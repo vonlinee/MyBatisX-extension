@@ -18,7 +18,6 @@ public class ParamBeforeSuffixOperator implements SuffixOperator {
 
     /**
      * Instantiates a new Param before suffix operator.
-     *
      * @param operatorName the operator name
      */
     public ParamBeforeSuffixOperator(final String operatorName) {

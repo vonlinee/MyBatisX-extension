@@ -13,7 +13,6 @@ public interface EntityMappingResolver {
 
     /**
      * 获取所有字段
-     *
      * @param mapperClass
      * @param entityClass
      * @return fields
@@ -22,7 +21,6 @@ public interface EntityMappingResolver {
 
     /**
      * 支持 mapper 类
-     *
      * @param mapperClass the mapper class
      * @return optional
      */

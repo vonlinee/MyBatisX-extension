@@ -5,7 +5,6 @@ import org.apache.ibatis.annotations.Param;
 
 public interface BlogTipMapper {
     /**
-     *
      * @param id 主键id
      * @return 博客名称
      */

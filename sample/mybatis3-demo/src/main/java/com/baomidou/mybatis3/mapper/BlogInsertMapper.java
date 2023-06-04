@@ -23,7 +23,7 @@ public interface BlogInsertMapper extends BaseMapper<Blog> {
     int insertBatchWithUnion(@Param("blogCollection") Collection<Blog> blogCollection);
 
     /* oracle 的批量插入*/
-    int insertBatchWithAll(@Param("blogCollection")Collection<Blog> blogCollection);
+    int insertBatchWithAll(@Param("blogCollection") Collection<Blog> blogCollection);
 
 
 }

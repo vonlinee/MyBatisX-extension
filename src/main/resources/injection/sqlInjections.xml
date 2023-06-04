@@ -3,7 +3,7 @@
     <injection language="SQL" injector-id="java">
         <display-name>MybatisX Select.value (org.apache.ibatis.annotations)</display-name>
         <value-pattern>(?:&lt;script&gt;)?(.+?)(?:&lt;\/script&gt;)?</value-pattern>
-        <single-file />
+        <single-file/>
         <place><![CDATA[
         psiMethod().withName("value").withParameters().definedInClass("org.apache.ibatis.annotations.Select")
 ]]></place>
@@ -11,7 +11,7 @@
     <injection language="SQL" injector-id="java">
         <display-name>MybatisX Insert.value (org.apache.ibatis.annotations)</display-name>
         <value-pattern>(?:&lt;script&gt;)?(.+?)(?:&lt;\/script&gt;)?</value-pattern>
-        <single-file />
+        <single-file/>
         <place><![CDATA[
         psiMethod().withName("value").withParameters().definedInClass("org.apache.ibatis.annotations.Insert")
 ]]></place>
@@ -19,7 +19,7 @@
     <injection language="SQL" injector-id="java">
         <display-name>MybatisX Update.value (org.apache.ibatis.annotations)</display-name>
         <value-pattern>(?:&lt;script&gt;)?(.+?)(?:&lt;\/script&gt;)?</value-pattern>
-        <single-file />
+        <single-file/>
         <place><![CDATA[
         psiMethod().withName("value").withParameters().definedInClass("org.apache.ibatis.annotations.Update")
 ]]></place>
@@ -27,7 +27,7 @@
     <injection language="SQL" injector-id="java">
         <display-name>MybatisX Delete.value (org.apache.ibatis.annotations)</display-name>
         <value-pattern>(?:&lt;script&gt;)?(.+?)(?:&lt;\/script&gt;)?</value-pattern>
-        <single-file />
+        <single-file/>
         <place><![CDATA[
         psiMethod().withName("value").withParameters().definedInClass("org.apache.ibatis.annotations.Delete")
 ]]></place>

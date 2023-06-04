@@ -12,7 +12,6 @@ public class GenerateException extends RuntimeException {
 
     /**
      * Instantiates a new Generate exception.
-     *
      * @param message the message
      */
     public GenerateException(String message) {
@@ -21,7 +20,6 @@ public class GenerateException extends RuntimeException {
 
     /**
      * Instantiates a new Generate exception.
-     *
      * @param message the message
      * @param cause   the cause
      */
@@ -31,7 +29,6 @@ public class GenerateException extends RuntimeException {
 
     /**
      * Instantiates a new Generate exception.
-     *
      * @param cause the cause
      */
     public GenerateException(Throwable cause) {
@@ -40,7 +37,6 @@ public class GenerateException extends RuntimeException {
 
     /**
      * Instantiates a new Generate exception.
-     *
      * @param message            the message
      * @param cause              the cause
      * @param enableSuppression  the enable suppression

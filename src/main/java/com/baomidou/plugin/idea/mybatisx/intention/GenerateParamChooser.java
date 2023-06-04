@@ -10,7 +10,6 @@ import org.jetbrains.annotations.NotNull;
 
 /**
  * The type Generate param chooser.
- *
  * @author yanglin
  */
 public class GenerateParamChooser extends JavaFileIntentionChooser {

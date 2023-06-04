@@ -21,15 +21,14 @@ public class BookSetterMapperTest {
 
     @Resource
     private BlogSetterMapper blogSetterMapper;
+    @Resource
+    private BlogInsertMapper blogInsertMapper;
 
     @Test
     public void testSelect() {
         BlogSetterDO blogSetterDO = blogSetterMapper.selectOneById(1);
         System.out.println(blogSetterDO);
     }
-
-    @Resource
-    private BlogInsertMapper blogInsertMapper;
 
     @Before
     public void initData() {

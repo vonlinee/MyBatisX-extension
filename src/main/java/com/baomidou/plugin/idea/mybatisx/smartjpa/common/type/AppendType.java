@@ -9,21 +9,18 @@ public interface AppendType {
 
     /**
      * Gets name.
-     *
      * @return the name
      */
     String getName();
 
     /**
      * Gets allow after.
-     *
      * @return the allow after
      */
     List<String> getAllowAfter();
 
     /**
      * Check after boolean.
-     *
      * @param appendType the append type
      * @return the boolean
      */

@@ -37,7 +37,6 @@ public class SelectOperator extends BaseOperatorManager {
 
     /**
      * Instantiates a new Select operator.
-     *
      * @param mappingField the mapping field
      * @param entityClass  the entity class
      */
@@ -56,7 +55,6 @@ public class SelectOperator extends BaseOperatorManager {
 
     /**
      * Init.
-     *
      * @param mappingField the mapping field
      * @param entityClass  the entity class
      * @param patterns     the patterns
@@ -77,7 +75,6 @@ public class SelectOperator extends BaseOperatorManager {
 
     /**
      * 初始化 selectOne+By+field区域
-     *
      * @param areaName
      * @param mappingField
      * @param sortAppenderFactory
@@ -276,7 +273,6 @@ public class SelectOperator extends BaseOperatorManager {
 
         /**
          * Instantiates a new Select result appender factory.
-         *
          * @param areaPrefix the area prefix
          */
         public SelectResultAppenderFactory(String areaPrefix) {
@@ -285,7 +281,6 @@ public class SelectOperator extends BaseOperatorManager {
 
         /**
          * 查询的结果不需要添加到参数中
-         *
          * @param entityClass
          * @param jpaStringList
          * @return
@@ -328,7 +323,6 @@ public class SelectOperator extends BaseOperatorManager {
 
         /**
          * Instantiates a new Select custom area appender.
-         *
          * @param area                  the area
          * @param areaType              the area type
          * @param syntaxAppenderFactory the syntax appender factory
@@ -339,7 +333,6 @@ public class SelectOperator extends BaseOperatorManager {
 
         /**
          * select 标签的字段一定不会生成参数
-         *
          * @param syntaxAppenderWrappers the jpa string list
          * @param entityClass            the entity class
          * @return
@@ -354,7 +347,6 @@ public class SelectOperator extends BaseOperatorManager {
 
         /**
          * Instantiates a new Select composite appender.
-         *
          * @param appenders the appenders
          */
         public SelectCompositeAppender(final SyntaxAppender... appenders) {

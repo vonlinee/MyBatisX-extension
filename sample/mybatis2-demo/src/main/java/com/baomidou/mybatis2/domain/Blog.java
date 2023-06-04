@@ -11,13 +11,13 @@ import java.util.Date;
 @TableName("t_blog")
 public class Blog {
     @TableId("id")
-   private Long id;
-   private String title;
-   private String content;
-   private BigDecimal money;
-   private Integer age;
-   @TableField("create_time")
-   private Date createTime;
+    private Long id;
+    private String title;
+    private String content;
+    private BigDecimal money;
+    private Integer age;
+    @TableField("create_time")
+    private Date createTime;
 
     public Long getId() {
         return id;

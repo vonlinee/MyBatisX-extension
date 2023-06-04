@@ -18,7 +18,6 @@ public class BooleanParameterChanger implements MxParameterChanger {
 
     /**
      * Instantiates a new Boolean parameter changer.
-     *
      * @param booleanValue the boolean value
      */
     public BooleanParameterChanger(Boolean booleanValue) {

@@ -68,7 +68,6 @@ public class CommonGenerator implements PlatformGenerator {
 
     /**
      * Create editor auto completion common generator.
-     *
      * @param entityClass the entity class
      * @param text        the text
      * @param dbms        the dbms

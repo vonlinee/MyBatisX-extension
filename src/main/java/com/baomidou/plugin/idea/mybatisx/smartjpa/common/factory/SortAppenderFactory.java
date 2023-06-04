@@ -30,7 +30,6 @@ public class SortAppenderFactory extends BaseAppenderFactory {
 
     /**
      * Instantiates a new Sort appender factory.
-     *
      * @param mappingField the mapping field
      */
     public SortAppenderFactory(final List<TxField> mappingField) {
@@ -73,7 +72,8 @@ public class SortAppenderFactory extends BaseAppenderFactory {
     public String getTemplateText(String tableName, PsiClass entityClass, LinkedList<TxParameter> parameters, LinkedList<SyntaxAppenderWrapper> collector, ConditionFieldWrapper conditionFieldWrapper) {
         StringBuilder stringBuilder = new StringBuilder();
         for (SyntaxAppenderWrapper syntaxAppender : collector) {
-            String templateText = syntaxAppender.getAppender().getTemplateText(tableName, entityClass, parameters, syntaxAppender.getCollector(), conditionFieldWrapper);
+            String templateText = syntaxAppender.getAppender()
+                .getTemplateText(tableName, entityClass, parameters, syntaxAppender.getCollector(), conditionFieldWrapper);
             stringBuilder.append(templateText).append(" ");
         }
         return "order by " + stringBuilder.toString();
@@ -99,7 +99,6 @@ public class SortAppenderFactory extends BaseAppenderFactory {
 
         /**
          * OrderBy 标签的字段一定不会生成参数
-         *
          * @param syntaxAppenderWrappers the jpa string list
          * @param entityClass            the entity class
          * @return
@@ -114,7 +113,6 @@ public class SortAppenderFactory extends BaseAppenderFactory {
 
         /**
          * Instantiates a new Sort custom field appender.
-         *
          * @param field the field
          * @param sort  the sort
          */

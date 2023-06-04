@@ -4,7 +4,6 @@ import com.baomidou.plugin.idea.mybatisx.dom.model.IdDomElement;
 import com.baomidou.plugin.idea.mybatisx.dom.model.Mapper;
 import com.baomidou.plugin.idea.mybatisx.dom.model.ResultMap;
 import com.baomidou.plugin.idea.mybatisx.util.MapperUtils;
-import com.google.common.base.Predicate;
 import com.google.common.collect.Collections2;
 import com.intellij.util.xml.ConvertContext;
 import com.intellij.util.xml.DomElement;
@@ -15,7 +14,6 @@ import java.util.Collection;
 
 /**
  * The type Result map converter.
- *
  * @author yanglin
  */
 public class ResultMapConverter extends IdBasedTagConverter {
@@ -37,7 +35,8 @@ public class ResultMapConverter extends IdBasedTagConverter {
     }
 
     private Collection<? extends IdDomElement> doFilterResultMapItself(Mapper mapper, final ResultMap resultMap) {
-        return Collections2.filter(mapper.getResultMaps(), input -> !MapperUtils.getId(input).equals(MapperUtils.getId(resultMap)));
+        return Collections2.filter(mapper.getResultMaps(), input -> !MapperUtils.getId(input)
+            .equals(MapperUtils.getId(resultMap)));
     }
 
 }

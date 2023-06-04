@@ -32,11 +32,13 @@ public class JpaAnnotationTypeOperator implements AnnotationTypeOperator {
                 field.addAnnotation("@GeneratedValue(strategy = GenerationType.IDENTITY)");
             }
         } else if (introspectedColumn.isSequenceColumn()) {
-            field.addAnnotation("@SequenceGenerator(name=\"\",sequenceName=\"" + introspectedTable.getTableConfiguration().getGeneratedKey().getRuntimeSqlStatement() + "\")");
+            field.addAnnotation("@SequenceGenerator(name=\"\",sequenceName=\"" + introspectedTable
+                .getTableConfiguration().getGeneratedKey().getRuntimeSqlStatement() + "\")");
         }
 
         String column = introspectedColumn.getActualColumnName();
-        if (StringUtility.stringContainsSpace(column) || introspectedTable.getTableConfiguration().isAllColumnDelimitingEnabled()) {
+        if (StringUtility.stringContainsSpace(column) || introspectedTable.getTableConfiguration()
+            .isAllColumnDelimitingEnabled()) {
             column = introspectedColumn.getContext().getBeginningDelimiter()
                 + column
                 + introspectedColumn.getContext().getEndingDelimiter();

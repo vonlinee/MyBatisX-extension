@@ -60,7 +60,6 @@ public abstract class BaseAppenderFactory implements SyntaxAppenderFactory {
      * 例如 and + field
      * 实际上是 and +field + equals
      * 默认追加 equals
-     *
      * @param syntaxAppender the syntax appender
      * @param current        the current
      */
@@ -104,7 +103,6 @@ public abstract class BaseAppenderFactory implements SyntaxAppenderFactory {
 
     /**
      * Is valid boolean.
-     *
      * @param splitList   前面已经存在数据
      * @param appendTypes 当前可选的数据
      * @return boolean
@@ -176,7 +174,6 @@ public abstract class BaseAppenderFactory implements SyntaxAppenderFactory {
 
     /**
      * Gets area sequence.
-     *
      * @return the area sequence
      */
     protected abstract AreaSequence getAreaSequence();

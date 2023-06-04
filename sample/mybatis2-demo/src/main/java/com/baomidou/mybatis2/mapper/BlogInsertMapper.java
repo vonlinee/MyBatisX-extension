@@ -15,5 +15,5 @@ public interface BlogInsertMapper extends BaseMapper<Blog> {
 
     int insertSelective(Blog blog);
 
-    int insertBatch(@Param("blogCollection")Collection<Blog> blogCollection);
+    int insertBatch(@Param("blogCollection") Collection<Blog> blogCollection);
 }

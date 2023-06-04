@@ -15,7 +15,6 @@ import java.util.Optional;
 
 /**
  * The type Jdbc type converter.
- *
  * @author ls9527
  */
 public class TypeHandlerConverter extends ConverterAdaptor<PsiClass>

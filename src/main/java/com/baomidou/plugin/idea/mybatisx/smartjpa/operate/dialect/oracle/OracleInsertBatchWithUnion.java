@@ -15,8 +15,6 @@ import org.jetbrains.annotations.NotNull;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
-import java.util.StringJoiner;
-import java.util.stream.Collectors;
 
 /**
  * oracle的批量插入
@@ -29,7 +27,6 @@ public class OracleInsertBatchWithUnion extends MysqlInsertBatch {
 
     /**
      * Instantiates a new Oracle insert batch with union.
-     *
      * @param dasTable  the das table
      * @param tableName the table name
      */
@@ -61,7 +58,6 @@ public class OracleInsertBatchWithUnion extends MysqlInsertBatch {
 
         /**
          * Instantiates a new Insert batch suffix operator.
-         *
          * @param mappingField the mapping field
          */
         public InsertBatchSuffixOperator(List<TxField> mappingField) {
@@ -77,7 +73,7 @@ public class OracleInsertBatchWithUnion extends MysqlInsertBatch {
             // 追加列名
             final String columns = mappingField.stream()
                 .map(TxField::getColumnName)
-                .collect(MybatisXCollectors.joining(",",conditionFieldWrapper.getNewline()));
+                .collect(MybatisXCollectors.joining(",", conditionFieldWrapper.getNewline()));
             stringBuilder.append("(").append(columns).append(")").append("\n");
             // values 连接符
             stringBuilder.append("(").append("\n");
@@ -104,7 +100,7 @@ public class OracleInsertBatchWithUnion extends MysqlInsertBatch {
                     fieldStr = conditionFieldWrapper.wrapDefaultDateIfNecessary(field.getColumnName(), fieldStr);
                     return fieldStr;
                 })
-                .collect(MybatisXCollectors.joining(",",conditionFieldWrapper.getNewline()));
+                .collect(MybatisXCollectors.joining(",", conditionFieldWrapper.getNewline()));
 
             stringBuilder.append("<foreach collection=\"").append(collectionName).append("\"");
             stringBuilder.append(" item=\"").append(itemName).append("\"");

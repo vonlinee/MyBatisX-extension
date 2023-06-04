@@ -53,6 +53,23 @@ public class FieldInfo {
      */
     private boolean autoIncrement;
 
+    public static FieldInfo build(IntrospectedColumn introspectedColumn) {
+        FieldInfo fieldInfo = new FieldInfo();
+        fieldInfo.fieldName = introspectedColumn.getJavaProperty();
+        fieldInfo.columnName = introspectedColumn.getActualColumnName();
+        fieldInfo.jdbcType = introspectedColumn.getJdbcTypeName();
+        fieldInfo.columnLength = introspectedColumn.getLength();
+        fieldInfo.columnScale = introspectedColumn.getScale();
+        FullyQualifiedJavaType fullyQualifiedJavaType = introspectedColumn.getFullyQualifiedJavaType();
+        fieldInfo.shortTypeName = fullyQualifiedJavaType.getShortName();
+        fieldInfo.fullTypeName = fullyQualifiedJavaType.getFullyQualifiedName();
+        fieldInfo.columnIsArray = fullyQualifiedJavaType.isArray();
+        fieldInfo.remark = introspectedColumn.getRemarks();
+        fieldInfo.nullable = introspectedColumn.isNullable();
+        fieldInfo.autoIncrement = introspectedColumn.isAutoIncrement();
+        return fieldInfo;
+    }
+
     public boolean isNullable() {
         return nullable;
     }
@@ -95,22 +112,5 @@ public class FieldInfo {
 
     public String getJdbcType() {
         return jdbcType;
-    }
-
-    public static FieldInfo build(IntrospectedColumn introspectedColumn) {
-        FieldInfo fieldInfo = new FieldInfo();
-        fieldInfo.fieldName = introspectedColumn.getJavaProperty();
-        fieldInfo.columnName = introspectedColumn.getActualColumnName();
-        fieldInfo.jdbcType = introspectedColumn.getJdbcTypeName();
-        fieldInfo.columnLength = introspectedColumn.getLength();
-        fieldInfo.columnScale = introspectedColumn.getScale();
-        FullyQualifiedJavaType fullyQualifiedJavaType = introspectedColumn.getFullyQualifiedJavaType();
-        fieldInfo.shortTypeName = fullyQualifiedJavaType.getShortName();
-        fieldInfo.fullTypeName = fullyQualifiedJavaType.getFullyQualifiedName();
-        fieldInfo.columnIsArray = fullyQualifiedJavaType.isArray();
-        fieldInfo.remark = introspectedColumn.getRemarks();
-        fieldInfo.nullable = introspectedColumn.isNullable();
-        fieldInfo.autoIncrement = introspectedColumn.isAutoIncrement();
-        return fieldInfo;
     }
 }

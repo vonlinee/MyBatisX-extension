@@ -41,6 +41,7 @@ public class ClassGenerateDialogWrapper extends DialogWrapper {
     private int lastPage = 1;
     private Project project;
     private List<DbTable> tableElements;
+    private GenerateConfig generateConfig;
 
     protected ClassGenerateDialogWrapper(@Nullable Project project) {
         super(project);
@@ -101,7 +102,6 @@ public class ClassGenerateDialogWrapper extends DialogWrapper {
 
     }
 
-
     private void switchPage(int newPage) {
         rootPanel.removeAll();
         JPanel comp = containerPanelList.get(newPage);
@@ -120,8 +120,6 @@ public class ClassGenerateDialogWrapper extends DialogWrapper {
     protected Action[] createActions() {
         return new Action[]{previousAction, getOKAction(), getCancelAction()};
     }
-
-    private GenerateConfig generateConfig;
 
     public void fillData(Project project, List<DbTable> tableElements) {
         this.project = project;

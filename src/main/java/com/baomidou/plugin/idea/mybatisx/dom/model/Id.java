@@ -8,7 +8,6 @@ import com.intellij.util.xml.GenericAttributeValue;
 
 /**
  * The interface Id.
- *
  * @author yanglin
  */
 public interface Id extends PropertyGroup {

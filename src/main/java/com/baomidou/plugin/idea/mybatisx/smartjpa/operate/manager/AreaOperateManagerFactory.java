@@ -16,7 +16,6 @@ public class AreaOperateManagerFactory {
 
     /**
      * Gets by dbms.
-     *
      * @param dbms         the dbms
      * @param mappingField the mapping field
      * @param entityClass  the entity class

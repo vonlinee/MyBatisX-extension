@@ -11,7 +11,6 @@ import java.util.List;
 public interface Generator {
     /**
      * Generate select.
-     *
      * @param id           the id
      * @param value        the value
      * @param resultType
@@ -30,7 +29,6 @@ public interface Generator {
 
     /**
      * Generate delete.
-     *
      * @param id    the id
      * @param value the value
      */
@@ -38,7 +36,6 @@ public interface Generator {
 
     /**
      * Generate insert.
-     *
      * @param id    the id
      * @param value the value
      */
@@ -46,7 +43,6 @@ public interface Generator {
 
     /**
      * Generate update.
-     *
      * @param id    the id
      * @param value the value
      */

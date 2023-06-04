@@ -8,19 +8,13 @@ import java.util.Date;
  * @author
  */
 public class TBlog implements Serializable {
-    private Long id;
-
-    private String title;
-
-    private String content;
-
-    private Long money;
-
-    private Integer age;
-
-    private Date createTime;
-
     private static final long serialVersionUID = 1L;
+    private Long id;
+    private String title;
+    private String content;
+    private Long money;
+    private Integer age;
+    private Date createTime;
 
     public Long getId() {
         return id;

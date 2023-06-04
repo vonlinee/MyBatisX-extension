@@ -135,11 +135,13 @@ public class IntellijIntrospector {
                     IntrospectedTable introspectedTable = (IntrospectedTable) iter.next();
                     String warning;
                     if (!introspectedTable.hasAnyColumns()) {
-                        warning = Messages.getString("Warning.1", introspectedTable.getFullyQualifiedTable().toString());
+                        warning = Messages.getString("Warning.1", introspectedTable.getFullyQualifiedTable()
+                            .toString());
                         this.warnings.add(warning);
                         iter.remove();
                     } else if (!introspectedTable.hasPrimaryKeyColumns() && !introspectedTable.hasBaseColumns()) {
-                        warning = Messages.getString("Warning.18", introspectedTable.getFullyQualifiedTable().toString());
+                        warning = Messages.getString("Warning.18", introspectedTable.getFullyQualifiedTable()
+                            .toString());
                         this.warnings.add(warning);
                         iter.remove();
                     } else {
@@ -286,7 +288,8 @@ public class IntellijIntrospector {
     }
 
     private boolean isMatchedColumn(IntrospectedColumn introspectedColumn, GeneratedKey gk) {
-        return introspectedColumn.isColumnNameDelimited() ? introspectedColumn.getActualColumnName().equals(gk.getColumn()) : introspectedColumn.getActualColumnName().equalsIgnoreCase(gk.getColumn());
+        return introspectedColumn.isColumnNameDelimited() ? introspectedColumn.getActualColumnName()
+            .equals(gk.getColumn()) : introspectedColumn.getActualColumnName().equalsIgnoreCase(gk.getColumn());
     }
 
     private void applyColumnOverrides(TableConfiguration tc, Map<ActualTableName, List<IntrospectedColumn>> columns) {

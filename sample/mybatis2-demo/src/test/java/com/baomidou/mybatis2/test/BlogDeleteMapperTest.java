@@ -23,14 +23,16 @@ public class BlogDeleteMapperTest {
 
     @Resource
     BlogInsertMapper blogInsertMapper;
-
+    @Resource
+    private BlogDeleteMapper blogDeleteMapper;
 
     @After
-    public void destroyData(){
+    public void destroyData() {
         blogDeleteMapper.deleteAll();
     }
+
     @Before
-    public void initData(){
+    public void initData() {
         Blog blogA = new Blog();
         blogA.setId(1L);
         blogA.setTitle("title-a");
@@ -60,12 +62,12 @@ public class BlogDeleteMapperTest {
 
 
         Blog blogE = new Blog();
-       blogE.setId(4L);
-       blogE.setTitle("baomidou-b");
-       blogE.setContent("content-a");
-       blogE.setAge(0);
-       blogE.setMoney(BigDecimal.valueOf(5500));
-       blogE.setCreateTime(new Date());
+        blogE.setId(4L);
+        blogE.setTitle("baomidou-b");
+        blogE.setContent("content-a");
+        blogE.setAge(0);
+        blogE.setMoney(BigDecimal.valueOf(5500));
+        blogE.setCreateTime(new Date());
         blogInsertMapper.insertAll(blogE);
 
         Blog blogF = new Blog();
@@ -77,7 +79,6 @@ public class BlogDeleteMapperTest {
         blogF.setCreateTime(new Date());
         blogInsertMapper.insertAll(blogF);
     }
-
 
     @Test
     public void delByIdAndAgeAfter() {
@@ -98,11 +99,13 @@ public class BlogDeleteMapperTest {
         int changeCount = blogDeleteMapper.delByIdNotIn(Arrays.asList(2L, 3L, 4L));
         Assert.assertEquals(changeCount, 2);
     }
+
     @Test
     public void delByIdBetween() {
-        int changeCount =  blogDeleteMapper.delByIdBetween(2L, 4L);
+        int changeCount = blogDeleteMapper.delByIdBetween(2L, 4L);
         Assert.assertEquals(changeCount, 3);
     }
+
     @Test
     public void delByIdNotLike() {
         int hasChange = blogDeleteMapper.delByTitleLike("title-a");
@@ -110,54 +113,60 @@ public class BlogDeleteMapperTest {
         int noChange = blogDeleteMapper.delByTitleLike("title");
         Assert.assertEquals(noChange, 0);
     }
+
     @Test
     public void delByIdStartWith() {
         int changeCount = blogDeleteMapper.delByTitleStartWith("-a");
         Assert.assertEquals(changeCount, 3);
     }
+
     @Test
     public void delByIdEndWith() {
         int changeCount = blogDeleteMapper.delByTitleEndWith("baomidou");
         Assert.assertEquals(changeCount, 2);
     }
+
     @Test
     public void delByIdContaining() {
         int changeCount = blogDeleteMapper.delByTitleContaining("dou");
         Assert.assertEquals(changeCount, 2);
     }
+
     @Test
     public void delByAgeTrue() {
         int changeCount = blogDeleteMapper.delByAgeTrue();
         Assert.assertEquals(changeCount, 1);
     }
+
     @Test
     public void delByAgeFalse() {
         int changeCount = blogDeleteMapper.delByAgeFalse();
         Assert.assertEquals(changeCount, 1);
     }
+
     @Test
     public void delByTitleIgnoreCase() {
         int changeCount = blogDeleteMapper.delByTitleIgnoreCase("apaCHE-A");
         Assert.assertEquals(changeCount, 1);
     }
+
     @Test
     public void delByTitleIs() {
         int changeCount = blogDeleteMapper.delByTitleIs("apache-a");
         Assert.assertEquals(changeCount, 1);
     }
+
     @Test
     public void delByIdGreaterThan() {
         int changeCount = blogDeleteMapper.delByIdGreaterThan(3L);
         Assert.assertEquals(changeCount, 2);
     }
+
     @Test
     public void delByIdLessThan() {
         int changeCount = blogDeleteMapper.delByIdLessThan(4L);
         Assert.assertEquals(changeCount, 3);
     }
-
-    @Resource
-    private BlogDeleteMapper blogDeleteMapper;
 
     /**
      * like 没有百分号

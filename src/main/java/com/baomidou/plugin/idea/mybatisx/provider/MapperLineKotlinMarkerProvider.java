@@ -18,7 +18,6 @@ import java.util.Collection;
 
 /**
  * The type Mapper line marker provider.
- *
  * @author yanglin
  */
 public class MapperLineKotlinMarkerProvider extends RelatedItemLineMarkerProvider {

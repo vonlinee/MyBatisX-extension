@@ -14,7 +14,6 @@ public class JoinAppendTypeCommand implements AppendTypeCommand {
 
     /**
      * Instantiates a new Join append type command.
-     *
      * @param syntaxAppender the syntax appender
      */
     public JoinAppendTypeCommand(final SyntaxAppender syntaxAppender) {

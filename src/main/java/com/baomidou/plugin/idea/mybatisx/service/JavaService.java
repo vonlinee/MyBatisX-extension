@@ -31,7 +31,6 @@ import java.util.Set;
 
 /**
  * The type Java service.
- *
  * @author yanglin
  */
 public class JavaService {
@@ -43,7 +42,6 @@ public class JavaService {
 
     /**
      * Instantiates a new Java service.
-     *
      * @param project the project
      */
     public JavaService(Project project) {
@@ -54,7 +52,6 @@ public class JavaService {
 
     /**
      * Gets instance.
-     *
      * @param project the project
      * @return the instance
      */
@@ -64,7 +61,6 @@ public class JavaService {
 
     /**
      * Gets reference clazz of psi field.
-     *
      * @param field the field
      * @return the reference clazz of psi field
      */
@@ -79,7 +75,6 @@ public class JavaService {
 
     /**
      * Find statement optional.
-     *
      * @param method the method
      * @return the optional
      */
@@ -91,7 +86,6 @@ public class JavaService {
 
     /**
      * Process.
-     *
      * @param psiMethod the psi method
      * @param processor the processor
      */
@@ -123,7 +117,6 @@ public class JavaService {
 
     /**
      * Process.
-     *
      * @param clazz     the clazz
      * @param processor the processor
      */
@@ -140,7 +133,6 @@ public class JavaService {
 
     /**
      * Find with find first processor optional.
-     *
      * @param target the target
      * @return the optional
      */
@@ -152,7 +144,6 @@ public class JavaService {
 
     /**
      * Import clazz.
-     *
      * @param file      the file
      * @param clazzName the clazz name
      */

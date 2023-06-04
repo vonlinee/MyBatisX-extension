@@ -6,7 +6,7 @@ import lombok.experimental.Accessors;
 import java.io.Serializable;
 import java.util.Date;
 
-public class ParentDTO  {
+public class ParentDTO {
     /**
      * 用于测试忽略静态字段
      */

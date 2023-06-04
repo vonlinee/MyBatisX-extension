@@ -1,7 +1,6 @@
 package com.baomidou.plugin.idea.mybatisx.generate.dto;
 
 
-
 import com.baomidou.plugin.idea.mybatisx.generate.classname.ClassNameStrategy;
 
 import java.util.Collections;

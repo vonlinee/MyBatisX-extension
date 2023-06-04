@@ -28,9 +28,10 @@ public class FreeMakerFormatter implements JavaFormatter {
 
     public static final String TEMPLATE = "template";
     private static final String USER_NAME = "user.name";
-    private CustomTemplateRoot rootObject;
+    private static final Logger logger = LoggerFactory.getLogger(FreeMakerFormatter.class);
     private final ClassInfo classInfo;
     protected Context context;
+    private CustomTemplateRoot rootObject;
 
     public FreeMakerFormatter(CustomTemplateRoot rootObject, ClassInfo classInfo) {
         this.rootObject = rootObject;
@@ -42,11 +43,8 @@ public class FreeMakerFormatter implements JavaFormatter {
         this.context = context;
     }
 
-    private static final Logger logger = LoggerFactory.getLogger(FreeMakerFormatter.class);
-
     /**
      * free marker 生成的代码, 不关心这里设置的任何属性
-     *
      * @param compilationUnit
      * @return
      */

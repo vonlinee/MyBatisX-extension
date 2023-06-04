@@ -19,7 +19,7 @@ import java.util.Optional;
  * JavaCompletionTestCase
  * <p>
  * JavaCodeInsightFixtureTestCase
- *
+ * <p>
  * 03 JavaCodeInsightFixtureTestCase
  * 04 LightJavaCodeInsightFixtureTestCase
  */
@@ -39,7 +39,7 @@ public abstract class BaseJpaTest extends JavaCodeInsightFixtureTestCase {
         String tipContent = FileUtils.readFileToString(new File(tip), "UTF-8");
         tipContent = tipContent.replace("#tip#", tipName);
 
-        myFixture.configureByFiles("template/Blog.java","template/TipMapper.xml");
+        myFixture.configureByFiles("template/Blog.java", "template/TipMapper.xml");
 
         PsiFile mapperJava = myFixture.addFileToProject("template/TipMapper.java", tipContent);
         myFixture.configureFromTempProjectFile("template/TipMapper.java");
@@ -49,7 +49,8 @@ public abstract class BaseJpaTest extends JavaCodeInsightFixtureTestCase {
         List<IntentionAction> intentionActions = myFixture.filterAvailableIntentions(MYBATIS_X_GENERATE_MYBATIS_SQL);
         Assert.assertTrue(intentionActions.size() > 0);
 
-        Optional<IntentionAction> intentionActionOptional = intentionActions.stream().filter(action -> action.getText().equalsIgnoreCase(MYBATIS_X_GENERATE_MYBATIS_SQL)).findAny();
+        Optional<IntentionAction> intentionActionOptional = intentionActions.stream()
+            .filter(action -> action.getText().equalsIgnoreCase(MYBATIS_X_GENERATE_MYBATIS_SQL)).findAny();
         Assert.assertTrue(intentionActionOptional.isPresent());
 
         IntentionAction intentionAction = intentionActionOptional.get();
@@ -62,13 +63,13 @@ public abstract class BaseJpaTest extends JavaCodeInsightFixtureTestCase {
         super.tuneFixture(moduleBuilder);
 
         String javaHome = System.getenv("JAVA_HOME");
-        if(javaHome == null){
+        if (javaHome == null) {
             javaHome = IdeaTestUtil.getMockJdk18Path().getPath();
         }
 
         moduleBuilder.addJdk(javaHome);
 
-        moduleBuilder.addLibrary("mp3-lib","src/test/testData/lib");
+        moduleBuilder.addLibrary("mp3-lib", "src/test/testData/lib");
 
     }
 }

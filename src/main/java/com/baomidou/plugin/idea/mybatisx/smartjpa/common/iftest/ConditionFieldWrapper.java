@@ -13,7 +13,6 @@ import java.util.List;
 public interface ConditionFieldWrapper {
     /**
      * Wrapper condition text string.
-     *
      * @param fieldName    the field name
      * @param templateText the template text
      * @return the string
@@ -22,7 +21,6 @@ public interface ConditionFieldWrapper {
 
     /**
      * Wrapper where string.
-     *
      * @param content the content
      * @return the string
      */
@@ -30,21 +28,18 @@ public interface ConditionFieldWrapper {
 
     /**
      * Gets all fields.
-     *
      * @return the all fields
      */
     String getAllFields();
 
     /**
      * Gets result map.
-     *
      * @return the result map
      */
     String getResultMap();
 
     /**
      * Gets result type.
-     *
      * @return the result type
      */
     String getResultType();
@@ -61,7 +56,6 @@ public interface ConditionFieldWrapper {
      * 如果不是默认字段,任然返回原先的字段值
      * 例如对 create_time,update_time 字段改为数据库的默认时间
      * oracle的默认日期: SYSDATE
-     *
      * @param columnName 字段名
      * @param fieldValue 字段的实际值
      * @return 字段值

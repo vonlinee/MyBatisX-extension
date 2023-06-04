@@ -8,14 +8,12 @@ import org.jetbrains.annotations.Nullable;
 
 /**
  * The type Alias class reference.
- *
  * @author yanglin
  */
 public class AliasClassReference extends PsiReferenceBase<XmlAttributeValue> {
 
     /**
      * Instantiates a new Alias class reference.
-     *
      * @param element the element
      */
     public AliasClassReference(@NotNull XmlAttributeValue element) {

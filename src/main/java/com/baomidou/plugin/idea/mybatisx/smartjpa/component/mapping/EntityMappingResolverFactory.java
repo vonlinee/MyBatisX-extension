@@ -34,7 +34,6 @@ public class EntityMappingResolverFactory {
 
     /**
      * Instantiates a new Entity mapping resolver factory.
-     *
      * @param project the project
      */
     public EntityMappingResolverFactory(Project project) {
@@ -54,7 +53,6 @@ public class EntityMappingResolverFactory {
 
     /**
      * Search entity psi class.
-     *
      * @return the psi class
      */
     public EntityMappingHolder searchEntity(PsiClass mapperClass) {

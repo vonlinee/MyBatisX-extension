@@ -15,7 +15,6 @@ public class DasTableAdaptor implements MxDasTable {
 
     /**
      * Find sequence name optional.
-     *
      * @param tableName the table name
      * @return the optional
      */
@@ -25,7 +24,6 @@ public class DasTableAdaptor implements MxDasTable {
 
     /**
      * Gets primary key.
-     *
      * @return the primary key
      */
     public DasTableKey getPrimaryKey() {
@@ -34,7 +32,6 @@ public class DasTableAdaptor implements MxDasTable {
 
     /**
      * Sets das table.
-     *
      * @param dasTable the das table
      */
     public void setDasTable(DasTable dasTable) {

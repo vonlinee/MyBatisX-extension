@@ -1,13 +1,11 @@
 package com.baomidou.plugin.idea.mybatisx.reference;
 
-import com.intellij.database.psi.DbElement;
 import com.intellij.psi.PsiField;
 import com.intellij.psi.xml.XmlAttributeValue;
 import org.jetbrains.annotations.NotNull;
 
 /**
  * The type Reference set resolver factory.
- *
  * @author yanglin
  */
 public final class ReferenceSetResolverFactory {
@@ -18,7 +16,6 @@ public final class ReferenceSetResolverFactory {
 
     /**
      * Create psi field resolver context reference set resolver.
-     *
      * @param <F>    the type parameter
      * @param target the target
      * @return the context reference set resolver

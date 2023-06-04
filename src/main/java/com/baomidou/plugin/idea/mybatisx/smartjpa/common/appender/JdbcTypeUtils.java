@@ -13,7 +13,6 @@ import java.util.concurrent.ConcurrentHashMap;
 public class JdbcTypeUtils {
     /**
      * 后续提取类， 先用静态的
-     *
      * @return
      */
     private static Map<String, String> fieldJdbcType = new ConcurrentHashMap<>();
@@ -33,7 +32,6 @@ public class JdbcTypeUtils {
 
     /**
      * Wrapper field string.
-     *
      * @param paramName     the param name
      * @param canonicalText the canonical text
      * @return the string

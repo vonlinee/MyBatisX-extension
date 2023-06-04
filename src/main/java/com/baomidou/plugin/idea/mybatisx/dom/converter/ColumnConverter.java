@@ -24,7 +24,6 @@ import java.util.Optional;
 
 /**
  * The type Column converter.
- *
  * @author ls9527
  */
 public class ColumnConverter extends ConverterAdaptor<XmlAttributeValue> implements CustomReferenceConverter<XmlAttributeValue> {

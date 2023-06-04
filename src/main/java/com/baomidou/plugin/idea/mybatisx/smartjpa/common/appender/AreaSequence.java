@@ -36,7 +36,6 @@ public enum AreaSequence {
 
     /**
      * Gets sequence.
-     *
      * @return the sequence
      */
     public int getSequence() {

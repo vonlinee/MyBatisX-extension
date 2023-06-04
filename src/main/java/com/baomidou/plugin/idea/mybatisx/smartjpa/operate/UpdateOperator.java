@@ -33,19 +33,18 @@ public class UpdateOperator extends BaseOperatorManager {
 
     /**
      * Instantiates a new Update operator.
-     *
      * @param mappingField the mapping field
      * @param entityClass
      */
     public UpdateOperator(final List<TxField> mappingField, PsiClass entityClass) {
         final Set<String> patterns = AbstractStatementGenerator.UPDATE_GENERATOR.getPatterns();
-        this.init(mappingField, entityClass,patterns);
+        this.init(mappingField, entityClass, patterns);
         patterns.forEach(this::addOperatorName);
     }
 
     /**
      * Init.
-     *  @param mappingField the mapping field
+     * @param mappingField     the mapping field
      * @param entityClass
      * @param operatorNameList
      */
@@ -114,7 +113,6 @@ public class UpdateOperator extends BaseOperatorManager {
 
         /**
          * Instantiates a new Update result appender factory.
-         *
          * @param areaPrefix the area prefix
          */
         public UpdateResultAppenderFactory(String areaPrefix) {
@@ -129,7 +127,8 @@ public class UpdateOperator extends BaseOperatorManager {
             String operatorXml = "update " + tableName + "\n set ";
 
             return operatorXml + collector.stream().map(syntaxAppenderWrapper -> {
-                return syntaxAppenderWrapper.getAppender().getTemplateText(tableName, entityClass, parameters, collector, conditionFieldWrapper);
+                return syntaxAppenderWrapper.getAppender()
+                    .getTemplateText(tableName, entityClass, parameters, collector, conditionFieldWrapper);
             }).collect(Collectors.joining());
         }
 

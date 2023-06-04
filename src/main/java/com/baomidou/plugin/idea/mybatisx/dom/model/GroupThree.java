@@ -6,14 +6,12 @@ import java.util.List;
 
 /**
  * The interface Group three.
- *
  * @author yanglin
  */
 public interface GroupThree extends GroupTwo {
 
     /**
      * Gets select key.
-     *
      * @return the select key
      */
     @SubTagList("selectKey")

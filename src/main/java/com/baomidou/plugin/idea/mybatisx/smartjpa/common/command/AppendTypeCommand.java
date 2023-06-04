@@ -11,7 +11,6 @@ import java.util.Optional;
 public interface AppendTypeCommand {
     /**
      * Execute optional.
-     *
      * @return the optional
      */
     Optional<SyntaxAppender> execute();

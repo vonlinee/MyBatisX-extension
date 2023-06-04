@@ -34,7 +34,6 @@ public class ResultAppenderFactory extends BaseAppenderFactory {
 
     /**
      * Instantiates a new Result appender factory.
-     *
      * @param areaPrefix the area prefix
      */
     public ResultAppenderFactory(final String areaPrefix) {
@@ -43,7 +42,6 @@ public class ResultAppenderFactory extends BaseAppenderFactory {
 
     /**
      * Register appender.
-     *
      * @param syntaxAppender the syntax appender
      */
     public void registerAppender(final SyntaxAppender syntaxAppender) {
@@ -79,7 +77,6 @@ public class ResultAppenderFactory extends BaseAppenderFactory {
 
         /**
          * Instantiates a new Custom field appender.
-         *
          * @param field        the field
          * @param areaSequence the area sequence
          */

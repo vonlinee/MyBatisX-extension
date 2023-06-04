@@ -8,14 +8,12 @@ import java.util.List;
 
 /**
  * The interface Group one.
- *
  * @author yanglin
  */
 public interface GroupOne extends DomElement {
 
     /**
      * Gets includes.
-     *
      * @return the includes
      */
     @NotNull
@@ -24,7 +22,6 @@ public interface GroupOne extends DomElement {
 
     /**
      * Gets trims.
-     *
      * @return the trims
      */
     @NotNull
@@ -33,7 +30,6 @@ public interface GroupOne extends DomElement {
 
     /**
      * Gets wheres.
-     *
      * @return the wheres
      */
     @NotNull
@@ -42,7 +38,6 @@ public interface GroupOne extends DomElement {
 
     /**
      * Gets sets.
-     *
      * @return the sets
      */
     @NotNull
@@ -51,7 +46,6 @@ public interface GroupOne extends DomElement {
 
     /**
      * Gets foreachs.
-     *
      * @return the foreachs
      */
     @NotNull
@@ -60,7 +54,6 @@ public interface GroupOne extends DomElement {
 
     /**
      * Gets chooses.
-     *
      * @return the chooses
      */
     @NotNull
@@ -69,7 +62,6 @@ public interface GroupOne extends DomElement {
 
     /**
      * Gets ifs.
-     *
      * @return the ifs
      */
     @NotNull

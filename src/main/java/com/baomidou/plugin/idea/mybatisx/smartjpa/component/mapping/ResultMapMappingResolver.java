@@ -96,7 +96,6 @@ public class ResultMapMappingResolver extends JpaMappingResolver implements Enti
 
     /**
      * 添加所有父类的 ResultMap
-     *
      * @param txFields
      * @param currentResultMap
      * @param entityClass
@@ -123,11 +122,12 @@ public class ResultMapMappingResolver extends JpaMappingResolver implements Enti
     }
 
     private Collection<? extends TxField> determineResults(List<Result> results, PsiClass mapperClass) {
-        return results.stream().map(result -> determineField(mapperClass, result.getProperty(), result.getXmlTag(),result.getJdbcType(), false)).filter(Objects::nonNull).collect(Collectors.toList());
+        return results.stream()
+            .map(result -> determineField(mapperClass, result.getProperty(), result.getXmlTag(), result.getJdbcType(), false))
+            .filter(Objects::nonNull).collect(Collectors.toList());
     }
 
     /**
-     *
      * @param entityClass
      * @param property
      * @param xmlTag
@@ -159,11 +159,12 @@ public class ResultMapMappingResolver extends JpaMappingResolver implements Enti
             txField.setClassName(field.getContainingClass().getQualifiedName());
             txField.setPrimaryKey(isPrimaryKey);
             String fieldJdbcType = null;
-            if(jdbcType !=null){
+            if (jdbcType != null) {
                 fieldJdbcType = jdbcType.getStringValue();
             }
             if (fieldJdbcType == null) {
-                Optional<String> jdbcTypeByJavaType = JdbcTypeUtils.findJdbcTypeByJavaType(field.getType().getCanonicalText());
+                Optional<String> jdbcTypeByJavaType = JdbcTypeUtils.findJdbcTypeByJavaType(field.getType()
+                    .getCanonicalText());
                 if (jdbcTypeByJavaType.isPresent()) {
                     fieldJdbcType = jdbcTypeByJavaType.get();
                 }
@@ -176,30 +177,28 @@ public class ResultMapMappingResolver extends JpaMappingResolver implements Enti
 
     /**
      * resultMap 的子标签<id/>
-     *
      * @param mapperClass
      * @param ids
      * @return
      */
     private Collection<? extends TxField> determineIds(PsiClass mapperClass, List<Id> ids) {
-        return ids.stream().map(id -> getTxField(mapperClass, id)).filter(Objects::nonNull).collect(Collectors.toList());
+        return ids.stream().map(id -> getTxField(mapperClass, id)).filter(Objects::nonNull)
+            .collect(Collectors.toList());
     }
 
     /**
      * resultMap 的 id
-     *
      * @param mapperClass
      * @param id
      * @return
      */
     @Nullable
     private TxField getTxField(PsiClass mapperClass, Id id) {
-        return determineField(mapperClass, id.getProperty(), id.getXmlTag(), id.getJdbcType(),true);
+        return determineField(mapperClass, id.getProperty(), id.getXmlTag(), id.getJdbcType(), true);
     }
 
     /**
      * 找到名字最短的 ResultMap
-     *
      * @param resultMaps
      * @return
      */

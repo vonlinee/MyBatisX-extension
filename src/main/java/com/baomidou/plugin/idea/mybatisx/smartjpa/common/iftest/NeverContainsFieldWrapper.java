@@ -16,7 +16,6 @@ import java.util.stream.Collectors;
 
 /**
  * The type Never contains field wrapper.
- *
  * @author ls9527
  */
 public class NeverContainsFieldWrapper implements ConditionFieldWrapper {
@@ -41,7 +40,6 @@ public class NeverContainsFieldWrapper implements ConditionFieldWrapper {
 
     /**
      * 默认的 查询所有字段的方式
-     *
      * @return
      */
     @Override

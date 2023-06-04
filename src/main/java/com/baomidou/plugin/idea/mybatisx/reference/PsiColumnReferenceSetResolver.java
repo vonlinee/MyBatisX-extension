@@ -26,7 +26,6 @@ import java.util.Optional;
 
 /**
  * The type Psi field reference set resolver.
- *
  * @author yanglin
  */
 public class PsiColumnReferenceSetResolver {
@@ -51,7 +50,6 @@ public class PsiColumnReferenceSetResolver {
 
     /**
      * Instantiates a new Context reference set resolver.
-     *
      * @param element the element
      */
     protected PsiColumnReferenceSetResolver(@NotNull XmlAttributeValue element) {
@@ -62,7 +60,6 @@ public class PsiColumnReferenceSetResolver {
 
     /**
      * Resolve optional.
-     *
      * @param index the index
      * @return the optional
      */
@@ -72,7 +69,6 @@ public class PsiColumnReferenceSetResolver {
 
     /**
      * Gets start element.
-     *
      * @return the start element
      */
     public Optional<DasTable> getStartElement() {
@@ -82,7 +78,6 @@ public class PsiColumnReferenceSetResolver {
 
     /**
      * Gets element.
-     *
      * @return the element
      */
     public XmlAttributeValue getElement() {
@@ -91,7 +86,6 @@ public class PsiColumnReferenceSetResolver {
 
     /**
      * Sets element.
-     *
      * @param element the element
      */
     public void setElement(XmlAttributeValue element) {
@@ -100,7 +94,6 @@ public class PsiColumnReferenceSetResolver {
 
     /**
      * Gets project.
-     *
      * @return the project
      */
     public Project getProject() {
@@ -109,7 +102,6 @@ public class PsiColumnReferenceSetResolver {
 
     /**
      * Sets project.
-     *
      * @param project the project
      */
     public void setProject(Project project) {

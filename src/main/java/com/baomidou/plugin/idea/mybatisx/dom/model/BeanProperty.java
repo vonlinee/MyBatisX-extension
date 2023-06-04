@@ -7,14 +7,12 @@ import org.jetbrains.annotations.NotNull;
 
 /**
  * The interface Bean property.
- *
  * @author yanglin
  */
 public interface BeanProperty extends DomElement {
 
     /**
      * Gets name.
-     *
      * @return the name
      */
     @NotNull
@@ -23,7 +21,6 @@ public interface BeanProperty extends DomElement {
 
     /**
      * Gets value.
-     *
      * @return the value
      */
     @NotNull

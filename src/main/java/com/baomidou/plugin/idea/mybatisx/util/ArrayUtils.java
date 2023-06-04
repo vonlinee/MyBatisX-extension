@@ -7,7 +7,6 @@ import java.util.Optional;
 
 /**
  * The type Array utils.
- *
  * @author yanglin
  */
 public final class ArrayUtils {
@@ -18,7 +17,6 @@ public final class ArrayUtils {
 
     /**
      * Gets only element.
-     *
      * @param <T>      the type parameter
      * @param target   the target
      * @param defValue the def value
@@ -30,7 +28,6 @@ public final class ArrayUtils {
 
     /**
      * Gets only element.
-     *
      * @param <T>    the type parameter
      * @param target the target
      * @return the only element

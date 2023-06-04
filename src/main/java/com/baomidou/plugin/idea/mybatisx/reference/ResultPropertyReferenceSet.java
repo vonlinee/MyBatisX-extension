@@ -11,14 +11,12 @@ import org.jetbrains.annotations.Nullable;
 
 /**
  * The type Result property reference set.
- *
  * @author yanglin
  */
 public class ResultPropertyReferenceSet extends ReferenceSetBase<PsiReference> {
 
     /**
      * Instantiates a new Result property reference set.
-     *
      * @param text    the text
      * @param element the element
      * @param offset  the offset

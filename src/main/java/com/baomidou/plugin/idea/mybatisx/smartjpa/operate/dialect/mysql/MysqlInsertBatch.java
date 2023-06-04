@@ -24,7 +24,6 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * The type Mysql insert batch.
@@ -50,7 +49,6 @@ public class MysqlInsertBatch implements CustomStatement {
 
     /**
      * Init insert batch.
-     *
      * @param areaName     the area name
      * @param mappingField the mapping field
      */
@@ -78,7 +76,6 @@ public class MysqlInsertBatch implements CustomStatement {
 
     /**
      * Gets result appender factory.
-     *
      * @param mappingField the mapping field
      * @param newAreaName  the new area name
      * @return the result appender factory
@@ -102,7 +99,6 @@ public class MysqlInsertBatch implements CustomStatement {
 
     /**
      * Batch name string.
-     *
      * @return the string
      */
     @NotNull
@@ -112,7 +108,6 @@ public class MysqlInsertBatch implements CustomStatement {
 
     /**
      * Gets new area name.
-     *
      * @param areaName the area name
      * @return the new area name
      */
@@ -123,7 +118,6 @@ public class MysqlInsertBatch implements CustomStatement {
 
     /**
      * Gets suffix operator.
-     *
      * @param mappingField the mapping field
      * @return the suffix operator
      */
@@ -147,7 +141,6 @@ public class MysqlInsertBatch implements CustomStatement {
 
         /**
          * Instantiates a new Insert batch result appender factory.
-         *
          * @param areaPrefix the area prefix
          */
         public InsertBatchResultAppenderFactory(String areaPrefix) {
@@ -161,7 +154,8 @@ public class MysqlInsertBatch implements CustomStatement {
                                       LinkedList<SyntaxAppenderWrapper> collector, ConditionFieldWrapper conditionFieldWrapper) {
             StringBuilder mapperXml = new StringBuilder("insert into " + tableName);
             for (SyntaxAppenderWrapper syntaxAppenderWrapper : collector) {
-                String templateText = syntaxAppenderWrapper.getAppender().getTemplateText(tableName, entityClass, parameters, collector, conditionFieldWrapper);
+                String templateText = syntaxAppenderWrapper.getAppender()
+                    .getTemplateText(tableName, entityClass, parameters, collector, conditionFieldWrapper);
                 mapperXml.append(templateText);
             }
             return mapperXml.toString();
@@ -192,7 +186,6 @@ public class MysqlInsertBatch implements CustomStatement {
 
         /**
          * Instantiates a new Insert batch suffix operator.
-         *
          * @param mappingField the mapping field
          */
         public InsertBatchSuffixOperator(List<TxField> mappingField) {
@@ -206,7 +199,7 @@ public class MysqlInsertBatch implements CustomStatement {
             // 追加列名
             final String columns = mappingField.stream()
                 .map(field -> field.getColumnName())
-                .collect(MybatisXCollectors.joining(",",conditionFieldWrapper.getNewline()));
+                .collect(MybatisXCollectors.joining(",", conditionFieldWrapper.getNewline()));
             stringBuilder.append("(").append(columns).append(")").append("\n");
             // values 连接符
             stringBuilder.append("values").append("\n");
@@ -218,7 +211,7 @@ public class MysqlInsertBatch implements CustomStatement {
                     fieldValue = conditionFieldWrapper.wrapDefaultDateIfNecessary(field.getColumnName(), fieldValue);
                     return fieldValue;
                 })
-                .collect(MybatisXCollectors.joining(",",conditionFieldWrapper.getNewline()));
+                .collect(MybatisXCollectors.joining(",", conditionFieldWrapper.getNewline()));
 
             stringBuilder.append("<foreach collection=\"").append(collectionName).append("\"");
             stringBuilder.append(" item=\"" + itemName + "\"");

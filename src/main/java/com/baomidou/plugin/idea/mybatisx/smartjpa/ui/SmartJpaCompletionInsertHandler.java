@@ -18,7 +18,6 @@ public class SmartJpaCompletionInsertHandler implements InsertHandler<LookupElem
 
     /**
      * Instantiates a new Smart jpa completion insert handler.
-     *
      * @param editor  the editor
      * @param project the project
      */

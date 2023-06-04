@@ -12,7 +12,6 @@ import org.jetbrains.annotations.NotNull;
 
 /**
  * The type Generate statement intention.
- *
  * @author yanglin
  */
 public class GenerateStatementIntention extends GenericIntention {

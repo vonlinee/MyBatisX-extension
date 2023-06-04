@@ -25,7 +25,6 @@ import java.util.Optional;
 
 /**
  * The type Mapper backtracking utils.
- *
  * @author yanglin
  */
 public final class MapperBacktrackingUtils {
@@ -36,7 +35,6 @@ public final class MapperBacktrackingUtils {
 
     /**
      * Gets property clazz.
-     *
      * @param attributeValue the attribute value
      * @return the property clazz
      */
@@ -168,7 +166,6 @@ public final class MapperBacktrackingUtils {
 
     /**
      * Is within same tag boolean.
-     *
      * @param domElement the dom element
      * @param xmlElement the xml element
      * @return the boolean

@@ -8,7 +8,8 @@
     </update>
 
     <select id="selectByKey" resultType="com.baomidou.mybatis3.domain.Blog">
-        select * from blog
+        select *
+        from blog
         where id = #{id,jdbcType=INTEGER}
     </select>
 </mapper>

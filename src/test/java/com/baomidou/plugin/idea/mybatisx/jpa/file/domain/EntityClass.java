@@ -3,7 +3,7 @@ package com.baomidou.plugin.idea.mybatisx.jpa.file.domain;
 import java.math.BigDecimal;
 import java.util.Date;
 
-public class EntityClass extends EntityParentClass{
+public class EntityClass extends EntityParentClass {
     private Integer id;
     private String name;
     private BigDecimal amount;

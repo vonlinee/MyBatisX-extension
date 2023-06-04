@@ -7,14 +7,12 @@ import java.util.List;
 
 /**
  * The interface Constructor.
- *
  * @author yanglin
  */
 public interface Constructor extends DomElement {
 
     /**
      * Gets args.
-     *
      * @return the args
      */
     @SubTagList("arg")
@@ -22,7 +20,6 @@ public interface Constructor extends DomElement {
 
     /**
      * Gets id args.
-     *
      * @return the id args
      */
     @SubTagList("idArg")

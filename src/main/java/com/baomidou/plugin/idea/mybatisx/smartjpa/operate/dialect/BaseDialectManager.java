@@ -32,7 +32,6 @@ public class BaseDialectManager implements AreaOperateManager {
 
     /**
      * Init.
-     *
      * @param mappingField the mapping field
      * @param entityClass  the entity class
      */
@@ -47,7 +46,6 @@ public class BaseDialectManager implements AreaOperateManager {
 
     /**
      * Register managers.
-     *
      * @param areaOperateManager the area operate manager
      */
     protected void registerManagers(AreaOperateManager areaOperateManager) {

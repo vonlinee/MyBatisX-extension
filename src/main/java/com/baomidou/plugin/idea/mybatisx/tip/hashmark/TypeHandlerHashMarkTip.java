@@ -15,7 +15,6 @@ import java.util.Optional;
 
 /**
  * 类型处理器的提示
- *
  * @author ls9527
  */
 public class TypeHandlerHashMarkTip implements HashMarkTip {
@@ -29,7 +28,6 @@ public class TypeHandlerHashMarkTip implements HashMarkTip {
 
     /**
      * 通常希望提示自定义的类型处理器
-     *
      * @param completionResultSet
      * @param mapper
      */

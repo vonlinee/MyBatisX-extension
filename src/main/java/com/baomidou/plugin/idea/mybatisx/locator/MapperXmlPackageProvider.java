@@ -18,7 +18,6 @@ import java.util.Set;
 
 /**
  * The type Mapper xml package provider.
- *
  * @author yanglin
  */
 public class MapperXmlPackageProvider extends PackageProvider {

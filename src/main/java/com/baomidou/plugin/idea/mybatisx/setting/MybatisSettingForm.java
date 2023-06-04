@@ -4,7 +4,6 @@ import javax.swing.*;
 
 /**
  * The type Mybatis setting form.
- *
  * @author yanglin
  */
 public class MybatisSettingForm {

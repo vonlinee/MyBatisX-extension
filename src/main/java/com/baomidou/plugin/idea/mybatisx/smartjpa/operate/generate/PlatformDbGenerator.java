@@ -32,7 +32,8 @@ public class PlatformDbGenerator extends PlatformSimpleGenerator {
         // 社区版不提供这个服务, 只能提供mysql方式的提示和生成
         try {
             SqlPsiFacade instance = SqlPsiFacade.getInstance(project);
-            SqlLanguageDialect dialectMapping = instance.getDialectMapping(element.getContainingFile().getVirtualFile());
+            SqlLanguageDialect dialectMapping = instance.getDialectMapping(element.getContainingFile()
+                .getVirtualFile());
             dbms = DbmsAdaptor.castOf(dialectMapping.getDbms());
         } catch (NoClassDefFoundError ignore) {
         }

@@ -11,7 +11,6 @@ public class JavaTypeHashMark implements HashMarkTip {
 
     /**
      * java 类如此多，所以就不提示了
-     *
      * @param completionResultSet
      * @param mapper
      */

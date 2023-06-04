@@ -8,14 +8,12 @@ import org.jetbrains.annotations.NotNull;
 
 /**
  * The interface Type alias.
- *
  * @author yanglin
  */
 public interface TypeAlias extends DomElement {
 
     /**
      * Gets type.
-     *
      * @return the type
      */
     @NotNull
@@ -24,7 +22,6 @@ public interface TypeAlias extends DomElement {
 
     /**
      * Gets alias.
-     *
      * @return the alias
      */
     @NotNull

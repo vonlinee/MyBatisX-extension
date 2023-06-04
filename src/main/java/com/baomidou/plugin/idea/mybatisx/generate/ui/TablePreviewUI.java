@@ -37,6 +37,16 @@ import java.util.Arrays;
 import java.util.List;
 
 public class TablePreviewUI {
+    ListTableModel<TableUIInfo> model = new ListTableModel<>(
+        new MybaitsxTableColumnInfo("tableName", false),
+        new MybaitsxTableColumnInfo("className", true)
+    );
+    List<ClassNameStrategy> classNameStrategies = new ArrayList<ClassNameStrategy>() {
+        {
+            add(new CamelStrategy());
+            add(new SameAsTableNameStrategy());
+        }
+    };
     private JPanel rootPanel;
     private JPanel listPanel;
     private JTextField ignoreTablePrefixTextField;
@@ -60,14 +70,8 @@ public class TablePreviewUI {
     private JPanel classNameStrategyPanel;
     private PsiElement[] tableElements;
     private List<DbTable> dbTables;
-
-
     private String moduleName;
 
-    ListTableModel<TableUIInfo> model = new ListTableModel<>(
-        new MybaitsxTableColumnInfo("tableName", false),
-        new MybaitsxTableColumnInfo("className", true)
-    );
 
     public TablePreviewUI() {
         TableView<TableUIInfo> tableView = new TableView<>(model);
@@ -85,7 +89,6 @@ public class TablePreviewUI {
 
     }
 
-
     public DomainInfo buildDomainInfo() {
         DomainInfo domainInfo = new DomainInfo();
         domainInfo.setModulePath(moduleChooseTextField.getText());
@@ -98,7 +101,6 @@ public class TablePreviewUI {
         return domainInfo;
 
     }
-
 
     public JPanel getRootPanel() {
         return rootPanel;
@@ -180,7 +182,6 @@ public class TablePreviewUI {
         ignoreTableSuffixTextField.getDocument().addDocumentListener(listener);
     }
 
-
     private void refreshTableNames(String classNameStrategyName, List<DbTable> dbTables, String ignorePrefix, String ignoreSuffix) {
         for (int currentRowIndex = model.getRowCount() - 1; currentRowIndex >= 0; currentRowIndex--) {
             model.removeRow(currentRowIndex);
@@ -193,12 +194,6 @@ public class TablePreviewUI {
         }
     }
 
-    List<ClassNameStrategy> classNameStrategies = new ArrayList<ClassNameStrategy>(){
-        {
-            add(new CamelStrategy());
-            add(new SameAsTableNameStrategy());
-        }
-    };
     private ClassNameStrategy findStrategyByName(String classNameStrategyName) {
         ClassNameStrategy classNameStrategy = null;
         for (ClassNameStrategy nameStrategy : classNameStrategies) {

@@ -48,7 +48,6 @@ public class SmartJpaCompletionProvider {
 
     /**
      * Add completion.
-     *
      * @param parameters  the parameters
      * @param result      the result
      * @param mapperClass the mapper class
@@ -105,7 +104,6 @@ public class SmartJpaCompletionProvider {
 
     /**
      * 在editor级别做初始化字段的缓存
-     *
      * @param mapperClass
      * @param editor
      * @return
@@ -131,7 +129,8 @@ public class SmartJpaCompletionProvider {
         DbmsAdaptor dbms = DbmsAdaptor.MYSQL;
         try {
             SqlPsiFacade instance = SqlPsiFacade.getInstance(Objects.requireNonNull(editor.getProject()));
-            SqlLanguageDialect dialectMapping = instance.getDialectMapping(mapperClass.getContainingFile().getVirtualFile());
+            SqlLanguageDialect dialectMapping = instance.getDialectMapping(mapperClass.getContainingFile()
+                .getVirtualFile());
             dbms = DbmsAdaptor.castOf(dialectMapping.getDbms());
         } catch (NoClassDefFoundError ignore) {
         }
@@ -158,7 +157,8 @@ public class SmartJpaCompletionProvider {
         if (prefix.length() >= splitString.length()) {
             final String newFragmentPrefix = prefix.substring(splitString.length());
             completionResultSet = completionResultSet.withPrefixMatcher(newFragmentPrefix);
-            logger.info("getCompletionResultSet changed prefix: {}", completionResultSet.getPrefixMatcher().getPrefix());
+            logger.info("getCompletionResultSet changed prefix: {}", completionResultSet.getPrefixMatcher()
+                .getPrefix());
         }
         return completionResultSet;
     }

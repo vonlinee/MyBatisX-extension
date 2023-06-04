@@ -69,15 +69,15 @@ public class IntellijMyBatisGenerator {
     }
 
     public void generate(ProgressCallback callback, IntellijTableInfo tableInfo) throws SQLException, IOException, InterruptedException {
-        this.generate(callback, null, null, true,null, tableInfo);
+        this.generate(callback, null, null, true, null, tableInfo);
     }
 
     public void generate(ProgressCallback callback, Set<String> contextIds, IntellijTableInfo tableInfo) throws SQLException, IOException, InterruptedException {
-        this.generate(callback, contextIds, null, true, null,tableInfo);
+        this.generate(callback, contextIds, null, true, null, tableInfo);
     }
 
     public void generate(ProgressCallback callback, Set<String> contextIds, Set<String> fullyQualifiedTableNames, IntellijTableInfo tableInfo) throws SQLException, IOException, InterruptedException {
-        this.generate(callback, contextIds, fullyQualifiedTableNames, true,null, tableInfo);
+        this.generate(callback, contextIds, fullyQualifiedTableNames, true, null, tableInfo);
     }
 
     public void generate(ProgressCallback callback,

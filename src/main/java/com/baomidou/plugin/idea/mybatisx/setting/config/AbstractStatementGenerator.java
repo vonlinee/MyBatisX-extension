@@ -40,7 +40,6 @@ import java.util.Set;
  * <p>
  * 抽象 Statement 代码生成器
  * </p>
- *
  * @author jobob
  * @since 2018 -07-30
  */
@@ -82,7 +81,6 @@ public abstract class AbstractStatementGenerator {
 
     /**
      * Instantiates a new Abstract statement generator.
-     *
      * @param patterns the patterns
      */
     public AbstractStatementGenerator(@NotNull String... patterns) {
@@ -91,7 +89,6 @@ public abstract class AbstractStatementGenerator {
 
     /**
      * 获取方法的返回类型
-     *
      * @param method the method
      * @return select result type
      */
@@ -124,8 +121,7 @@ public abstract class AbstractStatementGenerator {
 
     /**
      * Apply generate.
-     *
-     * @param method the method
+     * @param method  the method
      * @param project
      */
     public static void applyGenerate(@Nullable final PsiMethod method, Project project) {
@@ -139,7 +135,8 @@ public abstract class AbstractStatementGenerator {
             BaseListPopupStep<AbstractStatementGenerator> step = new BaseListPopupStep<AbstractStatementGenerator>("[ Statement type for method: " + method.getName() + "]", generators) {
                 @Override
                 public PopupStep onChosen(AbstractStatementGenerator selectedValue, boolean finalChoice) {
-                    return this.doFinalStep(() -> WriteCommandAction.writeCommandAction(project).run(() -> selectedValue.execute(method, project)));
+                    return this.doFinalStep(() -> WriteCommandAction.writeCommandAction(project)
+                        .run(() -> selectedValue.execute(method, project)));
                 }
             };
             JBPopupFactory.getInstance().createListPopup(step).showInFocusCenter();
@@ -148,7 +145,6 @@ public abstract class AbstractStatementGenerator {
 
     /**
      * Get generators abstract statement generator [ ].
-     *
      * @param method the method
      * @return the abstract statement generator [ ]
      */
@@ -159,7 +155,7 @@ public abstract class AbstractStatementGenerator {
         for (AbstractStatementGenerator generator : ALL) {
             for (String pattern : generator.getPatterns()) {
                 // 一定是以关键字开头
-                if(target.startsWith(pattern)){
+                if (target.startsWith(pattern)) {
                     result.add(generator);
                 }
             }
@@ -169,8 +165,7 @@ public abstract class AbstractStatementGenerator {
 
     /**
      * Execute.
-     *
-     * @param method the method
+     * @param method  the method
      * @param project
      */
     public void execute(@NotNull final PsiMethod method, final Project project) {
@@ -226,7 +221,6 @@ public abstract class AbstractStatementGenerator {
 
     /**
      * Gets target.
-     *
      * @param mapper the mapper
      * @param method the method
      * @return the target
@@ -236,7 +230,6 @@ public abstract class AbstractStatementGenerator {
 
     /**
      * Gets id.
-     *
      * @return the id
      */
     @NotNull
@@ -244,7 +237,6 @@ public abstract class AbstractStatementGenerator {
 
     /**
      * Gets display text.
-     *
      * @return the display text
      */
     @NotNull
@@ -252,7 +244,6 @@ public abstract class AbstractStatementGenerator {
 
     /**
      * Gets patterns.
-     *
      * @return the patterns
      */
     public Set<String> getPatterns() {
@@ -261,7 +252,6 @@ public abstract class AbstractStatementGenerator {
 
     /**
      * Sets patterns.
-     *
      * @param patterns the patterns
      */
     public void setPatterns(Set<String> patterns) {

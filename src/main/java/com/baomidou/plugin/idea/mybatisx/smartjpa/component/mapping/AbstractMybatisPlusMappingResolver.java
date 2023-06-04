@@ -8,14 +8,12 @@ import com.intellij.psi.JavaPsiFacade;
 import com.intellij.psi.PsiAnnotation;
 import com.intellij.psi.PsiAnnotationMemberValue;
 import com.intellij.psi.PsiClass;
-import com.intellij.psi.PsiConstantEvaluationHelper;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiField;
 import com.intellij.psi.PsiJavaCodeReferenceElement;
 import com.intellij.psi.PsiLiteralExpression;
 import com.intellij.psi.PsiReferenceList;
 import com.intellij.psi.PsiType;
-import com.intellij.psi.impl.PsiConstantEvaluationHelperImpl;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Arrays;
@@ -35,7 +33,6 @@ public abstract class AbstractMybatisPlusMappingResolver extends JpaMappingResol
 
     /**
      * 获得表名注解
-     *
      * @return table name annotation
      */
     @NotNull
@@ -59,7 +56,8 @@ public abstract class AbstractMybatisPlusMappingResolver extends JpaMappingResol
                 txField.setPrimaryKey(findIsPrimaryKeyFromField(field));
 
                 txField.setClassName(field.getContainingClass().getQualifiedName());
-                Optional<String> jdbcTypeByJavaType = JdbcTypeUtils.findJdbcTypeByJavaType(field.getType().getCanonicalText());
+                Optional<String> jdbcTypeByJavaType = JdbcTypeUtils.findJdbcTypeByJavaType(field.getType()
+                    .getCanonicalText());
                 jdbcTypeByJavaType.ifPresent(txField::setJdbcType);
                 return txField;
             }).collect(Collectors.toList());
@@ -71,7 +69,6 @@ public abstract class AbstractMybatisPlusMappingResolver extends JpaMappingResol
 
     /**
      * Gets table field annotation.
-     *
      * @param field the field
      * @return the table field annotation
      */
@@ -93,7 +90,6 @@ public abstract class AbstractMybatisPlusMappingResolver extends JpaMappingResol
 
     /**
      * Gets attribute value.
-     *
      * @param fieldAnnotation the field annotation
      * @param value           the value
      * @return the attribute value
@@ -148,7 +144,6 @@ public abstract class AbstractMybatisPlusMappingResolver extends JpaMappingResol
 
     /**
      * Gets base mapper class name.
-     *
      * @return the base mapper class name
      */
     protected abstract String getBaseMapperClassName();

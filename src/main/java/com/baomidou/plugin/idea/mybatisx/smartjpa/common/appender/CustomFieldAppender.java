@@ -45,7 +45,6 @@ public class CustomFieldAppender implements SyntaxAppender {
 
     /**
      * Instantiates a new Custom field appender.
-     *
      * @param field        the field
      * @param areaSequence the area sequence
      */
@@ -63,7 +62,6 @@ public class CustomFieldAppender implements SyntaxAppender {
 
     /**
      * Sets area sequence.
-     *
      * @param areaSequence the area sequence
      */
     public void setAreaSequence(AreaSequence areaSequence) {
@@ -72,7 +70,6 @@ public class CustomFieldAppender implements SyntaxAppender {
 
     /**
      * Gets field name.
-     *
      * @return the field name
      */
     public String getFieldName() {
@@ -158,7 +155,6 @@ public class CustomFieldAppender implements SyntaxAppender {
 
     /**
      * 啥也做不了,  只能把自己加到树里面
-     *
      * @param jpaStringList
      * @param syntaxAppenderWrapper
      */

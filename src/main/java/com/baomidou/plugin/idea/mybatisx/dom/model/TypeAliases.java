@@ -8,14 +8,12 @@ import java.util.List;
 
 /**
  * The interface Type aliases.
- *
  * @author yanglin
  */
 public interface TypeAliases extends DomElement {
 
     /**
      * Gets type alias.
-     *
      * @return the type alias
      */
     @NotNull
@@ -24,7 +22,6 @@ public interface TypeAliases extends DomElement {
 
     /**
      * Gets packages.
-     *
      * @return the packages
      */
     @NotNull

@@ -15,6 +15,7 @@ public class CustomTemplateRoot implements Serializable {
     private DomainInfo domainInfo;
 
     private String templateText;
+    private List<ModuleInfoGo> moduleInfoList = new ArrayList<>();
 
     public String getTemplateText() {
         return templateText;
@@ -23,8 +24,6 @@ public class CustomTemplateRoot implements Serializable {
     public void setTemplateText(String templateText) {
         this.templateText = templateText;
     }
-
-    private List<ModuleInfoGo> moduleInfoList = new ArrayList<>();
 
     public void setModuleInfoList(List<ModuleInfoGo> moduleInfoList) {
         this.moduleInfoList = moduleInfoList;

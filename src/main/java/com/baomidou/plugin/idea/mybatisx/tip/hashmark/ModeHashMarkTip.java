@@ -9,7 +9,6 @@ import java.util.List;
 
 /**
  * see mybatis : org.apache.ibatis.mapping.ParameterMode
- *
  * @author ls9527
  */
 public class ModeHashMarkTip implements HashMarkTip {
@@ -28,7 +27,6 @@ public class ModeHashMarkTip implements HashMarkTip {
 
     /**
      * 最简单的枚举值提示
-     *
      * @param completionResultSet
      * @param mapper
      */

@@ -19,13 +19,13 @@ import org.jetbrains.annotations.Nullable;
 
 /**
  * 参考 com.intellij.spring.el.contextProviders.extensions.SpringElCommentReferenceContributor
- *
  * @author ls9527
  */
 public class ContextHashMarkReferenceContributor extends PsiReferenceContributor {
 
     private static final String SIMPLE_PREFIX_STR = "#{";
-    public static final PsiElementPattern.Capture<PsiElement> EL_VAR_COMMENT = PlatformPatterns.psiElement(PsiElement.class)
+    public static final PsiElementPattern.Capture<PsiElement> EL_VAR_COMMENT = PlatformPatterns
+        .psiElement(PsiElement.class)
         .withText(StandardPatterns.string().startsWith(SIMPLE_PREFIX_STR).contains("}"));
 
 

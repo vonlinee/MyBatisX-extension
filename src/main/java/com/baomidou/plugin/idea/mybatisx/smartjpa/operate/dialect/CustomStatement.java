@@ -8,14 +8,12 @@ import com.baomidou.plugin.idea.mybatisx.smartjpa.operate.manager.StatementBlock
 public interface CustomStatement {
     /**
      * Gets statement block.
-     *
      * @return the statement block
      */
     StatementBlock getStatementBlock();
 
     /**
      * Operator name string.
-     *
      * @return the string
      */
     String operatorName();

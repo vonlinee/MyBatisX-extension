@@ -1,8 +1,10 @@
 package template;
-import java.util.List;
+
 import org.apache.ibatis.annotations.Param;
-import java.util.Collection;
 import template.Blog;
+
+import java.util.Collection;
+import java.util.List;
 
 public interface TipMapper {
     List<Blog> selectByIdNotIn(@Param("idList") Collection<Long> idList);

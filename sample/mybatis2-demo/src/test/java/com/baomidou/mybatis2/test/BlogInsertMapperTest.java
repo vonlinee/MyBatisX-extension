@@ -44,7 +44,7 @@ public class BlogInsertMapperTest {
         Blog blogA = buildBean(100L);
         Blog blogB = buildBean(101L);
         Blog blogC = buildBean(102L);
-        int changeCount = blogInsertMapper.insertBatch(Arrays.asList(blogA,blogB,blogC));
+        int changeCount = blogInsertMapper.insertBatch(Arrays.asList(blogA, blogB, blogC));
         Assert.assertEquals(changeCount, 3);
     }
 

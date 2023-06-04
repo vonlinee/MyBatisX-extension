@@ -20,7 +20,6 @@ import java.util.Optional;
 
 /**
  * The type Alias facade.
- *
  * @author yanglin
  */
 public class AliasFacade {
@@ -33,7 +32,6 @@ public class AliasFacade {
 
     /**
      * Instantiates a new Alias facade.
-     *
      * @param project the project
      */
     public AliasFacade(Project project) {
@@ -45,7 +43,6 @@ public class AliasFacade {
 
     /**
      * Gets instance.
-     *
      * @param project the project
      * @return the instance
      */
@@ -69,7 +66,6 @@ public class AliasFacade {
 
     /**
      * Find psi class optional.
-     *
      * @param element   the element
      * @param shortName the short name
      * @return the optional
@@ -96,7 +92,6 @@ public class AliasFacade {
 
     /**
      * Gets alias descs.
-     *
      * @param element the element
      * @return the alias descs
      */
@@ -111,7 +106,6 @@ public class AliasFacade {
 
     /**
      * Find alias desc optional.
-     *
      * @param clazz the clazz
      * @return the optional
      */
@@ -131,13 +125,11 @@ public class AliasFacade {
 
     /**
      * Register resolver.
-     *
      * @param resolver the resolver
      */
     public void registerResolver(@NotNull AliasResolver resolver) {
         this.resolvers.add(resolver);
     }
-
 
 
     private static class InternalAlias {

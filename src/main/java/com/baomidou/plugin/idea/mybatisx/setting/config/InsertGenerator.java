@@ -9,7 +9,6 @@ import org.jetbrains.annotations.NotNull;
  * <p>
  * Insert 代码生成器
  * </p>
- *
  * @author yanglin jobob
  * @since 2018 -07-30
  */
@@ -17,7 +16,6 @@ public class InsertGenerator extends AbstractStatementGenerator {
 
     /**
      * Instantiates a new Insert generator.
-     *
      * @param patterns the patterns
      */
     public InsertGenerator(@NotNull String... patterns) {

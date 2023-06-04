@@ -30,7 +30,6 @@ public class CustomAreaAppender implements SyntaxAppender {
 
     /**
      * Instantiates a new Custom area appender.
-     *
      * @param area                  the area
      * @param areaType              the area type
      * @param areaSequence          the area sequence
@@ -47,7 +46,6 @@ public class CustomAreaAppender implements SyntaxAppender {
 
     /**
      * Instantiates a new Custom area appender.
-     *
      * @param area                  the area
      * @param areaType              the area type
      * @param areaSequence          the area sequence
@@ -62,7 +60,6 @@ public class CustomAreaAppender implements SyntaxAppender {
 
     /**
      * Create custom area appender custom area appender.
-     *
      * @param area                  the area
      * @param areaType              the area type
      * @param areaSequence          the area sequence
@@ -78,7 +75,6 @@ public class CustomAreaAppender implements SyntaxAppender {
 
     /**
      * Create custom area appender custom area appender.
-     *
      * @param area     the area
      * @param areaType the area type
      * @return the custom area appender
@@ -89,7 +85,6 @@ public class CustomAreaAppender implements SyntaxAppender {
 
     /**
      * Create custom area appender custom area appender.
-     *
      * @param area                  the area
      * @param areaType              the area type
      * @param sequence              the sequence
@@ -116,7 +111,6 @@ public class CustomAreaAppender implements SyntaxAppender {
 
     /**
      * Gets syntax appender factory.
-     *
      * @return the syntax appender factory
      */
     public SyntaxAppenderFactory getSyntaxAppenderFactory() {
@@ -196,7 +190,6 @@ public class CustomAreaAppender implements SyntaxAppender {
 
     /**
      * Gets child area sequence.
-     *
      * @return the child area sequence
      */
     public AreaSequence getChildAreaSequence() {

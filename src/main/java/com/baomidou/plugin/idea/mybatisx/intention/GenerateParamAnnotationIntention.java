@@ -13,7 +13,6 @@ import org.jetbrains.annotations.NotNull;
 
 /**
  * The type Generate param annotation intention.
- *
  * @author yanglin
  */
 public class GenerateParamAnnotationIntention extends GenericIntention {

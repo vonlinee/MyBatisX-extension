@@ -7,7 +7,6 @@ import com.intellij.ide.fileTemplates.FileTemplateGroupDescriptorFactory;
 
 /**
  * The type Mybatis file template descriptor factory.
- *
  * @author yanglin
  */
 public class MybatisFileTemplateDescriptorFactory implements FileTemplateGroupDescriptorFactory {

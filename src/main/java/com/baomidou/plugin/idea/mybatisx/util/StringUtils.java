@@ -13,7 +13,6 @@ import java.util.stream.Collectors;
 public class StringUtils {
     /**
      * Upper case first char string.
-     *
      * @param str the str
      * @return the string
      */
@@ -28,7 +27,6 @@ public class StringUtils {
 
     /**
      * Lower case first char string.
-     *
      * @param str the str
      * @return the string
      */
@@ -43,7 +41,6 @@ public class StringUtils {
 
     /**
      * convert string from slash style to camel style, such as my_course will convert to MyCourse
-     *
      * @param str the str
      * @return string
      */
@@ -70,7 +67,6 @@ public class StringUtils {
 
     /**
      * Is empty boolean.
-     *
      * @param str the str
      * @return the boolean
      */
@@ -83,7 +79,7 @@ public class StringUtils {
      * @param camelStr
      * @return
      */
-    public static String camelToSlash(String camelStr){
+    public static String camelToSlash(String camelStr) {
         String[] strings = splitByCharacterType(camelStr, true);
         return Arrays.stream(strings).map(StringUtils::lowerCaseFirstChar).collect(Collectors.joining("_"));
     }
@@ -99,7 +95,7 @@ public class StringUtils {
             int tokenStart = 0;
             int currentType = Character.getType(c[tokenStart]);
 
-            for(int pos = tokenStart + 1; pos < c.length; ++pos) {
+            for (int pos = tokenStart + 1; pos < c.length; ++pos) {
                 int type = Character.getType(c[pos]);
                 if (type != currentType) {
                     if (camelCase && type == 2 && currentType == 1) {
@@ -113,11 +109,12 @@ public class StringUtils {
                         tokenStart = pos;
                     }
 
-                    currentType = type; }
+                    currentType = type;
+                }
             }
 
             list.add(new String(c, tokenStart, c.length - tokenStart));
-            return (String[])list.toArray(new String[list.size()]);
+            return (String[]) list.toArray(new String[list.size()]);
         }
     }
 }

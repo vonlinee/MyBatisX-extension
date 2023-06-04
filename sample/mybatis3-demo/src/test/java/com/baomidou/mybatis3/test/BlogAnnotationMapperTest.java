@@ -27,6 +27,8 @@ public class BlogAnnotationMapperTest {
 
     @Resource
     private BlogAnnotationMapper blogAnnotationMapper;
+    @Resource
+    private BlogDeleteMapper blogDeleteMapper;
 
     @After
     public void destroyData() {
@@ -82,13 +84,11 @@ public class BlogAnnotationMapperTest {
         blogInsertMapper.insertAll(blogF);
     }
 
-
     @Test
     public void selectById() {
         JpaBlog blog = blogAnnotationMapper.selectOneById(1L);
         Assert.assertNotNull(blog);
     }
-
 
     @Test
     public void updateTitleById() {
@@ -98,7 +98,7 @@ public class BlogAnnotationMapperTest {
 
     @Test
     public void updateTitleAndContentByIdAndTitle() {
-        int title2 = blogAnnotationMapper.updateTitleAndContentByIdAndTitle("title2", "content2",1L,"title-a");
+        int title2 = blogAnnotationMapper.updateTitleAndContentByIdAndTitle("title2", "content2", 1L, "title-a");
         Assert.assertEquals(title2, 1);
     }
 
@@ -121,9 +121,6 @@ public class BlogAnnotationMapperTest {
         int effectRows = blogAnnotationMapper.insertSelective(blogE);
         Assert.assertEquals(effectRows, 1);
     }
-
-    @Resource
-    private BlogDeleteMapper blogDeleteMapper;
 
 
 }

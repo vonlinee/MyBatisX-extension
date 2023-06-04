@@ -41,13 +41,18 @@ public class MybatisXmlGenerator implements Generator {
      */
     public static final String RESULT_TYPE = "resultType";
     private static final Logger logger = LoggerFactory.getLogger(MybatisXmlGenerator.class);
+    Set<String> allowedResultMapNames = new HashSet<String>() {
+        {
+            add("BaseResultMap");
+            add("BlobResultMap");
+        }
+    };
     private MapperClassGenerateFactory mapperClassGenerateFactory;
     private Mapper mapper;
     private Project project;
 
     /**
      * Instantiates a new Mybatis xml generator.
-     *
      * @param mapperClassGenerateFactory
      * @param mapper                     the mapper
      * @param project                    the project
@@ -120,12 +125,6 @@ public class MybatisXmlGenerator implements Generator {
 
     }
 
-    Set<String> allowedResultMapNames = new HashSet<String>(){
-        {
-            add("BaseResultMap");
-            add("BlobResultMap");
-        }
-    };
     private void generateResultMapClass(PsiClass entityClass, String resultType, List<TxField> resultFields) {
 
         Set<String> allowFields = resultFields.stream().map(TxField::getFieldName).collect(Collectors.toSet());
@@ -152,7 +151,8 @@ public class MybatisXmlGenerator implements Generator {
         }
 
         if (generate == null) {
-            @NotNull XmlTag[] resultMaps = xmlTag.findSubTags("resultMap");
+            @NotNull
+            XmlTag[] resultMaps = xmlTag.findSubTags("resultMap");
             for (XmlTag resultMap : resultMaps) {
                 XmlAttribute id = resultMap.getAttribute("id");
                 if (id != null && resultMapId.equals(id.getValue())) {

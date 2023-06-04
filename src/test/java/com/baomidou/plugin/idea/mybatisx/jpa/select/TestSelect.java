@@ -28,7 +28,6 @@ public class TestSelect extends BaseJpaTest {
     }
 
 
-
     public void testSelectByIdAndAgeAfter() throws IOException {
 
 
@@ -213,7 +212,7 @@ public class TestSelect extends BaseJpaTest {
 
     }
 
-//    List<Blog> selectByAgeGreaterThan(@Param("age") Integer age);
+    //    List<Blog> selectByAgeGreaterThan(@Param("age") Integer age);
     public void testSelectByAgeGreaterThan() throws IOException {
         launchAction("selectByAgeGreaterThan");
 
@@ -242,7 +241,7 @@ public class TestSelect extends BaseJpaTest {
 
     }
 
-  //   List<Blog> selectByAgeLessThan(@Param("age") Integer age);
+    //   List<Blog> selectByAgeLessThan(@Param("age") Integer age);
     public void testSelectByAgeLessThan() throws IOException {
         launchAction("selectByAgeLessThan");
 
@@ -271,7 +270,6 @@ public class TestSelect extends BaseJpaTest {
     }
 
 
-
     // List<Blog> selectByAgeIs(@Param("age") Integer age);
     public void testSelectByAgeIs() throws IOException {
         launchAction("selectByAgeIs");
@@ -285,8 +283,6 @@ public class TestSelect extends BaseJpaTest {
             true);
 
     }
-
-
 
 
 }

@@ -36,7 +36,6 @@ public class MybatisAnnotationGenerator implements Generator {
 
     /**
      * Instantiates a new Mybatis annotation generator.
-     *
      * @param mapperClassGenerateFactory
      * @param mapper
      * @param project                    the project

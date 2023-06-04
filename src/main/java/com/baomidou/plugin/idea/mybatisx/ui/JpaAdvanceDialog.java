@@ -7,8 +7,6 @@ import com.intellij.psi.PsiClass;
 import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
 import org.jetbrains.annotations.Nullable;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import javax.swing.*;
 import java.awt.*;
@@ -18,7 +16,6 @@ import java.util.Set;
 
 /**
  * The type Jpa advance dialog.
- *
  * @author ls9527  自动生成的高级提示框
  */
 public class JpaAdvanceDialog extends DialogWrapper {
@@ -28,7 +25,6 @@ public class JpaAdvanceDialog extends DialogWrapper {
 
     /**
      * Instantiates a new Jpa advance dialog.
-     *
      * @param project the project
      */
     public JpaAdvanceDialog(@Nullable Project project) {
@@ -46,7 +42,6 @@ public class JpaAdvanceDialog extends DialogWrapper {
 
     /**
      * Gets selected fields.
-     *
      * @return the selected fields
      */
     public Set<String> getSelectedFields() {
@@ -65,7 +60,6 @@ public class JpaAdvanceDialog extends DialogWrapper {
 
     /**
      * Gets all fields str.
-     *
      * @return the all fields str
      */
     public String getAllFieldsStr() {
@@ -74,7 +68,6 @@ public class JpaAdvanceDialog extends DialogWrapper {
 
     /**
      * Init fields.
-     *
      * @param conditionFields the condition fields
      * @param resultFields
      * @param allFields       the all fields
@@ -108,7 +101,6 @@ public class JpaAdvanceDialog extends DialogWrapper {
 
     /**
      * Gets result map.
-     *
      * @return the result map
      */
     public String getResultMap() {
@@ -118,7 +110,6 @@ public class JpaAdvanceDialog extends DialogWrapper {
 
     /**
      * Gets result type class.
-     *
      * @return the result type class
      */
     public String getResultTypeClass() {
@@ -127,7 +118,6 @@ public class JpaAdvanceDialog extends DialogWrapper {
 
     /**
      * Is result type boolean.
-     *
      * @return the boolean
      */
     public boolean isResultType() {
@@ -136,7 +126,6 @@ public class JpaAdvanceDialog extends DialogWrapper {
 
     /**
      * Gets generator type.
-     *
      * @return the generator type
      */
     public SmartJpaAdvanceUI.GeneratorEnum getGeneratorType() {

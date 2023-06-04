@@ -17,7 +17,6 @@ import java.util.Set;
  * <p>
  * Mybatis 相关注解定义
  * </p>
- *
  * @author yanglin
  * @since 2018 -07-30
  */
@@ -76,7 +75,6 @@ public class Annotation implements Cloneable {
 
     /**
      * Instantiates a new Annotation.
-     *
      * @param label         the label
      * @param qualifiedName the qualified name
      */
@@ -93,7 +91,6 @@ public class Annotation implements Cloneable {
 
     /**
      * With attribute annotation.
-     *
      * @param key   the key
      * @param value the value
      * @return the annotation
@@ -106,7 +103,6 @@ public class Annotation implements Cloneable {
 
     /**
      * With value annotation.
-     *
      * @param value the value
      * @return the annotation
      */
@@ -144,12 +140,12 @@ public class Annotation implements Cloneable {
 
     /**
      * To psi class optional.
-     *
      * @param project the project
      * @return the optional
      */
     public Optional<PsiClass> toPsiClass(@NotNull Project project) {
-        return Optional.ofNullable(JavaPsiFacade.getInstance(project).findClass(getQualifiedName(), GlobalSearchScope.allScope(project)));
+        return Optional.ofNullable(JavaPsiFacade.getInstance(project)
+            .findClass(getQualifiedName(), GlobalSearchScope.allScope(project)));
     }
 
     private Optional<String> getSingleValue() {
@@ -166,7 +162,6 @@ public class Annotation implements Cloneable {
 
     /**
      * Gets label.
-     *
      * @return the label
      */
     @NotNull
@@ -176,7 +171,6 @@ public class Annotation implements Cloneable {
 
     /**
      * Gets qualified name.
-     *
      * @return the qualified name
      */
     @NotNull
@@ -208,7 +202,6 @@ public class Annotation implements Cloneable {
 
         /**
          * Instantiates a new String value.
-         *
          * @param value the value
          */
         public StringValue(@NotNull String value) {

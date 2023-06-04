@@ -39,7 +39,6 @@ public class StatementBlock {
 
     /**
      * Gets result appender factory.
-     *
      * @return the result appender factory
      */
     public SyntaxAppenderFactory getResultAppenderFactory() {
@@ -48,7 +47,6 @@ public class StatementBlock {
 
     /**
      * Sets result appender factory.
-     *
      * @param resultAppenderFactory the result appender factory
      */
     public void setResultAppenderFactory(SyntaxAppenderFactory resultAppenderFactory) {
@@ -57,7 +55,6 @@ public class StatementBlock {
 
     /**
      * Gets condition appender factory.
-     *
      * @return the condition appender factory
      */
     public SyntaxAppenderFactory getConditionAppenderFactory() {
@@ -66,7 +63,6 @@ public class StatementBlock {
 
     /**
      * Sets condition appender factory.
-     *
      * @param conditionAppenderFactory the condition appender factory
      */
     public void setConditionAppenderFactory(SyntaxAppenderFactory conditionAppenderFactory) {
@@ -75,7 +71,6 @@ public class StatementBlock {
 
     /**
      * Gets sort appender factory.
-     *
      * @return the sort appender factory
      */
     public SyntaxAppenderFactory getSortAppenderFactory() {
@@ -84,7 +79,6 @@ public class StatementBlock {
 
     /**
      * Sets sort appender factory.
-     *
      * @param sortAppenderFactory the sort appender factory
      */
     public void setSortAppenderFactory(SyntaxAppenderFactory sortAppenderFactory) {
@@ -93,7 +87,6 @@ public class StatementBlock {
 
     /**
      * Gets tag name.
-     *
      * @return the tag name
      */
     public String getTagName() {
@@ -102,7 +95,6 @@ public class StatementBlock {
 
     /**
      * Sets tag name.
-     *
      * @param tagName the tag name
      */
     public void setTagName(String tagName) {
@@ -112,7 +104,6 @@ public class StatementBlock {
 
     /**
      * Gets syntax appender factory by str.
-     *
      * @param text the text
      * @return the syntax appender factory by str
      */
@@ -141,7 +132,6 @@ public class StatementBlock {
 
     /**
      * Sets return wrapper.
-     *
      * @param typeDescriptor the type descriptor
      */
     public void setReturnWrapper(TypeDescriptor typeDescriptor) {
@@ -150,7 +140,6 @@ public class StatementBlock {
 
     /**
      * Gets return descriptor.
-     *
      * @return the return descriptor
      */
     public TypeDescriptor getReturnDescriptor() {
@@ -159,7 +148,6 @@ public class StatementBlock {
 
     /**
      * Find priority linked list.
-     *
      * @param stringLengthComparator the string length comparator
      * @param splitStr               the split str
      * @return the linked list

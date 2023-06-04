@@ -19,7 +19,6 @@ public class MysqlManager extends BaseDialectManager {
 
     /**
      * Instantiates a new Mysql manager.
-     *
      * @param mappingField the mapping field
      * @param entityClass  the entity class
      */

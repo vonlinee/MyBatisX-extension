@@ -8,14 +8,12 @@ import java.util.List;
 
 /**
  * The interface Group four.
- *
  * @author yanglin
  */
 public interface GroupFour extends DomElement {
 
     /**
      * Gets constructor.
-     *
      * @return the constructor
      */
     @SubTag("constructor")
@@ -23,7 +21,6 @@ public interface GroupFour extends DomElement {
 
     /**
      * Gets ids.
-     *
      * @return the ids
      */
     @SubTagList("id")
@@ -31,7 +28,6 @@ public interface GroupFour extends DomElement {
 
     /**
      * Gets results.
-     *
      * @return the results
      */
     @SubTagList("result")
@@ -39,7 +35,6 @@ public interface GroupFour extends DomElement {
 
     /**
      * Gets associations.
-     *
      * @return the associations
      */
     @SubTagList("association")
@@ -47,7 +42,6 @@ public interface GroupFour extends DomElement {
 
     /**
      * Gets collections.
-     *
      * @return the collections
      */
     @SubTagList("collection")
@@ -55,7 +49,6 @@ public interface GroupFour extends DomElement {
 
     /**
      * Gets discriminator.
-     *
      * @return the discriminator
      */
     @SubTag("discriminator")

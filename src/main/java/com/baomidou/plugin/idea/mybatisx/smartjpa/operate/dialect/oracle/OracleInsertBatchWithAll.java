@@ -24,7 +24,6 @@ import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 /**
  * oracle的批量插入
@@ -38,7 +37,6 @@ public class OracleInsertBatchWithAll extends MysqlInsertBatch {
 
     /**
      * Instantiates a new Oracle insert batch with all.
-     *
      * @param dasTable  the das table
      * @param tableName the table name
      */
@@ -82,7 +80,6 @@ public class OracleInsertBatchWithAll extends MysqlInsertBatch {
 
         /**
          * Instantiates a new Insert batch result appender factory.
-         *
          * @param areaPrefix the area prefix
          */
         public InsertBatchResultAppenderFactory(String areaPrefix) {
@@ -97,7 +94,8 @@ public class OracleInsertBatchWithAll extends MysqlInsertBatch {
                                       ConditionFieldWrapper conditionFieldWrapper) {
             StringBuilder mapperXml = new StringBuilder("insert all ");
             for (SyntaxAppenderWrapper syntaxAppenderWrapper : collector) {
-                String templateText = syntaxAppenderWrapper.getAppender().getTemplateText(tableName, entityClass, parameters, collector, conditionFieldWrapper);
+                String templateText = syntaxAppenderWrapper.getAppender()
+                    .getTemplateText(tableName, entityClass, parameters, collector, conditionFieldWrapper);
                 mapperXml.append(templateText);
             }
             mapperXml.append("select 1 from dual");
@@ -134,7 +132,6 @@ public class OracleInsertBatchWithAll extends MysqlInsertBatch {
 
         /**
          * Instantiates a new Insert batch suffix operator.
-         *
          * @param tableName    the table name
          * @param mappingField the mapping field
          */
@@ -153,7 +150,7 @@ public class OracleInsertBatchWithAll extends MysqlInsertBatch {
             // 追加列名
             final String columns = mappingField.stream()
                 .map(TxField::getColumnName)
-                .collect(MybatisXCollectors.joining(",",conditionFieldWrapper.getNewline()));
+                .collect(MybatisXCollectors.joining(",", conditionFieldWrapper.getNewline()));
 
             final TxParameter collection = parameters.poll();
             if (collection == null) {
@@ -179,7 +176,7 @@ public class OracleInsertBatchWithAll extends MysqlInsertBatch {
                     fieldStr = conditionFieldWrapper.wrapDefaultDateIfNecessary(field.getColumnName(), fieldStr);
                     return fieldStr;
                 })
-                .collect(MybatisXCollectors.joining(",",conditionFieldWrapper.getNewline()));
+                .collect(MybatisXCollectors.joining(",", conditionFieldWrapper.getNewline()));
 
             stringBuilder.append("<foreach collection=\"").append(collectionName).append("\"");
             stringBuilder.append(" item=\"").append(itemName).append("\"").append(">").append("\n");

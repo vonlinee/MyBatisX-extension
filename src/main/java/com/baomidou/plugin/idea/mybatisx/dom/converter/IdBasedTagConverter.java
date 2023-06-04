@@ -33,7 +33,6 @@ import java.util.Set;
 
 /**
  * The type Id based tag converter.
- *
  * @author yanglin
  */
 public abstract class IdBasedTagConverter extends ConverterAdaptor<XmlAttributeValue> implements CustomReferenceConverter<XmlAttributeValue> {
@@ -49,7 +48,6 @@ public abstract class IdBasedTagConverter extends ConverterAdaptor<XmlAttributeV
 
     /**
      * Instantiates a new Id based tag converter.
-     *
      * @param crossMapperSupported the cross mapper supported
      */
     protected IdBasedTagConverter(boolean crossMapperSupported) {
@@ -90,7 +88,6 @@ public abstract class IdBasedTagConverter extends ConverterAdaptor<XmlAttributeV
 
     /**
      * Gets comparisons.
-     *
      * @param mapper  mapper in the project, null if {@link #crossMapperSupported} is false
      * @param context the dom convert context
      * @return the comparisons
@@ -101,7 +98,8 @@ public abstract class IdBasedTagConverter extends ConverterAdaptor<XmlAttributeV
     @NotNull
     @Override
     public PsiReference[] createReferences(GenericDomValue<XmlAttributeValue> value, PsiElement element, ConvertContext context) {
-        return PsiClassConverter.createJavaClassReferenceProvider(value, null, new ValueReferenceProvider(context)).getReferencesByElement(element);
+        return PsiClassConverter.createJavaClassReferenceProvider(value, null, new ValueReferenceProvider(context))
+            .getReferencesByElement(element);
     }
 
     private abstract class TraverseStrategy {
@@ -112,7 +110,6 @@ public abstract class IdBasedTagConverter extends ConverterAdaptor<XmlAttributeV
 
         /**
          * Instantiates a new Traverse strategy.
-         *
          * @param context the context
          */
         public TraverseStrategy(@NotNull ConvertContext context) {
@@ -121,7 +118,6 @@ public abstract class IdBasedTagConverter extends ConverterAdaptor<XmlAttributeV
 
         /**
          * Gets value.
-         *
          * @return the value
          */
         public abstract Collection<? extends IdDomElement> getValue();
@@ -131,7 +127,6 @@ public abstract class IdBasedTagConverter extends ConverterAdaptor<XmlAttributeV
 
         /**
          * Instantiates a new Inside mapper strategy.
-         *
          * @param context the context
          */
         public InsideMapperStrategy(@NotNull ConvertContext context) {
@@ -149,7 +144,6 @@ public abstract class IdBasedTagConverter extends ConverterAdaptor<XmlAttributeV
 
         /**
          * Instantiates a new Cross mapper strategy.
-         *
          * @param context the context
          */
         public CrossMapperStrategy(@NotNull ConvertContext context) {
@@ -199,7 +193,8 @@ public abstract class IdBasedTagConverter extends ConverterAdaptor<XmlAttributeV
         private TextRange getTextRange(PsiElement element) {
             String text = element.getText();
             int index = text.lastIndexOf(MybatisConstants.DOT_SEPARATOR);
-            return -1 == index ? ElementManipulators.getValueTextRange(element) : TextRange.create(text.substring(0, index).length() + 1, text.length() - 1);
+            return -1 == index ? ElementManipulators.getValueTextRange(element) : TextRange.create(text
+                .substring(0, index).length() + 1, text.length() - 1);
         }
     }
 
@@ -210,7 +205,6 @@ public abstract class IdBasedTagConverter extends ConverterAdaptor<XmlAttributeV
 
         /**
          * Instantiates a new Value reference.
-         *
          * @param element the element
          * @param rng     the rng
          * @param context the context
@@ -231,7 +225,8 @@ public abstract class IdBasedTagConverter extends ConverterAdaptor<XmlAttributeV
         @NotNull
         @Override
         public Object[] getVariants() {
-            Set<String> res = getElement().getText().contains(MybatisConstants.DOT_SEPARATOR) ? setupContextIdSignature() : setupGlobalIdSignature();
+            Set<String> res = getElement().getText()
+                .contains(MybatisConstants.DOT_SEPARATOR) ? setupContextIdSignature() : setupGlobalIdSignature();
             return res.toArray(new String[res.size()]);
         }
 

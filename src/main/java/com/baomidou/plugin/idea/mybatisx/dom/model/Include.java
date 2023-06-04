@@ -9,14 +9,12 @@ import com.intellij.util.xml.GenericAttributeValue;
 
 /**
  * The interface Include.
- *
  * @author yanglin
  */
 public interface Include extends DomElement {
 
     /**
      * Gets ref id.
-     *
      * @return the ref id
      */
     @Attribute("refid")

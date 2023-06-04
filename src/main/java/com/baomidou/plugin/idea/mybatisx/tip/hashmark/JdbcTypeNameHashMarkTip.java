@@ -11,7 +11,6 @@ public class JdbcTypeNameHashMarkTip implements HashMarkTip {
 
     /**
      * 自定义结构体类型,无需支持
-     *
      * @param completionResultSet
      * @param mapper
      */

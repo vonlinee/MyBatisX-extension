@@ -4,7 +4,6 @@ package com.baomidou.plugin.idea.mybatisx.smartjpa.common.appender.operator.suff
 import com.baomidou.plugin.idea.mybatisx.smartjpa.common.appender.JdbcTypeUtils;
 import com.baomidou.plugin.idea.mybatisx.smartjpa.common.iftest.ConditionFieldWrapper;
 import com.baomidou.plugin.idea.mybatisx.smartjpa.component.TxParameter;
-import com.intellij.psi.PsiParameter;
 
 import java.util.LinkedList;
 

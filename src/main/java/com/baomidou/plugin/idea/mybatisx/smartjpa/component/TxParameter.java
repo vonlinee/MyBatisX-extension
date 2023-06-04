@@ -44,7 +44,6 @@ public class TxParameter {
 
     /**
      * Create by psi field tx parameter.
-     *
      * @param psiField     the psi field
      * @param areaSequence
      * @return the tx parameter
@@ -73,7 +72,8 @@ public class TxParameter {
             if (innermostComponentReferenceElement != null) {
                 List<String> importClasses = new ArrayList<>();
                 importClasses.add(innermostComponentReferenceElement.getQualifiedName());
-                @NotNull PsiType[] typeParameters = innermostComponentReferenceElement.getTypeParameters();
+                @NotNull
+                PsiType[] typeParameters = innermostComponentReferenceElement.getTypeParameters();
                 for (PsiType typeParameter : typeParameters) {
                     if (!determinePrimitive(typeParameter.getCanonicalText())) {
                         importClasses.add(typeParameter.getCanonicalText());
@@ -107,7 +107,8 @@ public class TxParameter {
     }
 
     public static TxParameter createByPsiParameter(PsiParameter psiParameter) {
-        TxParameter byOrigin = createByOrigin(psiParameter.getName(), psiParameter.getType().getCanonicalText(), psiParameter.getType().getCanonicalText());
+        TxParameter byOrigin = createByOrigin(psiParameter.getName(), psiParameter.getType()
+            .getCanonicalText(), psiParameter.getType().getCanonicalText());
 
         PsiTypeElement typeElement = psiParameter.getTypeElement();
         if (typeElement != null) {
@@ -125,7 +126,6 @@ public class TxParameter {
 
     /**
      * Create by origin tx parameter.
-     *
      * @param name              变量名
      * @param typeText          定义类型简称
      * @param canonicalTypeText 定义类型的全称,用于导入
@@ -138,7 +138,6 @@ public class TxParameter {
 
     /**
      * Create by origin tx parameter.
-     *
      * @param name              变量名, 例如:  blogCollection
      * @param typeText          定义类型简称,例如:  java.util.Collection
      * @param canonicalTypeText 定义类型的全称,用于导入;  例如: java.util.Collection
@@ -172,7 +171,6 @@ public class TxParameter {
 
     /**
      * 字段类型简称
-     *
      * @return type text
      */
     public String getTypeText() {
@@ -181,7 +179,6 @@ public class TxParameter {
 
     /**
      * Gets canonical type text.
-     *
      * @return the canonical type text
      */
     public String getCanonicalTypeText() {
@@ -190,7 +187,6 @@ public class TxParameter {
 
     /**
      * 字段名称
-     *
      * @return name
      */
     public String getName() {
@@ -199,7 +195,6 @@ public class TxParameter {
 
     /**
      * Sets name.
-     *
      * @param name the name
      */
     public void setName(final String name) {
@@ -208,7 +203,6 @@ public class TxParameter {
 
     /**
      * Is param annotation boolean.
-     *
      * @return the boolean
      */
     public boolean isParamAnnotation() {

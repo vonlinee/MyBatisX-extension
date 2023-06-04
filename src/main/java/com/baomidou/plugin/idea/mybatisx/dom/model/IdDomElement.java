@@ -10,14 +10,12 @@ import com.intellij.util.xml.Required;
 
 /**
  * The interface Id dom element.
- *
  * @author yanglin
  */
 public interface IdDomElement extends DomElement {
 
     /**
      * Gets id.
-     *
      * @return the id
      */
     @Required
@@ -28,7 +26,6 @@ public interface IdDomElement extends DomElement {
 
     /**
      * Sets value.
-     *
      * @param content the content
      */
     void setValue(String content);

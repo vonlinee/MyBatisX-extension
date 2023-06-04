@@ -19,7 +19,6 @@ import java.util.Optional;
 
 /**
  * The type Property converter.
- *
  * @author yanglin
  */
 public class PropertyConverter extends ConverterAdaptor<XmlAttributeValue> implements CustomReferenceConverter<XmlAttributeValue> {

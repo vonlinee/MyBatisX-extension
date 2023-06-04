@@ -9,10 +9,9 @@ import org.jetbrains.annotations.NotNull;
 
 /**
  * The interface Select.
- *
  * @author yanglin
  */
-public interface Select extends GroupTwo, ResultMapGroup, IdDomElement  {
+public interface Select extends GroupTwo, ResultMapGroup, IdDomElement {
 
     /**
      * select 标签对应的 resultType

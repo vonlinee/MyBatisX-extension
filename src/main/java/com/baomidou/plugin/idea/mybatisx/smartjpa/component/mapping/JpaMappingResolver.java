@@ -49,7 +49,6 @@ public abstract class JpaMappingResolver {
 
     /**
      * Find entity class by mapper class optional.
-     *
      * @param mapperClass the mapper class
      * @return the optional
      */
@@ -57,12 +56,14 @@ public abstract class JpaMappingResolver {
         JavaPsiFacade instance = JavaPsiFacade.getInstance(mapperClass.getProject());
         PsiReferenceList extendsList = mapperClass.getExtendsList();
         if (extendsList != null) {
-            @NotNull PsiJavaCodeReferenceElement[] referenceElements = extendsList.getReferenceElements();
+            @NotNull
+            PsiJavaCodeReferenceElement[] referenceElements = extendsList.getReferenceElements();
             if (referenceElements.length > 0) {
                 for (PsiJavaCodeReferenceElement referenceElement : referenceElements) {
                     PsiReferenceParameterList parameterList = referenceElement.getParameterList();
                     if (parameterList != null) {
-                        @NotNull PsiType[] typeArguments = parameterList.getTypeArguments();
+                        @NotNull
+                        PsiType[] typeArguments = parameterList.getTypeArguments();
                         if (typeArguments != null) {
                             for (PsiType type : typeArguments) {
                                 String canonicalText = type.getCanonicalText();
@@ -105,7 +106,6 @@ public abstract class JpaMappingResolver {
 
     /**
      * Gets column name by jpa or camel.
-     *
      * @param field the field
      * @return the column name by jpa or camel
      */
@@ -116,7 +116,8 @@ public abstract class JpaMappingResolver {
         if (annotation != null) {
             PsiAnnotationMemberValue originFieldAnnotation = annotation.findAttributeValue(COLUMN_NAME);
 
-            PsiConstantEvaluationHelper constantEvaluationHelper = JavaPsiFacade.getInstance(field.getProject()).getConstantEvaluationHelper();
+            PsiConstantEvaluationHelper constantEvaluationHelper = JavaPsiFacade.getInstance(field.getProject())
+                .getConstantEvaluationHelper();
             if (originFieldAnnotation != null) {
                 Object value = constantEvaluationHelper.computeConstantExpression(originFieldAnnotation);
                 if (value != null) {
@@ -140,7 +141,6 @@ public abstract class JpaMappingResolver {
 
     /**
      * Init data by camel list.
-     *
      * @param entityClass the entity class
      * @return the list
      */
@@ -160,12 +160,13 @@ public abstract class JpaMappingResolver {
 
                 // 表的列名
                 txField.setColumnName(columnName);
-                if(field.hasAnnotation(ID_ANNOTATION)){
+                if (field.hasAnnotation(ID_ANNOTATION)) {
                     txField.setPrimaryKey(true);
                 }
 
                 txField.setClassName(field.getContainingClass().getQualifiedName());
-                Optional<String> jdbcTypeByJavaType = JdbcTypeUtils.findJdbcTypeByJavaType(field.getType().getCanonicalText());
+                Optional<String> jdbcTypeByJavaType = JdbcTypeUtils.findJdbcTypeByJavaType(field.getType()
+                    .getCanonicalText());
                 jdbcTypeByJavaType.ifPresent(txField::setJdbcType);
                 return txField;
             }).collect(Collectors.toList());
@@ -173,7 +174,6 @@ public abstract class JpaMappingResolver {
 
     /**
      * JPA 提示忽略静态字段
-     *
      * @param field
      * @return
      */

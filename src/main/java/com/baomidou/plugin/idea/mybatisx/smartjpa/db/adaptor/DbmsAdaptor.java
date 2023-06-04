@@ -23,7 +23,6 @@ public enum DbmsAdaptor {
 
     /**
      * Cast of dbms adaptor.
-     *
      * @param dbms the dbms
      * @return the dbms adaptor
      */

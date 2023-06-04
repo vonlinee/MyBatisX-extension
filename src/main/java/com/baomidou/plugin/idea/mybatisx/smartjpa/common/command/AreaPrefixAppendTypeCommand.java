@@ -27,7 +27,6 @@ public class AreaPrefixAppendTypeCommand implements AppendTypeCommand {
 
     /**
      * Instantiates a new Area prefix append type command.
-     *
      * @param areaPrefix            the area prefix
      * @param areaType              the area type
      * @param areaSequence          the area sequence

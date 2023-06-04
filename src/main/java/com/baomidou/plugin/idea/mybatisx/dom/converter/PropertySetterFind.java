@@ -53,7 +53,6 @@ public class PropertySetterFind {
      * 支持特殊的 setter 方法
      * 例如 oName, 正常来说： 生成的方法名应该是: setoName, 部分框架会生成: setOName
      * 而mybatis是支持这两种写法的
-     *
      * @param firstText
      * @param psiClass
      * @return

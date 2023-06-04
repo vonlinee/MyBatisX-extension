@@ -30,9 +30,10 @@ import java.util.stream.Stream;
  */
 public class MybatisGeneratorMainAction extends AnAction {
 
+    private static final Logger logger = LoggerFactory.getLogger(MybatisGeneratorMainAction.class);
+
     /**
      * 点击后打开插件主页面
-     *
      * @param e
      */
     @Override
@@ -47,7 +48,8 @@ public class MybatisGeneratorMainAction extends AnAction {
             return;
         }
         ClassGenerateDialogWrapper classGenerateDialogWrapper = new ClassGenerateDialogWrapper(project);
-        List<DbTable> dbTables = Stream.of(tableElements).filter(t -> t instanceof DbTable).map(t -> (DbTable) t).collect(Collectors.toList());
+        List<DbTable> dbTables = Stream.of(tableElements).filter(t -> t instanceof DbTable).map(t -> (DbTable) t)
+            .collect(Collectors.toList());
         // 填充默认的选项
         classGenerateDialogWrapper.fillData(project, dbTables);
         classGenerateDialogWrapper.show();
@@ -55,14 +57,12 @@ public class MybatisGeneratorMainAction extends AnAction {
         if (classGenerateDialogWrapper.getExitCode() == Messages.YES) {
             // 生成代码
             GenerateConfig generateConfig = classGenerateDialogWrapper.determineGenerateConfig();
-            if(!generateConfig.checkGenerate()){
+            if (!generateConfig.checkGenerate()) {
                 return;
             }
             generateCode(project, dbTables, generateConfig);
         }
     }
-
-    private static final Logger logger = LoggerFactory.getLogger(MybatisGeneratorMainAction.class);
 
     public void generateCode(Project project, List<DbTable> psiElements, GenerateConfig generateConfig) {
         try {
@@ -74,7 +74,8 @@ public class MybatisGeneratorMainAction extends AnAction {
             templateConfigs.setModuleName(generateConfig.getModuleName());
             templatesSettings.setTemplateConfigs(templateConfigs);
 
-            Map<String, DbTable> tableMapping = psiElements.stream().collect(Collectors.toMap(DasObject::getName, a -> a, (a, b) -> a));
+            Map<String, DbTable> tableMapping = psiElements.stream()
+                .collect(Collectors.toMap(DasObject::getName, a -> a, (a, b) -> a));
             for (TableUIInfo uiInfo : generateConfig.getTableUIInfoList()) {
                 String tableName = uiInfo.getTableName();
                 DbTable dbTable = tableMapping.get(tableName);

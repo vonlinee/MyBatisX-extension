@@ -13,14 +13,12 @@ import com.intellij.util.xml.GenericAttributeValue;
 
 /**
  * The interface Property group.
- *
  * @author yanglin
  */
 public interface PropertyGroup extends DomElement {
 
     /**
      * Gets property.
-     *
      * @return the property
      */
     @Attribute("property")
@@ -29,7 +27,6 @@ public interface PropertyGroup extends DomElement {
 
     /**
      * column
-     *
      * @return
      */
     @Attribute("column")
@@ -38,7 +35,6 @@ public interface PropertyGroup extends DomElement {
 
     /**
      * jdbcType
-     *
      * @return
      */
     @Attribute("jdbcType")
@@ -47,7 +43,6 @@ public interface PropertyGroup extends DomElement {
 
     /**
      * jdbcType
-     *
      * @return
      */
     @Attribute("typeHandler")

@@ -30,6 +30,8 @@ public class BlogExampleMapperTest {
 
     @Resource
     ExampleMapper exampleMapper;
+    @Resource
+    private BlogDeleteMapper blogDeleteMapper;
 
     @After
     public void destroyData() {
@@ -85,7 +87,6 @@ public class BlogExampleMapperTest {
         blogInsertMapper.insertAll(blogF);
     }
 
-
     @Test
     public void selectByIdIn() {
         List<BlogTitleContentDTO> blogTitleContentDTOS = exampleMapper.selectTitleAndContentById(1L);
@@ -97,15 +98,9 @@ public class BlogExampleMapperTest {
         Page<Blog> page = new Page<>();
         page.setCurrent(1);
         page.setSize(10);
-        exampleMapper.selectByTitle(page,"baomidou-b");
+        exampleMapper.selectByTitle(page, "baomidou-b");
         Assert.assertEquals(page.getTotal(), 1);
     }
-
-
-
-
-    @Resource
-    private BlogDeleteMapper blogDeleteMapper;
 
 
 }

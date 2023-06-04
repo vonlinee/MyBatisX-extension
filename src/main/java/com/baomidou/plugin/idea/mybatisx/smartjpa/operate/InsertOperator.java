@@ -40,7 +40,6 @@ public class InsertOperator extends BaseOperatorManager {
 
     /**
      * Instantiates a new Insert operator.
-     *
      * @param mappingField the mapping field
      */
     public InsertOperator(final List<TxField> mappingField) {
@@ -50,7 +49,6 @@ public class InsertOperator extends BaseOperatorManager {
 
     /**
      * Init.
-     *
      * @param mappingField the mapping field
      * @param patterns     the patterns
      */
@@ -163,7 +161,6 @@ public class InsertOperator extends BaseOperatorManager {
 
         /**
          * Instantiates a new Insert custom suffix appender.
-         *
          * @param tipName        the tip name
          * @param suffixOperator the suffix operator
          * @param areaSequence   the area sequence
@@ -174,7 +171,6 @@ public class InsertOperator extends BaseOperatorManager {
 
         /**
          * Create insert by suffix operator syntax appender.
-         *
          * @param all            the all
          * @param suffixOperator the suffix operator
          * @param areaSequence   the area sequence
@@ -195,7 +191,6 @@ public class InsertOperator extends BaseOperatorManager {
 
         /**
          * Instantiates a new Insert result appender factory.
-         *
          * @param areaPrefix the area prefix
          */
         public InsertResultAppenderFactory(String areaPrefix) {
@@ -210,7 +205,8 @@ public class InsertOperator extends BaseOperatorManager {
             StringBuilder mapperXml = new StringBuilder();
             mapperXml.append("insert into " + tableName).append("\n");
             for (SyntaxAppenderWrapper syntaxAppenderWrapper : collector) {
-                String templateText = syntaxAppenderWrapper.getAppender().getTemplateText(tableName, entityClass, parameters, collector, conditionFieldWrapper);
+                String templateText = syntaxAppenderWrapper.getAppender()
+                    .getTemplateText(tableName, entityClass, parameters, collector, conditionFieldWrapper);
                 mapperXml.append(templateText);
             }
             return mapperXml.toString();
@@ -237,7 +233,6 @@ public class InsertOperator extends BaseOperatorManager {
 
         /**
          * Instantiates a new Insert all suffix operator.
-         *
          * @param mappingField the mapping field
          */
         public InsertAllSuffixOperator(List<TxField> mappingField) {
@@ -251,7 +246,7 @@ public class InsertOperator extends BaseOperatorManager {
             // 追加列名
             final String columns = mappingField.stream()
                 .map(TxField::getColumnName)
-                .collect(MybatisXCollectors.joining(",",conditionFieldWrapper.getNewline()));
+                .collect(MybatisXCollectors.joining(",", conditionFieldWrapper.getNewline()));
             stringBuilder.append("(").append(columns).append(")").append("\n");
             // values 连接符
             stringBuilder.append("values").append("\n");
@@ -259,7 +254,7 @@ public class InsertOperator extends BaseOperatorManager {
                 .map(field -> {
                     String fieldValue = JdbcTypeUtils.wrapperField(field.getFieldName(), field.getFieldType());
                     return conditionFieldWrapper.wrapDefaultDateIfNecessary(field.getColumnName(), fieldValue);
-                }).collect(MybatisXCollectors.joining(",",conditionFieldWrapper.getNewline()));
+                }).collect(MybatisXCollectors.joining(",", conditionFieldWrapper.getNewline()));
             stringBuilder.append("(\n");
             stringBuilder.append(fields).append("\n");
             stringBuilder.append(")").append("\n");
@@ -275,7 +270,6 @@ public class InsertOperator extends BaseOperatorManager {
 
         /**
          * Instantiates a new Insert selective suffix operator.
-         *
          * @param mappingField the mapping field
          */
         public InsertSelectiveSuffixOperator(List<TxField> mappingField) {

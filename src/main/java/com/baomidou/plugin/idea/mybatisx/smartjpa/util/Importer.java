@@ -21,7 +21,6 @@ public class Importer {
 
     /**
      * Create importer.
-     *
      * @param strings the strings
      * @return the importer
      */
@@ -33,7 +32,6 @@ public class Importer {
 
     /**
      * Create importer.
-     *
      * @param imports the imports
      * @return the importer
      */
@@ -45,7 +43,6 @@ public class Importer {
 
     /**
      * Commit and save document.
-     *
      * @param psiDocumentManager the psi document manager
      * @param document           the document
      */
@@ -60,7 +57,6 @@ public class Importer {
 
     /**
      * Add import to file.
-     *
      * @param psiDocumentManager the psi document manager
      * @param containingFile     the containing file
      * @param document           the document

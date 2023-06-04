@@ -12,7 +12,6 @@ import java.util.Set;
 
 /**
  * The type Alias resolver.
- *
  * @author yanglin
  */
 public abstract class AliasResolver {
@@ -24,7 +23,6 @@ public abstract class AliasResolver {
 
     /**
      * Instantiates a new Alias resolver.
-     *
      * @param project the project
      */
     public AliasResolver(Project project) {
@@ -33,7 +31,6 @@ public abstract class AliasResolver {
 
     /**
      * Add alias desc optional.
-     *
      * @param descs the descs
      * @param clazz the clazz
      * @param alias the alias
@@ -52,7 +49,6 @@ public abstract class AliasResolver {
 
     /**
      * Gets class alias descriptions.
-     *
      * @param element the element
      * @return the class alias descriptions
      */
@@ -61,7 +57,6 @@ public abstract class AliasResolver {
 
     /**
      * Gets project.
-     *
      * @return the project
      */
     public Project getProject() {
@@ -70,7 +65,6 @@ public abstract class AliasResolver {
 
     /**
      * Sets project.
-     *
      * @param project the project
      */
     public void setProject(Project project) {

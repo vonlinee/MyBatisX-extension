@@ -21,7 +21,6 @@ import java.util.Set;
 
 /**
  * The type Bean alias resolver.
- *
  * @author yanglin
  */
 public class BeanAliasResolver extends PackageAliasResolver {
@@ -41,7 +40,6 @@ public class BeanAliasResolver extends PackageAliasResolver {
 
     /**
      * Instantiates a new Bean alias resolver.
-     *
      * @param project the project
      */
     public BeanAliasResolver(Project project) {
@@ -54,7 +52,8 @@ public class BeanAliasResolver extends PackageAliasResolver {
         Set<String> packages = new HashSet<>();
         Set<PsiClass> classes = findSqlSessionFactories();
         for (PsiClass sqlSessionFactoryClass : classes) {
-            CommonSpringModel springModel = SpringModelUtils.getInstance().getPsiClassSpringModel(sqlSessionFactoryClass);
+            CommonSpringModel springModel = SpringModelUtils.getInstance()
+                .getPsiClassSpringModel(sqlSessionFactoryClass);
             SpringModelSearchParameters.BeanClass beanClass = SpringModelSearchParameters.BeanClass.byClass(sqlSessionFactoryClass);
             springModel.processByClass(beanClass, springBeanPointer -> {
                 String propertyStringValue = SpringPropertyUtils.getPropertyStringValue(springBeanPointer.getSpringBean(), MAPPER_ALIAS_PROPERTY);

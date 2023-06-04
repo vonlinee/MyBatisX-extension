@@ -17,7 +17,6 @@ import java.util.Set;
 
 /**
  * The type Package alias resolver.
- *
  * @author yanglin
  */
 public abstract class PackageAliasResolver extends AliasResolver {
@@ -26,7 +25,6 @@ public abstract class PackageAliasResolver extends AliasResolver {
 
     /**
      * Instantiates a new Package alias resolver.
-     *
      * @param project the project
      */
     public PackageAliasResolver(Project project) {
@@ -86,7 +84,6 @@ public abstract class PackageAliasResolver extends AliasResolver {
 
     /**
      * 匹配子包
-     *
      * @param pkgName
      * @param basePackage
      * @param result
@@ -122,7 +119,6 @@ public abstract class PackageAliasResolver extends AliasResolver {
 
     /**
      * Gets packages.
-     *
      * @param element the element
      * @return the packages
      */

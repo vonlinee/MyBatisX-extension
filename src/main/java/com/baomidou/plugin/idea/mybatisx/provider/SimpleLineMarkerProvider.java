@@ -12,7 +12,6 @@ import java.util.Optional;
 
 /**
  * The type Simple line marker provider.
- *
  * @param <F> the type parameter
  * @param <T> the type parameter
  * @author yanglin
@@ -42,7 +41,6 @@ public abstract class SimpleLineMarkerProvider<F extends PsiElement, T> extends 
 
     /**
      * Is the element boolean.
-     *
      * @param element the element
      * @return the boolean
      */
@@ -50,7 +48,6 @@ public abstract class SimpleLineMarkerProvider<F extends PsiElement, T> extends 
 
     /**
      * Apply optional.
-     *
      * @param from the from
      * @return the optional
      */
@@ -59,7 +56,6 @@ public abstract class SimpleLineMarkerProvider<F extends PsiElement, T> extends 
 
     /**
      * Gets icon.
-     *
      * @return the icon
      */
     @Override

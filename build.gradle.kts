@@ -1,12 +1,12 @@
 buildscript {
     repositories {
         mavenLocal()
-        maven { url=uri("https://maven.aliyun.com/repository/public/") }
+        maven { url = uri("https://maven.aliyun.com/repository/public/") }
         mavenCentral()
-        maven { url=uri("https://plugins.gradle.org/m2/") }
-        maven { url=uri("https://oss.sonatype.org/content/repositories/releases/") }
-        maven { url=uri("https://dl.bintray.com/jetbrains/intellij-plugin-service") }
-        maven { url=uri("https://dl.bintray.com/jetbrains/intellij-third-party-dependencies/") }
+        maven { url = uri("https://plugins.gradle.org/m2/") }
+        maven { url = uri("https://oss.sonatype.org/content/repositories/releases/") }
+        maven { url = uri("https://dl.bintray.com/jetbrains/intellij-plugin-service") }
+        maven { url = uri("https://dl.bintray.com/jetbrains/intellij-third-party-dependencies/") }
     }
     dependencies {
         classpath("org.jetbrains.intellij.plugins:gradle-intellij-plugin:0.7.2")
@@ -55,8 +55,8 @@ intellij {
 // 各种版本去这里找
 // https://www.jetbrains.com/intellij-repository/releases
 
-group="com.baomidou.plugin.idea.mybatisx"
-version="1.5.2"
+group = "com.baomidou.plugin.idea.mybatisx"
+version = "1.5.2"
 
 repositories {
     mavenLocal()
@@ -68,9 +68,9 @@ dependencies {
     implementation("com.softwareloop:mybatis-generator-lombok-plugin:1.0")
     implementation("uk.com.robust-it:cloning:1.9.2")
     implementation("org.mybatis.generator:mybatis-generator-core:1.4.0")
-    implementation("org.freemarker:freemarker:2.3.29")
+    implementation("org.freemarker:freemarker:2.3.30")
     implementation("com.itranswarp:compiler:1.0")
-    testCompile("junit:junit:4.12")
+    testCompile("junit:junit:4.13.1")
     testCompile("commons-io:commons-io:2.8.0")
     compileOnly("org.projectlombok:lombok:1.18.0")
 }

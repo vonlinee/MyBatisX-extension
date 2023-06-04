@@ -43,7 +43,6 @@ public enum AppendTypeEnum {
 
     /**
      * Gets allowed after list.
-     *
      * @return the allowed after list
      */
     public List<String> getAllowedAfterList() {
@@ -52,7 +51,6 @@ public enum AppendTypeEnum {
 
     /**
      * Check after boolean.
-     *
      * @param appendType the append type
      * @return the boolean
      */

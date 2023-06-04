@@ -36,7 +36,6 @@ public class CustomJoinAppender implements SyntaxAppender {
 
     /**
      * Instantiates a new Custom join appender.
-     *
      * @param tipText      the tip text
      * @param sqlText      the sql text
      * @param areaSequence the area sequence

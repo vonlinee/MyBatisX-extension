@@ -29,6 +29,8 @@ public class BlogSelectProviderMapperTest {
 
     @Resource
     BlogSelectProviderMapper blogSelectProviderMapper;
+    @Resource
+    private BlogDeleteMapper blogDeleteMapper;
 
     @After
     public void destroyData() {
@@ -89,9 +91,6 @@ public class BlogSelectProviderMapperTest {
         Blog blog = blogSelectProviderMapper.selectByPrimaryKey(1L);
         Assert.assertNotNull(blog);
     }
-
-    @Resource
-    private BlogDeleteMapper blogDeleteMapper;
 
 
 }

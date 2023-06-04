@@ -3,7 +3,7 @@
 <mapper namespace="com.baomidou.mybatis3.mapper.BlogScriptMapper">
     <resultMap id="BaseResultMap"
                type="com.baomidou.mybatis3.domain.Blog">
-        <id column="id" property="id"  />
+        <id column="id" property="id"/>
         <result column="age" property="age"/>
         <result column="content" property="content"/>
         <result column="title" property="title"/>
@@ -11,6 +11,7 @@
         <result column="create_time" property="createTime"/>
     </resultMap>
     <sql id="Base_Column_List">
-		id,age,content,title,money,create_time
-	</sql>
+        id
+        ,age,content,title,money,create_time
+    </sql>
 </mapper>

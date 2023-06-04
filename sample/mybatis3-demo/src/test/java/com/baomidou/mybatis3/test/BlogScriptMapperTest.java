@@ -29,6 +29,8 @@ public class BlogScriptMapperTest {
 
     @Resource
     BlogScriptMapper blogScriptMapper;
+    @Resource
+    private BlogDeleteMapper blogDeleteMapper;
 
     @After
     public void destroyData() {
@@ -97,10 +99,6 @@ public class BlogScriptMapperTest {
         Assert.assertNotNull(blogs);
         Assert.assertEquals(blogs.size(), 1);
     }
-
-
-    @Resource
-    private BlogDeleteMapper blogDeleteMapper;
 
 
 }

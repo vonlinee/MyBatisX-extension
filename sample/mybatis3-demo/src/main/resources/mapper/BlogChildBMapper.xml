@@ -3,7 +3,7 @@
 <mapper namespace="com.baomidou.mybatis3.mapper.BlogChildBMapper">
     <resultMap id="BaseResultMap"
                type="com.baomidou.mybatis3.domain.Blog">
-        <id column="id" property="id"  />
+        <id column="id" property="id"/>
         <result column="age" property="age"/>
         <result column="content" property="content"/>
         <result column="title" property="title"/>
@@ -13,7 +13,7 @@
     <sql id="Base_Column_List">
         select id, age, content, title, money, create_time
         from t_blog
-	</sql>
+    </sql>
 
     <select id="selectByAge" databaseId="mysql" resultMap="BaseResultMap">
         select
@@ -22,7 +22,6 @@
         where
         age = #{age,jdbcType=NUMERIC}
     </select>
-
 
 
 </mapper>

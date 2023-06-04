@@ -12,7 +12,6 @@ import java.util.List;
 public interface MxParameterChanger extends SuffixOperator {
     /**
      * Gets parameter.
-     *
      * @param txParameter the tx parameter
      * @return the parameter
      */

@@ -34,7 +34,6 @@ import java.util.stream.Collectors;
 
 /**
  * The type Java utils.
- *
  * @author yanglin
  */
 public final class JavaUtils {
@@ -45,7 +44,6 @@ public final class JavaUtils {
 
     /**
      * Is model clazz boolean.
-     *
      * @param clazz the clazz
      * @return the boolean
      */
@@ -55,7 +53,6 @@ public final class JavaUtils {
 
     /**
      * Find settable psi field optional.
-     *
      * @param clazz        the clazz
      * @param propertyName the property name
      * @return the optional
@@ -66,7 +63,6 @@ public final class JavaUtils {
 
     /**
      * Find settable psi fields psi field [ ].
-     *
      * @param clazz the clazz
      * @return the psi field [ ]
      */
@@ -85,7 +81,6 @@ public final class JavaUtils {
 
     /**
      * Is element within interface boolean.
-     *
      * @param element the element
      * @return the boolean
      */
@@ -99,14 +94,13 @@ public final class JavaUtils {
 
     /**
      * Find clazz optional.
-     *
      * @param project   the project
      * @param clazzName the clazz name
      * @return the optional
      */
     public static Optional<PsiClass> findClazz(@NotNull Project project, @NotNull String clazzName) {
         String classNameNeedFind = clazzName;
-        if(classNameNeedFind.contains("$")){
+        if (classNameNeedFind.contains("$")) {
             classNameNeedFind = classNameNeedFind.replace("$", ".");
         }
         final JavaPsiFacade instance = JavaPsiFacade.getInstance(project);
@@ -115,18 +109,17 @@ public final class JavaUtils {
 
     /**
      * Find clazz optional.
-     *
      * @param project   the project
      * @param clazzName the clazz name
      * @return the optional
      */
     public static Optional<PsiClass[]> findClasses(@NotNull Project project, @NotNull String clazzName) {
-        return Optional.ofNullable(JavaPsiFacade.getInstance(project).findClasses(clazzName, GlobalSearchScope.allScope(project)));
+        return Optional.ofNullable(JavaPsiFacade.getInstance(project)
+            .findClasses(clazzName, GlobalSearchScope.allScope(project)));
     }
 
     /**
      * Find method optional.
-     *
      * @param project    the project
      * @param clazzName  the clazz name
      * @param methodName the method name
@@ -146,7 +139,6 @@ public final class JavaUtils {
 
     /**
      * Find method optional.
-     *
      * @param project    the project
      * @param clazzName  the clazz name
      * @param methodName the method name
@@ -172,7 +164,6 @@ public final class JavaUtils {
 
     /**
      * Find method optional.
-     *
      * @param project the project
      * @param element the element
      * @return the optional
@@ -183,7 +174,6 @@ public final class JavaUtils {
 
     /**
      * Is annotation present boolean.
-     *
      * @param target     the target
      * @param annotation the annotation
      * @return the boolean
@@ -195,7 +185,6 @@ public final class JavaUtils {
 
     /**
      * Gets psi annotation.
-     *
      * @param target     the target
      * @param annotation the annotation
      * @return the psi annotation
@@ -207,7 +196,6 @@ public final class JavaUtils {
 
     /**
      * Gets annotation attribute value.
-     *
      * @param target     the target
      * @param annotation the annotation
      * @param attrName   the attr name
@@ -225,7 +213,6 @@ public final class JavaUtils {
 
     /**
      * Gets annotation value.
-     *
      * @param target     the target
      * @param annotation the annotation
      * @return the annotation value
@@ -236,7 +223,6 @@ public final class JavaUtils {
 
     /**
      * Gets annotation value text.
-     *
      * @param target     the target
      * @param annotation the annotation
      * @return the annotation value text
@@ -248,7 +234,6 @@ public final class JavaUtils {
 
     /**
      * Is any annotation present boolean.
-     *
      * @param target      the target
      * @param annotations the annotations
      * @return the boolean
@@ -264,7 +249,6 @@ public final class JavaUtils {
 
     /**
      * Is all parameter with annotation boolean.
-     *
      * @param method     the method
      * @param annotation the annotation
      * @return the boolean
@@ -281,7 +265,6 @@ public final class JavaUtils {
 
     /**
      * Has import clazz boolean.
-     *
      * @param file      the file
      * @param clazzName the clazz name
      * @return the boolean

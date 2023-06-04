@@ -44,7 +44,6 @@ class SyntaxSplitHelper {
 
     /**
      * Instantiates a new Syntax split helper.
-     *
      * @param statementBlockList the statement block list
      */
     public SyntaxSplitHelper(final List<StatementBlock> statementBlockList) {
@@ -53,7 +52,6 @@ class SyntaxSplitHelper {
 
     /**
      * Split appender by text linked list.
-     *
      * @param splitText the split text
      * @return linked list
      */

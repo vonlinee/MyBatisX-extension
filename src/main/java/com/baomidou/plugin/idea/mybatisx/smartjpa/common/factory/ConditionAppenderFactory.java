@@ -43,7 +43,6 @@ public class ConditionAppenderFactory extends BaseAppenderFactory {
 
     /**
      * Instantiates a new Condition appender factory.
-     *
      * @param resultAreaName the result area name
      * @param mappingField   the mapping field
      */
@@ -53,7 +52,6 @@ public class ConditionAppenderFactory extends BaseAppenderFactory {
 
     /**
      * Init appender list.
-     *
      * @param mappingField   the mapping field
      * @param resultAreaName the result area name
      * @return the list

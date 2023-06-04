@@ -14,13 +14,11 @@ import com.intellij.psi.xml.XmlAttributeValue;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 /**
  * The type Context psi field reference.
- *
  * @author yanglin
  */
 public class ContextPsiFieldReference extends PsiReferenceBase<XmlAttributeValue> {
@@ -37,7 +35,6 @@ public class ContextPsiFieldReference extends PsiReferenceBase<XmlAttributeValue
 
     /**
      * Instantiates a new Context psi field reference.
-     *
      * @param element the element
      * @param range   the range
      * @param index   the index
@@ -89,7 +86,6 @@ public class ContextPsiFieldReference extends PsiReferenceBase<XmlAttributeValue
 
     /**
      * Gets resolver.
-     *
      * @return the resolver
      */
     public ContextReferenceSetResolver<XmlAttributeValue, PsiField> getResolver() {
@@ -98,7 +94,6 @@ public class ContextPsiFieldReference extends PsiReferenceBase<XmlAttributeValue
 
     /**
      * Sets resolver.
-     *
      * @param resolver the resolver
      */
     public void setResolver(ContextReferenceSetResolver<XmlAttributeValue, PsiField> resolver) {
@@ -107,7 +102,6 @@ public class ContextPsiFieldReference extends PsiReferenceBase<XmlAttributeValue
 
     /**
      * Gets index.
-     *
      * @return the index
      */
     public int getIndex() {
@@ -116,7 +110,6 @@ public class ContextPsiFieldReference extends PsiReferenceBase<XmlAttributeValue
 
     /**
      * Sets index.
-     *
      * @param index the index
      */
     public void setIndex(int index) {

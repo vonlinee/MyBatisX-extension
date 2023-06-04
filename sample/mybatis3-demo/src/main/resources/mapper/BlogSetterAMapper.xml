@@ -3,12 +3,13 @@
 <mapper namespace="com.baomidou.mybatis3.mapper.BlogSetterMapper">
     <resultMap id="BaseResultMap"
                type="com.baomidou.mybatis3.domain.BlogSetterDO">
-        <id column="id" property="id"  />
-        <result column="title" property="oName" />
+        <id column="id" property="id"/>
+        <result column="title" property="oName"/>
     </resultMap>
     <sql id="Base_Column_List">
-		id,title
-	</sql>
+        id
+        ,title
+    </sql>
     <select id="selectOneById" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>

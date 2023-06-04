@@ -1,5 +1,7 @@
 package com.baomidou.mybatis3.mapper;
+
 import java.util.List;
+
 import org.apache.ibatis.annotations.Param;
 
 
@@ -12,8 +14,7 @@ public interface BlogScriptMapper extends BaseMapper<Blog> {
 
     @Select("select * from t_blog where age = #{age,jdbcType=NUMERIC}")
     @ResultMap("BaseResultMap")
-    List<Blog> selectAllByAge(@Param("age")Integer age);
-
+    List<Blog> selectAllByAge(@Param("age") Integer age);
 
 
     @Select("<script>" +
@@ -25,5 +26,5 @@ public interface BlogScriptMapper extends BaseMapper<Blog> {
         "</where>" +
         "</script>")
     @ResultMap("BaseResultMap")
-    List<Blog> selectAllByTitle(@Param("title")String title);
+    List<Blog> selectAllByTitle(@Param("title") String title);
 }

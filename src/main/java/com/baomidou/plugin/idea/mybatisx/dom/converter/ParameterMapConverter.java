@@ -10,7 +10,6 @@ import java.util.Collection;
 
 /**
  * The type Parameter map converter.
- *
  * @author yanglin
  */
 public class ParameterMapConverter extends IdBasedTagConverter {

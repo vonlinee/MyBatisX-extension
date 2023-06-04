@@ -23,7 +23,6 @@ public class SyntaxAppenderWrapper {
 
     /**
      * Instantiates a new Syntax appender wrapper.
-     *
      * @param syntaxAppender the syntax appender
      */
     public SyntaxAppenderWrapper(SyntaxAppender syntaxAppender) {
@@ -34,7 +33,6 @@ public class SyntaxAppenderWrapper {
 
     /**
      * Instantiates a new Syntax appender wrapper.
-     *
      * @param syntaxAppender the syntax appender
      * @param collector      the collector
      */
@@ -45,7 +43,6 @@ public class SyntaxAppenderWrapper {
 
     /**
      * Add wrapper.
-     *
      * @param syntaxAppenderWrapper the syntax appender wrapper
      */
     public void addWrapper(SyntaxAppenderWrapper syntaxAppenderWrapper) {
@@ -54,7 +51,6 @@ public class SyntaxAppenderWrapper {
 
     /**
      * Gets appender.
-     *
      * @return the appender
      */
     public SyntaxAppender getAppender() {
@@ -63,7 +59,6 @@ public class SyntaxAppenderWrapper {
 
     /**
      * Gets collector.
-     *
      * @return the collector
      */
     public LinkedList<SyntaxAppenderWrapper> getCollector() {

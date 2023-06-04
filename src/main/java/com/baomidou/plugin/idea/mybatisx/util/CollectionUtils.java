@@ -4,7 +4,6 @@ import java.util.Collection;
 
 /**
  * The type Collection utils.
- *
  * @author yanglin
  */
 public final class CollectionUtils {
@@ -15,7 +14,6 @@ public final class CollectionUtils {
 
     /**
      * Is empty boolean.
-     *
      * @param collection the collection
      * @return the boolean
      */
@@ -25,7 +23,6 @@ public final class CollectionUtils {
 
     /**
      * Is not empty boolean.
-     *
      * @param collection the collection
      * @return the boolean
      */

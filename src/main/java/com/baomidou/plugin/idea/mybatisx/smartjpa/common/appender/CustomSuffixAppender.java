@@ -41,7 +41,6 @@ public class CustomSuffixAppender implements SyntaxAppender {
 
     /**
      * Instantiates a new Custom suffix appender.
-     *
      * @param tipName the tip name
      */
     protected CustomSuffixAppender(String tipName) {
@@ -50,7 +49,6 @@ public class CustomSuffixAppender implements SyntaxAppender {
 
     /**
      * Instantiates a new Custom suffix appender.
-     *
      * @param tipName        the tip name
      * @param suffixOperator the suffix operator
      * @param areaSequence   the area sequence
@@ -63,7 +61,6 @@ public class CustomSuffixAppender implements SyntaxAppender {
 
     /**
      * Create by param join custom suffix appender.
-     *
      * @param tipName         the tip name
      * @param compareOperator the compare operator
      * @param areaSequence    the area sequence
@@ -78,7 +75,6 @@ public class CustomSuffixAppender implements SyntaxAppender {
 
     /**
      * Create by param around custom suffix appender.
-     *
      * @param tipName      the tip name
      * @param prefix       the prefix
      * @param suffix       the suffix
@@ -94,7 +90,6 @@ public class CustomSuffixAppender implements SyntaxAppender {
 
     /**
      * Create by suffix operator custom suffix appender.
-     *
      * @param tipName        the tip name
      * @param suffixOperator the suffix operator
      * @param areaSequence   the area sequence
@@ -109,7 +104,6 @@ public class CustomSuffixAppender implements SyntaxAppender {
 
     /**
      * Create by parameter changer custom suffix appender.
-     *
      * @param tipName           the tip name
      * @param mxParameterFinder the mx parameter finder
      * @param areaSequence      the area sequence
@@ -125,7 +119,6 @@ public class CustomSuffixAppender implements SyntaxAppender {
 
     /**
      * 根据固定后缀
-     *
      * @param tipName      the tip name
      * @param suffix       the suffix
      * @param areaSequence the area sequence
@@ -167,7 +160,6 @@ public class CustomSuffixAppender implements SyntaxAppender {
 
     /**
      * 后缀后面一定不能添加任何东西了
-     *
      * @param result
      * @return
      */
@@ -240,7 +232,6 @@ public class CustomSuffixAppender implements SyntaxAppender {
 
     /**
      * 对于前一个追加器是字段类型的,  就把字段弹出来, 加到自己里面
-     *
      * @param jpaStringList
      * @param syntaxAppenderWrapper
      */
@@ -317,7 +308,6 @@ public class CustomSuffixAppender implements SyntaxAppender {
 
     /**
      * Gets suffix operator.
-     *
      * @return the suffix operator
      */
     public SuffixOperator getSuffixOperator() {

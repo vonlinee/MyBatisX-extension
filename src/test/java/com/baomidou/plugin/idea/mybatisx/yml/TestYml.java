@@ -3,37 +3,15 @@ package com.baomidou.plugin.idea.mybatisx.yml;
 import junit.framework.TestCase;
 import org.apache.commons.io.IOUtils;
 import org.junit.Test;
-import org.yaml.snakeyaml.DumperOptions;
 import org.yaml.snakeyaml.Yaml;
-import org.yaml.snakeyaml.composer.Composer;
 import org.yaml.snakeyaml.nodes.Node;
-import org.yaml.snakeyaml.nodes.ScalarNode;
-import org.yaml.snakeyaml.nodes.Tag;
-import org.yaml.snakeyaml.parser.ParserImpl;
-import org.yaml.snakeyaml.reader.StreamReader;
 import org.yaml.snakeyaml.scanner.ScannerException;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.Reader;
 import java.util.Iterator;
-import java.util.regex.Pattern;
 
 public class TestYml extends TestCase {
-
-    private static class NodeIterable implements Iterable<Node> {
-        private Iterator<Node> iterator;
-
-        public NodeIterable(Iterator<Node> iterator) {
-            this.iterator = iterator;
-        }
-
-        public Iterator<Node> iterator() {
-            return this.iterator;
-        }
-    }
-
 
     /**
      * 用于测试 yml 中含有变量 @var@ 会导致载入失败的情况
@@ -74,6 +52,18 @@ public class TestYml extends TestCase {
             System.out.println(object);
         }
         System.out.println("读取文件成功");
+    }
+
+    private static class NodeIterable implements Iterable<Node> {
+        private Iterator<Node> iterator;
+
+        public NodeIterable(Iterator<Node> iterator) {
+            this.iterator = iterator;
+        }
+
+        public Iterator<Node> iterator() {
+            return this.iterator;
+        }
     }
 
 

@@ -8,7 +8,6 @@ import org.jetbrains.annotations.NotNull;
 
 /**
  * The type Package locate strategy.
- *
  * @author yanglin
  */
 public class PackageLocateStrategy extends LocateStrategy {

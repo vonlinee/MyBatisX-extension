@@ -18,7 +18,6 @@ import java.util.Collection;
 
 /**
  * The type Mapper line marker provider.
- *
  * @author yanglin
  */
 public class MapperLineMarkerProvider extends RelatedItemLineMarkerProvider {
@@ -43,7 +42,6 @@ public class MapperLineMarkerProvider extends RelatedItemLineMarkerProvider {
         }
         return filter;
     }
-
 
 
     /**

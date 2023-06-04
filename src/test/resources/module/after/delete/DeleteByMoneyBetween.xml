@@ -11,12 +11,13 @@
         <result column="create_time" property="createTime"/>
     </resultMap>
     <sql id="Base_Column_List">
-        id,age,content,title,money
+        id
+        ,age,content,title,money
     </sql>
     <delete id="deleteByMoneyBetween">
-        delete from t_blog
-        where
-        money between #{beginMoney,jdbcType=DECIMAL} and #{endMoney,jdbcType=DECIMAL}
+        delete
+        from t_blog
+        where money between #{beginMoney,jdbcType=DECIMAL} and #{endMoney,jdbcType=DECIMAL}
     </delete>
 
 </mapper>

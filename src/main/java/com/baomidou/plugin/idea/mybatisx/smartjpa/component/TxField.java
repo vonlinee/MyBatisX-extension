@@ -37,7 +37,6 @@ public class TxField {
 
     /**
      * Gets field type.
-     *
      * @return the field type
      */
     public String getFieldType() {
@@ -46,7 +45,6 @@ public class TxField {
 
     /**
      * Sets field type.
-     *
      * @param fieldType the field type
      */
     public void setFieldType(final String fieldType) {
@@ -55,7 +53,6 @@ public class TxField {
 
     /**
      * Gets tip name.
-     *
      * @return the tip name
      */
     public String getTipName() {
@@ -64,7 +61,6 @@ public class TxField {
 
     /**
      * Sets tip name.
-     *
      * @param tipName the tip name
      */
     public void setTipName(final String tipName) {
@@ -73,7 +69,6 @@ public class TxField {
 
     /**
      * Gets field name.
-     *
      * @return the field name
      */
     public String getFieldName() {
@@ -82,7 +77,6 @@ public class TxField {
 
     /**
      * Sets field name.
-     *
      * @param fieldName the field name
      */
     public void setFieldName(final String fieldName) {
@@ -91,7 +85,6 @@ public class TxField {
 
     /**
      * Gets column name.
-     *
      * @return the column name
      */
     public String getColumnName() {
@@ -100,7 +93,6 @@ public class TxField {
 
     /**
      * Sets column name.
-     *
      * @param columnName the column name
      */
     public void setColumnName(final String columnName) {

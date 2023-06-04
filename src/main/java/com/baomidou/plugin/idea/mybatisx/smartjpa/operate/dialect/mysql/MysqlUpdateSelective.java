@@ -49,7 +49,6 @@ public class MysqlUpdateSelective implements CustomStatement {
 
     /**
      * Init insert batch.
-     *
      * @param areaName     the area name
      * @param mappingField the mapping field
      */
@@ -77,7 +76,6 @@ public class MysqlUpdateSelective implements CustomStatement {
 
     /**
      * Gets result appender factory.
-     *
      * @param mappingField the mapping field
      * @param newAreaName  the new area name
      * @return the result appender factory
@@ -103,7 +101,6 @@ public class MysqlUpdateSelective implements CustomStatement {
 
     /**
      * Batch name string.
-     *
      * @return the string
      */
     @NotNull
@@ -113,7 +110,6 @@ public class MysqlUpdateSelective implements CustomStatement {
 
     /**
      * Gets new area name.
-     *
      * @param areaName the area name
      * @return the new area name
      */
@@ -124,7 +120,6 @@ public class MysqlUpdateSelective implements CustomStatement {
 
     /**
      * Gets suffix operator.
-     *
      * @param mappingField the mapping field
      * @return the suffix operator
      */
@@ -148,7 +143,6 @@ public class MysqlUpdateSelective implements CustomStatement {
 
         /**
          * Instantiates a new Insert batch result appender factory.
-         *
          * @param areaPrefix the area prefix
          */
         public UpdateSelectiveResultAppenderFactory(String areaPrefix) {
@@ -162,7 +156,8 @@ public class MysqlUpdateSelective implements CustomStatement {
                                       LinkedList<SyntaxAppenderWrapper> collector, ConditionFieldWrapper conditionFieldWrapper) {
             StringBuilder mapperXml = new StringBuilder("update " + tableName + "\n");
             for (SyntaxAppenderWrapper syntaxAppenderWrapper : collector) {
-                String templateText = syntaxAppenderWrapper.getAppender().getTemplateText(tableName, entityClass, parameters, collector, conditionFieldWrapper);
+                String templateText = syntaxAppenderWrapper.getAppender()
+                    .getTemplateText(tableName, entityClass, parameters, collector, conditionFieldWrapper);
                 mapperXml.append(templateText);
             }
             return mapperXml.toString();
@@ -192,7 +187,6 @@ public class MysqlUpdateSelective implements CustomStatement {
 
         /**
          * Instantiates a new Insert batch suffix operator.
-         *
          * @param mappingField the mapping field
          */
         public UpdateSelectiveSuffixOperator(List<TxField> mappingField) {

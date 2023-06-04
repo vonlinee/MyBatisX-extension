@@ -4,11 +4,10 @@
 
     <resultMap id="BaseResultMap" type="com.baomidou.mybatis3.domain.NestedDO">
         <!-- 支持嵌套类的提示, 实现了TypeHandler接口, 不报错 , mybatis 也不支持这种写法, 启动不了-->
-<!--        <result typeHandler="com.baomidou.mybatis3.domain.NestedDO$InnerClass"/>-->
+        <!--        <result typeHandler="com.baomidou.mybatis3.domain.NestedDO$InnerClass"/>-->
         <!-- 没有实现 TypeHandler 接口, 应该提示报错-->
-<!--        <result typeHandler="com.baomidou.mybatis3.domain.NestedDO$InnerClassNotTypeHandler"/>-->
+        <!--        <result typeHandler="com.baomidou.mybatis3.domain.NestedDO$InnerClassNotTypeHandler"/>-->
     </resultMap>
-
 
 
 </mapper>

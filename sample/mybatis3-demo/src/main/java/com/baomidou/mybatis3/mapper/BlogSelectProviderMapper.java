@@ -10,7 +10,7 @@ import java.util.Collection;
 import java.util.List;
 
 
-public interface BlogSelectProviderMapper  {
+public interface BlogSelectProviderMapper {
 
     @SelectProvider(value = CustomSelectProvider.class, method = "selectByPrimaryKey")
     Blog selectByPrimaryKey(@Param("id") Long id);

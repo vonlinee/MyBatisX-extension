@@ -15,33 +15,33 @@ public class Blog {
      * 单个id
      */
     @TableId("id")
-   private Long id;
+    private Long id;
     /**
      * 标题
      */
-   private String title;
+    private String title;
     /**
      * 内容
      */
-   private String content;
+    private String content;
     /**
      * 金额
      */
-   private BigDecimal money;
+    private BigDecimal money;
     /**
      * 年龄
      */
-   private Integer age;
+    private Integer age;
     /**
      * 创建时间
      */
-   @TableField("create_time")
-   private Date createTime;
+    @TableField("create_time")
+    private Date createTime;
     /**
      * 大文本
      */
     @TableField("blob_text")
-   private byte[] blobText;
+    private byte[] blobText;
     /**
      * 对象数组
      */

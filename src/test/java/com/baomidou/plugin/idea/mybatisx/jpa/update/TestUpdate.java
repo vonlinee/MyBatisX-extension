@@ -32,7 +32,6 @@ public class TestUpdate extends BaseJpaTest {
     }
 
 
-
     public void testUpdateAgeAndContentByIdIn() throws IOException {
         launchAction("updateAgeAndContentByIdIn");
 
@@ -45,7 +44,6 @@ public class TestUpdate extends BaseJpaTest {
             true);
 
     }
-
 
 
     public void testUpdateAgeAndContentByIdNotIn() throws IOException {
@@ -62,7 +60,6 @@ public class TestUpdate extends BaseJpaTest {
     }
 
 
-
     public void testUpdateAgeAndContentByIdBetween() throws IOException {
         launchAction("updateAgeAndContentByIdBetween");
 
@@ -75,7 +72,6 @@ public class TestUpdate extends BaseJpaTest {
             true);
 
     }
-
 
 
     public void testUpdateAgeAndContentByIdLike() throws IOException {
@@ -92,7 +88,6 @@ public class TestUpdate extends BaseJpaTest {
     }
 
 
-
     public void testUpdateAgeAndContentByTitleNotLike() throws IOException {
         launchAction("updateAgeAndContentByTitleNotLike");
 
@@ -105,7 +100,6 @@ public class TestUpdate extends BaseJpaTest {
             true);
 
     }
-
 
 
     public void testUpdateAgeAndContentByTitleStartWith() throws IOException {
@@ -122,7 +116,6 @@ public class TestUpdate extends BaseJpaTest {
     }
 
 
-
     public void testUpdateAgeAndContentByTitleEndWith() throws IOException {
         launchAction("updateAgeAndContentByTitleEndWith");
 
@@ -135,7 +128,6 @@ public class TestUpdate extends BaseJpaTest {
             true);
 
     }
-
 
 
     public void testUpdateAgeAndContentByTitleContaining() throws IOException {
@@ -152,7 +144,6 @@ public class TestUpdate extends BaseJpaTest {
     }
 
 
-
     public void testUpdateAgeAndContentByTitleIgnoreCase() throws IOException {
         launchAction("updateAgeAndContentByTitleIgnoreCase");
 
@@ -165,7 +156,6 @@ public class TestUpdate extends BaseJpaTest {
             true);
 
     }
-
 
 
     public void testUpdateAgeAndContentByIdGreaterThan() throws IOException {
@@ -182,7 +172,6 @@ public class TestUpdate extends BaseJpaTest {
     }
 
 
-
     public void testUpdateAgeAndContentByIdGreaterThanEqual() throws IOException {
         launchAction("updateAgeAndContentByIdGreaterThanEqual");
 
@@ -195,7 +184,6 @@ public class TestUpdate extends BaseJpaTest {
             true);
 
     }
-
 
 
     public void testUpdateAgeAndContentByIdIs() throws IOException {
@@ -224,6 +212,7 @@ public class TestUpdate extends BaseJpaTest {
             true);
 
     }
+
     public void testUpdateAgeAndContentByAgeTrue() throws IOException {
         launchAction("updateAgeAndContentByAgeTrue");
 

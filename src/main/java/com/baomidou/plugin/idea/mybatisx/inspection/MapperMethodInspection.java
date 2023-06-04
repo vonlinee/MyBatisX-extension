@@ -11,15 +11,11 @@ import com.intellij.codeInspection.InspectionManager;
 import com.intellij.codeInspection.LocalQuickFix;
 import com.intellij.codeInspection.ProblemDescriptor;
 import com.intellij.codeInspection.ProblemHighlightType;
-import com.intellij.debugger.engine.evaluation.expression.Modifier;
-import com.intellij.openapi.project.Project;
-import com.intellij.psi.JavaPsiFacade;
 import com.intellij.psi.PsiAnnotation;
 import com.intellij.psi.PsiClass;
 import com.intellij.psi.PsiIdentifier;
 import com.intellij.psi.PsiMethod;
 import com.intellij.psi.PsiModifier;
-import com.intellij.psi.search.GlobalSearchScope;
 import com.intellij.psi.util.PsiTreeUtil;
 import com.intellij.util.xml.DomElement;
 import org.jetbrains.annotations.NotNull;
@@ -35,19 +31,10 @@ import java.util.stream.Stream;
 
 /**
  * The type Mapper method inspection.
- *
  * @author yanglin
  */
 public class MapperMethodInspection extends MapperInspection {
 
-    private static final Set<String> STATEMENT_PROVIDER_NAMES = new HashSet<String>() {
-        {
-            add("org.apache.ibatis.annotations.SelectProvider");
-            add("org.apache.ibatis.annotations.UpdateProvider");
-            add("org.apache.ibatis.annotations.InsertProvider");
-            add("org.apache.ibatis.annotations.DeleteProvider");
-        }
-    };
     public static final Set<String> MYBATIS_PLUS_BASE_MAPPER_NAMES = new HashSet<String>() {
         {
             // mp3
@@ -58,6 +45,14 @@ public class MapperMethodInspection extends MapperInspection {
     };
     public static final String MAP_KEY = "org.apache.ibatis.annotations.MapKey";
     public static final String MAP = "java.util.Map";
+    private static final Set<String> STATEMENT_PROVIDER_NAMES = new HashSet<String>() {
+        {
+            add("org.apache.ibatis.annotations.SelectProvider");
+            add("org.apache.ibatis.annotations.UpdateProvider");
+            add("org.apache.ibatis.annotations.InsertProvider");
+            add("org.apache.ibatis.annotations.DeleteProvider");
+        }
+    };
 
     @Nullable
     @Override

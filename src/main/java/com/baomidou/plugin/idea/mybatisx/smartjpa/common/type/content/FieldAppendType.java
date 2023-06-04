@@ -17,7 +17,6 @@ public class FieldAppendType implements AppendType {
 
     /**
      * 允许所有区域
-     *
      * @return
      */
     @Override

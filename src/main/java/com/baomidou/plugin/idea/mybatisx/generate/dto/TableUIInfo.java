@@ -18,6 +18,14 @@ public class TableUIInfo implements Serializable {
      */
     private String className;
 
+    public TableUIInfo(String tableName, String className) {
+        this.tableName = tableName;
+        this.className = className;
+    }
+
+    public TableUIInfo() {
+    }
+
     public String getTableName() {
         return tableName;
     }
@@ -32,13 +40,5 @@ public class TableUIInfo implements Serializable {
 
     public void setClassName(String className) {
         this.className = className;
-    }
-
-    public TableUIInfo(String tableName, String className) {
-        this.tableName = tableName;
-        this.className = className;
-    }
-
-    public TableUIInfo() {
     }
 }

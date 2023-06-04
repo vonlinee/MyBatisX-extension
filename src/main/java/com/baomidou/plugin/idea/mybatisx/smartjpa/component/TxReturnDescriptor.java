@@ -34,7 +34,6 @@ public class TxReturnDescriptor implements TypeDescriptor {
 
     /**
      * Create collection by psi class tx return descriptor.
-     *
      * @param psiClass the psi class
      * @return the tx return descriptor
      */
@@ -48,7 +47,6 @@ public class TxReturnDescriptor implements TypeDescriptor {
 
     /**
      * Create by psi class tx return descriptor.
-     *
      * @param psiClass the psi class
      * @return the tx return descriptor
      */
@@ -62,7 +60,6 @@ public class TxReturnDescriptor implements TypeDescriptor {
 
     /**
      * Create by origin tx return descriptor.
-     *
      * @param qualifiedName the qualified name
      * @param simpleName    the simple name
      * @return the tx return descriptor

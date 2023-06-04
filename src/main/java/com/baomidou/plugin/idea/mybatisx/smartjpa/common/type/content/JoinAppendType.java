@@ -17,7 +17,6 @@ public class JoinAppendType implements AppendType {
 
     /**
      * 允许所有字段
-     *
      * @return
      */
     @Override

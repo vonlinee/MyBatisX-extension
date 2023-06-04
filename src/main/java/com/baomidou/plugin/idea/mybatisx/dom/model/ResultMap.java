@@ -11,14 +11,12 @@ import org.jetbrains.annotations.NotNull;
 
 /**
  * The interface Result map.
- *
  * @author yanglin
  */
 public interface ResultMap extends GroupFour, IdDomElement {
 
     /**
      * Gets extends.
-     *
      * @return the extends
      */
     @NotNull
@@ -28,7 +26,6 @@ public interface ResultMap extends GroupFour, IdDomElement {
 
     /**
      * Gets type.
-     *
      * @return the type
      */
     @NotNull

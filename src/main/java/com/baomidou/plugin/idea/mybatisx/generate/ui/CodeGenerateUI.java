@@ -45,13 +45,18 @@ import java.util.stream.IntStream;
 
 public class CodeGenerateUI {
     public static final String DOMAIN = "domain";
+    ListTableModel<ModuleInfoGo> model = new ListTableModel<>(
+        new MybaitsxModuleInfo("config name", 120, false),
+        new MybaitsxModuleInfo("module path", 420, true, true),
+        new MybaitsxModuleInfo("base path", 140, true),
+        new MybaitsxModuleInfo("package name", 160, true)
+    );
     private JPanel rootPanel;
     private JCheckBox commentCheckBox;
     private JCheckBox lombokCheckBox;
     private JCheckBox actualColumnCheckBox;
     private JCheckBox JSR310DateAPICheckBox;
     private JCheckBox useActualColumnAnnotationInjectCheckBox;
-
     private JCheckBox toStringHashCodeEqualsCheckBox;
     private JPanel containingPanel;
     private JRadioButton JPARadioButton;
@@ -60,18 +65,12 @@ public class CodeGenerateUI {
     private JRadioButton noneRadioButton;
     private JPanel templateExtraPanel;
     private JPanel templateExtraRadiosPanel;
-
     private ButtonGroup templateButtonGroup = new ButtonGroup();
-
-    ListTableModel<ModuleInfoGo> model = new ListTableModel<>(
-        new MybaitsxModuleInfo("config name", 120, false),
-        new MybaitsxModuleInfo("module path", 420, true, true),
-        new MybaitsxModuleInfo("base path", 140, true),
-        new MybaitsxModuleInfo("package name", 160, true)
-    );
     private Project project;
     private DomainInfo domainInfo;
     private String selectedTemplateName;
+    private boolean refresh = false;
+    private boolean initRadioTemplates = false;
 
     public JPanel getRootPanel() {
         return rootPanel;
@@ -141,8 +140,6 @@ public class CodeGenerateUI {
         }
         initSelectedModuleTable(list, domainInfo.getModulePath());
     }
-
-    private boolean refresh = false;
 
     private void initTemplates(GenerateConfig generateConfig,
                                String defaultsTemplatesName,
@@ -255,8 +252,6 @@ public class CodeGenerateUI {
 
     }
 
-    private boolean initRadioTemplates = false;
-
     private void initRaidoLayout(Map<String, List<TemplateSettingDTO>> templateSettingMap) {
         if (initRadioTemplates) {
             return;
@@ -319,7 +314,6 @@ public class CodeGenerateUI {
 
     /**
      * 初始化默认的模块选择表格
-     *
      * @param list
      * @param modulePath
      */
@@ -347,25 +341,97 @@ public class CodeGenerateUI {
         initMemoryModuleTable(moduleInfoGoList);
     }
 
+    /**
+     * 选择注解类型
+     * @param annotationType
+     */
+    private void selectAnnotation(String annotationType) {
+        if (annotationType == null) {
+            noneRadioButton.setSelected(true);
+            return;
+        }
+        TemplateAnnotationType templateAnnotationType = TemplateAnnotationType.valueOf(annotationType);
+        if (templateAnnotationType == TemplateAnnotationType.JPA) {
+            JPARadioButton.setSelected(true);
+        } else if (templateAnnotationType == TemplateAnnotationType.MYBATIS_PLUS3) {
+            mybatisPlus3RadioButton.setSelected(true);
+        } else if (templateAnnotationType == TemplateAnnotationType.MYBATIS_PLUS2) {
+            mybatisPlus2RadioButton.setSelected(true);
+        } else {
+            noneRadioButton.setSelected(true);
+        }
+    }
+
+    public void refreshGenerateConfig(GenerateConfig generateConfig) {
+
+        List<ModuleInfoGo> moduleUIInfoList = IntStream.range(0, model.getRowCount())
+            .mapToObj(index -> model.getRowValue(index))
+            .collect(Collectors.toList());
+        generateConfig.setModuleUIInfoList(moduleUIInfoList);
+        // 从1.4.7起改为基于模板生成, 所以不再需要那么多针对mapper的插件了
+//        generateConfig.setOffsetLimit(pageCheckBox.isSelected());
+//        generateConfig.setNeedForUpdate(toStringHashCodeEqualsCheckBox.isSelected());
+//        generateConfig.setNeedMapperAnnotation(mapperAnnotationCheckBox.isSelected());
+//        generateConfig.setRepositoryAnnotation(repositoryAnnotationCheckBox.isSelected());
+//        generateConfig.setNeedMapperAnnotation(mapperAnnotationCheckBox.isSelected());
+        generateConfig.setNeedsComment(commentCheckBox.isSelected());
+        generateConfig.setNeedToStringHashcodeEquals(toStringHashCodeEqualsCheckBox.isSelected());
+        generateConfig.setUseLombokPlugin(lombokCheckBox.isSelected());
+        generateConfig.setUseActualColumns(actualColumnCheckBox.isSelected());
+        generateConfig.setUseActualColumnAnnotationInject(useActualColumnAnnotationInjectCheckBox.isSelected());
+        generateConfig.setJsr310Support(JSR310DateAPICheckBox.isSelected());
+
+
+        String annotationTypeName = findAnnotationType();
+        generateConfig.setAnnotationType(annotationTypeName);
+
+        String templatesName = null;
+        final Enumeration<AbstractButton> elements = templateButtonGroup.getElements();
+        while (elements.hasMoreElements()) {
+            final AbstractButton abstractButton = elements.nextElement();
+            if (abstractButton.isSelected()) {
+                templatesName = abstractButton.getText();
+                break;
+            }
+        }
+        generateConfig.setTemplatesName(templatesName);
+
+    }
+
+    @Nullable
+    private String findAnnotationType() {
+        String annotationTypeName = null;
+        if (noneRadioButton.isSelected()) {
+            annotationTypeName = TemplateAnnotationType.NONE.name();
+        }
+        if (annotationTypeName == null && JPARadioButton.isSelected()) {
+            annotationTypeName = TemplateAnnotationType.JPA.name();
+        }
+        if (annotationTypeName == null && mybatisPlus3RadioButton.isSelected()) {
+            annotationTypeName = TemplateAnnotationType.MYBATIS_PLUS3.name();
+        }
+        if (annotationTypeName == null && mybatisPlus2RadioButton.isSelected()) {
+            annotationTypeName = TemplateAnnotationType.MYBATIS_PLUS2.name();
+        }
+        return annotationTypeName;
+    }
 
     private class MybaitsxModuleInfo extends ColumnInfo<ModuleInfoGo, String> {
 
+        private int width;
+        private boolean editable;
+        private boolean moduleEditor;
         public MybaitsxModuleInfo(String name, int width, boolean editable) {
             super(name);
             this.width = width;
             this.editable = editable;
         }
-
         public MybaitsxModuleInfo(String name, int width, boolean editable, boolean moduleEditor) {
             super(name);
             this.width = width;
             this.editable = editable;
             this.moduleEditor = moduleEditor;
         }
-
-        private int width;
-        private boolean editable;
-        private boolean moduleEditor;
 
         @Override
         public boolean isCellEditable(ModuleInfoGo moduleUIInfo) {
@@ -479,82 +545,6 @@ public class CodeGenerateUI {
 
             return value;
         }
-    }
-
-    /**
-     * 选择注解类型
-     *
-     * @param annotationType
-     */
-    private void selectAnnotation(String annotationType) {
-        if (annotationType == null) {
-            noneRadioButton.setSelected(true);
-            return;
-        }
-        TemplateAnnotationType templateAnnotationType = TemplateAnnotationType.valueOf(annotationType);
-        if (templateAnnotationType == TemplateAnnotationType.JPA) {
-            JPARadioButton.setSelected(true);
-        } else if (templateAnnotationType == TemplateAnnotationType.MYBATIS_PLUS3) {
-            mybatisPlus3RadioButton.setSelected(true);
-        } else if (templateAnnotationType == TemplateAnnotationType.MYBATIS_PLUS2) {
-            mybatisPlus2RadioButton.setSelected(true);
-        } else {
-            noneRadioButton.setSelected(true);
-        }
-    }
-
-    public void refreshGenerateConfig(GenerateConfig generateConfig) {
-
-        List<ModuleInfoGo> moduleUIInfoList = IntStream.range(0, model.getRowCount())
-            .mapToObj(index -> model.getRowValue(index))
-            .collect(Collectors.toList());
-        generateConfig.setModuleUIInfoList(moduleUIInfoList);
-        // 从1.4.7起改为基于模板生成, 所以不再需要那么多针对mapper的插件了
-//        generateConfig.setOffsetLimit(pageCheckBox.isSelected());
-//        generateConfig.setNeedForUpdate(toStringHashCodeEqualsCheckBox.isSelected());
-//        generateConfig.setNeedMapperAnnotation(mapperAnnotationCheckBox.isSelected());
-//        generateConfig.setRepositoryAnnotation(repositoryAnnotationCheckBox.isSelected());
-//        generateConfig.setNeedMapperAnnotation(mapperAnnotationCheckBox.isSelected());
-        generateConfig.setNeedsComment(commentCheckBox.isSelected());
-        generateConfig.setNeedToStringHashcodeEquals(toStringHashCodeEqualsCheckBox.isSelected());
-        generateConfig.setUseLombokPlugin(lombokCheckBox.isSelected());
-        generateConfig.setUseActualColumns(actualColumnCheckBox.isSelected());
-        generateConfig.setUseActualColumnAnnotationInject(useActualColumnAnnotationInjectCheckBox.isSelected());
-        generateConfig.setJsr310Support(JSR310DateAPICheckBox.isSelected());
-
-
-        String annotationTypeName = findAnnotationType();
-        generateConfig.setAnnotationType(annotationTypeName);
-
-        String templatesName = null;
-        final Enumeration<AbstractButton> elements = templateButtonGroup.getElements();
-        while (elements.hasMoreElements()) {
-            final AbstractButton abstractButton = elements.nextElement();
-            if (abstractButton.isSelected()) {
-                templatesName = abstractButton.getText();
-                break;
-            }
-        }
-        generateConfig.setTemplatesName(templatesName);
-
-    }
-
-    @Nullable
-    private String findAnnotationType() {
-        String annotationTypeName = null;
-        if (noneRadioButton.isSelected()) {
-            annotationTypeName = TemplateAnnotationType.NONE.name();
-        }
-        if (annotationTypeName == null && JPARadioButton.isSelected()) {
-            annotationTypeName = TemplateAnnotationType.JPA.name();
-        }
-        if (annotationTypeName == null && mybatisPlus3RadioButton.isSelected()) {
-            annotationTypeName = TemplateAnnotationType.MYBATIS_PLUS3.name();
-        }
-        if (annotationTypeName == null && mybatisPlus2RadioButton.isSelected()) {
-            annotationTypeName = TemplateAnnotationType.MYBATIS_PLUS2.name();
-        }
-        return annotationTypeName;
     }
 
 

@@ -31,7 +31,6 @@ public class StatementBlockFactory {
 
     /**
      * Split appender by text linked list.
-     *
      * @param splitParam the split param
      * @return the linked list
      */
@@ -44,7 +43,6 @@ public class StatementBlockFactory {
 
     /**
      * Register statement block.
-     *
      * @param statementBlock the statement block
      */
     public void registerStatementBlock(final StatementBlock statementBlock) {
@@ -56,7 +54,6 @@ public class StatementBlockFactory {
 
     /**
      * Find area list by jpa list.
-     *
      * @param jpaList the jpa list
      * @return the list
      */
@@ -77,7 +74,6 @@ public class StatementBlockFactory {
 
     /**
      * Gets all block.
-     *
      * @return the all block
      */
     public Collection<StatementBlock> getAllBlock() {
@@ -86,7 +82,6 @@ public class StatementBlockFactory {
 
     /**
      * Find block by text statement block.
-     *
      * @param text the text
      * @return the statement block
      */

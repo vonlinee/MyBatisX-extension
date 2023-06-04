@@ -12,7 +12,6 @@ import java.util.Optional;
 
 /**
  * The type Dao method converter.
- *
  * @author yanglin
  */
 public class DaoMethodConverter extends ConverterAdaptor<Object> {
@@ -21,7 +20,6 @@ public class DaoMethodConverter extends ConverterAdaptor<Object> {
      * id 的转换允许有空值 ， （这是一个不合理的结构）
      * 例如 selectKey 没有id
      * select,insert,update,delete 有 id
-     *
      * @param id
      * @param context
      * @return

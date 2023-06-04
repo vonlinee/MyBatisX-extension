@@ -16,7 +16,6 @@ public class OracleGenerateUtil {
 
     /**
      * Find sequence name optional.
-     *
      * @param dasTable  the das table
      * @param tableName the table name
      * @return the optional

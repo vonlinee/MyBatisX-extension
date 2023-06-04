@@ -31,7 +31,6 @@ public class DeleteOperator extends BaseOperatorManager {
 
     /**
      * Instantiates a new Delete operator.
-     *
      * @param mappingField the mapping field
      */
     public DeleteOperator(final List<TxField> mappingField) {
@@ -42,7 +41,6 @@ public class DeleteOperator extends BaseOperatorManager {
 
     /**
      * Init.
-     *
      * @param mappingField the mapping field
      */
     public void init(final List<TxField> mappingField) {
@@ -106,7 +104,6 @@ public class DeleteOperator extends BaseOperatorManager {
 
         /**
          * Instantiates a new Delete result appender factory.
-         *
          * @param pattern the pattern
          */
         public DeleteResultAppenderFactory(String pattern) {

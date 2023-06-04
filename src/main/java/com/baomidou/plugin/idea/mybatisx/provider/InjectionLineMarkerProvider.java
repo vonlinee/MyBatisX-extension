@@ -24,13 +24,12 @@ import java.util.Optional;
 
 /**
  * The type Injection line marker provider.
- *
  * @author yanglin
  */
 public class InjectionLineMarkerProvider extends RelatedItemLineMarkerProvider {
 
     @Override
-    protected void collectNavigationMarkers(@NotNull PsiElement element,@NotNull Collection<? super RelatedItemLineMarkerInfo<?>> result) {
+    protected void collectNavigationMarkers(@NotNull PsiElement element, @NotNull Collection<? super RelatedItemLineMarkerInfo<?>> result) {
         if (!(element instanceof PsiField)) {
             return;
         }

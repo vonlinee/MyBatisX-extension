@@ -9,7 +9,6 @@ import java.util.List;
 
 /**
  * The interface Configuration.
- *
  * @author yanglin
  */
 @Namespace("MybatisConfiguration")
@@ -17,7 +16,6 @@ public interface Configuration extends DomElement {
 
     /**
      * Gets type aliases.
-     *
      * @return the type aliases
      */
     @NotNull

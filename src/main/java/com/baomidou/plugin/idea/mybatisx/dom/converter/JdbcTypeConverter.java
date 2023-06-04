@@ -27,7 +27,6 @@ import java.util.Optional;
 
 /**
  * The type Jdbc type converter.
- *
  * @author ls9527
  */
 public class JdbcTypeConverter extends ConverterAdaptor<XmlAttributeValue> implements CustomReferenceConverter<XmlAttributeValue> {
@@ -142,7 +141,6 @@ public class JdbcTypeConverter extends ConverterAdaptor<XmlAttributeValue> imple
 
         /**
          * Instantiates a new Context reference set resolver.
-         *
          * @param element the element
          */
         protected JdbcTypeContextReferenceSetResolver(@NotNull XmlAttributeValue element) {

@@ -11,8 +11,9 @@
         <result column="money" property="money"/>
     </resultMap>
     <sql id="Base_Column_List">
-		id,age,content,title,money
-	</sql>
+        id
+        ,age,content,title,money
+    </sql>
     <select id="selectOneById" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>

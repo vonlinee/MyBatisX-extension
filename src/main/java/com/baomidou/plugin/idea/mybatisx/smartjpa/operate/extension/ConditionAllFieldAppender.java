@@ -63,7 +63,6 @@ public class ConditionAllFieldAppender extends CustomFieldAppender {
 
     /**
      * 前面必须是区域， 后续必须是区域或者空
-     *
      * @param secondAppender
      * @param areaSequence
      * @return

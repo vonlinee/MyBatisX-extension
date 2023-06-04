@@ -10,7 +10,6 @@ import org.jetbrains.annotations.Nullable;
 
 /**
  * The type Mapper locator.
- *
  * @author yanglin
  */
 public class MapperLocator {
@@ -22,7 +21,6 @@ public class MapperLocator {
 
     /**
      * Gets instance.
-     *
      * @param project the project
      * @return the instance
      */
@@ -32,7 +30,6 @@ public class MapperLocator {
 
     /**
      * Process boolean.
-     *
      * @param method the method
      * @return the boolean
      */
@@ -42,7 +39,6 @@ public class MapperLocator {
 
     /**
      * Process boolean.
-     *
      * @param clazz the clazz
      * @return the boolean
      */

@@ -50,26 +50,32 @@
         <!-- mapper.xml文件属性提示 -->
         <dom.fileMetaData id="baomidou.MapperDescription"
                           rootTagName="mapper"
-                             implementation="com.baomidou.plugin.idea.mybatisx.dom.description.MapperDescription"/>
+                          implementation="com.baomidou.plugin.idea.mybatisx.dom.description.MapperDescription"/>
         <!-- mybatis配置文件属性提示 -->
         <dom.fileMetaData id="baomidou.ConfigurationDescription"
-                             rootTagName="configuration"
-            implementation="com.baomidou.plugin.idea.mybatisx.dom.description.ConfigurationDescription"/>
+                          rootTagName="configuration"
+                          implementation="com.baomidou.plugin.idea.mybatisx.dom.description.ConfigurationDescription"/>
 
         <!-- Ctrl+B, 定位类的跳转, 定位方法的跳转 -->
         <definitionsScopedSearch id="baomidou.MapperClassSearch"
-                implementation="com.baomidou.plugin.idea.mybatisx.system.definitionsearch.MapperClassSearch"/>
+                                 implementation="com.baomidou.plugin.idea.mybatisx.system.definitionsearch.MapperClassSearch"/>
         <!-- 与搜索配套的跳转 -->
-        <gotoTargetRendererProvider order="first" implementation="com.baomidou.plugin.idea.mybatisx.provider.GotoMapperXmlSchemaTypeRendererProvider"/>
+        <gotoTargetRendererProvider order="first"
+                                    implementation="com.baomidou.plugin.idea.mybatisx.provider.GotoMapperXmlSchemaTypeRendererProvider"/>
 
         <!--项目服务-->
-        <projectService id="baomidou.JavaService" serviceImplementation="com.baomidou.plugin.idea.mybatisx.service.JavaService"/>
-        <projectService id="baomidou.AnnotationService" serviceImplementation="com.baomidou.plugin.idea.mybatisx.service.AnnotationService"/>
-        <projectService id="baomidou.EditorService" serviceImplementation="com.baomidou.plugin.idea.mybatisx.service.EditorService"/>
-        <projectService id="baomidou.AliasFacade" serviceImplementation="com.baomidou.plugin.idea.mybatisx.alias.AliasFacade"/>
+        <projectService id="baomidou.JavaService"
+                        serviceImplementation="com.baomidou.plugin.idea.mybatisx.service.JavaService"/>
+        <projectService id="baomidou.AnnotationService"
+                        serviceImplementation="com.baomidou.plugin.idea.mybatisx.service.AnnotationService"/>
+        <projectService id="baomidou.EditorService"
+                        serviceImplementation="com.baomidou.plugin.idea.mybatisx.service.EditorService"/>
+        <projectService id="baomidou.AliasFacade"
+                        serviceImplementation="com.baomidou.plugin.idea.mybatisx.alias.AliasFacade"/>
 
 
-        <projectService id="baomidou.MapperLocator" serviceImplementation="com.baomidou.plugin.idea.mybatisx.locator.MapperLocator"/>
+        <projectService id="baomidou.MapperLocator"
+                        serviceImplementation="com.baomidou.plugin.idea.mybatisx.locator.MapperLocator"/>
 
 
         <!--代码行插件，实现代码导航功能-->
@@ -83,9 +89,9 @@
         <codeInsight.lineMarkerProvider id="baomidou.InjectionLineMarkerProvider" language="JAVA"
                                         implementationClass="com.baomidou.plugin.idea.mybatisx.provider.InjectionLineMarkerProvider"/>
 
-<!--         设置中的配置 -->
-        <applicationConfigurable id="mybatisx.settings" instance="com.baomidou.plugin.idea.mybatisx.setting.MybatisConfigurable"/>
-
+        <!--         设置中的配置 -->
+        <applicationConfigurable id="mybatisx.settings"
+                                 instance="com.baomidou.plugin.idea.mybatisx.setting.MybatisConfigurable"/>
 
 
         <!-- xml 标签提示 -->
@@ -100,7 +106,7 @@
 
         <!--文件模板组，新建文件选择模板, 这里只是定义一个模板, 在mapper类方法定义完成后, 可以根据这个空模板生成一个文件 -->
         <fileTemplateGroup id="baomidou.MybatisFileTemplateDescriptorFactory"
-            implementation="com.baomidou.plugin.idea.mybatisx.system.template.MybatisFileTemplateDescriptorFactory"/>
+                           implementation="com.baomidou.plugin.idea.mybatisx.system.template.MybatisFileTemplateDescriptorFactory"/>
 
         <!--附加的LiveTemplate模板-->
         <defaultLiveTemplates id="baomidou.SqlLiveTemplateProvider"
@@ -108,7 +114,7 @@
 
         <!-- Mapper类 重命名 -->
         <refactoring.elementListenerProvider id="baomidou.MapperRefactoringProvider"
-            implementation="com.baomidou.plugin.idea.mybatisx.system.refactoring.MapperRefactoringProvider"/>
+                                             implementation="com.baomidou.plugin.idea.mybatisx.system.refactoring.MapperRefactoringProvider"/>
 
         <!-- 语法校验，让没有生成代码的方法产生错误 -->
         <localInspection language="JAVA" shortName="MybatisXMapperMethodInspection"

@@ -16,7 +16,6 @@ import org.jetbrains.annotations.NotNull;
 
 /**
  * The type Editor service.
- *
  * @author yanglin
  */
 public class EditorService {
@@ -29,7 +28,6 @@ public class EditorService {
 
     /**
      * Instantiates a new Editor service.
-     *
      * @param project the project
      */
     public EditorService(Project project) {
@@ -39,7 +37,6 @@ public class EditorService {
 
     /**
      * Gets instance.
-     *
      * @param project the project
      * @return the instance
      */
@@ -49,7 +46,6 @@ public class EditorService {
 
     /**
      * Format.
-     *
      * @param file    the file
      * @param element the element
      */
@@ -62,7 +58,6 @@ public class EditorService {
 
     /**
      * Scroll to.
-     *
      * @param element the element
      * @param offset  the offset
      */

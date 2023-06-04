@@ -1,8 +1,10 @@
 package com.baomidou.mybatis3.mapper;
+
 import java.util.Date;
 import java.util.Collection;
 import java.math.BigDecimal;
 import java.util.List;
+
 import com.baomidou.mybatis3.domain.Blog;
 import org.apache.ibatis.annotations.Param;
 
@@ -14,7 +16,6 @@ public interface BlogResultMapper {
 
     /**
      * 测试一长串的提示性能
-     *
      * @param age
      * @param title
      * @param beginCreateTime

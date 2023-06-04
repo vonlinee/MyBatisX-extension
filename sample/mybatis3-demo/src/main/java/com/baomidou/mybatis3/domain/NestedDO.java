@@ -9,7 +9,8 @@ import java.sql.SQLException;
 
 public class NestedDO {
     private Integer id;
-    public class InnerClass implements org.apache.ibatis.type.TypeHandler{
+
+    public class InnerClass implements org.apache.ibatis.type.TypeHandler {
 
         @Override
         public void setParameter(PreparedStatement preparedStatement, int i, Object o, JdbcType jdbcType) throws SQLException {
@@ -32,7 +33,7 @@ public class NestedDO {
         }
     }
 
-    public class InnerClassNotTypeHandler{
+    public class InnerClassNotTypeHandler {
 
     }
 }

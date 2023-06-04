@@ -18,7 +18,6 @@ public class InsertCustomSuffixAppender extends CustomSuffixAppender {
 
     /**
      * Instantiates a new Insert custom suffix appender.
-     *
      * @param tipName        the tip name
      * @param suffixOperator the suffix operator
      * @param areaSequence   the area sequence
@@ -29,7 +28,6 @@ public class InsertCustomSuffixAppender extends CustomSuffixAppender {
 
     /**
      * Create insert by suffix operator syntax appender.
-     *
      * @param all            the all
      * @param suffixOperator the suffix operator
      * @param areaSequence   the area sequence

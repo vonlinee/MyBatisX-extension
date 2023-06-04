@@ -25,7 +25,6 @@ import com.intellij.psi.javadoc.PsiDocComment;
 import com.intellij.psi.tree.IElementType;
 import com.intellij.psi.util.PsiTreeUtil;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -48,7 +47,8 @@ public class MapperMethodCompletionContributor extends CompletionContributor {
     private static final Logger logger = LoggerFactory.getLogger(MapperMethodCompletionContributor.class);
 
     private static boolean inCommentOrLiteral(CompletionParameters parameters) {
-        HighlighterIterator iterator = ((EditorEx) parameters.getEditor()).getHighlighter().createIterator(parameters.getOffset());
+        HighlighterIterator iterator = ((EditorEx) parameters.getEditor()).getHighlighter()
+            .createIterator(parameters.getOffset());
         if (iterator.atEnd()) {
             return false;
         }
@@ -68,7 +68,6 @@ public class MapperMethodCompletionContributor extends CompletionContributor {
      * 填充变量
      * <p>
      * 这一层做验证
-     *
      * @param parameters
      * @param result
      */
@@ -117,7 +116,6 @@ public class MapperMethodCompletionContributor extends CompletionContributor {
 
     /**
      * Find mapper class optional.
-     *
      * @param mapperClass the mapperClass
      * @return the optional
      */

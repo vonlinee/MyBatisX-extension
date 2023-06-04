@@ -10,7 +10,8 @@
         <result column="money" property="money"/>
     </resultMap>
     <sql id="Base_Column_List">
-        id,age,content,title,money
+        id
+        ,age,content,title,money
     </sql>
 
     <delete id="delByIdBetween">

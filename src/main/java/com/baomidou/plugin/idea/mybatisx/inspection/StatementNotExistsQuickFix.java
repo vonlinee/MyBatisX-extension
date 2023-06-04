@@ -10,7 +10,6 @@ import org.jetbrains.annotations.NotNull;
  * <p>
  * Statement 是否存在 检查
  * </p>
- *
  * @author yanglin
  * @since 2018 -07-30
  */
@@ -20,7 +19,6 @@ public class StatementNotExistsQuickFix extends GenericQuickFix {
 
     /**
      * Instantiates a new Statement not exists quick fix.
-     *
      * @param method the method
      */
     public StatementNotExistsQuickFix(@NotNull PsiMethod method) {
@@ -35,12 +33,11 @@ public class StatementNotExistsQuickFix extends GenericQuickFix {
 
     @Override
     public void applyFix(@NotNull Project project, @NotNull ProblemDescriptor descriptor) {
-        AbstractStatementGenerator.applyGenerate(method,project);
+        AbstractStatementGenerator.applyGenerate(method, project);
     }
 
     /**
      * Gets method.
-     *
      * @return the method
      */
     @NotNull
@@ -50,7 +47,6 @@ public class StatementNotExistsQuickFix extends GenericQuickFix {
 
     /**
      * Sets method.
-     *
      * @param method the method
      */
     public void setMethod(@NotNull PsiMethod method) {

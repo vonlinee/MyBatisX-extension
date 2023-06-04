@@ -58,14 +58,12 @@ public interface SyntaxAppender {
 
     /**
      * 文本
-     *
      * @return text
      */
     String getText();
 
     /**
      * 追加的类型
-     *
      * @return type
      */
     AppendTypeEnum getType();
@@ -73,7 +71,6 @@ public interface SyntaxAppender {
 
     /**
      * Check after boolean.
-     *
      * @param secondAppender the second appender
      * @param areaSequence   the area sequence
      * @return the boolean
@@ -86,7 +83,6 @@ public interface SyntaxAppender {
 
     /**
      * 获得要执行的命令
-     *
      * @param areaPrefix the area prefix
      * @param splitList  the split list
      * @return command
@@ -98,7 +94,6 @@ public interface SyntaxAppender {
 
     /**
      * Poll last optional.
-     *
      * @param splitList the split list
      * @return the optional
      */
@@ -108,7 +103,6 @@ public interface SyntaxAppender {
 
     /**
      * Check duplicate boolean.
-     *
      * @param syntaxAppenders the syntax appenders
      * @return the boolean
      */
@@ -118,7 +112,6 @@ public interface SyntaxAppender {
 
     /**
      * Find priority.
-     *
      * @param priorityQueue the priority queue
      * @param splitStr      the split str
      */
@@ -133,7 +126,6 @@ public interface SyntaxAppender {
 
     /**
      * Gets candidate appender.
-     *
      * @param result the result
      * @return the candidate appender
      */
@@ -143,7 +135,6 @@ public interface SyntaxAppender {
 
     /**
      * Gets template text.
-     *
      * @param tableName             the table name
      * @param entityClass           the entity class
      * @param parameters            the parameters
@@ -158,7 +149,6 @@ public interface SyntaxAppender {
 
     /**
      * Gets mx parameter.
-     *
      * @param syntaxAppenderWrapperLinkedList the jpa string list
      * @param entityClass                     the entity class
      * @return the mx parameter
@@ -167,7 +157,6 @@ public interface SyntaxAppender {
 
     /**
      * 转成树
-     *
      * @param jpaStringList         the jpa string list
      * @param syntaxAppenderWrapper the syntax appender wrapper
      */
@@ -176,7 +165,6 @@ public interface SyntaxAppender {
 
     /**
      * Gets area sequence.
-     *
      * @return the area sequence
      */
     default AreaSequence getAreaSequence() {

@@ -21,7 +21,6 @@ public class ParamAroundSuffixOperator implements SuffixOperator {
 
     /**
      * Instantiates a new Param around suffix operator.
-     *
      * @param prefix the prefix
      * @param suffix the suffix
      */

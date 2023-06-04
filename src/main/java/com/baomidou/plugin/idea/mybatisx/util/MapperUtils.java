@@ -6,7 +6,6 @@ import com.baomidou.plugin.idea.mybatisx.dom.model.Mapper;
 import com.baomidou.plugin.idea.mybatisx.dom.model.Package;
 import com.baomidou.plugin.idea.mybatisx.dom.model.TypeAlias;
 import com.baomidou.plugin.idea.mybatisx.dom.model.TypeAliases;
-import com.google.common.base.Function;
 import com.google.common.collect.Collections2;
 import com.google.common.collect.Lists;
 import com.intellij.ide.fileTemplates.FileTemplate;
@@ -39,7 +38,6 @@ import java.util.Properties;
 
 /**
  * The type Mapper utils.
- *
  * @author yanglin
  */
 public final class MapperUtils {
@@ -50,7 +48,6 @@ public final class MapperUtils {
 
     /**
      * Find parent id dom element optional.
-     *
      * @param element the element
      * @return the optional
      */
@@ -67,7 +64,6 @@ public final class MapperUtils {
 
     /**
      * Create mapper from file template psi element.
-     *
      * @param fileTemplateName the file template name
      * @param fileName         the file name
      * @param directory        the directory
@@ -93,18 +89,17 @@ public final class MapperUtils {
 
     /**
      * Find mapper directories collection.
-     *
      * @param project the project
      * @return the collection
      */
     @NotNull
     public static Collection<PsiDirectory> findMapperDirectories(@NotNull Project project) {
-        return Collections2.transform(findMappers(project), input -> Objects.requireNonNull(input.getXmlElement()).getContainingFile().getContainingDirectory());
+        return Collections2.transform(findMappers(project), input -> Objects.requireNonNull(input.getXmlElement())
+            .getContainingFile().getContainingDirectory());
     }
 
     /**
      * Is element within mybatis file boolean.
-     *
      * @param element the element
      * @return the boolean
      */
@@ -115,7 +110,6 @@ public final class MapperUtils {
 
     /**
      * Find mappers collection.
-     *
      * @param project the project
      * @return the collection
      */
@@ -127,7 +121,6 @@ public final class MapperUtils {
 
     /**
      * Find mappers collection.
-     *
      * @param project   the project
      * @param namespace the namespace
      * @return the collection
@@ -196,7 +189,6 @@ public final class MapperUtils {
 
     /**
      * Find mappers collection.
-     *
      * @param project the project
      * @param clazz   the clazz
      * @return the collection
@@ -208,7 +200,6 @@ public final class MapperUtils {
 
     /**
      * Find mappers collection.
-     *
      * @param project the project
      * @param method  the method
      * @return the collection
@@ -221,7 +212,6 @@ public final class MapperUtils {
 
     /**
      * Find first mapper optional.
-     *
      * @param project   the project
      * @param namespace the namespace
      * @return the optional
@@ -234,7 +224,6 @@ public final class MapperUtils {
 
     /**
      * Find first mapper optional.
-     *
      * @param project the project
      * @param clazz   the clazz
      * @return the optional
@@ -247,7 +236,6 @@ public final class MapperUtils {
 
     /**
      * Find first mapper optional.
-     *
      * @param project the project
      * @param method  the method
      * @return the optional
@@ -260,7 +248,6 @@ public final class MapperUtils {
 
     /**
      * Gets mapper.
-     *
      * @param element the element
      * @return the mapper
      */
@@ -278,7 +265,6 @@ public final class MapperUtils {
 
     /**
      * Gets namespace.
-     *
      * @param mapper the mapper
      * @return the namespace
      */
@@ -291,7 +277,6 @@ public final class MapperUtils {
 
     /**
      * Gets namespace.
-     *
      * @param element the element
      * @return the namespace
      */
@@ -303,7 +288,6 @@ public final class MapperUtils {
 
     /**
      * Is mapper with same namespace boolean.
-     *
      * @param mapper the mapper
      * @param target the target
      * @return the boolean
@@ -315,7 +299,6 @@ public final class MapperUtils {
 
     /**
      * Gets id.
-     *
      * @param <T>        the type parameter
      * @param domElement the dom element
      * @return the id
@@ -328,7 +311,6 @@ public final class MapperUtils {
 
     /**
      * Gets id signature.
-     *
      * @param <T>        the type parameter
      * @param domElement the dom element
      * @return the id signature
@@ -341,7 +323,6 @@ public final class MapperUtils {
 
     /**
      * Gets id signature.
-     *
      * @param <T>        the type parameter
      * @param domElement the dom element
      * @param mapper     the mapper
@@ -362,7 +343,6 @@ public final class MapperUtils {
 
     /**
      * Process configured type aliases.
-     *
      * @param project   the project
      * @param processor the processor
      */
@@ -385,7 +365,6 @@ public final class MapperUtils {
 
     /**
      * Process configured package.
-     *
      * @param project   the project
      * @param processor the processor
      */

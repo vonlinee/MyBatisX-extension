@@ -18,7 +18,6 @@ import org.jetbrains.annotations.NotNull;
 
 /**
  * The type Annotation service.
- *
  * @author yanglin
  */
 public class AnnotationService {
@@ -27,7 +26,6 @@ public class AnnotationService {
 
     /**
      * Instantiates a new Annotation service.
-     *
      * @param project the project
      */
     public AnnotationService(Project project) {
@@ -36,7 +34,6 @@ public class AnnotationService {
 
     /**
      * Gets instance.
-     *
      * @param project the project
      * @return the instance
      */
@@ -46,7 +43,6 @@ public class AnnotationService {
 
     /**
      * Add annotation.
-     *
      * @param parameter  the parameter
      * @param annotation the annotation
      */
@@ -55,7 +51,8 @@ public class AnnotationService {
         if (JavaUtils.isAnnotationPresent(parameter, annotation) || null == modifierList) {
             return;
         }
-        JavaService.getInstance(parameter.getProject()).importClazz((PsiJavaFile) parameter.getContainingFile(), annotation.getQualifiedName());
+        JavaService.getInstance(parameter.getProject())
+            .importClazz((PsiJavaFile) parameter.getContainingFile(), annotation.getQualifiedName());
 
         PsiElementFactory elementFactory = JavaPsiFacade.getInstance(project).getElementFactory();
         PsiAnnotation psiAnnotation = elementFactory.createAnnotationFromText(annotation.toString(), parameter);
@@ -65,7 +62,6 @@ public class AnnotationService {
 
     /**
      * Add annotation with parameter name for method parameters.
-     *
      * @param method the method
      */
     public void addAnnotationWithParameterNameForMethodParameters(@NotNull PsiMethod method) {
@@ -81,13 +77,13 @@ public class AnnotationService {
 
     /**
      * Add annotation with parameter name.
-     *
      * @param parameter the parameter
      */
     public void addAnnotationWithParameterName(@NotNull PsiParameter parameter) {
         String name = parameter.getName();
         if (null != name) {
-            AnnotationService.getInstance(parameter.getProject()).addAnnotation(parameter, Annotation.PARAM.withValue(new Annotation.StringValue(name)));
+            AnnotationService.getInstance(parameter.getProject())
+                .addAnnotation(parameter, Annotation.PARAM.withValue(new Annotation.StringValue(name)));
         }
     }
 }

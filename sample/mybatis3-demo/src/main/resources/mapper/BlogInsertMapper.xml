@@ -11,8 +11,9 @@
         <result column="create_time" property="createTime"/>
     </resultMap>
     <sql id="Base_Column_List">
-		id,age,content,title,money,create_time
-	</sql>
+        id
+        ,age,content,title,money,create_time
+    </sql>
     <insert id="insertSelective">
         insert into t_blog
         <trim prefix="(" suffix=")" suffixOverrides=",">

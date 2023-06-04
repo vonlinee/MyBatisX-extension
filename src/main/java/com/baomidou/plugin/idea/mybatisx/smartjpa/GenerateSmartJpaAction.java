@@ -14,7 +14,6 @@ import java.util.Optional;
 
 /**
  * 在mapper类中通过名字生成方法和xml内容
- *
  * @author ls9527
  */
 public class GenerateSmartJpaAction extends GenerateSmartJpaAdvanceAction {
@@ -36,7 +35,7 @@ public class GenerateSmartJpaAction extends GenerateSmartJpaAdvanceAction {
                                                                        List<String> resultFields,
                                                                        List<String> conditionFields,
                                                                        PsiClass entityClass, boolean isSelect) {
-        return Optional.of(new NeverContainsFieldWrapper(project,allFields));
+        return Optional.of(new NeverContainsFieldWrapper(project, allFields));
     }
 
     @Override

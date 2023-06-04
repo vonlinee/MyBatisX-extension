@@ -14,7 +14,6 @@ import org.jetbrains.annotations.NotNull;
 
 /**
  * The type Java file intention chooser.
- *
  * @author yanglin
  */
 public abstract class JavaFileIntentionChooser implements IntentionChooser {
@@ -33,7 +32,6 @@ public abstract class JavaFileIntentionChooser implements IntentionChooser {
 
     /**
      * Is available boolean.
-     *
      * @param element the element
      * @return the boolean
      */
@@ -41,7 +39,6 @@ public abstract class JavaFileIntentionChooser implements IntentionChooser {
 
     /**
      * Is position of parameter declaration boolean.
-     *
      * @param element the element
      * @return the boolean
      */
@@ -51,7 +48,6 @@ public abstract class JavaFileIntentionChooser implements IntentionChooser {
 
     /**
      * Is position of method declaration boolean.
-     *
      * @param element the element
      * @return the boolean
      */
@@ -61,7 +57,6 @@ public abstract class JavaFileIntentionChooser implements IntentionChooser {
 
     /**
      * Is position of interface declaration boolean.
-     *
      * @param element the element
      * @return the boolean
      */
@@ -71,7 +66,6 @@ public abstract class JavaFileIntentionChooser implements IntentionChooser {
 
     /**
      * Is target present in xml boolean.
-     *
      * @param psiClass the element
      * @return the boolean
      */

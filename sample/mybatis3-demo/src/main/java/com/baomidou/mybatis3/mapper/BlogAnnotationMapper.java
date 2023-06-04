@@ -1,4 +1,5 @@
 package com.baomidou.mybatis3.mapper;
+
 import org.apache.ibatis.annotations.Update;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Param;

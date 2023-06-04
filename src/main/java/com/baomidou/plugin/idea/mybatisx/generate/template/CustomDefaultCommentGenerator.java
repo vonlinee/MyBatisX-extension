@@ -51,7 +51,8 @@ public class CustomDefaultCommentGenerator extends DefaultCommentGenerator imple
             remarks = "";
         }
         topLevelClass.addJavaDocLine(" * " + remarks);
-        topLevelClass.addJavaDocLine(" * @TableName " + introspectedTable.getFullyQualifiedTable().getIntrospectedTableName());
+        topLevelClass.addJavaDocLine(" * @TableName " + introspectedTable.getFullyQualifiedTable()
+            .getIntrospectedTableName());
         topLevelClass.addJavaDocLine(" */");
         annotationTypeOperator.addModelClassComment(topLevelClass, introspectedTable);
 
@@ -136,7 +137,7 @@ public class CustomDefaultCommentGenerator extends DefaultCommentGenerator imple
     @Override
     public void addFieldAnnotation(Field field, IntrospectedTable introspectedTable, Set<FullyQualifiedJavaType> imports) {
 
-        annotationTypeOperator.addSerialVersionUIDAnnotation(field,introspectedTable);
+        annotationTypeOperator.addSerialVersionUIDAnnotation(field, introspectedTable);
     }
 
     @Override

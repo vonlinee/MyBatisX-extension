@@ -13,7 +13,6 @@ public class FieldAppendTypeCommand implements AppendTypeCommand {
 
     /**
      * Instantiates a new Field append type command.
-     *
      * @param syntaxAppender the syntax appender
      */
     public FieldAppendTypeCommand(final SyntaxAppender syntaxAppender) {

@@ -54,7 +54,6 @@ public class TemplatesSettings implements PersistentStateComponent<TemplatesSett
 
     /**
      * 默认的配置更改是无效的
-     *
      * @return
      */
     public Map<String, List<TemplateSettingDTO>> getTemplateSettingMap() {

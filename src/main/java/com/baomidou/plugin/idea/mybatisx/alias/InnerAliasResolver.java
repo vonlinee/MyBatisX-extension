@@ -16,7 +16,6 @@ import java.util.Set;
 
 /**
  * The type Inner alias resolver.
- *
  * @author yanglin
  */
 public class InnerAliasResolver extends AliasResolver {
@@ -25,7 +24,6 @@ public class InnerAliasResolver extends AliasResolver {
 
     /**
      * Instantiates a new Inner alias resolver.
-     *
      * @param project the project
      */
     public InnerAliasResolver(Project project) {
@@ -70,7 +68,6 @@ public class InnerAliasResolver extends AliasResolver {
     /**
      * 支持延迟识别, 当项目第一次打开时，可能未配置JDK， 在未配置JDK时， 内部别名无法注册。
      * 这里支持等手动配置JDK后才开始缓存
-     *
      * @param element the element
      * @return
      */

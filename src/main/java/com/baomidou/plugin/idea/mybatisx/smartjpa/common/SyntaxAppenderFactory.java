@@ -18,14 +18,12 @@ import java.util.PriorityQueue;
 public interface SyntaxAppenderFactory {
     /**
      * Gets syntax appender list.
-     *
      * @return the syntax appender list
      */
     List<SyntaxAppender> getSyntaxAppenderList();
 
     /**
      * Gets completion content.
-     *
      * @param splitList the split list
      * @return the completion content
      */
@@ -39,7 +37,6 @@ public interface SyntaxAppenderFactory {
 
     /**
      * Gets factory template text.
-     *
      * @param jpaStringList         the jpa string list
      * @param entityClass           the entity class
      * @param parameters            the parameters
@@ -55,7 +52,6 @@ public interface SyntaxAppenderFactory {
 
     /**
      * Mapping append optional.
-     *
      * @param syntaxAppender the syntax appender
      * @param splitList      the split list
      * @return the optional
@@ -64,7 +60,6 @@ public interface SyntaxAppenderFactory {
 
     /**
      * 动态提示文本
-     *
      * @return tip text
      */
     String getTipText();
@@ -72,7 +67,6 @@ public interface SyntaxAppenderFactory {
 
     /**
      * Gets mx parameter.
-     *
      * @param entityClass   the entity class
      * @param jpaStringList the jpa string list
      * @return the mx parameter
@@ -81,7 +75,6 @@ public interface SyntaxAppenderFactory {
 
     /**
      * Gets template text.
-     *
      * @param tableName             the table name
      * @param entityClass           the entity class
      * @param parameters            the parameters
@@ -99,7 +92,6 @@ public interface SyntaxAppenderFactory {
 
     /**
      * Find priority.
-     *
      * @param priorityQueue      the priority queue
      * @param syntaxAppenderList the syntax appender list
      * @param splitStr           the split str

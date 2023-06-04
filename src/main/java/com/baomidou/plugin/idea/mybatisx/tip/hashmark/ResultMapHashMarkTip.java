@@ -7,7 +7,6 @@ import com.intellij.codeInsight.lookup.LookupElementBuilder;
 
 /**
  * 提示 resultMap
- *
  * @author ls9527
  */
 public class ResultMapHashMarkTip implements HashMarkTip {
@@ -19,7 +18,6 @@ public class ResultMapHashMarkTip implements HashMarkTip {
 
     /**
      * resultMap 标签太多，只提示当前文件的
-     *
      * @param completionResultSet
      * @param mapper
      */

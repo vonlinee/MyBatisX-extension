@@ -53,13 +53,12 @@ import java.util.stream.Collectors;
 
 /**
  * 代码生成入口
- *
  * @author ls9527
  */
 public class GenerateCode {
 
-    private static final Logger logger = LoggerFactory.getLogger(GenerateCode.class);
     public static final MergeJavaCallBack SHELL_CALLBACK = new MergeJavaCallBack(true);
+    private static final Logger logger = LoggerFactory.getLogger(GenerateCode.class);
 
     public static void generate(Project project,
                                 GenerateConfig generateConfig,
@@ -292,7 +291,6 @@ public class GenerateCode {
 
     /**
      * 添加相关插件（注意插件文件需要通过jar引入）
-     *
      * @param context
      */
     private static void addPluginConfiguration(Context context, GenerateConfig generateConfig) {

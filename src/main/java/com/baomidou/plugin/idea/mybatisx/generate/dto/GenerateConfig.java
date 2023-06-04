@@ -67,7 +67,6 @@ public class GenerateConfig {
 
     /**
      * 需要生成repository注解
-     *
      * @Repository
      */
 //    private boolean repositoryAnnotation;
@@ -119,12 +118,9 @@ public class GenerateConfig {
 
     /**
      * 需要生成mapper注解
-     *
      * @Mapper
      */
 //    private boolean needMapperAnnotation;
-
-
     public String getModuleName() {
         return moduleName;
     }

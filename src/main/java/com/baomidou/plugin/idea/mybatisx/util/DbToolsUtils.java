@@ -25,7 +25,6 @@ public class DbToolsUtils {
 
     /**
      * Build intellij table info intellij table info.
-     *
      * @param currentTable the current table
      * @return the intellij table info
      */
@@ -76,7 +75,6 @@ public class DbToolsUtils {
 
     /**
      * Extract database type from url string.
-     *
      * @param url the url
      * @return the string
      */
@@ -101,7 +99,6 @@ public class DbToolsUtils {
 
     /**
      * Convert column to intellij column info intellij column info.
-     *
      * @param column       the column
      * @param databaseType the database type
      * @return the intellij column info
@@ -131,7 +128,6 @@ public class DbToolsUtils {
 
     /**
      * Convert type name to jdbc type int.
-     *
      * @param jdbcTypeName the jdbc type name
      * @param size         the size
      * @param databaseType the database type

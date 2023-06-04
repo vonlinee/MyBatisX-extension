@@ -10,7 +10,6 @@ import java.util.Map;
 
 /**
  * tip jdbc type
- *
  * @author ls9527
  */
 public class JdbcTypeHashMarkTip implements HashMarkTip {

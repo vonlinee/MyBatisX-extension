@@ -21,7 +21,6 @@ public class OracleManager extends BaseDialectManager {
 
     /**
      * Instantiates a new Oracle manager.
-     *
      * @param mappingField the mapping field
      * @param entityClass  the entity class
      * @param dasTable     the das table

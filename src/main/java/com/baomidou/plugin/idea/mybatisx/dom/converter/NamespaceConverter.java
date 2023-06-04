@@ -18,7 +18,6 @@ import java.util.Optional;
 public class NamespaceConverter extends ConverterAdaptor<PsiClass> {
     /**
      * 转换成类
-     *
      * @param id
      * @param context
      * @return

@@ -39,7 +39,6 @@ import java.util.Set;
 
 /**
  * 在mapper类中通过名字生成方法和xml内容
- *
  * @author ls9527
  */
 public class GenerateSmartJpaAdvanceAction extends PsiElementBaseIntentionAction implements IntentionAction {
@@ -135,7 +134,7 @@ public class GenerateSmartJpaAdvanceAction extends PsiElementBaseIntentionAction
 
         List<TxField> resultTxFields = conditionFieldWrapper.getResultTxFields();
         final Generator generator = conditionFieldWrapper.getGenerator(mapperClassGenerateFactory);
-        if(generator.checkCanGenerate(mapperClass)){
+        if (generator.checkCanGenerate(mapperClass)) {
             platformGenerator.generateMapperXml(
                 psiMethod,
                 conditionFieldWrapper,
@@ -156,7 +155,6 @@ public class GenerateSmartJpaAdvanceAction extends PsiElementBaseIntentionAction
 
     /**
      * 创建 条件字段包装器， 用于if,where 这样的标签
-     *
      * @param project         the project
      * @param defaultDateWord
      * @param allFields

@@ -10,14 +10,12 @@ import org.jetbrains.annotations.NotNull;
 
 /**
  * The interface Result map group.
- *
  * @author yanglin
  */
 public interface ResultMapGroup extends DomElement {
 
     /**
      * Gets result map.
-     *
      * @return the result map
      */
     @NotNull

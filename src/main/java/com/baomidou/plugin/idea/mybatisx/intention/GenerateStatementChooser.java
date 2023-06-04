@@ -10,7 +10,6 @@ import org.jetbrains.annotations.NotNull;
 
 /**
  * The type Generate statement chooser.
- *
  * @author yanglin
  */
 public class GenerateStatementChooser extends JavaFileIntentionChooser {

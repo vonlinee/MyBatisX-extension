@@ -9,11 +9,11 @@ public enum TemplateAnnotationType {
      */
     NONE,
     /**
-     *  实体类加入 MYBATIS_PLUS3 注解
+     * 实体类加入 MYBATIS_PLUS3 注解
      */
     MYBATIS_PLUS3,
     /**
-     *  实体类加入 MYBATIS_PLUS2 注解
+     * 实体类加入 MYBATIS_PLUS2 注解
      */
     MYBATIS_PLUS2,
     /**

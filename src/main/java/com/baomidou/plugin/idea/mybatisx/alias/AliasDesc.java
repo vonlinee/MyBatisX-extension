@@ -5,7 +5,6 @@ import org.jetbrains.annotations.NotNull;
 
 /**
  * The type Alias desc.
- *
  * @author yanglin
  */
 public class AliasDesc {
@@ -22,7 +21,6 @@ public class AliasDesc {
 
     /**
      * Instantiates a new Alias desc.
-     *
      * @param clazz the clazz
      * @param alias the alias
      */
@@ -33,7 +31,6 @@ public class AliasDesc {
 
     /**
      * Create alias desc.
-     *
      * @param psiClass the psi class
      * @param alias    the alias
      * @return the alias desc
@@ -44,7 +41,6 @@ public class AliasDesc {
 
     /**
      * Gets clazz.
-     *
      * @return the clazz
      */
     public PsiClass getClazz() {
@@ -53,7 +49,6 @@ public class AliasDesc {
 
     /**
      * Sets clazz.
-     *
      * @param clazz the clazz
      */
     public void setClazz(PsiClass clazz) {
@@ -62,7 +57,6 @@ public class AliasDesc {
 
     /**
      * Gets alias.
-     *
      * @return the alias
      */
     public String getAlias() {
@@ -71,7 +65,6 @@ public class AliasDesc {
 
     /**
      * Sets alias.
-     *
      * @param alias the alias
      */
     public void setAlias(String alias) {

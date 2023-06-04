@@ -19,7 +19,6 @@ import java.util.List;
 public interface AreaOperateManager {
     /**
      * 将字符串分割成 符号追加器
-     *
      * @param splitParam the split param
      * @return linked list
      */
@@ -28,7 +27,6 @@ public interface AreaOperateManager {
 
     /**
      * 获取生成的内容
-     *
      * @param splitList the split list
      * @return completion content
      */
@@ -36,14 +34,12 @@ public interface AreaOperateManager {
 
     /**
      * Gets completion content.
-     *
      * @return the completion content
      */
     List<String> getCompletionContent();
 
     /**
      * Gets parameters.
-     *
      * @param entityClass   the entity class
      * @param jpaStringList the jpa string list
      * @return the parameters
@@ -52,7 +48,6 @@ public interface AreaOperateManager {
 
     /**
      * Gets return wrapper.
-     *
      * @param text        the text
      * @param entityClass the entity class
      * @param linkedList  the linked list
@@ -62,7 +57,6 @@ public interface AreaOperateManager {
 
     /**
      * 当前区域是否支持这个操作
-     *
      * @param operatorText 操作区文本
      * @return boolean
      */
@@ -70,7 +64,6 @@ public interface AreaOperateManager {
 
     /**
      * Generate mapper xml.
-     *
      * @param id                    the id
      * @param jpaList               输入的文本
      * @param entityClass           类

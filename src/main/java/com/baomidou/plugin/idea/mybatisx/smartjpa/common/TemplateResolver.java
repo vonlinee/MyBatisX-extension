@@ -16,7 +16,6 @@ public class TemplateResolver {
 
     /**
      * Gets template text.
-     *
      * @param current               the current
      * @param tableName             the table name
      * @param entityClass           the entity class

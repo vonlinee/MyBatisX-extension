@@ -8,7 +8,6 @@ import org.jetbrains.annotations.NotNull;
 
 /**
  * The type Generic intention.
- *
  * @author yanglin
  */
 public abstract class GenericIntention implements IntentionAction {
@@ -20,7 +19,6 @@ public abstract class GenericIntention implements IntentionAction {
 
     /**
      * Instantiates a new Generic intention.
-     *
      * @param chooser the chooser
      */
     public GenericIntention(@NotNull IntentionChooser chooser) {

@@ -5,7 +5,7 @@ import ${tableClass.fullClassName};
 import ${serviceInterface.packageName}.${serviceInterface.fileName};
 import ${mapperInterface.packageName}.${mapperInterface.fileName};
 <#if baseService??&&baseService!="">
-import ${baseService};
+    import ${baseService};
     <#list baseService?split(".") as simpleName>
         <#if !simpleName_has_next>
             <#assign serviceSimpleName>${simpleName}</#assign>
@@ -21,7 +21,7 @@ import org.springframework.stereotype.Service;
 */
 @Service
 public class ${baseInfo.fileName} extends ServiceImpl<${mapperInterface.fileName}, ${tableClass.shortClassName}>
-    implements ${serviceInterface.fileName}{
+implements ${serviceInterface.fileName}{
 
 }
 

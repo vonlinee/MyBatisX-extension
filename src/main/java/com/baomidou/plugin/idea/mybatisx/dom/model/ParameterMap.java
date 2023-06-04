@@ -12,14 +12,12 @@ import java.util.List;
 
 /**
  * The interface Parameter map.
- *
  * @author yanglin
  */
 public interface ParameterMap extends IdDomElement {
 
     /**
      * Gets type.
-     *
      * @return the type
      */
     @NotNull
@@ -29,7 +27,6 @@ public interface ParameterMap extends IdDomElement {
 
     /**
      * Gets parameters.
-     *
      * @return the parameters
      */
     @SubTagList("parameter")

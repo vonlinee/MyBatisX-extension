@@ -21,7 +21,6 @@ import java.awt.event.ActionListener;
 
 /**
  * The type Ui component facade.
- *
  * @author yanglin
  */
 public final class UiComponentFacade {
@@ -37,7 +36,6 @@ public final class UiComponentFacade {
 
     /**
      * Gets instance.
-     *
      * @param project the project
      * @return the instance
      */
@@ -47,7 +45,6 @@ public final class UiComponentFacade {
 
     /**
      * Show single folder selection dialog virtual file.
-     *
      * @param title    the title
      * @param toSelect the to select
      * @param roots    the roots
@@ -66,7 +63,6 @@ public final class UiComponentFacade {
 
     /**
      * Show list popup with single clickable jb popup.
-     *
      * @param popupTitle        the popup title
      * @param popupListener     the popup listener
      * @param clickableTitle    the clickable title
@@ -104,7 +100,6 @@ public final class UiComponentFacade {
 
     /**
      * Show list popup jb popup.
-     *
      * @param title    the title
      * @param listener the listener
      * @param objs     the objs
@@ -139,7 +134,6 @@ public final class UiComponentFacade {
 
     /**
      * Create list popup builder popup chooser builder.
-     *
      * @param title    the title
      * @param listener the listener
      * @param objs     the objs

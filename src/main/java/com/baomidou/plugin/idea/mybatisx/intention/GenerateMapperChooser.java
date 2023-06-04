@@ -7,7 +7,6 @@ import org.jetbrains.annotations.NotNull;
 
 /**
  * The type Generate mapper chooser.
- *
  * @author yanglin
  */
 public class GenerateMapperChooser extends JavaFileIntentionChooser {

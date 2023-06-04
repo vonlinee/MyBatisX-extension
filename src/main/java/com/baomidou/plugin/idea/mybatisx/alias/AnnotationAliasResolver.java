@@ -18,14 +18,12 @@ import java.util.stream.Collectors;
 
 /**
  * The type Annotation alias resolver.
- *
  * @author yanglin
  */
 public class AnnotationAliasResolver extends AliasResolver {
 
     /**
      * Instantiates a new Annotation alias resolver.
-     *
      * @param project the project
      */
     public AnnotationAliasResolver(Project project) {
@@ -34,7 +32,6 @@ public class AnnotationAliasResolver extends AliasResolver {
 
     /**
      * Gets instance.
-     *
      * @param project the project
      * @return the instance
      */
@@ -47,7 +44,8 @@ public class AnnotationAliasResolver extends AliasResolver {
     public Set<AliasDesc> getClassAliasDescriptions(@Nullable PsiElement element) {
         Optional<PsiClass> clazz = Annotation.ALIAS.toPsiClass(project);
         if (clazz.isPresent()) {
-            Collection<PsiClass> res = AnnotatedElementsSearch.searchPsiClasses(clazz.get(), GlobalSearchScope.allScope(project)).findAll();
+            Collection<PsiClass> res = AnnotatedElementsSearch
+                .searchPsiClasses(clazz.get(), GlobalSearchScope.allScope(project)).findAll();
             return res.stream().map(psiClass -> {
                 Optional<String> txt = JavaUtils.getAnnotationValueText(psiClass, Annotation.ALIAS);
                 if (!txt.isPresent()) {

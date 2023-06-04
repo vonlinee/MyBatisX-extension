@@ -8,7 +8,6 @@ import javax.swing.*;
 
 /**
  * The type Mybatis configurable.
- *
  * @author yanglin
  */
 public class MybatisConfigurable implements SearchableConfigurable {
@@ -57,7 +56,7 @@ public class MybatisConfigurable implements SearchableConfigurable {
 
     @Override
     public boolean isModified() {
-        return  !mybatisXSettings.getInsertGenerator().equals(mybatisSettingForm.insertPatternTextField.getText())
+        return !mybatisXSettings.getInsertGenerator().equals(mybatisSettingForm.insertPatternTextField.getText())
             || !mybatisXSettings.getDeleteGenerator().equals(mybatisSettingForm.deletePatternTextField.getText())
             || !mybatisXSettings.getUpdateGenerator().equals(mybatisSettingForm.updatePatternTextField.getText())
             || !mybatisXSettings.getSelectGenerator().equals(mybatisSettingForm.selectPatternTextField.getText())
@@ -86,7 +85,7 @@ public class MybatisConfigurable implements SearchableConfigurable {
         mybatisSettingForm.updatePatternTextField.setText(mybatisXSettings.getUpdateGenerator());
         mybatisSettingForm.selectPatternTextField.setText(mybatisXSettings.getSelectGenerator());
 
-        JRadioButton jRadioButton =  mybatisSettingForm.birdRadioButton;
+        JRadioButton jRadioButton = mybatisSettingForm.birdRadioButton;
         if (MybatisXSettings.MapperIcon.DEFAULT.name().equals(mybatisXSettings.getMapperIcon())) {
             jRadioButton = mybatisSettingForm.defaultRadioButton;
         }

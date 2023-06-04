@@ -8,14 +8,12 @@ import java.util.List;
 
 /**
  * The interface Beans.
- *
  * @author yanglin
  */
 public interface Beans extends DomElement {
 
     /**
      * Gets beans.
-     *
      * @return the beans
      */
     @NotNull

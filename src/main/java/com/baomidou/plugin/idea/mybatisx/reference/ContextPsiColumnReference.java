@@ -29,7 +29,6 @@ import java.util.Optional;
 
 /**
  * The type Context psi field reference.
- *
  * @author yanglin
  */
 public class ContextPsiColumnReference extends PsiReferenceBase<XmlAttributeValue> {
@@ -46,7 +45,6 @@ public class ContextPsiColumnReference extends PsiReferenceBase<XmlAttributeValu
 
     /**
      * Instantiates a new Context psi field reference.
-     *
      * @param element     the element
      * @param range       the range
      * @param index       the index
@@ -62,7 +60,6 @@ public class ContextPsiColumnReference extends PsiReferenceBase<XmlAttributeValu
     /**
      * 如果能找到正确的列, 线条转到正确的列
      * 无法找到数据库的列, 引用当前节点
-     *
      * @return
      */
     @SuppressWarnings("unchecked")
@@ -84,7 +81,6 @@ public class ContextPsiColumnReference extends PsiReferenceBase<XmlAttributeValu
 
     /**
      * 获取用于提示的变量列表
-     *
      * @return
      */
     @NotNull
@@ -127,7 +123,6 @@ public class ContextPsiColumnReference extends PsiReferenceBase<XmlAttributeValu
 
     /**
      * Gets resolver.
-     *
      * @return the resolver
      */
     public PsiColumnReferenceSetResolver getResolver() {
@@ -136,7 +131,6 @@ public class ContextPsiColumnReference extends PsiReferenceBase<XmlAttributeValu
 
     /**
      * Sets resolver.
-     *
      * @param resolver the resolver
      */
     public void setResolver(PsiColumnReferenceSetResolver resolver) {
@@ -145,7 +139,6 @@ public class ContextPsiColumnReference extends PsiReferenceBase<XmlAttributeValu
 
     /**
      * Gets index.
-     *
      * @return the index
      */
     public int getIndex() {
@@ -154,7 +147,6 @@ public class ContextPsiColumnReference extends PsiReferenceBase<XmlAttributeValu
 
     /**
      * Sets index.
-     *
      * @param index the index
      */
     public void setIndex(int index) {

@@ -5,14 +5,12 @@ import org.jetbrains.annotations.NotNull;
 
 /**
  * The type Alias resolver factory.
- *
  * @author yanglin
  */
 public class AliasResolverFactory {
 
     /**
      * Create inner alias resolver alias resolver.
-     *
      * @param project the project
      * @return the alias resolver
      */
@@ -23,7 +21,6 @@ public class AliasResolverFactory {
 
     /**
      * Create annotation resolver alias resolver.
-     *
      * @param project the project
      * @return the alias resolver
      */
@@ -34,7 +31,6 @@ public class AliasResolverFactory {
 
     /**
      * Create bean resolver alias resolver.
-     *
      * @param project the project
      * @return the alias resolver
      */
@@ -45,7 +41,6 @@ public class AliasResolverFactory {
 
     /**
      * Create config package resolver alias resolver.
-     *
      * @param project the project
      * @return the alias resolver
      */
@@ -56,7 +51,6 @@ public class AliasResolverFactory {
 
     /**
      * Create single alias resolver alias resolver.
-     *
      * @param project the project
      * @return the alias resolver
      */

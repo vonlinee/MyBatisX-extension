@@ -7,7 +7,6 @@ import org.jetbrains.annotations.NotNull;
  * <p>
  * 通用 检查
  * </p>
- *
  * @author yanglin
  * @since 2018 -07-30
  */

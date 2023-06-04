@@ -14,7 +14,6 @@ import java.util.Optional;
 
 /**
  * The type Context reference set resolver.
- *
  * @param <F> the type parameter
  * @param <K> the type parameter
  * @author yanglin
@@ -40,7 +39,6 @@ public abstract class ContextReferenceSetResolver<F extends PsiElement, K extend
 
     /**
      * Instantiates a new Context reference set resolver.
-     *
      * @param element the element
      */
     protected ContextReferenceSetResolver(@NotNull F element) {
@@ -51,7 +49,6 @@ public abstract class ContextReferenceSetResolver<F extends PsiElement, K extend
 
     /**
      * Resolve optional.
-     *
      * @param index the index
      * @return the optional
      */
@@ -75,7 +72,6 @@ public abstract class ContextReferenceSetResolver<F extends PsiElement, K extend
 
     /**
      * Gets start element.
-     *
      * @return the start element
      */
     public Optional<K> getStartElement() {
@@ -84,7 +80,6 @@ public abstract class ContextReferenceSetResolver<F extends PsiElement, K extend
 
     /**
      * Gets start element.
-     *
      * @param firstText the first text
      * @return the start element
      */
@@ -93,7 +88,6 @@ public abstract class ContextReferenceSetResolver<F extends PsiElement, K extend
 
     /**
      * Gets text.
-     *
      * @return the text
      */
     @NotNull
@@ -101,7 +95,6 @@ public abstract class ContextReferenceSetResolver<F extends PsiElement, K extend
 
     /**
      * Resolve optional.
-     *
      * @param current the current
      * @param text    the text
      * @return the optional
@@ -113,7 +106,6 @@ public abstract class ContextReferenceSetResolver<F extends PsiElement, K extend
 
     /**
      * Gets element.
-     *
      * @return the element
      */
     public F getElement() {
@@ -122,7 +114,6 @@ public abstract class ContextReferenceSetResolver<F extends PsiElement, K extend
 
     /**
      * Sets element.
-     *
      * @param element the element
      */
     public void setElement(F element) {
@@ -131,7 +122,6 @@ public abstract class ContextReferenceSetResolver<F extends PsiElement, K extend
 
     /**
      * Gets project.
-     *
      * @return the project
      */
     public Project getProject() {
@@ -140,7 +130,6 @@ public abstract class ContextReferenceSetResolver<F extends PsiElement, K extend
 
     /**
      * Sets project.
-     *
      * @param project the project
      */
     public void setProject(Project project) {

@@ -14,14 +14,12 @@ import java.util.Optional;
 
 /**
  * The type Psi field reference set resolver.
- *
  * @author yanglin
  */
 public class PsiFieldReferenceSetResolver extends ContextReferenceSetResolver<XmlAttributeValue, PsiField> {
 
     /**
      * Instantiates a new Psi field reference set resolver.
-     *
      * @param from the from
      */
     protected PsiFieldReferenceSetResolver(XmlAttributeValue from) {

@@ -39,7 +39,6 @@ import java.util.stream.Collectors;
 
 /**
  * #{}提示的内容, 不仅仅只是字段， 还包括mybatis支持的7大属性配置
- *
  * @author ls9527
  */
 public class CompositeHashMarkTip {
@@ -50,14 +49,7 @@ public class CompositeHashMarkTip {
      * @param userName 用户名
      */
     public static final String PARAM = "param";
-    private Project project;
-
-    public CompositeHashMarkTip(Project project) {
-        this.project = project;
-    }
-
     private static final Logger logger = LoggerFactory.getLogger(CompositeHashMarkTip.class);
-
     private static List<HashMarkTip> hashMarkTips = new ArrayList<HashMarkTip>() {
         {
             add(new JdbcTypeHashMarkTip());
@@ -69,14 +61,17 @@ public class CompositeHashMarkTip {
             add(new JdbcTypeNameHashMarkTip());
         }
     };
+    private Project project;
 
+    public CompositeHashMarkTip(Project project) {
+        this.project = project;
+    }
 
     /**
      * Add element for psi parameter.
      * <p>
      * 提示的内容参考:
      * see https://mybatis.org/mybatis-3/zh/sqlmap-xml.html#select
-     *
      * @param wrappedText
      * @param editorCaret
      */
@@ -161,7 +156,6 @@ public class CompositeHashMarkTip {
      * 提示类的全称: com.intellij.codeInsight.completion.JavaPsiClassReferenceElement (com.baomidou.mybatis3.domain.Blog)
      * 提示类的简称: com.intellij.codeInsight.lookup.PsiTypeLookupItem  (Blog)
      * 提示指定的单个属性: com.intellij.codeInsight.lookup.VariableLookupItem
-     *
      * @param result
      * @param psiParameter
      * @param params
@@ -170,7 +164,8 @@ public class CompositeHashMarkTip {
      * @param canUseFields      是否能使用参数的类型的属性名称
      */
     private void promptFields(CompletionResultSet result, PsiParameter psiParameter, PsiDocTag[] params, String fieldFrontOfCaret, String fieldName, boolean canUseFields) {
-        Optional<PsiClass> clazz = JavaUtils.findClazz(psiParameter.getProject(), psiParameter.getType().getCanonicalText());
+        Optional<PsiClass> clazz = JavaUtils.findClazz(psiParameter.getProject(), psiParameter.getType()
+            .getCanonicalText());
         boolean isPrimitive = true;
         // 是一个类型:
         if (clazz.isPresent()) {
@@ -263,12 +258,14 @@ public class CompositeHashMarkTip {
 
     private String findFieldNameByParam(PsiParameter psiParameter) {
         String fieldName = null;
-        PsiConstantEvaluationHelper constantEvaluationHelper = JavaPsiFacade.getInstance(project).getConstantEvaluationHelper();
+        PsiConstantEvaluationHelper constantEvaluationHelper = JavaPsiFacade.getInstance(project)
+            .getConstantEvaluationHelper();
         PsiAnnotation annotation = psiParameter.getAnnotation(Annotation.PARAM.getQualifiedName());
         // 有注解, 优先使用注解名称
         if (annotation != null) {
             PsiAnnotationMemberValue valueAttr = annotation.findAttributeValue("value");
-            fieldName = Objects.requireNonNull(constantEvaluationHelper.computeConstantExpression(valueAttr)).toString();
+            fieldName = Objects.requireNonNull(constantEvaluationHelper.computeConstantExpression(valueAttr))
+                .toString();
         }
 
         return fieldName;
@@ -298,9 +295,11 @@ public class CompositeHashMarkTip {
             }
             String fieldName = findFieldName(myElement);
             // 没有字段名称, 不需要查找引用
-            PsiConstantEvaluationHelper constantEvaluationHelper = JavaPsiFacade.getInstance(project).getConstantEvaluationHelper();
+            PsiConstantEvaluationHelper constantEvaluationHelper = JavaPsiFacade.getInstance(project)
+                .getConstantEvaluationHelper();
             int parametersCount = parameterList.getParametersCount();
-            @NotNull PsiParameter[] parameters = parameterList.getParameters();
+            @NotNull
+            PsiParameter[] parameters = parameterList.getParameters();
             for (PsiParameter psiParameter : parameters) {
                 PsiAnnotation annotation = psiParameter.getAnnotation(Annotation.PARAM.getQualifiedName());
                 if (annotation != null) {

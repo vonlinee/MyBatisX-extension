@@ -15,7 +15,6 @@ public class FieldSuffixAppendTypeService implements AppendTypeCommand {
 
     /**
      * Instantiates a new Field suffix append type service.
-     *
      * @param syntaxAppender the syntax appender
      */
     public FieldSuffixAppendTypeService(final SyntaxAppender syntaxAppender) {

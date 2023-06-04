@@ -15,7 +15,6 @@ import java.io.Serializable;
 /**
  * The type Mybatis setting.
  * 这里是全局配置, 所以配置文件在目录($APP_CONFIG$)下
- *
  * @author yanglin
  */
 @State(
@@ -23,6 +22,7 @@ import java.io.Serializable;
     storages = @Storage(value = "$APP_CONFIG$/mybatisx.xml"))
 public class MybatisXSettings implements PersistentStateComponent<MybatisXSettings>, Serializable {
 
+    private static transient Joiner joiner = Joiner.on(";");
     // 配置的默认值
     private String mapperIcon;
     private String insertGenerator;
@@ -30,10 +30,8 @@ public class MybatisXSettings implements PersistentStateComponent<MybatisXSettin
     private String deleteGenerator;
     private String selectGenerator;
 
-    private static transient Joiner joiner = Joiner.on(";");
     /**
      * Gets instance.
-     *
      * @return the instance
      */
     public static MybatisXSettings getInstance() {
@@ -72,36 +70,36 @@ public class MybatisXSettings implements PersistentStateComponent<MybatisXSettin
         return insertGenerator;
     }
 
-    public String getUpdateGenerator() {
-        return updateGenerator;
-    }
-
-    public String getDeleteGenerator() {
-        return deleteGenerator;
-    }
-
-    public String getSelectGenerator() {
-        return selectGenerator;
-    }
-
-    public String getMapperIcon() {
-        return mapperIcon;
-    }
-
     public void setInsertGenerator(String insertGenerator) {
         this.insertGenerator = insertGenerator;
+    }
+
+    public String getUpdateGenerator() {
+        return updateGenerator;
     }
 
     public void setUpdateGenerator(String updateGenerator) {
         this.updateGenerator = updateGenerator;
     }
 
+    public String getDeleteGenerator() {
+        return deleteGenerator;
+    }
+
     public void setDeleteGenerator(String deleteGenerator) {
         this.deleteGenerator = deleteGenerator;
     }
 
+    public String getSelectGenerator() {
+        return selectGenerator;
+    }
+
     public void setSelectGenerator(String selectGenerator) {
         this.selectGenerator = selectGenerator;
+    }
+
+    public String getMapperIcon() {
+        return mapperIcon;
     }
 
     public void setMapperIcon(String mapperIcon) {

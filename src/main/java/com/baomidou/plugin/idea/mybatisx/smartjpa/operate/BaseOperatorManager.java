@@ -39,7 +39,6 @@ public abstract class BaseOperatorManager implements AreaOperateManager {
 
     /**
      * Gets operator name list.
-     *
      * @return the operator name list
      */
     protected Set<String> getOperatorNameList() {
@@ -48,7 +47,6 @@ public abstract class BaseOperatorManager implements AreaOperateManager {
 
     /**
      * Sets operator name list.
-     *
      * @param nameSet the name set
      */
     protected void setOperatorNameList(final Set<String> nameSet) {
@@ -69,7 +67,6 @@ public abstract class BaseOperatorManager implements AreaOperateManager {
 
     /**
      * Add operator name.
-     *
      * @param operatorName the operator name
      */
     protected void addOperatorName(String operatorName) {
@@ -84,7 +81,6 @@ public abstract class BaseOperatorManager implements AreaOperateManager {
 
     /**
      * Can execute boolean.
-     *
      * @param areaName the area name
      * @return the boolean
      */
@@ -100,7 +96,8 @@ public abstract class BaseOperatorManager implements AreaOperateManager {
             return Collections.emptyList();
         }
         List<SyntaxAppenderFactory> areaListByJpa = syntaxAppenderFactoryManager.findAreaListByJpa(jpaList);
-        return areaListByJpa.stream().flatMap(x -> x.getCompletionContent(jpaList).stream()).collect(Collectors.toList());
+        return areaListByJpa.stream().flatMap(x -> x.getCompletionContent(jpaList).stream())
+            .collect(Collectors.toList());
     }
 
     @Override
@@ -114,7 +111,6 @@ public abstract class BaseOperatorManager implements AreaOperateManager {
 
     /**
      * 获取参数列表
-     *
      * @param entityClass
      * @return
      */
@@ -132,7 +128,8 @@ public abstract class BaseOperatorManager implements AreaOperateManager {
         compositeAppender.toTree(new LinkedList<>(jpaList), rootSyntaxWrapper);
         // 树形结构 根据区域转成map
         LinkedList<SyntaxAppenderWrapper> collector = rootSyntaxWrapper.getCollector();
-        Map<String, SyntaxAppenderWrapper> areaAppenderWrapperMap = collector.stream().collect(Collectors.toMap(k -> k.getAppender().getText(), v -> v));
+        Map<String, SyntaxAppenderWrapper> areaAppenderWrapperMap = collector.stream()
+            .collect(Collectors.toMap(k -> k.getAppender().getText(), v -> v));
         // 根据区域工厂处理所有区域下的所有符号追加器
         List<SyntaxAppenderFactory> areaListByJpa = syntaxAppenderFactoryManager.findAreaListByJpa(jpaList);
         return areaListByJpa.stream().flatMap(appenderFactory -> {
@@ -145,7 +142,6 @@ public abstract class BaseOperatorManager implements AreaOperateManager {
 
     /**
      * Register statement block.
-     *
      * @param statementBlock the statement block
      */
     public void registerStatementBlock(StatementBlock statementBlock) {
@@ -154,14 +150,12 @@ public abstract class BaseOperatorManager implements AreaOperateManager {
 
     /**
      * Gets tag name.
-     *
      * @return the tag name
      */
     protected abstract String getTagName();
 
     /**
      * 生成xml
-     *
      * @param jpaList               the jpa list
      * @param entityClass           the entity class
      * @param psiMethod             the psi method
@@ -200,7 +194,6 @@ public abstract class BaseOperatorManager implements AreaOperateManager {
 
     /**
      * Init custom area.
-     *
      * @param areaName     the area name
      * @param mappingField the mapping field
      */

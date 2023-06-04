@@ -7,7 +7,6 @@ import javax.swing.*;
 
 /**
  * The interface Icons.
- *
  * @author yanglin
  */
 public interface Icons {

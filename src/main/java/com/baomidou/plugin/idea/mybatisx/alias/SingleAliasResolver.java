@@ -13,14 +13,12 @@ import java.util.Set;
  * 用于支持 mybatis-.meta.xml 下的 configuration -> typeAliases -> typeAlias
  * <p>
  * The type Single alias resolver.
- *
  * @author yanglin
  */
 public class SingleAliasResolver extends AliasResolver {
 
     /**
      * Instantiates a new Single alias resolver.
-     *
      * @param project the project
      */
     public SingleAliasResolver(Project project) {

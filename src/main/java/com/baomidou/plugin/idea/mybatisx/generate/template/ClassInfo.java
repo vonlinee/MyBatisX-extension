@@ -21,11 +21,6 @@ public class ClassInfo {
      * 类的简称
      */
     private String shortClassName;
-
-    public String getTableName() {
-        return tableName;
-    }
-
     /**
      * 表名
      */
@@ -64,23 +59,23 @@ public class ClassInfo {
         classInfo.remark = introspectedTable.getRemarks() == null ? "" : introspectedTable.getRemarks();
 
         classInfo.pkFields = introspectedTable.getPrimaryKeyColumns()
-                .stream()
-                .map(FieldInfo::build)
-                .collect(Collectors.toList());
+            .stream()
+            .map(FieldInfo::build)
+            .collect(Collectors.toList());
 
         classInfo.allFields = Stream.of(introspectedTable.getPrimaryKeyColumns(),
                 introspectedTable.getBaseColumns(),
                 introspectedTable.getBLOBColumns())
-                .flatMap(Collection::stream)
-                .map(FieldInfo::build)
-                .collect(Collectors.toList());
+            .flatMap(Collection::stream)
+            .map(FieldInfo::build)
+            .collect(Collectors.toList());
 
         classInfo.baseFields = introspectedTable.getBaseColumns().stream()
-                .map(FieldInfo::build)
-                .collect(Collectors.toList());
+            .map(FieldInfo::build)
+            .collect(Collectors.toList());
 
         classInfo.baseBlobFields = Stream.of(introspectedTable.getBaseColumns(),
-            introspectedTable.getBLOBColumns())
+                introspectedTable.getBLOBColumns())
             .flatMap(Collection::stream)
             .map(FieldInfo::build)
             .collect(Collectors.toList());
@@ -88,10 +83,14 @@ public class ClassInfo {
         classInfo.importList = classInfo.allFields.stream()
             .filter(fieldInfo -> !fieldInfo.isColumnIsArray())
             .map(FieldInfo::getFullTypeName)
-            .filter(typeName->!typeName.startsWith("java.lang"))
+            .filter(typeName -> !typeName.startsWith("java.lang"))
             .distinct()
             .collect(Collectors.toList());
         return classInfo;
+    }
+
+    public String getTableName() {
+        return tableName;
     }
 
     public String getFullClassName() {

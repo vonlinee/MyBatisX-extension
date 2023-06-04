@@ -27,7 +27,6 @@ public final class DomUtils {
 
     /**
      * Find dom elements collection.
-     *
      * @param <T>     the type parameter
      * @param project the project
      * @param clazz   the clazz
@@ -45,7 +44,6 @@ public final class DomUtils {
      * <p>
      * 判断是否为 Mybatis XML 文件
      * </p>
-     *
      * @param file 判断文件
      * @return boolean
      */
@@ -78,7 +76,6 @@ public final class DomUtils {
 
     /**
      * Is mybatis configuration file boolean.
-     *
      * @param file the file
      * @return the boolean
      */
@@ -92,7 +89,6 @@ public final class DomUtils {
 
     /**
      * Is beans file boolean.
-     *
      * @param file the file
      * @return the boolean
      */
@@ -106,7 +102,6 @@ public final class DomUtils {
 
     /**
      * Is xml file boolean.
-     *
      * @param file the file
      * @return the boolean
      */

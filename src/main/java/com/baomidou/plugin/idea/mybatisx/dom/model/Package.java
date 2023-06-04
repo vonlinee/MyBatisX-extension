@@ -7,14 +7,12 @@ import org.jetbrains.annotations.NotNull;
 
 /**
  * The interface Package.
- *
  * @author yanglin
  */
 public interface Package extends DomElement {
 
     /**
      * Gets name.
-     *
      * @return the name
      */
     @NotNull

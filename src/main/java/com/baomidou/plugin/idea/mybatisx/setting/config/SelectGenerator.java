@@ -13,7 +13,6 @@ import java.util.Optional;
  * <p>
  * Select 代码生成器
  * </p>
- *
  * @author yanglin jobob
  * @since 2018 -07-30
  */
@@ -21,7 +20,6 @@ public class SelectGenerator extends AbstractStatementGenerator {
 
     /**
      * Instantiates a new Select generator.
-     *
      * @param patterns the patterns
      */
     public SelectGenerator(@NotNull String... patterns) {

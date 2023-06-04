@@ -11,14 +11,14 @@
         <result column="create_time" property="createTime"/>
     </resultMap>
     <sql id="Base_Column_List">
-        id,age,content,title,money
+        id
+        ,age,content,title,money
     </sql>
     <update id="updateAgeAndContentByIdGreaterThanEqual">
         update t_blog
-        set age = #{age,jdbcType=NUMERIC},
-        content = #{content,jdbcType=VARCHAR}
-        where
-        id >= #{id,jdbcType=NUMERIC}
+        set age     = #{age,jdbcType=NUMERIC},
+            content = #{content,jdbcType=VARCHAR}
+        where id >= #{id,jdbcType=NUMERIC}
     </update>
 
 </mapper>

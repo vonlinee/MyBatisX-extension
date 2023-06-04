@@ -11,7 +11,8 @@
         <result column="blob_text" property="blobText"/>
     </resultMap>
     <sql id="Base_Column_List">
-        id,age,content,title,money
+        id
+        ,age,content,title,money
     </sql>
 
     <update id="updateIdAndContentByAllFields">
@@ -19,9 +20,9 @@
         set id      = #{id,jdbcType=NUMERIC},
             content = #{content,jdbcType=VARCHAR}
         where
-            AND id = #{id,jdbcType=NUMERIC}
-            AND title = #{title,jdbcType=VARCHAR}
-            AND content = #{content,jdbcType=VARCHAR}
+          AND id = #{id,jdbcType=NUMERIC}
+          AND title = #{title,jdbcType=VARCHAR}
+          AND content = #{content,jdbcType=VARCHAR}
     </update>
     <resultMap id="BlogIdTitleMap" type="com.baomidou.mybatis3.domain.BlogIdTitleDTO">
         <result column="id" property="id" jdbcType="NUMERIC"/>
@@ -60,28 +61,29 @@
          blob_text,
          objects,
          ids)
-        values ( #{id,jdbcType=NUMERIC},
+        values (#{id,jdbcType=NUMERIC},
                 #{title,jdbcType=VARCHAR},
                 #{content,jdbcType=VARCHAR},
                 #{money,jdbcType=DECIMAL},
                 #{age,jdbcType=NUMERIC},
                 NOW(),
-                 #{blobText},
+                #{blobText},
                 #{objects},
-                 #{ids})
+                #{ids})
 
     </insert>
 
     <resultMap id="BlogTitleContentMap" type="blogTitleContentDTO">
         <result column="title" property="title" jdbcType="VARCHAR"/>
-        <result column="content" property="content" jdbcType="VARCHAR" />
+        <result column="content" property="content" jdbcType="VARCHAR"/>
         <association property="childOther">
             <result column="title" property="title" jdbcType="VARCHAR"/>
             <result column="content" property="content" jdbcType="VARCHAR"/>
         </association>
         <collection property="childList" ofType="blogTitleContentDTOChild">
             <result column="title" property="title" jdbcType="VARCHAR"/>
-            <result column="content" property="content" jdbcType="VARCHAR" typeHandler="org.apache.ibatis.type.StringTypeHandler" />
+            <result column="content" property="content" jdbcType="VARCHAR"
+                    typeHandler="org.apache.ibatis.type.StringTypeHandler"/>
             <result column="createTime" property="createTime" jdbcType="VARCHAR"/>
         </collection>
     </resultMap>
@@ -95,7 +97,7 @@
         </where>
     </select>
     <select id="selectTitleAndContentById" resultMap="BlogTitleContentMap">
-select * from blog where id = #{id}
+        select * from blog where id = #{id}
         select title, content
         from t_blog
         <where>
@@ -119,10 +121,9 @@ select * from blog where id = #{id}
         title = #{title,jdbcType=BLOB}
     </select>
     <select id="selectCreateTimeByAge" resultType="com.baomidou.mybatis3.domain.Blog">
-    select create_time
-    from t_blog
-    where
-    age = #{blog.age,jdbcType=VARCHAR}
+        select create_time
+        from t_blog
+        where age = #{blog.age,jdbcType=VARCHAR}
     </select>
 
 

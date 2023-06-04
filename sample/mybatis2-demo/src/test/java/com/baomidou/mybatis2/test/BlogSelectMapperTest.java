@@ -28,6 +28,8 @@ public class BlogSelectMapperTest {
 
     @Resource
     BlogSelectMapper blogSelectMapper;
+    @Resource
+    private BlogDeleteMapper blogDeleteMapper;
 
     @After
     public void destroyData() {
@@ -167,7 +169,6 @@ public class BlogSelectMapperTest {
         Assert.assertEquals(blogs.size(), 3);
     }
 
-
     @Test
     public void selectByAgeLessThan() {
         List<Blog> blogs = blogSelectMapper.selectByAgeLessThan(30);
@@ -185,9 +186,6 @@ public class BlogSelectMapperTest {
         List<Blog> blogs = blogSelectMapper.selectByAgeIs(23);
         Assert.assertEquals(blogs.size(), 1);
     }
-
-    @Resource
-    private BlogDeleteMapper blogDeleteMapper;
 
 
 }

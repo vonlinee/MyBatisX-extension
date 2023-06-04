@@ -19,7 +19,6 @@ import java.util.List;
  * <p>
  * Mapper 元素接口
  * </p>
- *
  * @author yanglin jobob
  * @since 2018 -07-30
  */
@@ -28,7 +27,6 @@ public interface Mapper extends DomElement {
 
     /**
      * Gets dao elements.
-     *
      * @return the dao elements
      */
     @NotNull
@@ -37,7 +35,6 @@ public interface Mapper extends DomElement {
 
     /**
      * Gets namespace.
-     *
      * @return the namespace
      */
     @Required
@@ -49,7 +46,6 @@ public interface Mapper extends DomElement {
 
     /**
      * Gets result maps.
-     *
      * @return the result maps
      */
     @NotNull
@@ -58,7 +54,6 @@ public interface Mapper extends DomElement {
 
     /**
      * Gets parameter maps.
-     *
      * @return the parameter maps
      */
     @NotNull
@@ -67,7 +62,6 @@ public interface Mapper extends DomElement {
 
     /**
      * Gets sqls.
-     *
      * @return the sqls
      */
     @NotNull
@@ -76,7 +70,6 @@ public interface Mapper extends DomElement {
 
     /**
      * Gets inserts.
-     *
      * @return the inserts
      */
     @NotNull
@@ -85,7 +78,6 @@ public interface Mapper extends DomElement {
 
     /**
      * Gets updates.
-     *
      * @return the updates
      */
     @NotNull
@@ -94,7 +86,6 @@ public interface Mapper extends DomElement {
 
     /**
      * Gets deletes.
-     *
      * @return the deletes
      */
     @NotNull
@@ -103,7 +94,6 @@ public interface Mapper extends DomElement {
 
     /**
      * Gets selects.
-     *
      * @return the selects
      */
     @NotNull
@@ -112,7 +102,6 @@ public interface Mapper extends DomElement {
 
     /**
      * Add select select.
-     *
      * @return the select
      */
     @SubTagList("select")
@@ -120,7 +109,6 @@ public interface Mapper extends DomElement {
 
     /**
      * Add update update.
-     *
      * @return the update
      */
     @SubTagList("update")
@@ -128,7 +116,6 @@ public interface Mapper extends DomElement {
 
     /**
      * Add insert insert.
-     *
      * @return the insert
      */
     @SubTagList("insert")
@@ -136,7 +123,6 @@ public interface Mapper extends DomElement {
 
     /**
      * Add delete delete.
-     *
      * @return the delete
      */
     @SubTagList("delete")

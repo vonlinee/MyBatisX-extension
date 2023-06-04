@@ -10,14 +10,12 @@ import java.util.List;
 
 /**
  * The interface Choose.
- *
  * @author yanglin
  */
 public interface Choose extends DomElement {
 
     /**
      * Gets whens.
-     *
      * @return the whens
      */
     @NotNull
@@ -27,7 +25,6 @@ public interface Choose extends DomElement {
 
     /**
      * Gets otherwise.
-     *
      * @return the otherwise
      */
     @SubTag("otherwise")

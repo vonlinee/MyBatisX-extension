@@ -7,14 +7,12 @@ import org.jetbrains.annotations.NotNull;
 
 /**
  * The interface Intention chooser.
- *
  * @author yanglin
  */
 public interface IntentionChooser {
 
     /**
      * Is available boolean.
-     *
      * @param project the project
      * @param editor  the editor
      * @param file    the file

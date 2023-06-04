@@ -37,7 +37,6 @@ public class CompositeAppender implements SyntaxAppender {
 
     /**
      * Instantiates a new Composite appender.
-     *
      * @param appenderList the appender list
      */
     public CompositeAppender(final SyntaxAppender... appenderList) {
@@ -56,7 +55,6 @@ public class CompositeAppender implements SyntaxAppender {
 
     /**
      * 返回最后一个的类型
-     *
      * @return
      */
     @Override
@@ -140,7 +138,9 @@ public class CompositeAppender implements SyntaxAppender {
 
     @Override
     public List<TxParameter> getMxParameter(LinkedList<SyntaxAppenderWrapper> syntaxAppenderWrapperLinkedList, PsiClass entityClass) {
-        return appenderList.stream().flatMap(appender -> appender.getMxParameter(syntaxAppenderWrapperLinkedList, entityClass).stream()).collect(Collectors.toList());
+        return appenderList.stream()
+            .flatMap(appender -> appender.getMxParameter(syntaxAppenderWrapperLinkedList, entityClass).stream())
+            .collect(Collectors.toList());
     }
 
     @Override

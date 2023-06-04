@@ -11,7 +11,6 @@ import org.jetbrains.annotations.NotNull;
  * <p>
  * ResultType 检查
  * </p>
- *
  * @author yanglin
  * @since 2018 -07-30
  */
@@ -22,7 +21,6 @@ public class ResultTypeQuickFix extends GenericQuickFix {
 
     /**
      * Instantiates a new Result type quick fix.
-     *
      * @param select the select
      * @param target the target
      */
@@ -45,7 +43,6 @@ public class ResultTypeQuickFix extends GenericQuickFix {
 
     /**
      * Gets target.
-     *
      * @return the target
      */
     @NotNull
@@ -55,7 +52,6 @@ public class ResultTypeQuickFix extends GenericQuickFix {
 
     /**
      * Sets target.
-     *
      * @param target the target
      */
     public void setTarget(@NotNull PsiClass target) {
@@ -64,7 +60,6 @@ public class ResultTypeQuickFix extends GenericQuickFix {
 
     /**
      * Gets select.
-     *
      * @return the select
      */
     @NotNull
@@ -74,7 +69,6 @@ public class ResultTypeQuickFix extends GenericQuickFix {
 
     /**
      * Sets select.
-     *
      * @param select the select
      */
     public void setSelect(@NotNull Select select) {

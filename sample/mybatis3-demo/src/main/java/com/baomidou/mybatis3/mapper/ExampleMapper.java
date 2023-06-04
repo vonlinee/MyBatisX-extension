@@ -1,4 +1,5 @@
 package com.baomidou.mybatis3.mapper;
+
 import com.baomidou.mybatis3.domain.BlogTitleContentDTO;
 import com.baomidou.mybatis3.domain.BlogAgeContentDTO;
 import com.baomidou.mybatis3.domain.BlogIdTitleDTO;
@@ -16,10 +17,10 @@ import org.apache.ibatis.annotations.Param;
 
 public interface ExampleMapper extends BaseMapper<Blog> {
     // 测试默认检测不爆红
-    default void checkDefaultMethod(){}
+    default void checkDefaultMethod() {
+    }
 
     int updateIdAndContentByAllFields(@Param("id") Long id, @Param("content") String content);
-
 
 
     List<BlogIdTitleDTO> selectIdAndTitleById(@Param("id") Long id);
@@ -41,6 +42,6 @@ public interface ExampleMapper extends BaseMapper<Blog> {
     IPage<Blog> selectByTitle(Page<Blog> page, @Param("title") String title);
 
     @MapKey("id")
-    Map<String,Blog> selectCreateTimeByAge(@Param("blog") Blog xxxx, @Param("age")int age);
+    Map<String, Blog> selectCreateTimeByAge(@Param("blog") Blog xxxx, @Param("age") int age);
 
 }

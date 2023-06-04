@@ -3,8 +3,6 @@ package com.baomidou.plugin.idea.mybatisx.smartjpa.component;
 import com.baomidou.plugin.idea.mybatisx.smartjpa.common.appender.AreaSequence;
 import com.baomidou.plugin.idea.mybatisx.smartjpa.exp.JpaGenerateException;
 import com.baomidou.plugin.idea.mybatisx.util.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.text.MessageFormat;
 import java.util.ArrayList;
@@ -31,24 +29,23 @@ public class TxParameterDescriptor implements TypeDescriptor {
 
     /**
      * Instantiates a new Tx parameter descriptor.
-     *
      * @param parameterList the parameter list
      * @param mappingField
      */
     public TxParameterDescriptor(final List<TxParameter> parameterList, List<TxField> mappingField) {
         this.parameterList = parameterList;
-        fieldColumnNameMapping = mappingField.stream().collect(Collectors.toMap(TxField::getFieldName, x -> x, (a, b) -> {
-            if (!a.getFieldType().equals(b.getFieldType())) {
-                final String format = MessageFormat.format("冲突字段:  {0}#{1} <===> {2}#{3}", a.getClassName(), a.getFieldName(), b.getClassName(), b.getFieldName());
-                throw new JpaGenerateException("字段类型不匹配, 无法生成SQL. \n" + format);
-            }
-            return a;
-        }));
+        fieldColumnNameMapping = mappingField.stream()
+            .collect(Collectors.toMap(TxField::getFieldName, x -> x, (a, b) -> {
+                if (!a.getFieldType().equals(b.getFieldType())) {
+                    final String format = MessageFormat.format("冲突字段:  {0}#{1} <===> {2}#{3}", a.getClassName(), a.getFieldName(), b.getClassName(), b.getFieldName());
+                    throw new JpaGenerateException("字段类型不匹配, 无法生成SQL. \n" + format);
+                }
+                return a;
+            }));
     }
 
     /**
      * Add boolean.
-     *
      * @param txParameter the tx parameter
      * @return the boolean
      */
@@ -59,7 +56,6 @@ public class TxParameterDescriptor implements TypeDescriptor {
     /**
      * 参数字符串
      * TODO 关于 updateUpdateTimeByUpdateTime 这种情况会导致两个参数都无法传， 事实上可能需要第一个不需要传，第二个需要传
-     *
      * @param defaultDateList
      * @return
      */
@@ -83,7 +79,6 @@ public class TxParameterDescriptor implements TypeDescriptor {
 
     /**
      * 根据是否需要生成注解字段, 生成注解字段
-     *
      * @param txParameter
      * @param addedParamNames
      * @return
@@ -100,7 +95,6 @@ public class TxParameterDescriptor implements TypeDescriptor {
 
     /**
      * 要导入的类型列表
-     *
      * @return
      */
     @Override

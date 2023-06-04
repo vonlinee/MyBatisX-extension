@@ -16,7 +16,6 @@ public class JTextFieldHintListener implements FocusListener {
 
     /**
      * Instantiates a new J text field hint listener.
-     *
      * @param jTextField the j text field
      * @param hintText   the hint text
      */

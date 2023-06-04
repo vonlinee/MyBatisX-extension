@@ -21,7 +21,6 @@ import java.util.stream.Collectors;
 
 /**
  * The type Condition if test wrapper.
- *
  * @author ls9527
  */
 public class ConditionIfTestWrapper implements ConditionFieldWrapper {
@@ -42,10 +41,10 @@ public class ConditionIfTestWrapper implements ConditionFieldWrapper {
     private SmartJpaAdvanceUI.GeneratorEnum generatorType;
     private Mapper mapper;
     private List<String> defaultDateList;
+    private int newLine;
 
     /**
      * Instantiates a new Condition if test wrapper.
-     *
      * @param project
      * @param selectedWrapFields the wrapper fields
      * @param resultFields
@@ -83,7 +82,6 @@ public class ConditionIfTestWrapper implements ConditionFieldWrapper {
         return templateText;
     }
 
-
     private String getConditionField(String fieldName) {
         TxField txField = txFieldMap.get(fieldName);
         String appender = "";
@@ -92,7 +90,6 @@ public class ConditionIfTestWrapper implements ConditionFieldWrapper {
         }
         return fieldName + " != null" + appender;
     }
-
 
     @Override
     public String wrapWhere(String content) {
@@ -106,7 +103,6 @@ public class ConditionIfTestWrapper implements ConditionFieldWrapper {
 
     /**
      * Sets all fields.
-     *
      * @param allFieldsStr the all fields str
      */
     public void setAllFields(String allFieldsStr) {
@@ -120,7 +116,6 @@ public class ConditionIfTestWrapper implements ConditionFieldWrapper {
 
     /**
      * Sets result map.
-     *
      * @param resultMap the result map
      */
     public void setResultMap(String resultMap) {
@@ -134,7 +129,6 @@ public class ConditionIfTestWrapper implements ConditionFieldWrapper {
 
     /**
      * Sets result type.
-     *
      * @param resultType the result type
      */
     public void setResultType(boolean resultType) {
@@ -159,7 +153,6 @@ public class ConditionIfTestWrapper implements ConditionFieldWrapper {
 
     /**
      * Sets result type class.
-     *
      * @param resultTypeClass the result type class
      */
     public void setResultTypeClass(String resultTypeClass) {
@@ -179,7 +172,6 @@ public class ConditionIfTestWrapper implements ConditionFieldWrapper {
      * 对于默认值 create_time,update_time, 在 更新和插入的时候替换为数据库默认值的关键字
      * MYSQL默认时间: NOW()
      * ORACLE默认时间: SYSDATE
-     *
      * @param columnName 字段名
      * @param fieldValue
      * @return
@@ -197,13 +189,17 @@ public class ConditionIfTestWrapper implements ConditionFieldWrapper {
         return defaultDateList;
     }
 
+    public void setDefaultDateList(List<String> defaultDateList) {
+        this.defaultDateList = defaultDateList;
+    }
+
     @Override
     public List<TxField> getResultTxFields() {
         Set<String> addedFields = new HashSet<>();
-        return allFields.stream().filter(field -> resultFields.contains(field.getFieldName()) && addedFields.add(field.getFieldName())).collect(Collectors.toList());
+        return allFields.stream()
+            .filter(field -> resultFields.contains(field.getFieldName()) && addedFields.add(field.getFieldName()))
+            .collect(Collectors.toList());
     }
-
-    private int newLine;
 
     @Override
     public int getNewline() {
@@ -225,11 +221,6 @@ public class ConditionIfTestWrapper implements ConditionFieldWrapper {
         }
         return JdbcTypeUtils.wrapperField(name, canonicalTypeText);
     }
-
-    public void setDefaultDateList(List<String> defaultDateList) {
-        this.defaultDateList = defaultDateList;
-    }
-
 
     public void setNewLine(int newLine) {
         // 如果设置错误的值, 给一个合适的默认值
