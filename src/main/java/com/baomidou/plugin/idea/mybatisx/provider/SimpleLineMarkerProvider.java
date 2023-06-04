@@ -23,7 +23,6 @@ public abstract class SimpleLineMarkerProvider<F extends PsiElement, T> extends 
         if (!isTheElement(element)) {
             return;
         }
-
         Optional<? extends T[]> processResult = apply((F) element);
         if (processResult.isPresent()) {
             T[] arrays = processResult.get();
@@ -35,7 +34,6 @@ public abstract class SimpleLineMarkerProvider<F extends PsiElement, T> extends 
             RelatedItemLineMarkerInfo<PsiElement> lineMarkerInfo = navigationGutterIconBuilder.createLineMarkerInfo(element);
             result.add(lineMarkerInfo);
         }
-
     }
 
 

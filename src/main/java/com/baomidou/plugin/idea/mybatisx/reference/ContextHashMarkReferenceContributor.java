@@ -16,8 +16,8 @@ import com.intellij.util.ProcessingContext;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-
 /**
+ * 点击 XML Statement 中的变量，跳转到 Mapper 类中
  * 参考 com.intellij.spring.el.contextProviders.extensions.SpringElCommentReferenceContributor
  * @author ls9527
  */
@@ -25,19 +25,17 @@ public class ContextHashMarkReferenceContributor extends PsiReferenceContributor
 
     private static final String SIMPLE_PREFIX_STR = "#{";
     public static final PsiElementPattern.Capture<PsiElement> EL_VAR_COMMENT = PlatformPatterns
-        .psiElement(PsiElement.class)
-        .withText(StandardPatterns.string().startsWith(SIMPLE_PREFIX_STR).contains("}"));
-
+        .psiElement(PsiElement.class).withText(StandardPatterns.string().startsWith(SIMPLE_PREFIX_STR).contains("}"));
 
     @Override
     public void registerReferenceProviders(@NotNull PsiReferenceRegistrar registrar) {
         registrar.registerReferenceProvider(EL_VAR_COMMENT, new PsiReferenceProvider() {
             @Override
-            public @NotNull
-            PsiReference[] getReferencesByElement(@NotNull PsiElement element, @NotNull ProcessingContext context) {
+            public @NotNull PsiReference[] getReferencesByElement(@NotNull PsiElement element, @NotNull ProcessingContext context) {
                 if (!(element instanceof XmlToken)) {
                     return PsiReference.EMPTY_ARRAY;
                 }
+                System.out.println(element);
                 XmlToken literalExpression = (XmlToken) element;
                 String value = literalExpression.getText();
 
@@ -54,7 +52,7 @@ public class ContextHashMarkReferenceContributor extends PsiReferenceContributor
         });
     }
 
-    private class HashMarkReference extends PsiReferenceBase<PsiElement> {
+    private static class HashMarkReference extends PsiReferenceBase<PsiElement> {
 
         private final CompositeHashMarkTip compositeHashMarkTip;
 

@@ -13,3 +13,5 @@ Jar 安装： File -> Settings -> Plugins -> Install plugin from disk.. 选中 m
 使用文档：https://mp.baomidou.com/guide/mybatisx-idea-plugin.html
 
 Idea 2020.2
+
+开发环境: IntelliJ IDEA 2023.1.2 (Ultimate Edition)

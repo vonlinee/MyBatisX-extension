@@ -57,8 +57,8 @@ public class MapperMethodInspection extends MapperInspection {
     @Nullable
     @Override
     public ProblemDescriptor[] checkMethod(@NotNull PsiMethod method, @NotNull InspectionManager manager, boolean isOnTheFly) {
-        if (!MapperLocator.getInstance(method.getProject()).process(method)
-            || JavaUtils.isAnyAnnotationPresent(method, Annotation.STATEMENT_SYMMETRIES)) {
+        if (!MapperLocator.getInstance(method.getProject())
+            .process(method) || JavaUtils.isAnyAnnotationPresent(method, Annotation.STATEMENT_SYMMETRIES)) {
             return EMPTY_ARRAY;
         }
         List<ProblemDescriptor> res = createProblemDescriptors(method, manager, isOnTheFly);
@@ -109,17 +109,12 @@ public class MapperMethodInspection extends MapperInspection {
             // 如果返回的是Map, 并且有@MapKey的注解
             if (targetClass.isInterface() && MAP.equals(targetClass.getQualifiedName())) {
                 Optional<PsiAnnotation> first = Stream.of(method.getAnnotations())
-                    .filter(psiAnnotation -> Objects.equals(psiAnnotation.getQualifiedName(), MAP_KEY))
-                    .findFirst();
+                    .filter(psiAnnotation -> Objects.equals(psiAnnotation.getQualifiedName(), MAP_KEY)).findFirst();
                 // 如果找不到MapKey的注解,提示错误信息
                 if (!first.isPresent()) {
                     PsiIdentifier ide = method.getNameIdentifier();
                     String descriptionTemplate = "@MapKey is required";
-                    descriptor = manager.createProblemDescriptor(ide,
-                        descriptionTemplate,
-                        (LocalQuickFix) null,
-                        ProblemHighlightType.GENERIC_ERROR,
-                        isOnTheFly);
+                    descriptor = manager.createProblemDescriptor(ide, descriptionTemplate, (LocalQuickFix) null, ProblemHighlightType.GENERIC_ERROR, isOnTheFly);
                 }
                 // 返回类型如果是map接口,那么就用这里的验证方式
                 found = false;
@@ -132,15 +127,9 @@ public class MapperMethodInspection extends MapperInspection {
             if (!equalsOrInheritor(clazz, targetClass)) {
                 String srcType = clazz != null ? clazz.getQualifiedName() : "";
                 String targetType = targetClass.getQualifiedName();
-                String descriptionTemplate = "Result type not match for select id=\"#ref\""
-                    + "\n srcType: " + srcType
-                    + "\n targetType: " + targetType;
+                String descriptionTemplate = "Result type not match for select id=\"#ref\"" + "\n srcType: " + srcType + "\n targetType: " + targetType;
                 PsiIdentifier ide = method.getNameIdentifier();
-                descriptor = manager.createProblemDescriptor(ide,
-                    descriptionTemplate,
-                    (LocalQuickFix) null,
-                    ProblemHighlightType.GENERIC_ERROR,
-                    isOnTheFly);
+                descriptor = manager.createProblemDescriptor(ide, descriptionTemplate, (LocalQuickFix) null, ProblemHighlightType.GENERIC_ERROR, isOnTheFly);
             }
         }
         return Optional.ofNullable(descriptor);
@@ -175,8 +164,7 @@ public class MapperMethodInspection extends MapperInspection {
             if (isDefaultMethod) {
                 return Optional.empty();
             }
-            return Optional.of(manager.createProblemDescriptor(ide, "Statement with id=\"#ref\" not defined in mapper xml",
-                new StatementNotExistsQuickFix(method), ProblemHighlightType.GENERIC_ERROR, isOnTheFly));
+            return Optional.of(manager.createProblemDescriptor(ide, "Statement with id=\"#ref\" not defined in mapper xml", new StatementNotExistsQuickFix(method), ProblemHighlightType.GENERIC_ERROR, isOnTheFly));
         }
         return Optional.empty();
     }

@@ -11,6 +11,7 @@ import com.baomidou.plugin.idea.mybatisx.util.JavaUtils;
 import com.baomidou.plugin.idea.mybatisx.util.MapperUtils;
 import com.baomidou.plugin.idea.mybatisx.util.StringUtils;
 import com.google.common.collect.ImmutableSet;
+import com.intellij.codeInsight.daemon.RelatedItemLineMarkerInfo;
 import com.intellij.psi.PsiClass;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiMethod;
@@ -23,6 +24,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import javax.swing.*;
+import java.util.Collection;
 import java.util.Optional;
 
 /**
@@ -38,6 +40,11 @@ public class StatementLineMarkerProvider extends SimpleLineMarkerProvider<XmlTok
         Update.class.getSimpleName().toLowerCase(),
         Delete.class.getSimpleName().toLowerCase()
     );
+
+    @Override
+    protected void collectNavigationMarkers(@NotNull PsiElement element, @NotNull Collection<? super RelatedItemLineMarkerInfo<?>> result) {
+        super.collectNavigationMarkers(element, result);
+    }
 
     @Override
     public boolean isTheElement(@NotNull PsiElement element) {
@@ -133,5 +140,4 @@ public class StatementLineMarkerProvider extends SimpleLineMarkerProvider<XmlTok
         }
         return "Data access object found - " + text;
     }
-
 }
