@@ -3,6 +3,7 @@ package com.baomidou.plugin.idea.mybatisx.util;
 import com.intellij.openapi.project.Project;
 import com.intellij.psi.PsiFile;
 import com.intellij.psi.search.GlobalSearchScope;
+import com.intellij.psi.xml.XmlAttribute;
 import com.intellij.psi.xml.XmlFile;
 import com.intellij.psi.xml.XmlTag;
 import com.intellij.util.xml.DomElement;
@@ -27,6 +28,7 @@ public final class DomUtils {
 
     /**
      * Find dom elements collection.
+     *
      * @param <T>     the type parameter
      * @param project the project
      * @param clazz   the clazz
@@ -44,6 +46,7 @@ public final class DomUtils {
      * <p>
      * 判断是否为 Mybatis XML 文件
      * </p>
+     *
      * @param file 判断文件
      * @return boolean
      */
@@ -76,6 +79,7 @@ public final class DomUtils {
 
     /**
      * Is mybatis configuration file boolean.
+     *
      * @param file the file
      * @return the boolean
      */
@@ -89,6 +93,7 @@ public final class DomUtils {
 
     /**
      * Is beans file boolean.
+     *
      * @param file the file
      * @return the boolean
      */
@@ -102,6 +107,7 @@ public final class DomUtils {
 
     /**
      * Is xml file boolean.
+     *
      * @param file the file
      * @return the boolean
      */
@@ -109,4 +115,14 @@ public final class DomUtils {
         return file instanceof XmlFile;
     }
 
+    public static String getAttributeValue(XmlTag xmlTag, String attributeName) {
+        if (xmlTag == null || attributeName == null) {
+            return null;
+        }
+        XmlAttribute attribute = xmlTag.getAttribute(attributeName);
+        if (attribute == null) {
+            return null;
+        }
+        return attribute.getValue();
+    }
 }

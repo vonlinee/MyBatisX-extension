@@ -68,6 +68,7 @@ dependencies {
     implementation("com.softwareloop:mybatis-generator-lombok-plugin:1.0")
     implementation("uk.com.robust-it:cloning:1.9.2")
     implementation("org.mybatis.generator:mybatis-generator-core:1.4.0")
+    implementation("org.mybatis:mybatis:3.5.16")
     implementation("org.freemarker:freemarker:2.3.30")
     implementation("com.itranswarp:compiler:1.0")
     testCompile("junit:junit:4.13.1")

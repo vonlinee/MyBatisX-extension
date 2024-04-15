@@ -11,7 +11,8 @@ import com.baomidou.plugin.idea.mybatisx.util.JavaUtils;
 import com.baomidou.plugin.idea.mybatisx.util.MapperUtils;
 import com.baomidou.plugin.idea.mybatisx.util.StringUtils;
 import com.google.common.collect.ImmutableSet;
-import com.intellij.codeInsight.daemon.RelatedItemLineMarkerInfo;
+import com.intellij.ide.util.DefaultPsiElementCellRenderer;
+import com.intellij.json.psi.JsonProperty;
 import com.intellij.psi.PsiClass;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiMethod;
@@ -24,12 +25,16 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import javax.swing.*;
-import java.util.Collection;
+import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.Optional;
 
 /**
  * The type Statement line marker provider.
+ *
  * @author yanglin
+ * @see com.intellij.openapi.editor.markup.LineMarkerRenderer
  */
 public class StatementLineMarkerProvider extends SimpleLineMarkerProvider<XmlToken, PsiElement> {
 
@@ -41,16 +46,43 @@ public class StatementLineMarkerProvider extends SimpleLineMarkerProvider<XmlTok
         Delete.class.getSimpleName().toLowerCase()
     );
 
-    @Override
-    protected void collectNavigationMarkers(@NotNull PsiElement element, @NotNull Collection<? super RelatedItemLineMarkerInfo<?>> result) {
-        super.collectNavigationMarkers(element, result);
+    /**
+     * 单元格渲染
+     */
+    public static class MyListCellRenderer extends DefaultPsiElementCellRenderer {
+
+        @Override
+        public Component getListCellRendererComponent(JList list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
+            Component component = super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
+            component.addMouseListener(new MouseAdapter() {
+                @Override
+                public void mouseClicked(MouseEvent e) {
+                    super.mouseClicked(e);
+                }
+            });
+            return component;
+        }
+
+        @Override
+        public String getElementText(PsiElement element) {
+            StringBuilder prefix = new StringBuilder();
+            if (element instanceof JsonProperty) {
+                prefix.append("Found Panda! ");
+            }
+            return prefix.append(super.getElementText(element)).toString();
+        }
+
+        @Override
+        public Icon getIcon(PsiElement element) {
+            return Icons.STATEMENT_LINE_MARKER_ICON;
+        }
     }
 
     @Override
     public boolean isTheElement(@NotNull PsiElement element) {
         return element instanceof XmlToken
-            && isTargetType((XmlToken) element)
-            && MapperUtils.isElementWithinMybatisFile(element);
+               && isTargetType((XmlToken) element)
+               && MapperUtils.isElementWithinMybatisFile(element);
     }
 
     @Override

@@ -48,20 +48,28 @@ public class XmlUtils {
                 TemplateSettingDTO peek = (TemplateSettingDTO) objects.peek();
                 String name = attributes.getValue("name");
                 String value = attributes.getValue("value");
-                if (name.equals("configName")) {
-                    peek.setConfigName(value);
-                } else if (name.equals("configFile")) {
-                    peek.setConfigFile(value);
-                } else if (name.equals("fileName")) {
-                    peek.setFileName(value);
-                } else if (name.equals("suffix")) {
-                    peek.setSuffix(value);
-                } else if (name.equals("packageName")) {
-                    peek.setPackageName(value);
-                } else if (name.equals("encoding")) {
-                    peek.setEncoding(value);
-                } else if (name.equals("basePath")) {
-                    peek.setBasePath(value);
+                switch (name) {
+                    case "configName":
+                        peek.setConfigName(value);
+                        break;
+                    case "configFile":
+                        peek.setConfigFile(value);
+                        break;
+                    case "fileName":
+                        peek.setFileName(value);
+                        break;
+                    case "suffix":
+                        peek.setSuffix(value);
+                        break;
+                    case "packageName":
+                        peek.setPackageName(value);
+                        break;
+                    case "encoding":
+                        peek.setEncoding(value);
+                        break;
+                    case "basePath":
+                        peek.setBasePath(value);
+                        break;
                 }
             }
         }

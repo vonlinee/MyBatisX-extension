@@ -47,4 +47,6 @@ public interface Icons {
      * Icon SPRING_INJECTION_ICON = IconLoader.getIcon("/images/injection.png");
      */
     Icon SPRING_INJECTION_ICON = MAPPER_CLASS_ICON;
+
+    Icon PluginIcon = IconLoader.getIcon("/icon/pluginIcon.svg");
 }

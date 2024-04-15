@@ -35,7 +35,6 @@ public class ContextHashMarkReferenceContributor extends PsiReferenceContributor
                 if (!(element instanceof XmlToken)) {
                     return PsiReference.EMPTY_ARRAY;
                 }
-                System.out.println(element);
                 XmlToken literalExpression = (XmlToken) element;
                 String value = literalExpression.getText();
 

@@ -21,7 +21,7 @@ public class DomainPlaceHolder {
     private static final Logger logger = LoggerFactory.getLogger(DomainPlaceHolder.class);
 
     public static String replace(String templateText, DomainInfo domainInfo) {
-        if (templateText == null || "".equals(templateText.trim())) {
+        if (templateText == null || templateText.trim().isEmpty()) {
             return templateText;
         }
         if (domainInfo == null) {

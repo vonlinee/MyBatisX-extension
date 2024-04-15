@@ -44,6 +44,16 @@
     <depends optional="true" config-file="withKotlin.xml">org.jetbrains.kotlin</depends>
     <depends optional="true" config-file="injection-mybatisx.xml">org.intellij.intelliLang</depends>
 
+    <actions>
+        <!-- Add your actions here -->
+        <action id="actions.PreparedSqlParamsSetterAction"
+                class="com.baomidou.plugin.idea.mybatisx.actions.MyBatisConsoleLogSqlParamsSetterAction"
+                text="SQL Params Setter" icon="Icons.PluginIcon">
+            <add-to-group group-id="ConsoleEditorPopupMenu" anchor="first"/>
+            <add-to-group group-id="EditorPopupMenu" anchor="first"/>
+        </action>
+    </actions>
+
     <extensions defaultExtensionNs="com.intellij">
         <projectService id="baomidou.TemplatesSettings"
                         serviceImplementation="com.baomidou.plugin.idea.mybatisx.generate.setting.TemplatesSettings"/>
@@ -145,7 +155,18 @@
         <intentionAction order="first" id="baomidou.GenerateMapperIntention">
             <className>com.baomidou.plugin.idea.mybatisx.intention.GenerateMapperIntention</className>
         </intentionAction>
-
+        <!-- 生成mybatis mapper.xml文件 -->
+        <intentionAction id="baomidou.MapperStatementDebugIntention">
+            <className>com.baomidou.plugin.idea.mybatisx.intention.MapperStatementSqlDebugIntention</className>
+        </intentionAction>
+        <!-- mybatis mapper.xml 文件 提示 if test -->
+        <intentionAction id="baomidou.MapperXmlIfTestHintIntention">
+            <className>com.baomidou.plugin.idea.mybatisx.intention.MapperXmlIfTestHintIntention</className>
+        </intentionAction>
+        <!-- mybatis mapper.xml 文件 提示 foreach -->
+        <intentionAction id="baomidou.MapperXmlForeachHintIntention">
+            <className>com.baomidou.plugin.idea.mybatisx.intention.MapperXmlForeachHintIntention</className>
+        </intentionAction>
         <!-- 根据jpa名字生成方法和xml文件内容 -->
         <intentionAction id="baomidou.GenerateMapperMethodSmartJpaAction">
             <className>com.baomidou.plugin.idea.mybatisx.smartjpa.GenerateSmartJpaAction</className>

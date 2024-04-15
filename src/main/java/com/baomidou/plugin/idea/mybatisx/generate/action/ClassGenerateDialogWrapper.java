@@ -33,7 +33,7 @@ public class ClassGenerateDialogWrapper extends DialogWrapper {
 
     private JPanel rootPanel = new JPanel();
 
-    private java.util.List<JPanel> containerPanelList;
+    private List<JPanel> containerPanelList;
 
     private Action previousAction;
 
@@ -61,7 +61,7 @@ public class ClassGenerateDialogWrapper extends DialogWrapper {
         // 默认禁用 上一个设置
         previousAction.setEnabled(false);
         // 初始化容器列表
-        java.util.List<JPanel> list = new ArrayList<>();
+        List<JPanel> list = new ArrayList<>();
         list.add(tablePreviewUI.getRootPanel());
         list.add(codeGenerateUI.getRootPanel());
         containerPanelList = list;

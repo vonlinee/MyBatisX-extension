@@ -154,7 +154,7 @@ public class MybatisXTemplateSettings {
         return true;
     }
 
-    private class CopyAction extends AnActionButton {
+    private static class CopyAction extends AnActionButton {
         CopyAction() {
             super(JavaDebuggerBundle.message("button.copy"),
                 JavaDebuggerBundle.message("user.renderers.configurable.button.description.copy"),

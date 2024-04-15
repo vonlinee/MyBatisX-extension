@@ -20,6 +20,7 @@ import com.intellij.util.xml.GenericAttributeValue;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.Objects;
 import java.util.Optional;
 
 
@@ -124,7 +125,8 @@ public final class MapperBacktrackingUtils {
                                 if (genericClassOfListByField.isPresent()) {
                                     String fieldTypeClassName = genericClassOfListByField.get();
                                     Optional<PsiClass> fieldClassOptional = JavaUtils.findClazz(project, fieldTypeClassName);
-                                    if (foundClass = fieldClassOptional.isPresent()) {
+                                    foundClass = fieldClassOptional.isPresent();
+                                    if (foundClass) {
                                         currentClass = fieldClassOptional.get();
                                     }
                                 }
@@ -172,7 +174,7 @@ public final class MapperBacktrackingUtils {
      */
     public static boolean isWithinSameTag(@NotNull DomElement domElement, XmlAttributeValue xmlElement) {
         XmlTag xmlTag = PsiTreeUtil.getParentOfType(xmlElement, XmlTag.class);
-        return null != xmlElement && domElement.getXmlTag().equals(xmlTag);
+        return null != xmlElement && Objects.equals(domElement.getXmlTag(), xmlTag);
     }
 
     public static Optional<PsiClass> getEntityClass(XmlAttributeValue attributeValue) {
