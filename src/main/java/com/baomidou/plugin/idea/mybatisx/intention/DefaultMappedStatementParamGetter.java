@@ -141,6 +141,9 @@ public class DefaultMappedStatementParamGetter implements MappedStatementParamGe
         if (paramKey.contains("(") || paramKey.contains(")")) {
             return;
         }
+        if (notContainLetterOrNumber(paramKey)) {
+            return;
+        }
         variableNameMap.put(paramKey, array ? ParamDataType.NUMBER_ARRAY : ParamDataType.STRING);
     }
 

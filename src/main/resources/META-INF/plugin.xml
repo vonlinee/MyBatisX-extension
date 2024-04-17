@@ -1,3 +1,4 @@
+<!-- Plugin Configuration File. Read more: https://plugins.jetbrains.com/docs/intellij/plugin-configuration-file.html -->
 <idea-plugin url="https://gitee.com/baomidou/mybatis-plus" require-restart="false" allow-bundled-update="true">
     <!--插件id-->
     <id>com.baomidou.plugin.idea.mybatisx</id>
@@ -48,7 +49,7 @@
         <!-- Add your actions here -->
         <action id="com.baomidou.plugin.idea.mybatisx.actions.MyBatisConsoleLogSqlParamsSetterAction"
                 class="com.baomidou.plugin.idea.mybatisx.actions.MyBatisConsoleLogSqlParamsSetterAction"
-                text="SQL Params Setter" icon="Icons.PluginIcon">
+                text="SQL Params Setter" icon="/icons/pluginIcon.svg">
             <add-to-group group-id="ConsoleEditorPopupMenu" anchor="first"/>
             <add-to-group group-id="EditorPopupMenu" anchor="first"/>
         </action>
