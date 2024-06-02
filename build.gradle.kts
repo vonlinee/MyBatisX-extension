@@ -75,7 +75,7 @@ dependencies {
     testImplementation("commons-io:commons-io:2.8.0")
     compileOnly("org.projectlombok:lombok:1.18.0")
 
-    implementation(files("../libs/tools.jar"))
+    implementation(files("libs/tools.jar"))
 
     // 解决 lombok 不生效问题
     // 还需在Build,Execution,Deployment -> Compiler -> Annotation Processor开启注解处理器
