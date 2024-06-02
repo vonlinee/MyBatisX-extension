@@ -20,32 +20,34 @@ plugins {
     id("org.jetbrains.intellij") version "0.7.2"
 }
 
-java {
+java(Action {
     sourceCompatibility = JavaVersion.VERSION_1_8
     targetCompatibility = JavaVersion.VERSION_1_8
-}
+})
 
 // https://github.com/JetBrains/gradle-intellij-plugin/
 // http://www.jetbrains.org/intellij/sdk/docs/tutorials/build_system/prerequisites.html
-intellij {
+intellij(Action {
     version = "2020.2"
 
 //    type="IC"  // 社区版
 //    setPlugins(arrayOf("java")) //Bundled plugin dependencies
     type = "IU" // 企业版
-    setPlugins("java",
+    setPlugins(
+        "java",
         "Kotlin",
         "IntelliLang",
         "Spring",
         "SpringBoot",
-        "DatabaseTools") //Bundled plugin dependencies
+        "DatabaseTools"
+    ) //Bundled plugin dependencies
 
     pluginName = "MybatisX"
     sandboxDirectory = "${rootProject.rootDir}/idea-sandbox"
 
     updateSinceUntilBuild = false
     isDownloadSources = true
-}
+})
 
 //publishPlugin {
 //    username = project.hasProperty("publishUsername") ? project.property("publishUsername") : ""
