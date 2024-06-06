@@ -3,7 +3,8 @@ package com.baomidou.plugin.idea.mybatisx.intention;
 public enum ImportModel {
     OVERRIDE(1, "全部覆盖"),
     APPEND(2, "仅追加"),
-    MERGE(4, "合并不覆盖");
+    MERGE(3, "合并不覆盖"),
+    MERGE_OVERRIDE(4, "合并且覆盖");
 
     final int type;
     final String label;

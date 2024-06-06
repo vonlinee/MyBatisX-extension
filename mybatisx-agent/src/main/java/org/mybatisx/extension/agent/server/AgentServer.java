@@ -1,6 +1,5 @@
 package org.mybatisx.extension.agent.server;
 
-import com.alibaba.fastjson.JSON;
 import org.mybatisx.extension.agent.Data;
 import org.mybatisx.extension.agent.Log;
 
@@ -40,7 +39,7 @@ public class AgentServer {
                         //接受客户端数据
                         ObjectInputStream objectInputStream = new ObjectInputStream(inputStream);
                         Data receiveData = (Data) objectInputStream.readObject();
-                        Log.info("received from client[%s]: %s", socket.getRemoteSocketAddress(), JSON.toJSONString(receiveData));
+                        Log.info("received from client[%s]: %s", socket.getRemoteSocketAddress(), receiveData);
                         //反射调用
                         Object result = invokeMethod(receiveData);
                         //响应

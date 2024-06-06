@@ -71,7 +71,7 @@ public class JavaBeanToolAction extends AnAction {
                 @Override
                 public void mouseClicked(MouseEvent e) {
                     TreeClassChooser chooser = TreeClassChooserFactory.getInstance(project)
-                            .createWithInnerClassesScopeChooser("Select a class", GlobalSearchScope.allScope(project), null, null);
+                            .createWithInnerClassesScopeChooser("Select a Class", GlobalSearchScope.allScope(project), null, null);
                     chooser.showDialog();
                     PsiClass selectedClass = chooser.getSelected();
                     if (selectedClass != null) {

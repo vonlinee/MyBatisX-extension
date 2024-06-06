@@ -1,6 +1,5 @@
 package org.mybatisx.extension.agent.client;
 
-import com.alibaba.fastjson.JSON;
 import org.mybatisx.extension.agent.Data;
 import org.mybatisx.extension.agent.Log;
 
@@ -41,7 +40,7 @@ class RPCProxy implements InvocationHandler {
             objectOutputStream.writeObject(data);
             Log.info("waiting for server response....");
             result = objectInputStream.readObject();
-            Log.info("received data from [" + ip + ":" + port + "]:" + JSON.toJSONString(result));
+            Log.info("received data from [" + ip + ":" + port + "]: " + result);
         }
         return result;
     }

@@ -8,8 +8,6 @@ import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableColumn;
-import java.awt.event.FocusAdapter;
-import java.awt.event.FocusEvent;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
@@ -52,9 +50,49 @@ public class MapperStatementParamTablePane extends JScrollPane {
 
     public void addParams(Map<String, ParamNode> params, ImportModel mode) {
         TableModel model = (TableModel) table.getModel();
-        for (Map.Entry<String, ParamNode> entry : params.entrySet()) {
-            ParamNode node = entry.getValue();
-            model.addRow(new Object[]{entry.getKey(), node.getValue(), node.getDataType()});
+        if (mode == ImportModel.APPEND) {
+            for (Map.Entry<String, ParamNode> entry : params.entrySet()) {
+                ParamNode node = entry.getValue();
+                model.addRow(new Object[]{entry.getKey(), node.getValue(), node.getDataType()});
+            }
+        } else if (mode == ImportModel.OVERRIDE) {
+            model.setRowCount(0);
+            for (Map.Entry<String, ParamNode> entry : params.entrySet()) {
+                ParamNode node = entry.getValue();
+                model.addRow(new Object[]{entry.getKey(), node.getValue(), node.getDataType()});
+            }
+        } else if (mode == ImportModel.MERGE_OVERRIDE) { // 合并且覆盖
+            Map<String, String> paramKeyValues = new HashMap<>();
+            Map<String, Integer> keyRowNumMap = new HashMap<>();
+            int rowCount = model.getRowCount();
+            for (int i = 0; i < rowCount; i++) {
+                String key = String.valueOf(model.getValueAt(i, 0));
+                paramKeyValues.put(key, String.valueOf(model.getValueAt(i, 1)));
+                keyRowNumMap.put(key, i);
+            }
+            for (Map.Entry<String, ParamNode> entry : params.entrySet()) {
+                ParamNode node = entry.getValue();
+                if (paramKeyValues.containsKey(entry.getKey())) {
+                    Integer rowNum = keyRowNumMap.get(entry.getKey());
+                    model.setValueAt(node.getValue(), rowNum, 1);
+                    model.setValueAt(node.getDataType(), rowNum, 2);
+                } else {
+                    model.addRow(new Object[]{entry.getKey(), node.getValue(), node.getDataType()});
+                }
+            }
+        } else if (mode == ImportModel.MERGE) { // 仅合并
+            Map<String, String> paramKeyValues = new HashMap<>();
+            int rowCount = model.getRowCount();
+            for (int i = 0; i < rowCount; i++) {
+                String key = String.valueOf(model.getValueAt(i, 0));
+                paramKeyValues.put(key, String.valueOf(model.getValueAt(i, 1)));
+            }
+            for (Map.Entry<String, ParamNode> entry : params.entrySet()) {
+                ParamNode node = entry.getValue();
+                if (!paramKeyValues.containsKey(entry.getKey())) {
+                    model.addRow(new Object[]{entry.getKey(), node.getValue(), node.getDataType()});
+                }
+            }
         }
     }
 

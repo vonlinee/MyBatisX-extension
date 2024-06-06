@@ -3,8 +3,13 @@ package com.baomidou.plugin.idea.mybatisx.intention;
 import com.baomidou.plugin.idea.mybatisx.model.ParamDataType;
 import com.baomidou.plugin.idea.mybatisx.mybatis.DefaultMappedStatementSqlBuilder;
 import com.baomidou.plugin.idea.mybatisx.mybatis.MappedStatementSqlBuilder;
-import com.baomidou.plugin.idea.mybatisx.util.*;
+import com.baomidou.plugin.idea.mybatisx.util.DomUtils;
+import com.baomidou.plugin.idea.mybatisx.util.IntellijSDK;
+import com.baomidou.plugin.idea.mybatisx.util.SqlUtils;
+import com.baomidou.plugin.idea.mybatisx.util.StringUtils;
+import com.baomidou.plugin.idea.mybatisx.util.SwingUtils;
 import com.intellij.openapi.project.Project;
+import com.intellij.openapi.ui.ComboBox;
 import com.intellij.openapi.ui.DialogWrapper;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.xml.XmlTag;
@@ -19,6 +24,8 @@ import org.mybatisx.extension.agent.mybatis.MyMapperBuilderAssistant;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.util.ArrayList;
@@ -79,18 +86,16 @@ public class MappedStatementDebuggerDialog extends DialogWrapper {
         String sql = null;
         if (StringUtils.hasText(mapperStatement)) {
             Map<String, Object> map = table.getParamsAsMap();
-            if (map != null && !map.isEmpty()) {
-                try {
-                    MappedStatement mappedStatement = parseMappedStatement(mapperStatement);
-                    MappedStatementSqlBuilder mappedStatementSqlBuilder = new DefaultMappedStatementSqlBuilder();
-                    sql = mappedStatementSqlBuilder.build(mappedStatement, map);
-                } catch (Exception exception) {
-                    StringWriter writer = new StringWriter();
-                    try (PrintWriter pw = new PrintWriter(writer)) {
-                        exception.printStackTrace(pw);
-                    } finally {
-                        sql = writer.toString();
-                    }
+            try {
+                MappedStatement mappedStatement = parseMappedStatement(mapperStatement);
+                MappedStatementSqlBuilder mappedStatementSqlBuilder = new DefaultMappedStatementSqlBuilder();
+                sql = mappedStatementSqlBuilder.build(mappedStatement, map);
+            } catch (Exception exception) {
+                StringWriter writer = new StringWriter();
+                try (PrintWriter pw = new PrintWriter(writer)) {
+                    exception.printStackTrace(pw);
+                } finally {
+                    sql = writer.toString();
                 }
             }
         }
@@ -99,23 +104,6 @@ public class MappedStatementDebuggerDialog extends DialogWrapper {
 
     public void fillSqlWithParams() {
         fillSqlWithParams(false);
-    }
-
-    /**
-     * 导入参数
-     *
-     * @param importModel 导入模式
-     */
-    public void importParams(ImportModel importModel) {
-        if (importModel == null) {
-            importModel = ImportModel.MERGE;
-        }
-        List<ParamNode> params = importPane.getParams();
-        Map<String, ParamNode> paramNodeMap = new HashMap<>();
-        for (ParamNode param : params) {
-            paramNodeMap.put(param.getKey(), param);
-        }
-        fillMapperStatementParams(paramNodeMap, importModel);
     }
 
     public void fillSqlWithParams(boolean refreshParams) {
@@ -168,7 +156,7 @@ public class MappedStatementDebuggerDialog extends DialogWrapper {
         table = new MapperStatementParamTablePane();
         paramContainer.setLeftComponent(table);
 
-        importPane = new ParamImportPane(project);
+        importPane = new ParamImportPane(project, table);
         paramContainer.setRightComponent(importPane);
         center.setRightComponent(paramContainer);
 
@@ -176,7 +164,7 @@ public class MappedStatementDebuggerDialog extends DialogWrapper {
         init();
         // 弹窗根容器的宽度和高度
         // 使用 setSize 设置无效
-        this.mainPanel.setPreferredSize(SwingUtils.getScreenBasedDimension(0.75));
+        this.mainPanel.setPreferredSize(SwingUtils.getScreenBasedDimension(0.5));
     }
 
     /**
@@ -203,7 +191,28 @@ public class MappedStatementDebuggerDialog extends DialogWrapper {
      */
     @Override
     protected JComponent createSouthPanel() {
-        return new DialogBottomPanel(this);
+        Box box = Box.createHorizontalBox();
+
+        box.add(Box.createHorizontalGlue());
+
+        JButton btnParseParams = new JButton("获取参数");
+        btnParseParams.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                fillMapperStatementParams();
+            }
+        });
+
+        JButton btnGetSql = new JButton("获取SQL");
+        btnGetSql.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                fillSqlWithParams();
+            }
+        });
+        box.add(btnParseParams);
+        box.add(btnGetSql);
+        return box;
     }
 
     /**
@@ -222,15 +231,5 @@ public class MappedStatementDebuggerDialog extends DialogWrapper {
     public void fillParams(PsiElement element, Map<String, ParamDataType> paramNodeMap) {
         MappedStatementParamGetter getter = new DefaultMappedStatementParamGetter();
         getter.getParams(element, paramNodeMap);
-    }
-
-    /**
-     * 填充参数
-     *
-     * @param params 参数列表，不包含嵌套形式
-     * @param mode   操作类型，1-全部覆盖，2-仅追加，3-追加且覆盖，4-合并不覆盖
-     */
-    public void fillMapperStatementParams(Map<String, ParamNode> params, ImportModel mode) {
-        table.addParams(params, mode);
     }
 }

@@ -1,6 +1,7 @@
 package org.mybatisx.extension.agent;
 
 import java.io.Serializable;
+import java.util.Arrays;
 
 public class Data implements Serializable {
 
@@ -91,5 +92,17 @@ public class Data implements Serializable {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    @Override
+    public String toString() {
+        return "Data{" +
+               "type=" + type +
+               ", name='" + name + '\'' +
+               ", returnType=" + returnType +
+               ", methodName='" + methodName + '\'' +
+               ", parameterTypes=" + Arrays.toString(parameterTypes) +
+               ", args=" + Arrays.toString(args) +
+               '}';
     }
 }
