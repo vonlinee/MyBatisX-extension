@@ -1,0 +1,18 @@
+plugins {
+    id 'java-library'
+}
+
+repositories {
+    mavenCentral()
+}
+
+sourceCompatibility = '1.8'
+targetCompatibility = '1.8'
+
+dependencies {
+    api 'com.alibaba:fastjson:2.0.47'
+}
+
+test {
+    useJUnitPlatform()
+}

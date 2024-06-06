@@ -1,0 +1,4 @@
+Manifest-Version: 1.0
+Agent-Class: org.mybatisx.extension.agent.Agent
+Can-Redefine-Classes: true
+Can-Retransform-Classes: true

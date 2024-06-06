@@ -27,8 +27,8 @@ public class BlogSetterDO {
     @Override
     public String toString() {
         return "BlogSetterDO{" +
-            "id=" + id +
-            ", oName='" + oName + '\'' +
-            '}';
+               "id=" + id +
+               ", oName='" + oName + '\'' +
+               '}';
     }
 }

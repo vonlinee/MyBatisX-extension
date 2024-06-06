@@ -5,6 +5,7 @@ import java.util.Date;
 
 /**
  * t_blog
+ *
  * @author
  */
 public class TBlog implements Serializable {

@@ -1,6 +1,7 @@
 CREATE TABLE IF NOT EXISTS `T_BLOG`
 (
-    id BIGINT
+    id
+    BIGINT
 (
     20
 ) NOT NULL AUTO_INCREMENT,

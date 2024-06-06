@@ -18,13 +18,13 @@ public interface BlogScriptMapper extends BaseMapper<Blog> {
 
 
     @Select("<script>" +
-        "select * from t_blog" +
-        " <where>" +
-        "<if test=\"title!=null\">" +
-        " title = #{title,jdbcType=NUMERIC}" +
-        "</if>" +
-        "</where>" +
-        "</script>")
+            "select * from t_blog" +
+            " <where>" +
+            "<if test=\"title!=null\">" +
+            " title = #{title,jdbcType=NUMERIC}" +
+            "</if>" +
+            "</where>" +
+            "</script>")
     @ResultMap("BaseResultMap")
     List<Blog> selectAllByTitle(@Param("title") String title);
 }

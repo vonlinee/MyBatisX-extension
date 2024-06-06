@@ -12,6 +12,7 @@ public interface BlogTipMapper {
 
     /**
      * 通过id更新
+     *
      * @param blog blog请求对象
      * @return 更新的行数
      */
