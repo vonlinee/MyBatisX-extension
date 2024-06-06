@@ -15,8 +15,8 @@ buildscript {
 }
 
 plugins {
-    id 'java'
-    id 'org.jetbrains.kotlin.jvm' version '1.9.20'
+    java
+    id("org.jetbrains.kotlin.jvm") version "1.9.20"
     id("org.jetbrains.intellij") version "1.14.0"
 }
 
@@ -24,7 +24,7 @@ repositories {
     mavenCentral()
 }
 
-// 设置兼容性版本
+//// 设置兼容性版本
 java {
     sourceCompatibility = JavaVersion.VERSION_1_8
     targetCompatibility = JavaVersion.VERSION_1_8
@@ -49,26 +49,26 @@ dependencies {
 
     implementation(project(":agent-api"))
     implementation(project(":mybatisx-agent"))
-//    implementation(files("./tools.jar"))
+    implementation(files("./tools.jar"))
 }
 
 // See https://github.com/JetBrains/gradle-intellij-plugin/
+//
 intellij {
     version = "2021.3.3"
     type = "IU"
-
     // Bundled plugin dependencies
-    plugins = [
-            "com.intellij.spring.boot",
-            "com.intellij.java",
-            "org.intellij.intelliLang",
-            "com.intellij.spring",
-            "com.intellij.database",
-            "org.jetbrains.kotlin"
-    ]
+    plugins = listOf(
+        "com.intellij.spring.boot",
+        "com.intellij.java",
+        "org.intellij.intelliLang",
+        "com.intellij.spring",
+        "com.intellij.database",
+        "org.jetbrains.kotlin"
+    )
 }
 
-patchPluginXml {
+tasks.patchPluginXml {
     sinceBuild = "203"
     // 包含未来所有版本分支
     untilBuild = ""
@@ -77,6 +77,6 @@ patchPluginXml {
     """
 }
 
-tasks.withType(JavaCompile).configureEach {
-    options.encoding = 'UTF-8'
+tasks.withType<JavaCompile> {
+    options.encoding = "UTF-8"
 }
