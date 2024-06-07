@@ -3,15 +3,12 @@ package com.baomidou.plugin.idea.mybatisx.setting;
 import com.baomidou.plugin.idea.mybatisx.component.CodeArea;
 import com.baomidou.plugin.idea.mybatisx.component.SplitPane;
 import com.baomidou.plugin.idea.mybatisx.component.TreeView;
-import com.baomidou.plugin.idea.mybatisx.generate.setting.TemplatesSettings;
 import com.baomidou.plugin.idea.mybatisx.model.TemplateInfo;
 import com.baomidou.plugin.idea.mybatisx.util.CollectionUtils;
 import com.baomidou.plugin.idea.mybatisx.util.FileUtils;
-import com.baomidou.plugin.idea.mybatisx.util.PluginUtils;
 import com.baomidou.plugin.idea.mybatisx.util.SwingUtils;
 import com.intellij.openapi.options.ConfigurationException;
 import com.intellij.openapi.options.SearchableConfigurable;
-import com.intellij.openapi.project.Project;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -30,7 +27,6 @@ import java.util.Map;
 public class TemplateConfigurable implements SearchableConfigurable {
 
     JPanel rootPanel;
-    TemplatesSettings templatesSettings;
 
     @Override
     public @NotNull String getId() {
@@ -57,12 +53,9 @@ public class TemplateConfigurable implements SearchableConfigurable {
             treeView.setMinimumSize(new Dimension(200, treeView.getHeight()));
             tabContainer.setLeftComponent(treeView);
 
-            Project currentProject = PluginUtils.getCurrentProject();
-
-            List<TemplateInfo> templates = TemplatesSettings.getInstance(currentProject).getTemplates();
+            List<TemplateInfo> templates = GlobalTemplateSettings.getInstance().getTemplates();
 
             Map<String, TemplateInfo> map = CollectionUtils.toMap(templates, TemplateInfo::getName);
-
             for (TemplateInfo template : templates) {
                 DefaultMutableTreeNode node = new DefaultMutableTreeNode(template.getName());
                 treeView.addChild(node);
@@ -70,6 +63,11 @@ public class TemplateConfigurable implements SearchableConfigurable {
             treeView.expandAll();
 
             CodeArea field = new CodeArea();
+            JPanel panel = new JPanel(new BorderLayout());
+            panel.add(field, BorderLayout.CENTER);
+
+            ButtonGroup buttonGroup = new ButtonGroup();
+            buttonGroup.add(new JButton("Apply"));
             tabContainer.setRightComponent(field);
 
             field.addFocusListener(new FocusListener() {

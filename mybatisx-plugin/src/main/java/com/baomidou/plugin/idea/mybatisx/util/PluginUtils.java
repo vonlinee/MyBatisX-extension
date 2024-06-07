@@ -53,8 +53,11 @@ public class PluginUtils {
         return element instanceof PsiClass;
     }
 
+    /**
+     * 获取当前的 Project 实例
+     * @return Project
+     */
     public static Project getCurrentProject() {
-        // 获取当前的 Project 实例
         return ProjectManager.getInstance().getDefaultProject();
     }
 }

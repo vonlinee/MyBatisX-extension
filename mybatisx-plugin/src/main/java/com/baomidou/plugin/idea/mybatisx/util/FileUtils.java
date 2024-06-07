@@ -10,6 +10,9 @@ import java.util.stream.Stream;
 
 public class FileUtils {
 
+    private FileUtils() {
+    }
+
     public static void createNewFile(Path path) throws IOException {
         Files.createDirectories(path.getParent());
         Files.deleteIfExists(path);

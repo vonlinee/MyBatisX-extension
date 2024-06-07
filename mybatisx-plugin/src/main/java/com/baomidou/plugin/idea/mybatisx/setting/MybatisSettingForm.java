@@ -5,7 +5,7 @@ import com.intellij.openapi.fileChooser.FileChooserDescriptor;
 import com.intellij.openapi.fileChooser.FileChooserDescriptorFactory;
 import com.intellij.openapi.fileChooser.FileChooserDialog;
 import com.intellij.openapi.fileChooser.FileChooserFactory;
-import com.intellij.openapi.project.Project;
+import com.intellij.openapi.ui.ComboBox;
 import com.intellij.openapi.vfs.VirtualFile;
 
 import javax.swing.*;
@@ -84,7 +84,7 @@ public class MybatisSettingForm {
 
         typeMappingTabRootPanel.setLayout(new BoxLayout(typeMappingTabRootPanel, BoxLayout.Y_AXIS));
 
-        JComboBox<String> comboBox = new JComboBox<>();
+        ComboBox<String> comboBox = new ComboBox<>();
 
         typeMappingTabRootPanel.add(comboBox, 0);
 

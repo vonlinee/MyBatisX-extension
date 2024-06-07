@@ -7,7 +7,7 @@ import org.jetbrains.annotations.Nullable;
 
 import javax.swing.*;
 
-public class DataTypeConfigurable implements SearchableConfigurable {
+public final class DataTypeConfigurable implements SearchableConfigurable {
     @Override
     public @NotNull String getId() {
         return getClass().getName();
