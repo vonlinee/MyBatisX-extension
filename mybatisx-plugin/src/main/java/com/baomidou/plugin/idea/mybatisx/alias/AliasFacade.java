@@ -49,7 +49,7 @@ public class AliasFacade {
      * @param project the project
      * @return the instance
      */
-    public static final AliasFacade getInstance(@NotNull Project project) {
+    public static AliasFacade getInstance(@NotNull Project project) {
         return ServiceManager.getService(project, AliasFacade.class);
     }
 
@@ -59,7 +59,7 @@ public class AliasFacade {
             this.registerResolver(AliasResolverFactory.createBeanResolver(project));
             // support springboot alias
             this.registerResolver(AliasResolverFactory.createSpringBootResolver(project));
-        } catch (ClassNotFoundException e) {
+        } catch (ClassNotFoundException ignored) {
         }
         this.registerResolver(AliasResolverFactory.createSingleAliasResolver(project));
         this.registerResolver(AliasResolverFactory.createConfigPackageResolver(project));

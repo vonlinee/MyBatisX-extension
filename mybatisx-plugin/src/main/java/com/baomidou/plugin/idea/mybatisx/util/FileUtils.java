@@ -8,10 +8,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.stream.Stream;
 
-public class FileUtils {
-
-    private FileUtils() {
-    }
+public abstract class FileUtils {
 
     public static void createNewFile(Path path) throws IOException {
         Files.createDirectories(path.getParent());
@@ -27,7 +24,7 @@ public class FileUtils {
         if (!Files.exists(path)) {
             try {
                 Files.createDirectories(path);
-            } catch (IOException e) {
+            } catch (IOException ignored) {
 
             }
         }

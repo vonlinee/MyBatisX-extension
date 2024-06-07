@@ -1,11 +1,15 @@
 package com.baomidou.plugin.idea.mybatisx.generate.dto;
 
+import lombok.Getter;
+import lombok.Setter;
 import org.mybatis.generator.api.IntrospectedColumn;
 import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
 
 /**
  * 字段信息
  */
+@Setter
+@Getter
 public class FieldInfo {
     /**
      * 字段名称
@@ -70,47 +74,4 @@ public class FieldInfo {
         return fieldInfo;
     }
 
-    public boolean isNullable() {
-        return nullable;
-    }
-
-    public boolean isAutoIncrement() {
-        return autoIncrement;
-    }
-
-    public String getFieldName() {
-        return fieldName;
-    }
-
-    public String getShortTypeName() {
-        return shortTypeName;
-    }
-
-    public String getFullTypeName() {
-        return fullTypeName;
-    }
-
-    public String getColumnName() {
-        return columnName;
-    }
-
-    public String getRemark() {
-        return remark;
-    }
-
-    public int getColumnLength() {
-        return columnLength;
-    }
-
-    public int getColumnScale() {
-        return columnScale;
-    }
-
-    public boolean isColumnIsArray() {
-        return columnIsArray;
-    }
-
-    public String getJdbcType() {
-        return jdbcType;
-    }
 }

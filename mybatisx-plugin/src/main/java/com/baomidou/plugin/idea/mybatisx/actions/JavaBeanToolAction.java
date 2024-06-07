@@ -1,4 +1,4 @@
-package com.baomidou.plugin.idea.mybatisx.intention;
+package com.baomidou.plugin.idea.mybatisx.actions;
 
 import com.baomidou.plugin.idea.mybatisx.ui.FieldsTable;
 import com.baomidou.plugin.idea.mybatisx.util.SwingUtils;
@@ -7,6 +7,7 @@ import com.intellij.ide.util.TreeClassChooserFactory;
 import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.project.Project;
+import com.intellij.openapi.ui.ComboBox;
 import com.intellij.openapi.ui.DialogWrapper;
 import com.intellij.psi.PsiClass;
 import com.intellij.psi.PsiExpression;
@@ -15,6 +16,7 @@ import com.intellij.psi.PsiType;
 import com.intellij.psi.search.GlobalSearchScope;
 import com.intellij.sql.SqlFileType;
 import com.intellij.ui.EditorTextField;
+import com.intellij.ui.JBSplitter;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -30,7 +32,7 @@ import java.util.Vector;
 /**
  * JavaBean 工具
  */
-public class JavaBeanToolAction extends AnAction {
+public final class JavaBeanToolAction extends AnAction {
 
     @Override
     public void actionPerformed(@NotNull AnActionEvent event) {
@@ -38,7 +40,6 @@ public class JavaBeanToolAction extends AnAction {
         Project project = event.getProject();
 
         JavaBeanToolDialog dialog = new JavaBeanToolDialog(project);
-
         dialog.show();
     }
 
@@ -48,7 +49,7 @@ public class JavaBeanToolAction extends AnAction {
         JPanel mainPanel;
         FieldsTable beanFieldsTable;
         JPanel bottomPanel;
-        JSplitPane centerPanel;
+        JBSplitter centerPanel;
 
         public JavaBeanToolDialog(@Nullable Project project) {
             super(project);
@@ -99,14 +100,14 @@ public class JavaBeanToolAction extends AnAction {
             this.beanFieldsTable = new FieldsTable();
 
 
-            centerPanel = new JSplitPane();
-            centerPanel.setLeftComponent(beanFieldsTable);
+            centerPanel = new JBSplitter(false, 0.4f);
+            centerPanel.setFirstComponent(beanFieldsTable);
 
             ToolPane toolPane = new ToolPane();
             // 字段信息转DDL
             toolPane.addToolPane("DDL", new DDLCreatorTool(this.project));
 
-            centerPanel.setRightComponent(toolPane);
+            centerPanel.setSecondComponent(toolPane);
 
             this.mainPanel.add(centerPanel, BorderLayout.CENTER);
             this.mainPanel.add(topPanel, BorderLayout.NORTH);
@@ -132,10 +133,7 @@ public class JavaBeanToolAction extends AnAction {
                 btnGenerate.addActionListener(new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
-
-
                         Vector rows = beanFieldsTable.getRows();
-
                         System.out.println(rows);
                     }
                 });
@@ -169,14 +167,14 @@ public class JavaBeanToolAction extends AnAction {
     static class DDLCreatorTool extends JPanel {
 
         JLabel dbTypeLabel;
-        JComboBox<String> dbTypeComboBox;
+        ComboBox<String> dbTypeComboBox;
 
         JPanel topPanel;
         EditorTextField ddlEditor;
 
         public DDLCreatorTool(Project project) {
             dbTypeLabel = new JLabel("数据库类型");
-            dbTypeComboBox = new JComboBox<>();
+            dbTypeComboBox = new ComboBox<>();
             dbTypeComboBox.setModel(new DefaultComboBoxModel<>(new String[]{"MySQL"}));
 
             topPanel = new JPanel();

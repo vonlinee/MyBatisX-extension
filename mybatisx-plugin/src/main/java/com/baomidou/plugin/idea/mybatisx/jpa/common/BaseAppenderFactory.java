@@ -9,7 +9,7 @@ import com.baomidou.plugin.idea.mybatisx.jpa.common.iftest.ConditionFieldWrapper
 import com.baomidou.plugin.idea.mybatisx.jpa.component.TxParameter;
 import com.baomidou.plugin.idea.mybatisx.jpa.util.SyntaxAppenderWrapper;
 import com.intellij.psi.PsiClass;
-import org.apache.commons.lang3.StringUtils;
+import com.baomidou.plugin.idea.mybatisx.util.StringUtils;
 
 import java.util.ArrayList;
 import java.util.HashSet;

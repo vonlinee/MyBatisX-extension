@@ -21,7 +21,7 @@ import java.util.Set;
  */
 public class InnerAliasResolver extends AliasResolver {
     private static final Logger logger = LoggerFactory.getLogger(InnerAliasResolver.class);
-    private volatile Set<AliasDesc> innerAliasDescs = null;
+    private volatile Set<AliasDesc> innerAliasDescriptions = null;
 
     /**
      * Instantiates a new Inner alias resolver.
@@ -33,26 +33,26 @@ public class InnerAliasResolver extends AliasResolver {
     }
 
     private Set<AliasDesc> getAliasDescSet() {
-        Set<AliasDesc> aliasDescs = new HashSet<>();
-        addAliasDesc(aliasDescs, "java.lang.String", "string");
-        addAliasDesc(aliasDescs, "java.lang.Byte", "byte");
-        addAliasDesc(aliasDescs, "java.lang.Long", "long");
-        addAliasDesc(aliasDescs, "java.lang.Short", "short");
-        addAliasDesc(aliasDescs, "java.lang.Integer", "int");
-        addAliasDesc(aliasDescs, "java.lang.Integer", "integer");
-        addAliasDesc(aliasDescs, "java.lang.Double", "double");
-        addAliasDesc(aliasDescs, "java.lang.Float", "float");
-        addAliasDesc(aliasDescs, "java.lang.Boolean", "boolean");
-        addAliasDesc(aliasDescs, "java.util.Date", "date");
-        addAliasDesc(aliasDescs, "java.math.BigDecimal", "decimal");
-        addAliasDesc(aliasDescs, "java.lang.Object", "object");
-        addAliasDesc(aliasDescs, "java.util.Map", "map");
-        addAliasDesc(aliasDescs, "java.util.HashMap", "hashmap");
-        addAliasDesc(aliasDescs, "java.util.List", "list");
-        addAliasDesc(aliasDescs, "java.util.ArrayList", "arraylist");
-        addAliasDesc(aliasDescs, "java.util.Collection", "collection");
-        addAliasDesc(aliasDescs, "java.util.Iterator", "iterator");
-        return aliasDescs;
+        Set<AliasDesc> aliasDescriptions = new HashSet<>();
+        addAliasDesc(aliasDescriptions, "java.lang.String", "string");
+        addAliasDesc(aliasDescriptions, "java.lang.Byte", "byte");
+        addAliasDesc(aliasDescriptions, "java.lang.Long", "long");
+        addAliasDesc(aliasDescriptions, "java.lang.Short", "short");
+        addAliasDesc(aliasDescriptions, "java.lang.Integer", "int");
+        addAliasDesc(aliasDescriptions, "java.lang.Integer", "integer");
+        addAliasDesc(aliasDescriptions, "java.lang.Double", "double");
+        addAliasDesc(aliasDescriptions, "java.lang.Float", "float");
+        addAliasDesc(aliasDescriptions, "java.lang.Boolean", "boolean");
+        addAliasDesc(aliasDescriptions, "java.util.Date", "date");
+        addAliasDesc(aliasDescriptions, "java.math.BigDecimal", "decimal");
+        addAliasDesc(aliasDescriptions, "java.lang.Object", "object");
+        addAliasDesc(aliasDescriptions, "java.util.Map", "map");
+        addAliasDesc(aliasDescriptions, "java.util.HashMap", "hashmap");
+        addAliasDesc(aliasDescriptions, "java.util.List", "list");
+        addAliasDesc(aliasDescriptions, "java.util.ArrayList", "arraylist");
+        addAliasDesc(aliasDescriptions, "java.util.Collection", "collection");
+        addAliasDesc(aliasDescriptions, "java.util.Iterator", "iterator");
+        return aliasDescriptions;
     }
 
     private void addAliasDesc(Set<AliasDesc> aliasDescs, String clazz, String alias) {
@@ -77,18 +77,18 @@ public class InnerAliasResolver extends AliasResolver {
     @NotNull
     @Override
     public Set<AliasDesc> getClassAliasDescriptions(@Nullable PsiElement element) {
-        if (innerAliasDescs == null) {
+        if (innerAliasDescriptions == null) {
             Set<AliasDesc> aliasDescSet = getAliasDescSet();
             if (!aliasDescSet.isEmpty()) {
                 synchronized (this) {
-                    this.innerAliasDescs = aliasDescSet;
+                    this.innerAliasDescriptions = aliasDescSet;
                 }
             }
         }
-        if (innerAliasDescs == null) {
+        if (innerAliasDescriptions == null) {
             return Collections.emptySet();
         }
-        return innerAliasDescs;
+        return innerAliasDescriptions;
     }
 
 }

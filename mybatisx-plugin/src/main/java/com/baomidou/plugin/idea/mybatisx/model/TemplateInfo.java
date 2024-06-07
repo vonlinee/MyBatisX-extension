@@ -32,6 +32,9 @@ public class TemplateInfo {
      */
     private String content;
 
+    /**
+     * 持久化状态Bean必须要默认构造器
+     */
     public TemplateInfo() {
     }
 

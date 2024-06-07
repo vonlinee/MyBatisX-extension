@@ -29,7 +29,7 @@ import java.util.stream.Collectors;
 /**
  * The type Mybatis generator main action.
  */
-public class MyBatisGeneratorAction extends AnAction {
+public final class MyBatisGeneratorAction extends AnAction {
 
     private static final Logger logger = LoggerFactory.getLogger(MyBatisGeneratorAction.class);
 

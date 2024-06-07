@@ -1,6 +1,6 @@
 package com.baomidou.plugin.idea.mybatisx.jpa.common.appender;
 
-import org.apache.commons.lang3.StringUtils;
+import com.baomidou.plugin.idea.mybatisx.util.StringUtils;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Map;

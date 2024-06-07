@@ -147,12 +147,10 @@ public class MapperMethodInspection extends MapperInspection {
         PsiIdentifier ide = method.getNameIdentifier();
         // SelectProvider爆红 issue: https://gitee.com/baomidou/MybatisX/issues/I17JQ4
         PsiAnnotation[] annotation = method.getAnnotations();
-        if (annotation.length > 0) {
-            // 如果存在提供者注解, 就返回验证成功
-            for (PsiAnnotation psiAnnotation : annotation) {
-                if (STATEMENT_PROVIDER_NAMES.contains(psiAnnotation.getQualifiedName())) {
-                    return Optional.empty();
-                }
+        // 如果存在提供者注解, 就返回验证成功
+        for (PsiAnnotation psiAnnotation : annotation) {
+            if (STATEMENT_PROVIDER_NAMES.contains(psiAnnotation.getQualifiedName())) {
+                return Optional.empty();
             }
         }
         JavaService instance = JavaService.getInstance(method.getProject());

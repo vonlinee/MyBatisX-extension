@@ -3,6 +3,7 @@ package com.baomidou.plugin.idea.mybatisx.util;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 import java.util.StringJoiner;
 import java.util.stream.Collectors;
 
@@ -383,5 +384,13 @@ public class StringUtils {
         } else {
             return str1.toString().contentEquals(str2);
         }
+    }
+
+    public static boolean equals(String s1, String s2) {
+        return Objects.equals(s1, s2);
+    }
+
+    public static boolean isNotBlank(String str) {
+        return !isBlank(str);
     }
 }

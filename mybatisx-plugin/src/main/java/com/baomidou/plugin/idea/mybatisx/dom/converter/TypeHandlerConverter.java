@@ -46,7 +46,7 @@ public class TypeHandlerConverter extends ConverterAdaptor<PsiClass>
 
     @NotNull
     @Override
-    public PsiReference[] createReferences(GenericDomValue<PsiClass> value, PsiElement element, ConvertContext context) {
+    public PsiReference @NotNull [] createReferences(GenericDomValue<PsiClass> value, PsiElement element, ConvertContext context) {
         return psiClassConverter.createReferences(value, element, context);
     }
 
@@ -57,10 +57,7 @@ public class TypeHandlerConverter extends ConverterAdaptor<PsiClass>
             return true;
         }
         PsiClass typeHandlerCla = typeHandlerClassOptional.get();
-        if (!psiClass.isInheritor(typeHandlerCla, true)) {
-            return true;
-        }
-        return false;
+        return !psiClass.isInheritor(typeHandlerCla, true);
     }
 
 }

@@ -11,7 +11,7 @@ import org.jetbrains.annotations.NotNull;
 public class AliasResolverFactory {
 
     /**
-     * Create inner alias resolver alias resolver.
+     * Create inner alias resolver.
      *
      * @param project the project
      * @return the alias resolver

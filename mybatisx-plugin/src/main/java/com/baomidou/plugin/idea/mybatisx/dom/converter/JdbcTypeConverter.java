@@ -8,6 +8,7 @@ import com.intellij.psi.*;
 import com.intellij.psi.util.ReferenceSetBase;
 import com.intellij.psi.xml.XmlAttributeValue;
 import com.intellij.util.xml.*;
+import lombok.Getter;
 import org.jetbrains.annotations.NonNls;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -41,7 +42,7 @@ public class JdbcTypeConverter extends ConverterAdaptor<XmlAttributeValue> imple
     public XmlAttributeValue fromString(@Nullable @NonNls String s, ConvertContext context) {
         DomElement ctxElement = context.getInvocationElement();
         if (ctxElement instanceof GenericAttributeValue) {
-            GenericAttributeValue genericAttributeValue = (GenericAttributeValue) ctxElement;
+            GenericAttributeValue<?> genericAttributeValue = (GenericAttributeValue<?>) ctxElement;
             return genericAttributeValue.getXmlAttributeValue();
         }
         return null;
@@ -54,12 +55,9 @@ public class JdbcTypeConverter extends ConverterAdaptor<XmlAttributeValue> imple
     /**
      * cache the variants
      */
+    @Getter
     static class JdbcTypeVariantHolder {
         Object[] variants;
-
-        public Object[] getVariants() {
-            return variants;
-        }
 
         public synchronized void setVariants(Object[] variants) {
             this.variants = variants;
@@ -154,8 +152,7 @@ public class JdbcTypeConverter extends ConverterAdaptor<XmlAttributeValue> imple
             String paramText = firstText.toUpperCase();
             PsiField foundField = null;
             for (PsiField enumField : psiClass.getAllFields()) {
-                if (enumField.getName() != null
-                    && enumField.getName().equalsIgnoreCase(paramText)) {
+                if (enumField.getName().equalsIgnoreCase(paramText)) {
                     if (enumField.getType().getCanonicalText().equalsIgnoreCase(psiClass.getQualifiedName())) {
                         foundField = enumField;
                         break;
@@ -174,6 +171,5 @@ public class JdbcTypeConverter extends ConverterAdaptor<XmlAttributeValue> imple
         String getText() {
             return getElement().getValue();
         }
-
     }
 }

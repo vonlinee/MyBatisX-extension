@@ -74,12 +74,11 @@ public class JpaAdvanceDialog extends DialogWrapper {
      * Init fields.
      *
      * @param conditionFields the condition fields
-     * @param resultFields
      * @param allFields       the all fields
      * @param entityClass     the entity class
      */
     public void initFields(List<String> conditionFields, List<String> resultFields, List<TxField> allFields, PsiClass entityClass) {
-        if (conditionFields.size() > 0) {
+        if (!conditionFields.isEmpty()) {
             JPanel conditionPanel = smartJpaAdvanceUI.getConditionPanel();
             // 默认 5 列
             int columns = 5;

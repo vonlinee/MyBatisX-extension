@@ -12,7 +12,7 @@ import com.intellij.psi.PsiElement;
 import com.intellij.sql.dialects.SqlLanguageDialect;
 import com.intellij.sql.psi.SqlPsiFacade;
 import com.intellij.util.containers.JBIterable;
-import org.apache.commons.lang3.StringUtils;
+import com.baomidou.plugin.idea.mybatisx.util.StringUtils;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Comparator;

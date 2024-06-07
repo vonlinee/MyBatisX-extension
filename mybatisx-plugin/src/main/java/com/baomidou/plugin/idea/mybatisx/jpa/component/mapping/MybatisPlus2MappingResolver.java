@@ -3,7 +3,7 @@ package com.baomidou.plugin.idea.mybatisx.jpa.component.mapping;
 
 import com.intellij.psi.PsiAnnotation;
 import com.intellij.psi.PsiField;
-import org.apache.commons.lang3.StringUtils;
+import com.baomidou.plugin.idea.mybatisx.util.StringUtils;
 import org.jetbrains.annotations.NotNull;
 
 /**

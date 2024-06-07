@@ -156,10 +156,8 @@ public class Annotation implements Cloneable {
     private Optional<String> getSingleValue() {
         try {
             String value = Iterables.getOnlyElement(attributePairs.keySet());
-            StringBuilder builder = new StringBuilder("(");
-            builder.append(attributePairs.get(value).toString());
-            builder.append(")");
-            return Optional.of(builder.toString());
+            String builder = "(" + attributePairs.get(value).toString() + ")";
+            return Optional.of(builder);
         } catch (Exception e) {
             return Optional.empty();
         }
@@ -186,7 +184,7 @@ public class Annotation implements Cloneable {
     }
 
     @Override
-    protected Annotation clone() {
+    protected Annotation clone() throws CloneNotSupportedException {
         try {
             return (Annotation) super.clone();
         } catch (CloneNotSupportedException e) {
@@ -220,7 +218,5 @@ public class Annotation implements Cloneable {
         public String toString() {
             return "\"" + value + "\"";
         }
-
     }
-
 }

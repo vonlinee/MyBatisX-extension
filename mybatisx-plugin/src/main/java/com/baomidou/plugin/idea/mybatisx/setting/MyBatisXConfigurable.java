@@ -11,7 +11,7 @@ import javax.swing.*;
  *
  * @author yanglin
  */
-public class MyBatisConfigurable implements SearchableConfigurable {
+public class MyBatisXConfigurable implements SearchableConfigurable {
 
     private final MyBatisXSettings mybatisXSettings;
 
@@ -20,7 +20,7 @@ public class MyBatisConfigurable implements SearchableConfigurable {
     /**
      * Instantiates a new Mybatis configurable.
      */
-    public MyBatisConfigurable() {
+    public MyBatisXConfigurable() {
         mybatisXSettings = MyBatisXSettings.getInstance();
     }
 

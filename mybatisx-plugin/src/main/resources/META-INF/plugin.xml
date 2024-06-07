@@ -70,8 +70,8 @@
             <add-to-group group-id="EditorPopupMenu" anchor="first"/>
         </action>
 
-        <action id="com.baomidou.plugin.idea.mybatisx.intention.JavaBeanToolAction"
-                class="com.baomidou.plugin.idea.mybatisx.intention.JavaBeanToolAction"
+        <action id="com.baomidou.plugin.idea.mybatisx.actions.JavaBeanToolAction"
+                class="com.baomidou.plugin.idea.mybatisx.actions.JavaBeanToolAction"
                 text="JavaBean Tool" icon="/icons/bean.svg">
             <!--Idea顶部工具栏 Generate Java Doc菜单后-->
             <add-to-group group-id="ToolsMenu" anchor="after" relative-to-action="GenerateJavadoc"/>
@@ -89,12 +89,33 @@
         <!-- icon：图标，需要配置为全限定命名    -->
         <!-- 不配置compact属性，表示该Group需要支持子菜单    -->
         <group
-                id="FileHotswapAction"
-                class="com.baomidou.plugin.idea.mybatisx.agent.action.FileHotSwapActionGroup"
-                text="File Hot Swap"
-                popup="true">
+            id="FileHotswapAction"
+            class="com.baomidou.plugin.idea.mybatisx.agent.action.FileHotSwapActionGroup"
+            text="File Hot Swap"
+            popup="true">
             <add-to-group group-id="EditorPopupMenu" anchor="first"/>
         </group>
+
+
+        <!-- Add your actions here -->
+        <action id="com.baomidou.plugin.idea.mybatisx.ddl.CreateTableDDL"
+                class="com.baomidou.plugin.idea.mybatisx.ddl.CreateTableDDL"
+                text="CreateTable DDL"
+                description="Create Table DDL" popup="false">
+            <!--<keyboard-shortcut keymap="$default" first-keystroke="shift alt C"/>-->
+            <add-to-group group-id="GenerateGroup" anchor="last"/>
+        </action>
+        <action id="com.baomidou.plugin.idea.mybatisx.ddl.AddColumnDDL"
+                class="com.baomidou.plugin.idea.mybatisx.ddl.AddColumnDDL" text="AddColumn DDL"
+                description="Create Add Column DDL by JPA entity">
+            <add-to-group group-id="GenerateGroup" anchor="last"/>
+        </action>
+
+        <!-- Add your actions here -->
+        <action id="com.breezes.javabean2ddl.main" class="com.baomidou.plugin.idea.mybatisx.actions.Bean2DDLAction"
+                text="CreateTableDDL" description="Java bean convert mysql create table sql ddl script">
+            <add-to-group group-id="GenerateGroup" anchor="last"/>
+        </action>
     </actions>
 
 
@@ -148,18 +169,18 @@
                                         implementationClass="com.baomidou.plugin.idea.mybatisx.provider.InjectionLineMarkerProvider"/>
 
         <!-- 设置中的配置 -->
-        <applicationConfigurable id="com.baomidou.plugin.idea.mybatisx.setting.MyBatisConfigurable"
+        <applicationConfigurable id="com.baomidou.plugin.idea.mybatisx.setting.MyBatisXConfigurable"
                                  displayName="MyBatisX"
-                                 instance="com.baomidou.plugin.idea.mybatisx.setting.MyBatisConfigurable"/>
+                                 instance="com.baomidou.plugin.idea.mybatisx.setting.MyBatisXConfigurable"/>
         <!--模板设置-->
         <applicationConfigurable id="com.baomidou.plugin.idea.mybatisx.setting.TemplateConfigurable"
                                  displayName="Template"
-                                 parentId="com.baomidou.plugin.idea.mybatisx.setting.MyBatisConfigurable"
+                                 parentId="com.baomidou.plugin.idea.mybatisx.setting.MyBatisXConfigurable"
                                  instance="com.baomidou.plugin.idea.mybatisx.setting.TemplateConfigurable"/>
 
         <applicationConfigurable id="com.baomidou.plugin.idea.mybatisx.setting.DataTypeConfigurable"
                                  displayName="DataType"
-                                 parentId="com.baomidou.plugin.idea.mybatisx.setting.MyBatisConfigurable"
+                                 parentId="com.baomidou.plugin.idea.mybatisx.setting.MyBatisXConfigurable"
                                  instance="com.baomidou.plugin.idea.mybatisx.setting.DataTypeConfigurable"/>
 
         <!-- xml 标签提示 -->
@@ -253,20 +274,24 @@
 
         <!-- 使用 Alt+Delete 删除方法时, 也删掉对应的标签 -->
         <refactoring.safeDeleteProcessor
-                implementation="com.baomidou.plugin.idea.mybatisx.system.refactoring.MapperMethodSafeDeleteProcessor"/>
+            implementation="com.baomidou.plugin.idea.mybatisx.system.refactoring.MapperMethodSafeDeleteProcessor"/>
 
+        <applicationConfigurable instance="com.baomidou.plugin.idea.mybatisx.ui.SettingPanelConfig"
+                                 groupId="com.baomidou.plugin.idea.mybatisx.setting.MyBatisXConfigurable"
+                                 displayName="类型映射"/>
+
+        <applicationConfigurable instance="com.baomidou.plugin.idea.mybatisx.setting.TranslationConfigurable"
+                                 groupId="com.baomidou.plugin.idea.mybatisx.setting.MyBatisXConfigurable"
+                                 displayName="翻译配置"/>
+
+        <applicationService serviceImplementation="com.baomidou.plugin.idea.mybatisx.setting.JavaBean2DDLSetting"/>
     </extensions>
-
-    <!--    <projectListeners>-->
-    <!--        <listener class="com.baomidou.plugin.idea.mybatisx.hotswap.HotSwapExecutionListener"-->
-    <!--                  topic="com.intellij.execution.ExecutionListener"/>-->
-    <!--    </projectListeners>-->
 
     <applicationListeners>
         <listener
-                topic="com.intellij.ide.AppLifecycleListener"
-                class="com.baomidou.plugin.idea.mybatisx.boot.PluginInitializer"
-                activeInTestMode="false"/>
+            topic="com.intellij.ide.AppLifecycleListener"
+            class="com.baomidou.plugin.idea.mybatisx.boot.PluginInitializer"
+            activeInTestMode="false"/>
     </applicationListeners>
 
     <projectListeners>

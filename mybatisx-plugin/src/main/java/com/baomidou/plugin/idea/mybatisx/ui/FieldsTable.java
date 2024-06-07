@@ -88,7 +88,7 @@ public class FieldsTable extends JScrollPane {
         private void initButton() {
             this.btnDelete = SwingUtils.newIconButton("delete.svg");
             // 将边框外的上下左右空间设置为0
-            this.btnDelete.setMargin(new Insets(0, 0, 0, 0));
+            this.btnDelete.setMargin(JBUI.emptyInsets());
             // 将标签中显示的文本和图标之间的间隔量设置为0
             this.btnDelete.setIconTextGap(0);
             // 不打印边框
@@ -123,7 +123,7 @@ public class FieldsTable extends JScrollPane {
             btnAdd = SwingUtils.newIconButton("copy.svg");
             btnAdd.setIconTextGap(0);
             // 将边框外的上下左右空间设置为0
-            btnAdd.setMargin(new Insets(0, 0, 0, 0));
+            btnAdd.setMargin(JBUI.emptyInsets());
             // 将标签中显示的文本和图标之间的间隔量设置为0
             btnAdd.setIconTextGap(0);
             // 不打印边框

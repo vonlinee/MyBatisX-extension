@@ -5,7 +5,9 @@ import com.baomidou.plugin.idea.mybatisx.jpa.common.SyntaxAppenderFactory;
 import com.baomidou.plugin.idea.mybatisx.jpa.common.appender.AreaSequence;
 import com.baomidou.plugin.idea.mybatisx.jpa.common.appender.CustomAreaAppender;
 import com.baomidou.plugin.idea.mybatisx.jpa.component.TypeDescriptor;
-import org.apache.commons.lang3.StringUtils;
+import com.baomidou.plugin.idea.mybatisx.util.StringUtils;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.Comparator;
 import java.util.LinkedList;
@@ -14,101 +16,46 @@ import java.util.PriorityQueue;
 /**
  * The type Statement block.
  */
+@Setter
+@Getter
 public class StatementBlock {
 
     /**
      * 标签名称
+     * -- SETTER --
+     * Sets tag name.
+     *
+     * @param tagName the tag name
      */
     private String tagName;
     /**
      * 结果集区域
+     * -- SETTER --
+     * Sets result appender factory.
+     *
+     * @param resultAppenderFactory the result appender factory
      */
     private SyntaxAppenderFactory resultAppenderFactory;
     /**
      * 条件区域
+     * -- SETTER --
+     * Sets condition appender factory.
+     *
+     * @param conditionAppenderFactory the condition appender factory
      */
     private SyntaxAppenderFactory conditionAppenderFactory;
     /**
      * 排序区域
+     * -- SETTER --
+     * Sets sort appender factory.
+     *
+     * @param sortAppenderFactory the sort appender factory
      */
     private SyntaxAppenderFactory sortAppenderFactory;
     /**
      * 返回值类型
      */
     private TypeDescriptor returnDescriptor;
-
-    /**
-     * Gets result appender factory.
-     *
-     * @return the result appender factory
-     */
-    public SyntaxAppenderFactory getResultAppenderFactory() {
-        return resultAppenderFactory;
-    }
-
-    /**
-     * Sets result appender factory.
-     *
-     * @param resultAppenderFactory the result appender factory
-     */
-    public void setResultAppenderFactory(SyntaxAppenderFactory resultAppenderFactory) {
-        this.resultAppenderFactory = resultAppenderFactory;
-    }
-
-    /**
-     * Gets condition appender factory.
-     *
-     * @return the condition appender factory
-     */
-    public SyntaxAppenderFactory getConditionAppenderFactory() {
-        return conditionAppenderFactory;
-    }
-
-    /**
-     * Sets condition appender factory.
-     *
-     * @param conditionAppenderFactory the condition appender factory
-     */
-    public void setConditionAppenderFactory(SyntaxAppenderFactory conditionAppenderFactory) {
-        this.conditionAppenderFactory = conditionAppenderFactory;
-    }
-
-    /**
-     * Gets sort appender factory.
-     *
-     * @return the sort appender factory
-     */
-    public SyntaxAppenderFactory getSortAppenderFactory() {
-        return sortAppenderFactory;
-    }
-
-    /**
-     * Sets sort appender factory.
-     *
-     * @param sortAppenderFactory the sort appender factory
-     */
-    public void setSortAppenderFactory(SyntaxAppenderFactory sortAppenderFactory) {
-        this.sortAppenderFactory = sortAppenderFactory;
-    }
-
-    /**
-     * Gets tag name.
-     *
-     * @return the tag name
-     */
-    public String getTagName() {
-        return tagName;
-    }
-
-    /**
-     * Sets tag name.
-     *
-     * @param tagName the tag name
-     */
-    public void setTagName(String tagName) {
-        this.tagName = tagName;
-    }
-
 
     /**
      * Gets syntax appender factory by str.
@@ -133,10 +80,7 @@ public class StatementBlock {
         if (appenderFactory == null) {
             return false;
         }
-        if (text.equals(appenderFactory.getTipText())) {
-            return true;
-        }
-        return false;
+        return text.equals(appenderFactory.getTipText());
     }
 
     /**
@@ -149,32 +93,21 @@ public class StatementBlock {
     }
 
     /**
-     * Gets return descriptor.
-     *
-     * @return the return descriptor
-     */
-    public TypeDescriptor getReturnDescriptor() {
-        return returnDescriptor;
-    }
-
-    /**
      * Find priority linked list.
      *
      * @param stringLengthComparator the string length comparator
      * @param splitStr               the split str
      * @return the linked list
      */
-    public LinkedList<SyntaxAppender> findPriority(Comparator<SyntaxAppender> stringLengthComparator,
-                                                   String splitStr) {
-        if (StringUtils.isNoneBlank(splitStr) &&
-            !(getTagName().startsWith(splitStr) || splitStr.startsWith(getTagName()))) {
+    public LinkedList<SyntaxAppender> findPriority(Comparator<SyntaxAppender> stringLengthComparator, String splitStr) {
+        if (StringUtils.isNotBlank(splitStr) && !(getTagName().startsWith(splitStr) || splitStr.startsWith(getTagName()))) {
             return new LinkedList<>();
         }
         String replaceStr = splitStr;
         LinkedList<SyntaxAppender> syntaxAppenderList = new LinkedList<>();
         AreaSequence currentArea = AreaSequence.RESULT;
         // 找到一个合适的前缀
-        while (replaceStr.length() > 0) {
+        while (!replaceStr.isEmpty()) {
             PriorityQueue<SyntaxAppender> priorityQueue = new PriorityQueue<>(stringLengthComparator);
             if (currentArea.getSequence() <= AreaSequence.RESULT.getSequence()) {
                 resultAppenderFactory.findPriority(priorityQueue, syntaxAppenderList, replaceStr);
