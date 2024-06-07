@@ -28,7 +28,7 @@ import java.util.Map;
 @State(
         name = "MybatisXSettings",
         storages = @Storage(value = MyBatisXPlugin.PERSISTENT_STATE_FILE))
-public class MyBatisXSettings implements PersistentStateComponent<MyBatisXSettings.State> {
+public final class MyBatisXSettings implements PersistentStateComponent<MyBatisXSettings.State> {
 
     private final State state = new State();
 

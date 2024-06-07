@@ -2,7 +2,6 @@ package com.baomidou.plugin.idea.mybatisx.setting;
 
 import com.intellij.openapi.options.ConfigurationException;
 import com.intellij.openapi.options.SearchableConfigurable;
-import com.intellij.openapi.util.NlsContexts;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -15,7 +14,7 @@ public class DataTypeConfigurable implements SearchableConfigurable {
     }
 
     @Override
-    public @NlsContexts.ConfigurableName String getDisplayName() {
+    public String getDisplayName() {
         return "DataType Setting";
     }
 

@@ -15,6 +15,9 @@ import com.intellij.openapi.project.Project;
 import com.intellij.openapi.ui.ComboBox;
 import com.intellij.ui.EditorTextField;
 import com.intellij.ui.HorizontalScrollBarEditorCustomization;
+import com.intellij.ui.tabs.JBTabs;
+import com.intellij.ui.tabs.TabInfo;
+import com.intellij.ui.tabs.impl.JBTabsImpl;
 import org.jetbrains.annotations.NotNull;
 
 import javax.swing.*;
@@ -22,6 +25,7 @@ import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -31,28 +35,30 @@ public class ParamImportPane extends JPanel {
     private static final Gson gson = new Gson();
 
     Editor jsonTab;
-    Editor urlParamTab;
-    JTabbedPane tabbedPane;
+    Editor urlParamTabEditor;
+    JBTabs tabbedPane;
     MapperStatementParamTablePane table;
 
     public ParamImportPane(Project project, MapperStatementParamTablePane table) {
         super(new BorderLayout());
         this.table = table;
 
-        tabbedPane = new JTabbedPane();
-        tabbedPane.setTabPlacement(JTabbedPane.TOP);
-        tabbedPane.setTabLayoutPolicy(JTabbedPane.SCROLL_TAB_LAYOUT);
+        tabbedPane = new JBTabsImpl(project);
+//        tabbedPane.setTabPlacement(JTabbedPane.TOP);
+//        tabbedPane.setTabLayoutPolicy(JTabbedPane.SCROLL_TAB_LAYOUT);
 
         jsonTab = new Editor(project, JsonFileType.INSTANCE);
-        tabbedPane.addTab("JSON", jsonTab);
 
-        urlParamTab = new Editor(project, PlainTextFileType.INSTANCE);
-        tabbedPane.addTab("URL参数", urlParamTab);
+        TabInfo tabInfo = new TabInfo(jsonTab);
+        tabInfo.setText("JSON");
+        tabbedPane.addTab(tabInfo);
 
-        // 设置选项卡布局在顶部
-        tabbedPane.setTabPlacement(JTabbedPane.TOP);
+        urlParamTabEditor = new Editor(project, PlainTextFileType.INSTANCE);
+        TabInfo urlParamTab = new TabInfo(urlParamTabEditor);
+        urlParamTab.setText("URL");
+        tabbedPane.addTab(urlParamTab);
 
-        add(tabbedPane, BorderLayout.CENTER);
+        add(tabbedPane.getComponent(), BorderLayout.CENTER);
 
         Box box = Box.createHorizontalBox();
         box.add(new Box.Filler(new Dimension(100, 0), new Dimension(200, 0),
@@ -106,6 +112,9 @@ public class ParamImportPane extends JPanel {
             importModel = ImportModel.MERGE;
         }
         List<ParamNode> params = getParams();
+        if (params == null || params.isEmpty()) {
+            return;
+        }
         Map<String, ParamNode> paramNodeMap = new HashMap<>();
         for (ParamNode param : params) {
             paramNodeMap.put(param.getKey(), param);
@@ -155,18 +164,23 @@ public class ParamImportPane extends JPanel {
      * @return 参数列表
      */
     public List<ParamNode> getParams() {
-        int index = tabbedPane.getSelectedIndex();
+        TabInfo selectedTabInfo = tabbedPane.getSelectedInfo();
+        if (selectedTabInfo == null) {
+            return Collections.emptyList();
+        }
+        String selectedTabText = selectedTabInfo.getText();
+
         List<ParamNode> paramNodes = new ArrayList<>();
-        if (index == 0) {
+        if ("JSON".equalsIgnoreCase(selectedTabText)) {
             // json
             String text = jsonTab.getText();
             if (StringUtils.isBlank(text)) {
                 return paramNodes;
             }
             parseJsonParams(null, JsonParser.parseString(text), paramNodes);
-        } else if (index == 1) {
+        } else if ("URL".equalsIgnoreCase(selectedTabText)) {
             // url参数
-            String text = urlParamTab.getText();
+            String text = urlParamTabEditor.getText();
             if (!StringUtils.isBlank(text)) {
                 int i = text.indexOf("?");
                 if (i >= 0) {

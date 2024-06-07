@@ -12,7 +12,6 @@ import com.baomidou.plugin.idea.mybatisx.util.SwingUtils;
 import com.intellij.openapi.options.ConfigurationException;
 import com.intellij.openapi.options.SearchableConfigurable;
 import com.intellij.openapi.project.Project;
-import com.intellij.openapi.util.NlsContexts;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -39,7 +38,7 @@ public class TemplateConfigurable implements SearchableConfigurable {
     }
 
     @Override
-    public @NlsContexts.ConfigurableName String getDisplayName() {
+    public String getDisplayName() {
         return getId();
     }
 
@@ -60,7 +59,7 @@ public class TemplateConfigurable implements SearchableConfigurable {
 
             Project currentProject = PluginUtils.getCurrentProject();
 
-            List<TemplateInfo> templates = TemplatesSettings.getInstance(currentProject).templates;
+            List<TemplateInfo> templates = TemplatesSettings.getInstance(currentProject).getTemplates();
 
             Map<String, TemplateInfo> map = CollectionUtils.toMap(templates, TemplateInfo::getName);
 
@@ -82,9 +81,8 @@ public class TemplateConfigurable implements SearchableConfigurable {
                 @Override
                 public void focusLost(FocusEvent e) {
                     // 将文件变更写入文件
-
                     DefaultMutableTreeNode node = SwingUtils.getSelectedNode(treeView);
-                    TemplateInfo templateInfo = map.get(node.getUserObject());
+                    TemplateInfo templateInfo = map.get(String.valueOf(node.getUserObject()));
                     templateInfo.setContent(field.getText());
                 }
             });

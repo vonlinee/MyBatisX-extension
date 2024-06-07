@@ -1,11 +1,13 @@
 package com.baomidou.plugin.idea.mybatisx.boot;
 
+import com.baomidou.plugin.idea.mybatisx.generate.setting.TemplatesSettings;
 import com.baomidou.plugin.idea.mybatisx.model.TemplateInfo;
 import com.baomidou.plugin.idea.mybatisx.setting.DataTypeMappingTableModel;
 import com.baomidou.plugin.idea.mybatisx.setting.MyBatisXSettings;
 import com.baomidou.plugin.idea.mybatisx.util.FileUtils;
 import com.baomidou.plugin.idea.mybatisx.util.IOUtils;
 import com.baomidou.plugin.idea.mybatisx.util.PluginUtils;
+import com.intellij.codeInsight.template.impl.TemplateSettings;
 import com.intellij.ide.AppLifecycleListener;
 import com.intellij.openapi.project.Project;
 import org.jetbrains.annotations.Nullable;
@@ -84,6 +86,9 @@ public class PluginInitializer implements AppLifecycleListener {
         } catch (Exception exception) {
             logger.error("failed to copy templates", exception);
         }
+
+        TemplatesSettings templatesSettings;
+
         MyBatisXSettings settings = MyBatisXSettings.getInstance();
 
         // 数据类型映射信息

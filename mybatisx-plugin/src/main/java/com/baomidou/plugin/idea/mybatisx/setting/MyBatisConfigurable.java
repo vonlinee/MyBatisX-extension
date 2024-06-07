@@ -26,7 +26,7 @@ public class MyBatisConfigurable implements SearchableConfigurable {
 
     @Override
     public String getId() {
-        return "MybatisX";
+        return "MyBatisX";
     }
 
     @Override

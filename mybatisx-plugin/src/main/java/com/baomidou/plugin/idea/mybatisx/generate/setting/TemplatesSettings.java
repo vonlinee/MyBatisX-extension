@@ -4,14 +4,16 @@ import com.baomidou.plugin.idea.mybatisx.generate.dto.TemplateContext;
 import com.baomidou.plugin.idea.mybatisx.generate.dto.TemplateSettingDTO;
 import com.baomidou.plugin.idea.mybatisx.model.TemplateInfo;
 import com.baomidou.plugin.idea.mybatisx.util.MyBatisXPlugin;
+import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.components.PersistentStateComponent;
 import com.intellij.openapi.components.ServiceManager;
 import com.intellij.openapi.components.State;
 import com.intellij.openapi.components.Storage;
 import com.intellij.openapi.project.Project;
 import com.intellij.util.xmlb.XmlSerializerUtil;
+import lombok.Getter;
+import lombok.Setter;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -22,14 +24,13 @@ import java.util.Map;
  * 模板设置
  */
 @State(name = "TemplatesSettings", storages = {@Storage(value = MyBatisXPlugin.PERSISTENT_STATE_FILE)})
-public class TemplatesSettings implements PersistentStateComponent<TemplatesSettings> {
+public final class TemplatesSettings implements PersistentStateComponent<TemplatesSettings.State> {
 
-    /**
-     * 模板信息列表
-     * 序列化的对象需要有默认构造器，否则序列化失败
-     */
-    public List<TemplateInfo> templates = new ArrayList<>();
+    @Setter
+    @Getter
     private TemplateContext templateConfigs;
+
+    private final State state = new State();
 
     @NotNull
     public static TemplatesSettings getInstance(@NotNull Project project) {
@@ -46,13 +47,13 @@ public class TemplatesSettings implements PersistentStateComponent<TemplatesSett
     }
 
     @Override
-    public @Nullable TemplatesSettings getState() {
-        return this;
+    public TemplatesSettings.State getState() {
+        return state;
     }
 
     @Override
-    public void loadState(@NotNull TemplatesSettings state) {
-        XmlSerializerUtil.copyBean(state, this);
+    public void loadState(@NotNull TemplatesSettings.State state) {
+        XmlSerializerUtil.copyBean(state, this.state);
     }
 
     /**
@@ -69,11 +70,15 @@ public class TemplatesSettings implements PersistentStateComponent<TemplatesSett
         return templateSettingMap;
     }
 
-    public TemplateContext getTemplateConfigs() {
-        return templateConfigs;
+    public static class State {
+        /**
+         * 模板信息列表
+         * 序列化的对象需要有默认构造器，否则序列化失败
+         */
+        public List<TemplateInfo> templates = new ArrayList<>();
     }
 
-    public void setTemplateConfigs(TemplateContext templateConfigs) {
-        this.templateConfigs = templateConfigs;
+    public List<TemplateInfo> getTemplates() {
+        return state.templates;
     }
 }

@@ -9,10 +9,10 @@ import com.baomidou.plugin.idea.mybatisx.util.SqlUtils;
 import com.baomidou.plugin.idea.mybatisx.util.StringUtils;
 import com.baomidou.plugin.idea.mybatisx.util.SwingUtils;
 import com.intellij.openapi.project.Project;
-import com.intellij.openapi.ui.ComboBox;
 import com.intellij.openapi.ui.DialogWrapper;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.xml.XmlTag;
+import com.intellij.ui.JBSplitter;
 import com.intellij.util.ui.JBUI;
 import org.apache.ibatis.mapping.MappedStatement;
 import org.apache.ibatis.session.Configuration;
@@ -39,14 +39,14 @@ public class MappedStatementDebuggerDialog extends DialogWrapper {
     MapperStatementEditor textField;
     ResultSqlEditor resultSqlEditor;
     MapperStatementParamTablePane table;
-    JSplitPane editorContainer;
+    JBSplitter editorContainer;
     DynamicMyBatisConfiguration configuration;
     MyMapperBuilderAssistant assistant;
     MapperStatementParser msParser = new MapperStatementParser();
-    JSplitPane center;
+    JBSplitter center;
     Project project;
     ParamImportPane importPane;
-    JSplitPane paramContainer;
+    JBSplitter paramContainer;
     private JPanel mainPanel;
     private String namespace;
 
@@ -127,15 +127,15 @@ public class MappedStatementDebuggerDialog extends DialogWrapper {
 
         this.mainPanel.add(topPanel, BorderLayout.NORTH);
 
-        center = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT);
+        center = new JBSplitter(false, 0.5f);
 
-        editorContainer = new JSplitPane(JSplitPane.VERTICAL_SPLIT);
+        editorContainer = new JBSplitter(true, 0.5F);
         // Mapper Statement 编辑器
         textField = new MapperStatementEditor(project);
         textField.setOneLineMode(false);
         textField.setPreferredWidth(500);
         textField.setEnabled(true);
-        editorContainer.setLeftComponent(textField);
+        editorContainer.setFirstComponent(textField);
 
         // 结果sql编辑器
         resultSqlEditor = new ResultSqlEditor(project);
@@ -143,22 +143,18 @@ public class MappedStatementDebuggerDialog extends DialogWrapper {
         resultSqlEditor.setPreferredWidth(500);
         resultSqlEditor.setEnabled(true);
 
-        editorContainer.setLeftComponent(textField);
-        editorContainer.setRightComponent(resultSqlEditor);
-        editorContainer.setDividerLocation(0.5D);
+        editorContainer.setSecondComponent(resultSqlEditor);
 
-        center.setLeftComponent(editorContainer);
-        // 设置分隔线位置，左右各一半
-        center.setDividerLocation(0.5D);
+        center.setFirstComponent(editorContainer);
 
-        paramContainer = new JSplitPane(JSplitPane.VERTICAL_SPLIT);
+        paramContainer = new JBSplitter(true, 0.5f);
         // 参数表区域
         table = new MapperStatementParamTablePane();
-        paramContainer.setLeftComponent(table);
+        paramContainer.setFirstComponent(table);
 
         importPane = new ParamImportPane(project, table);
-        paramContainer.setRightComponent(importPane);
-        center.setRightComponent(paramContainer);
+        paramContainer.setSecondComponent(importPane);
+        center.setSecondComponent(paramContainer);
 
         this.mainPanel.add(center, BorderLayout.CENTER);
         init();
@@ -171,11 +167,6 @@ public class MappedStatementDebuggerDialog extends DialogWrapper {
      * 弹窗显示后进行初始化操作
      */
     public final void initUI() {
-        // 设置分隔线位置，左右各一半 需要在show之后设置才有效
-        center.setDividerLocation(0.5D);
-        editorContainer.setDividerLocation(0.5D);
-        paramContainer.setDividerLocation(0.5D);
-
         IntellijSDK.invokeLater(this::fillMapperStatementParams);
     }
 
