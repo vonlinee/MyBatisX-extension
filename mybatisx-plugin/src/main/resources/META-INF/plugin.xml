@@ -249,6 +249,9 @@
         <applicationService id="baomidou.MybatisSetting"
                             serviceImplementation="com.baomidou.mybatisx.plugin.setting.MyBatisXSettings"/>
 
+        <applicationService id="com.baomidou.mybatisx.plugin.setting.MyBatisGeneratorSettings"
+                            serviceImplementation="com.baomidou.mybatisx.plugin.setting.MyBatisGeneratorSettings"/>
+
         <applicationService
             id="com.baomidou.mybatisx.plugin.setting.GlobalTemplateSettings"
             serviceImplementation="com.baomidou.mybatisx.plugin.setting.GlobalTemplateSettings"/>

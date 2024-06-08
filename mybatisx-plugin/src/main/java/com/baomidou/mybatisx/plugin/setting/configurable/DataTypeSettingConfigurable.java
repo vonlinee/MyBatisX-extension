@@ -20,9 +20,8 @@ import java.util.Objects;
  */
 public final class DataTypeSettingConfigurable implements SearchableConfigurable {
 
-    private DataTypeSettingPanel dataTypeSettingPanel;
-
-    private JavaBean2DDLSetting javaBean2DDLSetting;
+    private final DataTypeSettingPanel dataTypeSettingPanel;
+    private final JavaBean2DDLSetting javaBean2DDLSetting;
 
     public DataTypeSettingConfigurable() {
         this.dataTypeSettingPanel = new DataTypeSettingPanel();
@@ -50,18 +49,6 @@ public final class DataTypeSettingConfigurable implements SearchableConfigurable
     @Override
     public boolean isModified() {
         JavaBean2DDLSetting.MySettingProperties myProperties = javaBean2DDLSetting.myProperties;
-        if (!StringUtils.equals(myProperties.getIdAnnotation(), dataTypeSettingPanel.getIdText().getText())) {
-            return true;
-        }
-        if (!StringUtils.equals(myProperties.getTableAnnotation(), dataTypeSettingPanel.getTableText().getText())) {
-            return true;
-        }
-        if (!StringUtils.equals(myProperties.getTableAnnotationProperty(), dataTypeSettingPanel.getTablePropertyText().getText())) {
-            return true;
-        }
-        if (!StringUtils.equals(myProperties.getCommentAnnotation(), dataTypeSettingPanel.getCommendText().getText())) {
-            return true;
-        }
         ComboBoxItem intComboBox = (ComboBoxItem) dataTypeSettingPanel.getIntMapComboBox().getSelectedItem();
         assert intComboBox != null;
         if (!StringUtils.equals(myProperties.getIntType(), intComboBox.getValue())) {
@@ -157,12 +144,6 @@ public final class DataTypeSettingConfigurable implements SearchableConfigurable
     @Override
     public void apply() throws ConfigurationException {
         JavaBean2DDLSetting.MySettingProperties myProperties = javaBean2DDLSetting.myProperties;
-
-        myProperties.setIdAnnotation(dataTypeSettingPanel.getIdText().getText());
-        myProperties.setTableAnnotation(dataTypeSettingPanel.getTableText().getText());
-        myProperties.setTableAnnotationProperty(dataTypeSettingPanel.getTablePropertyText().getText());
-        myProperties.setCommentAnnotation(dataTypeSettingPanel.getCommendText().getText());
-
         myProperties.setIntType(((ComboBoxItem) Objects.requireNonNull(dataTypeSettingPanel.getIntMapComboBox().getSelectedItem())).getValue());
         myProperties.setBooleanType(((ComboBoxItem) Objects.requireNonNull(dataTypeSettingPanel.getBooleanMapComboBox().getSelectedItem())).getValue());
         myProperties.setDoubleType(((ComboBoxItem) Objects.requireNonNull(dataTypeSettingPanel.getDoubleMapComboBox().getSelectedItem())).getValue());
@@ -193,11 +174,6 @@ public final class DataTypeSettingConfigurable implements SearchableConfigurable
     @Override
     public void reset() {
         JavaBean2DDLSetting.MySettingProperties myProperties = javaBean2DDLSetting.myProperties;
-        dataTypeSettingPanel.getIdText().setText(myProperties.getIdAnnotation());
-        dataTypeSettingPanel.getTableText().setText(myProperties.getTableAnnotation());
-        dataTypeSettingPanel.getTablePropertyText().setText(myProperties.getTableAnnotationProperty());
-        dataTypeSettingPanel.getCommendText().setText(myProperties.getCommentAnnotation());
-
         dataTypeSettingPanel.getIntMapComboBox().setSelectedItem(new SqlTypeComboBoxItem(Objects.requireNonNull(SqlTypeEnum.findByType(myProperties.getIntType()))));
         dataTypeSettingPanel.getLongMapComboBox().setSelectedItem(new SqlTypeComboBoxItem(Objects.requireNonNull(SqlTypeEnum.findByType(myProperties.getLongType()))));
         dataTypeSettingPanel.getBooleanMapComboBox().setSelectedItem(new SqlTypeComboBoxItem(Objects.requireNonNull(SqlTypeEnum.findByType(myProperties.getBooleanType()))));

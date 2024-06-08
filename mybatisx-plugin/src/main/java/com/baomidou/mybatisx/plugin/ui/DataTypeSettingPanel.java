@@ -16,14 +16,9 @@ import java.util.Objects;
 @Setter
 public class DataTypeSettingPanel {
     private JPanel mainPanel;
-    private JTextField tableText;
-    private JTextField idText;
-    private JTextField commendText;
     private JComboBox<ComboBoxItem> intMapComboBox;
     private JTextField intDefaultText;
     private JPanel auxiliaryPanel;
-    private JPanel annotationPanel;
-    private JPanel docPanel;
     private JPanel mapPanel;
     private JPanel commonlyUsedMapPanel;
     private JComboBox<ComboBoxItem> longMapComboBox;
@@ -34,7 +29,6 @@ public class DataTypeSettingPanel {
     private JTextField booleanDefaultText;
     private JComboBox<ComboBoxItem> dateMapComboBox;
     private JTextField dateDefaultText;
-    private JTextField tablePropertyText;
     private JComboBox<ComboBoxItem> doubleMapComboBox;
     private JComboBox<ComboBoxItem> floatMapComboBox;
     private JTextField doubleDefaultText;
