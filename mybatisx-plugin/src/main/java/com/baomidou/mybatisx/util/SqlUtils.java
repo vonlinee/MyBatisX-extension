@@ -1,6 +1,6 @@
 package com.baomidou.mybatisx.util;
 
-import com.baomidou.mybatisx.model.Param;
+import com.baomidou.mybatisx.feat.bean.Param;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;

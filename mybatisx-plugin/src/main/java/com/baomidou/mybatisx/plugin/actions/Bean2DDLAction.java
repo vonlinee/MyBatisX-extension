@@ -1,6 +1,6 @@
 package com.baomidou.mybatisx.plugin.actions;
 
-import com.baomidou.mybatisx.model.ConvertBean;
+import com.baomidou.mybatisx.feat.bean.ConvertBean;
 import com.baomidou.mybatisx.plugin.ui.dialog.BeanToolDialog;
 import com.baomidou.mybatisx.util.MessageNotification;
 import com.baomidou.mybatisx.util.PsiHelper;

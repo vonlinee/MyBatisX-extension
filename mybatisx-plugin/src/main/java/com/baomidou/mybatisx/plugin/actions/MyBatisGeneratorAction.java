@@ -1,11 +1,11 @@
 package com.baomidou.mybatisx.plugin.actions;
 
-import com.baomidou.mybatisx.generate.ClassGenerateDialogWrapper;
-import com.baomidou.mybatisx.generate.dto.GenerateConfig;
-import com.baomidou.mybatisx.generate.dto.TableUIInfo;
-import com.baomidou.mybatisx.generate.dto.TemplateContext;
-import com.baomidou.mybatisx.generate.setting.TemplatesSettings;
-import com.baomidou.mybatisx.generate.template.CodeGenerator;
+import com.baomidou.mybatisx.feat.generate.ClassGenerateDialogWrapper;
+import com.baomidou.mybatisx.feat.generate.dto.GenerateConfig;
+import com.baomidou.mybatisx.feat.generate.dto.TableUIInfo;
+import com.baomidou.mybatisx.feat.generate.dto.TemplateContext;
+import com.baomidou.mybatisx.feat.generate.setting.TemplatesSettings;
+import com.baomidou.mybatisx.feat.generate.template.CodeGenerator;
 import com.baomidou.mybatisx.util.ArrayUtils;
 import com.baomidou.mybatisx.util.PluginUtils;
 import com.baomidou.mybatisx.util.PsiHelper;

@@ -1,7 +1,7 @@
 package com.baomidou.mybatisx.service;
 
-import com.baomidou.mybatisx.ddl.SqlTypeEnum;
-import com.baomidou.mybatisx.model.SqlTypeComboBoxItem;
+import com.baomidou.mybatisx.feat.ddl.SqlTypeEnum;
+import com.baomidou.mybatisx.feat.bean.SqlTypeComboBoxItem;
 import com.baomidou.mybatisx.util.StringUtils;
 
 import javax.swing.*;

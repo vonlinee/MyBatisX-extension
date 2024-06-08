@@ -1,7 +1,7 @@
 package com.baomidou.mybatisx.util;
 
 import com.baomidou.mybatisx.plugin.actions.Bean2DDLAction;
-import com.baomidou.mybatisx.model.ConvertBean;
+import com.baomidou.mybatisx.feat.bean.ConvertBean;
 import com.baomidou.mybatisx.plugin.setting.JavaBean2DDLSetting;
 
 import java.util.concurrent.ConcurrentHashMap;

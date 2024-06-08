@@ -9,10 +9,6 @@ import org.jetbrains.annotations.NotNull;
 
 public class CodeArea extends EditorTextField {
 
-    public CodeArea(FileType fileType) {
-        super(null, fileType);
-    }
-
     public CodeArea() {
         super(null, PlainTextFileType.INSTANCE);
     }

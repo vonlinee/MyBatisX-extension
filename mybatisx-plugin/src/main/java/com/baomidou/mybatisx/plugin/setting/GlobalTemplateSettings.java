@@ -1,7 +1,7 @@
 package com.baomidou.mybatisx.plugin.setting;
 
-import com.baomidou.mybatisx.generate.setting.TemplatesSettings;
-import com.baomidou.mybatisx.model.TemplateInfo;
+import com.baomidou.mybatisx.feat.generate.setting.TemplatesSettings;
+import com.baomidou.mybatisx.feat.bean.TemplateInfo;
 import com.baomidou.mybatisx.util.MyBatisXPlugin;
 import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.components.PersistentStateComponent;

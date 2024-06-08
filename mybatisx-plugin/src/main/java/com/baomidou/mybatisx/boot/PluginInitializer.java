@@ -1,6 +1,6 @@
 package com.baomidou.mybatisx.boot;
 
-import com.baomidou.mybatisx.model.TemplateInfo;
+import com.baomidou.mybatisx.feat.bean.TemplateInfo;
 import com.baomidou.mybatisx.plugin.setting.DataTypeMappingTableModel;
 import com.baomidou.mybatisx.plugin.setting.GlobalTemplateSettings;
 import com.baomidou.mybatisx.plugin.setting.MyBatisXSettings;

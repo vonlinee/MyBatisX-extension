@@ -1,6 +1,6 @@
 package com.baomidou.mybatisx.plugin.ui.components;
 
-import com.baomidou.mybatisx.model.BeanInfo;
+import com.baomidou.mybatisx.feat.bean.BeanInfo;
 
 import javax.swing.*;
 

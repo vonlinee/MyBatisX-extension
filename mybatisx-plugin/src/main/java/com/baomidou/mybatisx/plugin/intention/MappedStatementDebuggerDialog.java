@@ -1,8 +1,8 @@
 package com.baomidou.mybatisx.plugin.intention;
 
 import com.baomidou.mybatisx.model.ParamDataType;
-import com.baomidou.mybatisx.mybatis.DefaultMappedStatementSqlBuilder;
-import com.baomidou.mybatisx.mybatis.MappedStatementSqlBuilder;
+import com.baomidou.mybatisx.feat.mybatis.DefaultMappedStatementSqlBuilder;
+import com.baomidou.mybatisx.feat.mybatis.MappedStatementSqlBuilder;
 import com.baomidou.mybatisx.util.DomUtils;
 import com.baomidou.mybatisx.util.IntellijSDK;
 import com.baomidou.mybatisx.util.SqlUtils;

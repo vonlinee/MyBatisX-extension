@@ -1,6 +1,6 @@
 package com.baomidou.mybatisx.plugin.ui;
 
-import com.baomidou.mybatisx.model.TemplateInfo;
+import com.baomidou.mybatisx.feat.bean.TemplateInfo;
 import com.baomidou.mybatisx.plugin.setting.DataTypeMappingTableModel;
 import com.baomidou.mybatisx.plugin.setting.TemplateTableModel;
 import com.intellij.openapi.fileChooser.FileChooserDescriptor;

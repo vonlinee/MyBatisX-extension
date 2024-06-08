@@ -1,7 +1,7 @@
 package com.baomidou.mybatisx.util;
 
-import com.baomidou.mybatisx.generate.plugin.helper.IntellijColumnInfo;
-import com.baomidou.mybatisx.generate.plugin.helper.IntellijTableInfo;
+import com.baomidou.mybatisx.feat.generate.plugin.IntellijColumnInfo;
+import com.baomidou.mybatisx.feat.generate.plugin.IntellijTableInfo;
 import com.intellij.database.model.DasColumn;
 import com.intellij.database.model.DasTableKey;
 import com.intellij.database.model.DasTypedObject;

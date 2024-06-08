@@ -12,7 +12,7 @@ import com.baomidou.mybatisx.feat.jpa.component.TxField;
 import com.baomidou.mybatisx.feat.jpa.component.TypeDescriptor;
 import com.baomidou.mybatisx.feat.jpa.component.mapping.EntityMappingHolder;
 import com.baomidou.mybatisx.feat.jpa.component.mapping.EntityMappingResolverFactory;
-import com.baomidou.mybatisx.plugin.ui.JpaAdvanceDialog;
+import com.baomidou.mybatisx.plugin.ui.dialog.JpaAdvanceDialog;
 import com.baomidou.mybatisx.util.MapperUtils;
 import com.intellij.codeInsight.intention.IntentionAction;
 import com.intellij.codeInsight.intention.PsiElementBaseIntentionAction;

@@ -84,15 +84,15 @@
         </group>
 
         <!-- Add your actions here -->
-        <action id="com.baomidou.mybatisx.ddl.CreateTableDDL"
-                class="com.baomidou.mybatisx.ddl.CreateTableDDL"
+        <action id="com.baomidou.mybatisx.feat.ddl.CreateTableDDL"
+                class="com.baomidou.mybatisx.feat.ddl.CreateTableDDL"
                 text="CreateTable DDL"
                 description="Create Table DDL" popup="false">
             <!--<keyboard-shortcut keymap="$default" first-keystroke="shift alt C"/>-->
             <add-to-group group-id="GenerateGroup" anchor="last"/>
         </action>
-        <action id="com.baomidou.mybatisx.ddl.AddColumnDDL"
-                class="com.baomidou.mybatisx.ddl.AddColumnDDL" text="AddColumn DDL"
+        <action id="com.baomidou.mybatisx.feat.ddl.AddColumnDDL"
+                class="com.baomidou.mybatisx.feat.ddl.AddColumnDDL" text="AddColumn DDL"
                 description="Create Add Column DDL by JPA entity">
             <add-to-group group-id="GenerateGroup" anchor="last"/>
         </action>
@@ -111,7 +111,7 @@
         <notificationGroup displayType="BALLOON" id="notifyAction"/>
 
         <projectService id="baomidou.TemplatesSettings"
-                        serviceImplementation="com.baomidou.mybatisx.generate.setting.TemplatesSettings"/>
+                        serviceImplementation="com.baomidou.mybatisx.feat.generate.setting.TemplatesSettings"/>
         <!--文件描述-->
         <!-- mapper.xml文件属性提示 -->
         <dom.fileMetaData id="baomidou.MapperDescription"
@@ -261,9 +261,15 @@
         <refactoring.safeDeleteProcessor
             implementation="com.baomidou.mybatisx.plugin.extensions.MapperMethodSafeDeleteProcessor"/>
 
-        <applicationConfigurable instance="com.baomidou.mybatisx.plugin.ui.SettingPanelConfig"
-                                 groupId="com.baomidou.mybatisx.plugin.setting.configurable.MyBatisXConfigurable"
-                                 displayName="类型映射"/>
+        <applicationConfigurable
+            instance="com.baomidou.mybatisx.plugin.setting.configurable.DataTypeSettingConfigurable"
+            groupId="com.baomidou.mybatisx.plugin.setting.configurable.MyBatisXConfigurable"
+            displayName="类型映射"/>
+
+        <applicationConfigurable
+            instance="com.baomidou.mybatisx.plugin.setting.configurable.MyBatisGeneratorConfigurable"
+            groupId="com.baomidou.mybatisx.plugin.setting.configurable.MyBatisXConfigurable"
+            displayName="Generator"/>
 
         <applicationConfigurable
             instance="com.baomidou.mybatisx.plugin.setting.configurable.TranslationConfigurable"

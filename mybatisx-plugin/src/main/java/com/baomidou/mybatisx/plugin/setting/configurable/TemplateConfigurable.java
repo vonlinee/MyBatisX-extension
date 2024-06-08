@@ -3,7 +3,7 @@ package com.baomidou.mybatisx.plugin.setting.configurable;
 import com.baomidou.mybatisx.plugin.component.CodeArea;
 import com.baomidou.mybatisx.plugin.component.SplitPane;
 import com.baomidou.mybatisx.plugin.component.TreeView;
-import com.baomidou.mybatisx.model.TemplateInfo;
+import com.baomidou.mybatisx.feat.bean.TemplateInfo;
 import com.baomidou.mybatisx.plugin.setting.GlobalTemplateSettings;
 import com.baomidou.mybatisx.util.CollectionUtils;
 import com.baomidou.mybatisx.util.FileUtils;

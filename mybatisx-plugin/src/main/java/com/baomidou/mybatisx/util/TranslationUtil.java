@@ -1,6 +1,6 @@
 package com.baomidou.mybatisx.util;
 
-import com.baomidou.mybatisx.model.Field;
+import com.baomidou.mybatisx.feat.bean.Field;
 import com.baomidou.mybatisx.model.TranslationVO;
 import com.baomidou.mybatisx.service.BaiduTranslationService;
 import com.baomidou.mybatisx.service.TencentTranslationService;
@@ -13,8 +13,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static com.baomidou.mybatisx.ddl.TranslationAppEnum.BAIDU;
-import static com.baomidou.mybatisx.ddl.TranslationAppEnum.TENCENT;
+import static com.baomidou.mybatisx.feat.ddl.TranslationAppEnum.BAIDU;
+import static com.baomidou.mybatisx.feat.ddl.TranslationAppEnum.TENCENT;
 
 /**
  * @author breezes_y@163.com

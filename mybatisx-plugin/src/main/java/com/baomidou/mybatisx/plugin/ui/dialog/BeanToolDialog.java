@@ -1,7 +1,7 @@
 package com.baomidou.mybatisx.plugin.ui.dialog;
 
-import com.baomidou.mybatisx.model.BeanInfo;
-import com.baomidou.mybatisx.plugin.ui.BeanFieldsTable;
+import com.baomidou.mybatisx.feat.bean.BeanInfo;
+import com.baomidou.mybatisx.plugin.ui.components.BeanFieldsTable;
 import com.baomidou.mybatisx.plugin.ui.components.BeanToolPane;
 import com.baomidou.mybatisx.plugin.ui.components.DDLCreatorTool;
 import com.baomidou.mybatisx.util.IdeSDK;

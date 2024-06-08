@@ -1,10 +1,10 @@
 package com.baomidou.mybatisx.plugin.ui;
 
-import com.baomidou.mybatisx.ddl.SqlTypeEnum;
+import com.baomidou.mybatisx.feat.bean.SqlTypeComboBoxItem;
+import com.baomidou.mybatisx.feat.ddl.SqlTypeEnum;
 import com.baomidou.mybatisx.model.ComboBoxItem;
-import com.baomidou.mybatisx.model.SqlTypeComboBoxItem;
-import com.baomidou.mybatisx.service.BaseTypeItemListener;
 import com.baomidou.mybatisx.plugin.setting.JavaBean2DDLSetting;
+import com.baomidou.mybatisx.service.BaseTypeItemListener;
 import com.intellij.openapi.components.ServiceManager;
 import lombok.Getter;
 import lombok.Setter;
@@ -58,10 +58,8 @@ public class DataTypeSettingPanel {
 
         /*自定义映射下拉框初始化*/
         commonlyUsedMapComboBoxInit();
-
         /*sql类型默认长度文本框初始化*/
         sqlLengthTextInit();
-
         showNoInMapFieldRadioInit();
     }
 

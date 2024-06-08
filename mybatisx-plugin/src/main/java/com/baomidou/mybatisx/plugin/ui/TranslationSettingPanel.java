@@ -1,8 +1,8 @@
 package com.baomidou.mybatisx.plugin.ui;
 
-import com.baomidou.mybatisx.ddl.TranslationAppEnum;
+import com.baomidou.mybatisx.feat.ddl.TranslationAppEnum;
 import com.baomidou.mybatisx.model.ComboBoxItem;
-import com.baomidou.mybatisx.model.TranslationAppComboBoxItem;
+import com.baomidou.mybatisx.feat.bean.TranslationAppComboBoxItem;
 import com.baomidou.mybatisx.plugin.setting.JavaBean2DDLSetting;
 import com.intellij.openapi.components.ServiceManager;
 import lombok.Getter;
@@ -15,9 +15,9 @@ import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 
-import static com.baomidou.mybatisx.ddl.TranslationAppEnum.BAIDU;
-import static com.baomidou.mybatisx.ddl.TranslationAppEnum.EMPTY;
-import static com.baomidou.mybatisx.ddl.TranslationAppEnum.TENCENT;
+import static com.baomidou.mybatisx.feat.ddl.TranslationAppEnum.BAIDU;
+import static com.baomidou.mybatisx.feat.ddl.TranslationAppEnum.EMPTY;
+import static com.baomidou.mybatisx.feat.ddl.TranslationAppEnum.TENCENT;
 
 @Getter
 @Setter

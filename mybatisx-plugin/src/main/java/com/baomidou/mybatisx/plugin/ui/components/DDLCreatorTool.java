@@ -1,7 +1,7 @@
 package com.baomidou.mybatisx.plugin.ui.components;
 
-import com.baomidou.mybatisx.model.BeanInfo;
-import com.baomidou.mybatisx.model.Field;
+import com.baomidou.mybatisx.feat.bean.BeanInfo;
+import com.baomidou.mybatisx.feat.bean.Field;
 import com.baomidou.mybatisx.util.DdlFormatUtil;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.ui.ComboBox;

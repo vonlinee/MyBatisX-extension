@@ -2,9 +2,9 @@ package com.baomidou.mybatisx.plugin.setting.configurable;
 
 import com.baomidou.mybatisx.plugin.setting.JavaBean2DDLSetting;
 import com.baomidou.mybatisx.plugin.ui.TranslationSettingPanel;
-import com.baomidou.mybatisx.ddl.TranslationAppEnum;
+import com.baomidou.mybatisx.feat.ddl.TranslationAppEnum;
 import com.baomidou.mybatisx.model.ComboBoxItem;
-import com.baomidou.mybatisx.model.TranslationAppComboBoxItem;
+import com.baomidou.mybatisx.feat.bean.TranslationAppComboBoxItem;
 import com.intellij.openapi.options.ConfigurationException;
 import com.baomidou.mybatisx.util.StringUtils;
 import org.jetbrains.annotations.Nullable;

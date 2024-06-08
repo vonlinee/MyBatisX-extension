@@ -1,7 +1,7 @@
 package com.baomidou.mybatisx.service;
 
 import com.baomidou.mybatisx.plugin.actions.Bean2DDLAction;
-import com.baomidou.mybatisx.model.Field;
+import com.baomidou.mybatisx.feat.bean.Field;
 import com.baomidou.mybatisx.plugin.setting.JavaBean2DDLSetting;
 import com.baomidou.mybatisx.util.BaseUtil;
 import com.baomidou.mybatisx.util.CollectionUtils;
