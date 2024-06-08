@@ -6,7 +6,7 @@ import com.baomidou.plugin.idea.mybatisx.jpa.common.appender.CustomSuffixAppende
 import com.baomidou.plugin.idea.mybatisx.jpa.common.appender.operator.suffix.SuffixOperator;
 import com.baomidou.plugin.idea.mybatisx.jpa.common.iftest.ConditionFieldWrapper;
 import com.baomidou.plugin.idea.mybatisx.jpa.component.TxParameter;
-import com.baomidou.plugin.idea.mybatisx.jpa.util.SyntaxAppenderWrapper;
+import com.baomidou.plugin.idea.mybatisx.jpa.SyntaxAppenderWrapper;
 import com.intellij.psi.PsiClass;
 
 import java.util.LinkedList;

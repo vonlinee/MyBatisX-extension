@@ -10,7 +10,7 @@ import com.baomidou.plugin.idea.mybatisx.generate.plugin.IntellijMyBatisGenerato
 import com.baomidou.plugin.idea.mybatisx.generate.plugin.JavaTypeResolverJsr310Impl;
 import com.baomidou.plugin.idea.mybatisx.generate.plugin.helper.IntellijTableInfo;
 import com.baomidou.plugin.idea.mybatisx.generate.plugin.helper.MergeJavaCallBack;
-import com.baomidou.plugin.idea.mybatisx.generate.util.DomainPlaceHolder;
+import com.baomidou.plugin.idea.mybatisx.generate.DomainPlaceHolder;
 import com.baomidou.plugin.idea.mybatisx.util.DbToolsUtils;
 import com.baomidou.plugin.idea.mybatisx.util.JavaUtils;
 import com.baomidou.plugin.idea.mybatisx.util.SpringStringUtils;
@@ -100,7 +100,7 @@ public class CodeGenerator {
         if (SpringStringUtils.hasText(generateConfig.getSuperClass())) {
             javaModelGeneratorConfiguration.addProperty(PropertyRegistry.ANY_ROOT_CLASS, generateConfig.getSuperClass());
             final Optional<PsiClass> psiClassOptional = JavaUtils.findClass(project, generateConfig.getSuperClass());
-            psiClassOptional.ifPresent(psiClass -> classLoaderList.add(new MybatisXClassPathDynamicClassLoader(psiClass)));
+            psiClassOptional.ifPresent(psiClass -> classLoaderList.add(new MyBatisXClassPathDynamicClassLoader(psiClass)));
 
         }
 

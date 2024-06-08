@@ -130,18 +130,6 @@ public class MissingCompatiableStatementBuilder extends XMLStatementBuilder {
             keyGenerator, keyProperty, keyColumn, null, langDriver, resultSets, dirtySelect);
     }
 
-    /**
-     * 解析MappedStatement标签
-     *
-     * @return
-     */
-    public synchronized MappedStatement parseMappedStatement() {
-        this.parseStatementNode();
-        MappedStatement ms = lastMappedStatement;
-        this.lastMappedStatement = null;
-        return ms;
-    }
-
     private void processSelectKeyNodes(String id, Class<?> parameterTypeClass, LanguageDriver langDriver) {
         List<XNode> selectKeyNodes = context.evalNodes("selectKey");
         if (configuration.getDatabaseId() != null) {
@@ -217,10 +205,6 @@ public class MissingCompatiableStatementBuilder extends XMLStatementBuilder {
         for (XNode nodeToHandle : selectKeyNodes) {
             nodeToHandle.getParent().getNode().removeChild(nodeToHandle.getNode());
         }
-    }
-
-    public final MappedStatement getLastMappedStatement() {
-        return lastMappedStatement;
     }
 
     private LanguageDriver getLanguageDriver(String lang) {

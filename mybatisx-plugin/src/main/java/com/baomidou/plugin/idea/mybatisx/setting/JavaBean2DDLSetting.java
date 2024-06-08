@@ -10,16 +10,16 @@ import lombok.Setter;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import static com.baomidou.plugin.idea.mybatisx.enums.SqlTypeAndJavaTypeEnum.BIGINT;
-import static com.baomidou.plugin.idea.mybatisx.enums.SqlTypeAndJavaTypeEnum.DATE;
-import static com.baomidou.plugin.idea.mybatisx.enums.SqlTypeAndJavaTypeEnum.DATETIME;
-import static com.baomidou.plugin.idea.mybatisx.enums.SqlTypeAndJavaTypeEnum.DECIMAL;
-import static com.baomidou.plugin.idea.mybatisx.enums.SqlTypeAndJavaTypeEnum.DOUBLE;
-import static com.baomidou.plugin.idea.mybatisx.enums.SqlTypeAndJavaTypeEnum.INT;
-import static com.baomidou.plugin.idea.mybatisx.enums.SqlTypeAndJavaTypeEnum.TIME;
-import static com.baomidou.plugin.idea.mybatisx.enums.SqlTypeAndJavaTypeEnum.TIMESTAMP;
-import static com.baomidou.plugin.idea.mybatisx.enums.SqlTypeAndJavaTypeEnum.TINYINT;
-import static com.baomidou.plugin.idea.mybatisx.enums.SqlTypeAndJavaTypeEnum.VARCHAR;
+import static com.baomidou.plugin.idea.mybatisx.ddl.SqlTypeAndJavaTypeEnum.BIGINT;
+import static com.baomidou.plugin.idea.mybatisx.ddl.SqlTypeAndJavaTypeEnum.DATE;
+import static com.baomidou.plugin.idea.mybatisx.ddl.SqlTypeAndJavaTypeEnum.DATETIME;
+import static com.baomidou.plugin.idea.mybatisx.ddl.SqlTypeAndJavaTypeEnum.DECIMAL;
+import static com.baomidou.plugin.idea.mybatisx.ddl.SqlTypeAndJavaTypeEnum.DOUBLE;
+import static com.baomidou.plugin.idea.mybatisx.ddl.SqlTypeAndJavaTypeEnum.INT;
+import static com.baomidou.plugin.idea.mybatisx.ddl.SqlTypeAndJavaTypeEnum.TIME;
+import static com.baomidou.plugin.idea.mybatisx.ddl.SqlTypeAndJavaTypeEnum.TIMESTAMP;
+import static com.baomidou.plugin.idea.mybatisx.ddl.SqlTypeAndJavaTypeEnum.TINYINT;
+import static com.baomidou.plugin.idea.mybatisx.ddl.SqlTypeAndJavaTypeEnum.VARCHAR;
 
 @State(
     name = "JavaBean2DDL.Settings",

@@ -18,6 +18,8 @@ import com.intellij.openapi.project.Project;
 import com.intellij.psi.PsiClass;
 import com.intellij.psi.xml.XmlAttributeValue;
 import com.intellij.util.containers.JBIterable;
+import lombok.Getter;
+import lombok.Setter;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -29,6 +31,8 @@ import java.util.Optional;
  *
  * @author yanglin
  */
+@Setter
+@Getter
 public class PsiColumnReferenceSetResolver {
 
     private static final Splitter SPLITTER = Splitter.on(MyBatisUtils.DOT_SEPARATOR);
@@ -78,43 +82,6 @@ public class PsiColumnReferenceSetResolver {
         return getStartElement(Iterables.getFirst(texts, null));
     }
 
-
-    /**
-     * Gets element.
-     *
-     * @return the element
-     */
-    public XmlAttributeValue getElement() {
-        return element;
-    }
-
-    /**
-     * Sets element.
-     *
-     * @param element the element
-     */
-    public void setElement(XmlAttributeValue element) {
-        this.element = element;
-    }
-
-    /**
-     * Gets project.
-     *
-     * @return the project
-     */
-    public Project getProject() {
-        return project;
-    }
-
-    /**
-     * Sets project.
-     *
-     * @param project the project
-     */
-    public void setProject(Project project) {
-        this.project = project;
-    }
-
     @NotNull
     public String getText() {
         return getElement().getValue();
@@ -128,8 +95,7 @@ public class PsiColumnReferenceSetResolver {
         }
         PsiClass entityClass = clazz.get();
         assert firstText != null;
-        EntityMappingResolverFactory entityMappingResolverFactory
-                = new EntityMappingResolverFactory(project);
+        EntityMappingResolverFactory entityMappingResolverFactory = new EntityMappingResolverFactory(project);
 
         String tableName = entityMappingResolverFactory.findTableName(entityClass);
         DbPsiFacade dbPsiFacade = DbPsiFacade.getInstance(project);

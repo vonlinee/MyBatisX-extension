@@ -2,8 +2,6 @@ package com.baomidou.plugin.idea.mybatisx.provider;
 
 import com.baomidou.plugin.idea.mybatisx.dom.model.IdDomElement;
 import com.baomidou.plugin.idea.mybatisx.dom.model.Mapper;
-import com.baomidou.plugin.idea.mybatisx.provider.filter.AbstractElementFilter;
-import com.baomidou.plugin.idea.mybatisx.provider.filter.EmptyAbstractElementFilter;
 import com.baomidou.plugin.idea.mybatisx.service.KotlinService;
 import com.intellij.codeInsight.daemon.RelatedItemLineMarkerInfo;
 import com.intellij.codeInsight.daemon.RelatedItemLineMarkerProvider;

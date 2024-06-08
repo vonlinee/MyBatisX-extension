@@ -2,10 +2,8 @@ package com.baomidou.plugin.idea.mybatisx.mybatis;
 
 import org.apache.ibatis.builder.IncompleteElementException;
 import org.apache.ibatis.builder.MapperBuilderAssistant;
-import org.apache.ibatis.builder.SqlSourceBuilder;
 import org.apache.ibatis.cache.Cache;
 import org.apache.ibatis.executor.keygen.KeyGenerator;
-import org.apache.ibatis.mapping.BoundSql;
 import org.apache.ibatis.mapping.MappedStatement;
 import org.apache.ibatis.mapping.ParameterMap;
 import org.apache.ibatis.mapping.ParameterMapping;
@@ -15,14 +13,10 @@ import org.apache.ibatis.mapping.SqlCommandType;
 import org.apache.ibatis.mapping.SqlSource;
 import org.apache.ibatis.mapping.StatementType;
 import org.apache.ibatis.scripting.LanguageDriver;
-import org.apache.ibatis.scripting.xmltags.DynamicContext;
-import org.apache.ibatis.scripting.xmltags.DynamicSqlSource;
 import org.apache.ibatis.session.Configuration;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-import java.util.Objects;
 
 /**
  * @see MapperBuilderAssistant

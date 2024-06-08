@@ -19,7 +19,7 @@ import org.jetbrains.annotations.NotNull;
  *
  * @author yanglin
  */
-public class EditorService {
+public final class EditorService {
 
     private Project project;
 

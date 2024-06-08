@@ -1,6 +1,6 @@
 package com.baomidou.plugin.idea.mybatisx.service;
 
-import com.baomidou.plugin.idea.mybatisx.enums.SqlTypeEnum;
+import com.baomidou.plugin.idea.mybatisx.ddl.SqlTypeEnum;
 import com.baomidou.plugin.idea.mybatisx.model.SqlTypeComboBoxItem;
 import com.baomidou.plugin.idea.mybatisx.util.StringUtils;
 

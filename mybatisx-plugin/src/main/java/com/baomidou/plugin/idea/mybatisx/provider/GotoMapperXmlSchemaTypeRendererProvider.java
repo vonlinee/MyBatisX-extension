@@ -12,7 +12,7 @@ import com.intellij.psi.xml.XmlTag;
 import com.intellij.xml.util.XmlUtil;
 import org.jetbrains.annotations.NotNull;
 
-public class GotoMapperXmlSchemaTypeRendererProvider implements GotoTargetRendererProvider {
+public final class GotoMapperXmlSchemaTypeRendererProvider implements GotoTargetRendererProvider {
     @Override
     public PsiElementListCellRenderer<XmlTag> getRenderer(@NotNull PsiElement element, @NotNull GotoTargetHandler.GotoData gotoData) {
         if (element instanceof XmlTagImpl) {

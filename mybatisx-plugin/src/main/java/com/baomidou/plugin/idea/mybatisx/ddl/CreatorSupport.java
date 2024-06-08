@@ -1,5 +1,6 @@
 package com.baomidou.plugin.idea.mybatisx.ddl;
 
+import com.baomidou.plugin.idea.mybatisx.ui.DDLResultDialog;
 import com.intellij.lang.jvm.annotation.JvmAnnotationAttribute;
 import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;
@@ -58,7 +59,7 @@ public abstract class CreatorSupport extends AnAction {
         int w = (int) (screenSize.width * 0.3);
         int h = (int) (screenSize.height * 0.3);
 
-        ResultDialog dialog = new ResultDialog(result);
+        DDLResultDialog dialog = new DDLResultDialog(result);
         dialog.setSize(w, h);
         dialog.pack();
         dialog.setLocation((int) (screenSize.width * 0.5) - (int) (w * 0.5), (int) (screenSize.height * 0.5) - (int) (h * 0.5));
@@ -90,7 +91,7 @@ public abstract class CreatorSupport extends AnAction {
             tableField.setDesc(clearDesc(psiField.getDocComment().getText()));
         }
         //默认认为不是主键
-        tableField.setPrimayKey(false);
+        tableField.setPrimaryKey(false);
         tableField.setGeneratedValue(false);
 
         //通过自己定义的一个Convertor.getFieldGetterName 将字段名 转换获得其Getter方法
@@ -148,10 +149,10 @@ public abstract class CreatorSupport extends AnAction {
                 return null;
             }
             //忽略OneToMany 一般都是在ManyToOne定义字段
-            if (annotation.getQualifiedName().equals("javax.persistence.OneToMany")
-                || annotation.getQualifiedName().equals("javax.persistence.ManyToMany")) {
+            if (Objects.equals(annotation.getQualifiedName(), "javax.persistence.OneToMany")
+                || Objects.equals(annotation.getQualifiedName(), "javax.persistence.ManyToMany")) {
                 return null;
-            } else if (annotation.getQualifiedName().equals("javax.persistence.OneToOne")) {
+            } else if (Objects.equals(annotation.getQualifiedName(), "javax.persistence.OneToOne")) {
                 //如果是OneToOne的话，分析是不是mappedBy对方对象的（这个描述很变扭）
                 for (JvmAnnotationAttribute attr : annotation.getAttributes()) {
                     if (attr.getAttributeName().equals("mappedBy")) {
@@ -161,7 +162,7 @@ public abstract class CreatorSupport extends AnAction {
             }
 
             //获得JoinColumn annotation 然后提取是否为空 提取字段名称等等
-            if (annotation.getQualifiedName().equals("javax.persistence.JoinColumn")) {
+            if (Objects.equals(annotation.getQualifiedName(), "javax.persistence.JoinColumn")) {
                 for (JvmAnnotationAttribute attr : annotation.getAttributes()) {
                     if (attr.getAttributeName().equals("name")) {
                         tableField.setName(getAttrTxtValue(attr));
@@ -175,7 +176,7 @@ public abstract class CreatorSupport extends AnAction {
                 tableField.setHasTypeTranslate(mapperField.isHasTypeTranslate());
                 tableField.setLength(mapperField.getLength());
                 return tableField;
-            } else if (annotation.getQualifiedName().equals("javax.persistence.Column")) {
+            } else if (Objects.equals(annotation.getQualifiedName(), "javax.persistence.Column")) {
                 //分析普通字段 获得字段名
                 for (JvmAnnotationAttribute attr : annotation.getAttributes()) {
                     if (attr.getAttributeName().equals("name")) {
@@ -191,7 +192,7 @@ public abstract class CreatorSupport extends AnAction {
             }
             //获得是否为主键
             if (annotation.getQualifiedName().equals("javax.persistence.Id")) {
-                tableField.setPrimayKey(true);
+                tableField.setPrimaryKey(true);
             }
             //获得是否自动生成主键
             if (annotation.getQualifiedName().equals("javax.persistence.GeneratedValue")) {
@@ -230,7 +231,7 @@ public abstract class CreatorSupport extends AnAction {
                 continue;
             }
             for (PsiAnnotation annotation : method.getAnnotations()) {
-                if (annotation.getQualifiedName().equals("javax.persistence.Id")) {
+                if (Objects.equals(annotation.getQualifiedName(), "javax.persistence.Id")) {
                     String fieldName = Convertor.getGetterFieldName(method.getName());
                     PsiField targetField = psiClass.findFieldByName(fieldName, true);
                     return this.getTableField(targetField);
@@ -249,7 +250,7 @@ public abstract class CreatorSupport extends AnAction {
      * @return
      */
     protected String clearDesc(String docStr) {
-        if (docStr != null && docStr.length() > 0) {
+        if (docStr != null && !docStr.isEmpty()) {
             docStr = docStr.replace("/**", "");
             docStr = docStr.replace("*/", "");
             docStr = docStr.replace("*", "");
@@ -290,7 +291,7 @@ public abstract class CreatorSupport extends AnAction {
         tableName = firstLetter + tableName.substring(1, tableName.length());
         tableName = Convertor.Camel2Underline(tableName);
         for (PsiAnnotation psiAnnotation : psiClass.getAnnotations()) {
-            if (psiAnnotation.getQualifiedName().equals("javax.persistence.Table")) {
+            if (Objects.equals(psiAnnotation.getQualifiedName(), "javax.persistence.Table")) {
                 for (JvmAnnotationAttribute attribute : psiAnnotation.getAttributes()) {
                     if (attribute.getAttributeName().equals("name")) {
                         tableName = getAttrTxtValue(attribute);

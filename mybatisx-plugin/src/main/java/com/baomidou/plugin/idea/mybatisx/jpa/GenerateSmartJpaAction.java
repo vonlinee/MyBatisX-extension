@@ -17,7 +17,7 @@ import java.util.Optional;
  *
  * @author ls9527
  */
-public class GenerateSmartJpaAction extends GenerateSmartJpaAdvanceAction {
+public final class GenerateSmartJpaAction extends GenerateSmartJpaAdvanceAction {
 
 
     private static final Logger logger = LoggerFactory.getLogger(GenerateSmartJpaAction.class);

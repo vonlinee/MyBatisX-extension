@@ -37,9 +37,6 @@ public class Convertor {
         if (methodName == null || methodName.trim().isEmpty()) {
             return false;
         }
-        if (methodName.indexOf("get") == 1) {
-            return true;
-        }
-        return false;
+        return methodName.indexOf("get") == 1;
     }
 }

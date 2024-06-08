@@ -1,6 +1,6 @@
 package com.baomidou.plugin.idea.mybatisx.model;
 
-import com.baomidou.plugin.idea.mybatisx.enums.SqlTypeEnum;
+import com.baomidou.plugin.idea.mybatisx.ddl.SqlTypeEnum;
 
 public class SqlTypeComboBoxItem extends ComboBoxItem {
 

@@ -1,6 +1,6 @@
 package com.baomidou.plugin.idea.mybatisx.model;
 
-import com.baomidou.plugin.idea.mybatisx.enums.SqlTypeAndJavaTypeEnum;
+import com.baomidou.plugin.idea.mybatisx.ddl.SqlTypeAndJavaTypeEnum;
 import com.baomidou.plugin.idea.mybatisx.util.SqlTypeMapUtil;
 import com.google.common.base.CaseFormat;
 import lombok.Getter;

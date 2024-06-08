@@ -1,6 +1,5 @@
 package com.baomidou.plugin.idea.mybatisx.generate.template;
 
-import freemarker.cache.FileTemplateLoader;
 import freemarker.template.Configuration;
 import freemarker.template.TemplateExceptionHandler;
 

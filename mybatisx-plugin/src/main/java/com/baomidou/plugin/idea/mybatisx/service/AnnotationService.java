@@ -56,7 +56,7 @@ public class AnnotationService {
             return;
         }
         JavaService.getInstance(parameter.getProject())
-                .importClazz((PsiJavaFile) parameter.getContainingFile(), annotation.getQualifiedName());
+            .importClazz((PsiJavaFile) parameter.getContainingFile(), annotation.getQualifiedName());
 
         PsiElementFactory elementFactory = JavaPsiFacade.getInstance(project).getElementFactory();
         PsiAnnotation psiAnnotation = elementFactory.createAnnotationFromText(annotation.toString(), parameter);
@@ -83,8 +83,12 @@ public class AnnotationService {
      * @param parameter the parameter
      */
     public void addAnnotationWithParameterName(@NotNull PsiParameter parameter) {
-        String name = parameter.getName();
-        AnnotationService.getInstance(parameter.getProject())
+        try {
+            String name = parameter.getName();
+            AnnotationService.getInstance(parameter.getProject())
                 .addAnnotation(parameter, Annotation.PARAM.withValue(new Annotation.StringValue(name)));
+        } catch (Throwable throwable) {
+            throwable.printStackTrace();
+        }
     }
 }

@@ -1,7 +1,7 @@
 package com.baomidou.plugin.idea.mybatisx.generate.setting;
 
 import com.baomidou.plugin.idea.mybatisx.generate.dto.TemplateSettingDTO;
-import com.baomidou.plugin.idea.mybatisx.generate.util.XmlUtils;
+import com.baomidou.plugin.idea.mybatisx.util.XmlUtils;
 import com.baomidou.plugin.idea.mybatisx.util.IOUtils;
 import com.intellij.ide.extensionResources.ExtensionsRootType;
 import com.intellij.ide.scratch.ScratchFileService;

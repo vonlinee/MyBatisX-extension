@@ -98,7 +98,7 @@ public class Annotation implements Cloneable {
      * @param value the value
      * @return the annotation
      */
-    public Annotation withAttribute(@NotNull String key, @NotNull AnnotationValue value) {
+    public Annotation withAttribute(@NotNull String key, @NotNull AnnotationValue value) throws CloneNotSupportedException {
         Annotation copy = this.clone();
         copy.attributePairs = Maps.newHashMap(this.attributePairs);
         return copy.addAttribute(key, value);
@@ -110,7 +110,7 @@ public class Annotation implements Cloneable {
      * @param value the value
      * @return the annotation
      */
-    public Annotation withValue(@NotNull AnnotationValue value) {
+    public Annotation withValue(@NotNull AnnotationValue value) throws CloneNotSupportedException {
         return withAttribute("value", value);
     }
 

@@ -11,7 +11,7 @@ import org.mybatisx.extension.agent.AgentException;
 import com.baomidou.plugin.idea.mybatisx.agent.handler.Handler;
 import com.baomidou.plugin.idea.mybatisx.agent.handler.JavaFileHandler;
 import com.baomidou.plugin.idea.mybatisx.agent.handler.XmlFileHandler;
-import com.baomidou.plugin.idea.mybatisx.agent.util.Notifications;
+import com.baomidou.plugin.idea.mybatisx.util.Notifications;
 
 import java.util.ArrayList;
 import java.util.List;

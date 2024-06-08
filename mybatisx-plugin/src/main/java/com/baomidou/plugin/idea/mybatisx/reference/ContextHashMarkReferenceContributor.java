@@ -32,7 +32,7 @@ public class ContextHashMarkReferenceContributor extends PsiReferenceContributor
     public void registerReferenceProviders(@NotNull PsiReferenceRegistrar registrar) {
         registrar.registerReferenceProvider(EL_VAR_COMMENT, new PsiReferenceProvider() {
             @Override
-            public @NotNull PsiReference[] getReferencesByElement(@NotNull PsiElement element, @NotNull ProcessingContext context) {
+            public @NotNull PsiReference @NotNull [] getReferencesByElement(@NotNull PsiElement element, @NotNull ProcessingContext context) {
                 if (!(element instanceof XmlToken)) {
                     return PsiReference.EMPTY_ARRAY;
                 }

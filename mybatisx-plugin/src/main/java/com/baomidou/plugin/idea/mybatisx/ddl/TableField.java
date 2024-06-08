@@ -1,8 +1,13 @@
 package com.baomidou.plugin.idea.mybatisx.ddl;
 
+import lombok.Getter;
+import lombok.Setter;
+
+@Setter
+@Getter
 public class TableField {
 
-    private boolean isPrimayKey;
+    private boolean isPrimaryKey;
 
     private boolean isGeneratedValue;
 
@@ -18,23 +23,11 @@ public class TableField {
 
     private boolean hasTypeTranslate = false;
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
     public String getType() {
         if (type == null) {
             return "unknown";
         }
         return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
     }
 
     public Integer getLength() {
@@ -49,49 +42,5 @@ public class TableField {
             return null;
         }
         return length;
-    }
-
-    public void setLength(Integer length) {
-        this.length = length;
-    }
-
-    public String getDesc() {
-        return desc;
-    }
-
-    public void setDesc(String desc) {
-        this.desc = desc;
-    }
-
-    public boolean isNullable() {
-        return nullable;
-    }
-
-    public void setNullable(boolean nullable) {
-        this.nullable = nullable;
-    }
-
-    public boolean isPrimayKey() {
-        return isPrimayKey;
-    }
-
-    public void setPrimayKey(boolean primayKey) {
-        isPrimayKey = primayKey;
-    }
-
-    public boolean isGeneratedValue() {
-        return isGeneratedValue;
-    }
-
-    public void setGeneratedValue(boolean generatedValue) {
-        isGeneratedValue = generatedValue;
-    }
-
-    public boolean isHasTypeTranslate() {
-        return hasTypeTranslate;
-    }
-
-    public void setHasTypeTranslate(boolean hasTypeTranslate) {
-        this.hasTypeTranslate = hasTypeTranslate;
     }
 }

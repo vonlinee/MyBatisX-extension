@@ -34,11 +34,11 @@ public class CreateTableDDL extends CreatorSupport {
         }
 
         //组织SQL
-        StringBuffer createTableDDL = new StringBuffer("DROP TABLE IF EXISTS `" + tableName + "`;\n");
-        createTableDDL.append("CREATE TABLE `" + tableName + "` (\n");
+        StringBuilder createTableDDL = new StringBuilder("DROP TABLE IF EXISTS `" + tableName + "`;\n");
+        createTableDDL.append("CREATE TABLE `").append(tableName).append("` (\n");
         for (int i = 0; i < tableFields.size(); i++) {
             //获得字段的列SQL
-            createTableDDL.append("    " + getSqlOfColumnPart(tableFields.get(i)));
+            createTableDDL.append("    ").append(getSqlOfColumnPart(tableFields.get(i)));
             if (i < tableFields.size() - 1) {
                 createTableDDL.append(",");
             }
@@ -56,24 +56,24 @@ public class CreateTableDDL extends CreatorSupport {
      * @return
      */
     private String getSqlOfColumnPart(TableField tableField) {
-        StringBuffer sql = new StringBuffer();
-        sql.append("`" + tableField.getName() + "` " + tableField.getType());
+        StringBuilder sql = new StringBuilder();
+        sql.append("`").append(tableField.getName()).append("` ").append(tableField.getType());
         if (tableField.getLength() != null) {
-            sql.append("(" + tableField.getLength() + ")");
+            sql.append("(").append(tableField.getLength()).append(")");
         }
-        if (!tableField.isPrimayKey() && tableField.isNullable()) {
+        if (!tableField.isPrimaryKey() && tableField.isNullable()) {
             sql.append(" NULL");
         } else {
             sql.append(" NOT NULL");
         }
-        if (tableField.isPrimayKey()) {
+        if (tableField.isPrimaryKey()) {
             sql.append(" PRIMARY KEY");
         }
         if (tableField.isGeneratedValue()) {
             sql.append(" AUTO_INCREMENT");
         }
-        if (tableField.getDesc() != null && tableField.getDesc().length() > 0) {
-            sql.append(" COMMENT '" + tableField.getDesc() + "'");
+        if (tableField.getDesc() != null && !tableField.getDesc().isEmpty()) {
+            sql.append(" COMMENT '").append(tableField.getDesc()).append("'");
         }
         return sql.toString();
     }

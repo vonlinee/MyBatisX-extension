@@ -2,7 +2,7 @@ package com.baomidou.plugin.idea.mybatisx.jpa.common;
 
 import com.baomidou.plugin.idea.mybatisx.jpa.common.iftest.ConditionFieldWrapper;
 import com.baomidou.plugin.idea.mybatisx.jpa.component.TypeDescriptor;
-import com.baomidou.plugin.idea.mybatisx.jpa.util.Importer;
+import com.baomidou.plugin.idea.mybatisx.jpa.Importer;
 import com.baomidou.plugin.idea.mybatisx.util.StringUtils;
 import com.intellij.openapi.editor.Document;
 import com.intellij.openapi.editor.Editor;

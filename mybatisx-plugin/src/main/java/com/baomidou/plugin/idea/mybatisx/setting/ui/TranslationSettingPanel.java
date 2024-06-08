@@ -1,6 +1,6 @@
 package com.baomidou.plugin.idea.mybatisx.setting.ui;
 
-import com.baomidou.plugin.idea.mybatisx.enums.TranslationAppEnum;
+import com.baomidou.plugin.idea.mybatisx.ddl.TranslationAppEnum;
 import com.baomidou.plugin.idea.mybatisx.model.ComboBoxItem;
 import com.baomidou.plugin.idea.mybatisx.model.TranslationAppComboBoxItem;
 import com.baomidou.plugin.idea.mybatisx.setting.JavaBean2DDLSetting;
@@ -15,9 +15,9 @@ import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 
-import static com.baomidou.plugin.idea.mybatisx.enums.TranslationAppEnum.BAIDU;
-import static com.baomidou.plugin.idea.mybatisx.enums.TranslationAppEnum.EMPTY;
-import static com.baomidou.plugin.idea.mybatisx.enums.TranslationAppEnum.TENCENT;
+import static com.baomidou.plugin.idea.mybatisx.ddl.TranslationAppEnum.BAIDU;
+import static com.baomidou.plugin.idea.mybatisx.ddl.TranslationAppEnum.EMPTY;
+import static com.baomidou.plugin.idea.mybatisx.ddl.TranslationAppEnum.TENCENT;
 
 @Getter
 @Setter

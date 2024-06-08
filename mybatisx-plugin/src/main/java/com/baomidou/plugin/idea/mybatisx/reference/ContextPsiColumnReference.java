@@ -69,7 +69,6 @@ public class ContextPsiColumnReference extends PsiReferenceBase<XmlAttributeValu
      *
      * @return
      */
-    @SuppressWarnings("unchecked")
     @Nullable
     @Override
     public PsiElement resolve() {

@@ -1,6 +1,6 @@
 package com.baomidou.plugin.idea.mybatisx.model;
 
-import com.baomidou.plugin.idea.mybatisx.enums.TranslationAppEnum;
+import com.baomidou.plugin.idea.mybatisx.ddl.TranslationAppEnum;
 
 public class TranslationAppComboBoxItem extends ComboBoxItem {
 

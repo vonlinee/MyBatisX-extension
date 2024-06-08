@@ -1,6 +1,6 @@
 package com.baomidou.plugin.idea.mybatisx.ui;
 
-import com.baomidou.plugin.idea.mybatisx.enums.SqlTypeEnum;
+import com.baomidou.plugin.idea.mybatisx.ddl.SqlTypeEnum;
 import com.baomidou.plugin.idea.mybatisx.model.ComboBoxItem;
 import com.baomidou.plugin.idea.mybatisx.model.SqlTypeComboBoxItem;
 import com.baomidou.plugin.idea.mybatisx.setting.JavaBean2DDLSetting;

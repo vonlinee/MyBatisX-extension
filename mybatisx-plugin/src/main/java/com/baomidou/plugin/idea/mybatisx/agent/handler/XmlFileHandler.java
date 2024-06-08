@@ -3,7 +3,7 @@ package com.baomidou.plugin.idea.mybatisx.agent.handler;
 import com.baomidou.plugin.idea.mybatisx.agent.connect.AgentConnector;
 import com.baomidou.plugin.idea.mybatisx.agent.connect.AgentConnectorImpl;
 import com.baomidou.plugin.idea.mybatisx.agent.context.VMContext;
-import com.baomidou.plugin.idea.mybatisx.agent.util.Notifications;
+import com.baomidou.plugin.idea.mybatisx.util.Notifications;
 import com.intellij.notification.NotificationType;
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.actionSystem.PlatformDataKeys;

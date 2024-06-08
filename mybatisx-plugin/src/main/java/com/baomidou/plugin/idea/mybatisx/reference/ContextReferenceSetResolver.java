@@ -6,6 +6,8 @@ import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
 import com.intellij.openapi.project.Project;
 import com.intellij.psi.PsiElement;
+import lombok.Getter;
+import lombok.Setter;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -19,6 +21,8 @@ import java.util.Optional;
  * @param <K> the type parameter
  * @author yanglin
  */
+@Setter
+@Getter
 public abstract class ContextReferenceSetResolver<F extends PsiElement, K extends PsiElement> {
 
     private static final Splitter SPLITTER = Splitter.on(MyBatisUtils.DOT_SEPARATOR);
@@ -106,44 +110,7 @@ public abstract class ContextReferenceSetResolver<F extends PsiElement, K extend
      * @param text    the text
      * @return the optional
      */
-    @NotNull
     public Optional<K> resolve(K current, String text) {
         return Optional.empty();
-    }
-
-    /**
-     * Gets element.
-     *
-     * @return the element
-     */
-    public F getElement() {
-        return element;
-    }
-
-    /**
-     * Sets element.
-     *
-     * @param element the element
-     */
-    public void setElement(F element) {
-        this.element = element;
-    }
-
-    /**
-     * Gets project.
-     *
-     * @return the project
-     */
-    public Project getProject() {
-        return project;
-    }
-
-    /**
-     * Sets project.
-     *
-     * @param project the project
-     */
-    public void setProject(Project project) {
-        this.project = project;
     }
 }

@@ -89,7 +89,7 @@ public class AddColumnDDL extends CreatorSupport {
         if (tableField.getLength() != null) {
             sql.append("(" + tableField.getLength() + ")");
         }
-        if (!tableField.isPrimayKey() && tableField.isNullable()) {
+        if (!tableField.isPrimaryKey() && tableField.isNullable()) {
             sql.append(" NULL");
         } else {
             sql.append(" NOT NULL");

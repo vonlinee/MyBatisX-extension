@@ -34,7 +34,7 @@ import java.util.Set;
  *
  * @author yanglin
  */
-public class JavaService {
+public final class JavaService {
     private Project project;
 
     private JavaPsiFacade javaPsiFacade;
@@ -127,7 +127,6 @@ public class JavaService {
      * @param clazz     the clazz
      * @param processor the processor
      */
-    @SuppressWarnings("unchecked")
     public void processClass(@NotNull PsiClass clazz, @NotNull Processor<Mapper> processor) {
         String ns = clazz.getQualifiedName();
         for (Mapper mapper : MapperUtils.findMappers(clazz.getProject())) {

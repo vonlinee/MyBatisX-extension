@@ -45,17 +45,16 @@ public class KotlinService {
      */
     public void processKotlinMethod(@NotNull KtNamedFunction ktMethod, @NotNull Processor<IdDomElement> processor) {
         KtClass parentClass = PsiTreeUtil.getParentOfType(ktMethod, KtClass.class);
-        if (null == parentClass || !KtPsiUtil.isTrait(parentClass)) {
+        assert parentClass != null;
+        if (!KtPsiUtil.isTrait(parentClass)) {
             return;
         }
         String packageName = KtPsiUtil.getPackageName(parentClass);
         String id = packageName + "." + parentClass.getName() + "." + ktMethod.getName();
         Collection<Mapper> mappers = MapperUtils.findMappers(ktMethod.getProject());
-
         mappers.stream()
-                .flatMap(mapper -> mapper.getDaoElements().stream())
-                .filter(idDom -> MapperUtils.getIdSignature(idDom).equals(id))
-                .forEach(processor::process);
+            .flatMap(mapper -> mapper.getDaoElements().stream())
+            .filter(idDom -> MapperUtils.getIdSignature(idDom).equals(id))
+            .forEach(processor::process);
     }
-
 }

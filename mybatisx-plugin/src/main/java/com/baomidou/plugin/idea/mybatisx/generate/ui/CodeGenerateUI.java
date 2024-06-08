@@ -5,7 +5,7 @@ import com.baomidou.plugin.idea.mybatisx.generate.dto.GenerateConfig;
 import com.baomidou.plugin.idea.mybatisx.generate.dto.ModuleInfoGo;
 import com.baomidou.plugin.idea.mybatisx.generate.dto.TemplateAnnotationType;
 import com.baomidou.plugin.idea.mybatisx.generate.dto.TemplateSettingDTO;
-import com.baomidou.plugin.idea.mybatisx.generate.util.DomainPlaceHolder;
+import com.baomidou.plugin.idea.mybatisx.generate.DomainPlaceHolder;
 import com.baomidou.plugin.idea.mybatisx.util.StringUtils;
 import com.intellij.openapi.actionSystem.ActionToolbarPosition;
 import com.intellij.openapi.actionSystem.AnActionEvent;

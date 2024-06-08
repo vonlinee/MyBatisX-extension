@@ -22,7 +22,7 @@ public class PsiFieldReferenceSetResolver extends ContextReferenceSetResolver<Xm
     /**
      * Instantiates a new Psi field reference set resolver.
      *
-     * @param from the from
+     * @param from the form
      */
     protected PsiFieldReferenceSetResolver(XmlAttributeValue from) {
         super(from);
@@ -47,7 +47,7 @@ public class PsiFieldReferenceSetResolver extends ContextReferenceSetResolver<Xm
     }
 
     @Override
-    public Optional<PsiField> getStartElement(@Nullable String firstText) {
+    public @NotNull Optional<PsiField> getStartElement(@Nullable String firstText) {
         PropertySetterFind propertySetterFind = new PropertySetterFind();
         return propertySetterFind.getStartElement(firstText, getElement());
     }

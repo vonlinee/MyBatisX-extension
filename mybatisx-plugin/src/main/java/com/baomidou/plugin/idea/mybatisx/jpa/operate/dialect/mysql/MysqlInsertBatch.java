@@ -13,7 +13,7 @@ import com.baomidou.plugin.idea.mybatisx.jpa.component.TxReturnDescriptor;
 import com.baomidou.plugin.idea.mybatisx.jpa.operate.dialect.CustomStatement;
 import com.baomidou.plugin.idea.mybatisx.jpa.operate.dialect.oracle.InsertCustomSuffixAppender;
 import com.baomidou.plugin.idea.mybatisx.jpa.operate.manager.StatementBlock;
-import com.baomidou.plugin.idea.mybatisx.jpa.util.SyntaxAppenderWrapper;
+import com.baomidou.plugin.idea.mybatisx.jpa.SyntaxAppenderWrapper;
 import com.baomidou.plugin.idea.mybatisx.util.MybatisXCollectors;
 import com.baomidou.plugin.idea.mybatisx.util.StringUtils;
 import com.intellij.psi.PsiClass;

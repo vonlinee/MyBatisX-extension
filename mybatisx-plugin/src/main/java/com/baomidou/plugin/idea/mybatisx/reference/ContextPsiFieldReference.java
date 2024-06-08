@@ -11,6 +11,7 @@ import com.intellij.psi.PsiField;
 import com.intellij.psi.PsiReference;
 import com.intellij.psi.PsiReferenceBase;
 import com.intellij.psi.xml.XmlAttributeValue;
+import lombok.Getter;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -22,15 +23,24 @@ import java.util.Optional;
  *
  * @author yanglin
  */
+@Getter
 public class ContextPsiFieldReference extends PsiReferenceBase<XmlAttributeValue> {
 
     /**
      * The Resolver.
+     * -- GETTER --
+     * Gets resolver.
+     *
+     * @return the resolver
      */
     protected ContextReferenceSetResolver<XmlAttributeValue, PsiField> resolver;
 
     /**
      * The Index.
+     * -- GETTER --
+     * Gets index.
+     *
+     * @return the index
      */
     protected int index;
 
@@ -47,7 +57,6 @@ public class ContextPsiFieldReference extends PsiReferenceBase<XmlAttributeValue
         resolver = ReferenceSetResolverFactory.createPsiFieldResolver(element);
     }
 
-    @SuppressWarnings("unchecked")
     @Nullable
     @Override
     public PsiElement resolve() {
@@ -72,7 +81,6 @@ public class ContextPsiFieldReference extends PsiReferenceBase<XmlAttributeValue
         return setterFields.toArray(new Object[0]);
     }
 
-    @SuppressWarnings("unchecked")
     private Optional<PsiClass> getTargetClazz() {
         if (getElement().getValue().contains(MyBatisUtils.DOT_SEPARATOR)) {
             int ind = 0 == index ? 0 : index - 1;
@@ -87,30 +95,12 @@ public class ContextPsiFieldReference extends PsiReferenceBase<XmlAttributeValue
     }
 
     /**
-     * Gets resolver.
-     *
-     * @return the resolver
-     */
-    public ContextReferenceSetResolver<XmlAttributeValue, PsiField> getResolver() {
-        return resolver;
-    }
-
-    /**
      * Sets resolver.
      *
      * @param resolver the resolver
      */
     public void setResolver(ContextReferenceSetResolver<XmlAttributeValue, PsiField> resolver) {
         this.resolver = resolver;
-    }
-
-    /**
-     * Gets index.
-     *
-     * @return the index
-     */
-    public int getIndex() {
-        return index;
     }
 
     /**

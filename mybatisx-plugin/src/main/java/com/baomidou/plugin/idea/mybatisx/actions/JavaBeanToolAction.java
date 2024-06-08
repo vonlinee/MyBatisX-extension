@@ -112,7 +112,7 @@ public final class JavaBeanToolAction extends AnAction {
             this.mainPanel.add(centerPanel, BorderLayout.CENTER);
             this.mainPanel.add(topPanel, BorderLayout.NORTH);
 
-            this.mainPanel.setPreferredSize(SwingUtils.getScreenBasedDimension(0.8));
+            this.mainPanel.setPreferredSize(SwingUtils.getScreenBasedDimension(0.5));
             return this.mainPanel;
         }
 

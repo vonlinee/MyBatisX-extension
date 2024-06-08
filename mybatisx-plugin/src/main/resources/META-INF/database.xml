@@ -19,7 +19,7 @@
     <actions>
 
         <action id="bmd-mybatis-generate-action"
-                class="com.baomidou.plugin.idea.mybatisx.generate.action.MyBatisGeneratorAction"
+                class="com.baomidou.plugin.idea.mybatisx.actions.MyBatisGeneratorAction"
                 text="MybatisX-Generator"
                 description="MybatisX generator idea plugin">
             <add-to-group group-id="DatabaseViewPopupMenu" anchor="first"/>

@@ -19,7 +19,7 @@ import com.baomidou.plugin.idea.mybatisx.agent.connect.AgentConnector;
 import com.baomidou.plugin.idea.mybatisx.agent.connect.AgentConnectorImpl;
 import com.baomidou.plugin.idea.mybatisx.agent.context.VMInfo;
 import com.baomidou.plugin.idea.mybatisx.agent.context.VMContext;
-import com.baomidou.plugin.idea.mybatisx.agent.util.Notifications;
+import com.baomidou.plugin.idea.mybatisx.util.Notifications;
 
 import javax.swing.*;
 import java.util.Collections;

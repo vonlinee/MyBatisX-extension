@@ -1,7 +1,7 @@
 package com.baomidou.plugin.idea.mybatisx.provider;
 
 import com.baomidou.plugin.idea.mybatisx.dom.model.Mapper;
-import com.baomidou.plugin.idea.mybatisx.setting.MapperIcon;
+import com.baomidou.plugin.idea.mybatisx.util.MapperIcon;
 import com.baomidou.plugin.idea.mybatisx.setting.MyBatisXSettings;
 import com.baomidou.plugin.idea.mybatisx.util.Icons;
 import com.baomidou.plugin.idea.mybatisx.util.MapperUtils;

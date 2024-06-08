@@ -11,7 +11,7 @@ import com.baomidou.plugin.idea.mybatisx.jpa.component.TypeDescriptor;
 import com.baomidou.plugin.idea.mybatisx.jpa.operate.manager.AreaOperateManager;
 import com.baomidou.plugin.idea.mybatisx.jpa.operate.manager.StatementBlock;
 import com.baomidou.plugin.idea.mybatisx.jpa.operate.manager.StatementBlockFactory;
-import com.baomidou.plugin.idea.mybatisx.jpa.util.SyntaxAppenderWrapper;
+import com.baomidou.plugin.idea.mybatisx.jpa.SyntaxAppenderWrapper;
 import com.intellij.psi.PsiClass;
 import com.intellij.psi.PsiMethod;
 import org.apache.commons.lang.StringUtils;

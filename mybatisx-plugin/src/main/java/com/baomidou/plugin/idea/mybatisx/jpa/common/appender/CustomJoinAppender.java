@@ -7,7 +7,7 @@ import com.baomidou.plugin.idea.mybatisx.jpa.common.command.JoinAppendTypeComman
 import com.baomidou.plugin.idea.mybatisx.jpa.common.iftest.ConditionFieldWrapper;
 import com.baomidou.plugin.idea.mybatisx.jpa.component.TxParameter;
 import com.baomidou.plugin.idea.mybatisx.jpa.operate.model.AppendTypeEnum;
-import com.baomidou.plugin.idea.mybatisx.jpa.util.SyntaxAppenderWrapper;
+import com.baomidou.plugin.idea.mybatisx.jpa.SyntaxAppenderWrapper;
 import com.intellij.psi.PsiClass;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;

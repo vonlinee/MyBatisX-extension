@@ -11,7 +11,7 @@ import com.baomidou.plugin.idea.mybatisx.jpa.component.TxParameter;
 import com.baomidou.plugin.idea.mybatisx.jpa.db.adaptor.DasTableAdaptor;
 import com.baomidou.plugin.idea.mybatisx.jpa.exp.GenerateException;
 import com.baomidou.plugin.idea.mybatisx.jpa.operate.dialect.mysql.MysqlInsertBatch;
-import com.baomidou.plugin.idea.mybatisx.jpa.util.SyntaxAppenderWrapper;
+import com.baomidou.plugin.idea.mybatisx.jpa.SyntaxAppenderWrapper;
 import com.baomidou.plugin.idea.mybatisx.util.MybatisXCollectors;
 import com.baomidou.plugin.idea.mybatisx.util.StringUtils;
 import com.intellij.database.model.DasTableKey;

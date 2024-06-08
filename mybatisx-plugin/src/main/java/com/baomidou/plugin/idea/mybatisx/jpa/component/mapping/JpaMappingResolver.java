@@ -2,7 +2,7 @@ package com.baomidou.plugin.idea.mybatisx.jpa.component.mapping;
 
 import com.baomidou.plugin.idea.mybatisx.jpa.common.appender.JdbcTypeUtils;
 import com.baomidou.plugin.idea.mybatisx.jpa.component.TxField;
-import com.baomidou.plugin.idea.mybatisx.jpa.util.FieldUtil;
+import com.baomidou.plugin.idea.mybatisx.jpa.FieldUtil;
 import com.baomidou.plugin.idea.mybatisx.util.StringUtils;
 import com.intellij.psi.JavaPsiFacade;
 import com.intellij.psi.PsiAnnotation;

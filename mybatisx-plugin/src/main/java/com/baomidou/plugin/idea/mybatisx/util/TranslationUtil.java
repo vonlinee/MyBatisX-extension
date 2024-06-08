@@ -13,8 +13,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static com.baomidou.plugin.idea.mybatisx.enums.TranslationAppEnum.BAIDU;
-import static com.baomidou.plugin.idea.mybatisx.enums.TranslationAppEnum.TENCENT;
+import static com.baomidou.plugin.idea.mybatisx.ddl.TranslationAppEnum.BAIDU;
+import static com.baomidou.plugin.idea.mybatisx.ddl.TranslationAppEnum.TENCENT;
 
 /**
  * @author breezes_y@163.com

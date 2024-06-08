@@ -72,6 +72,10 @@ public abstract class AbstractStatementGenerator {
     public static final Set<AbstractStatementGenerator> ALL = ImmutableSet.of(UPDATE_GENERATOR, SELECT_GENERATOR, DELETE_GENERATOR, INSERT_GENERATOR);
 
     private static final Function<Mapper, String> FUN = mapper -> {
+        XmlTag xmlTag = mapper.getXmlTag();
+        if (xmlTag == null) {
+            return null;
+        }
         VirtualFile vf = mapper.getXmlTag().getContainingFile().getVirtualFile();
         if (null == vf) {
             return "";

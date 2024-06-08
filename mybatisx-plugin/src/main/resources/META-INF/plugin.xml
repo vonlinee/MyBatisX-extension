@@ -131,11 +131,11 @@
         <!-- mapper.xml文件属性提示 -->
         <dom.fileMetaData id="baomidou.MapperDescription"
                           rootTagName="mapper"
-                          implementation="com.baomidou.plugin.idea.mybatisx.dom.description.MapperDescription"/>
+                          implementation="com.baomidou.plugin.idea.mybatisx.dom.MapperDescription"/>
         <!-- mybatis配置文件属性提示 -->
         <dom.fileMetaData id="baomidou.ConfigurationDescription"
                           rootTagName="configuration"
-                          implementation="com.baomidou.plugin.idea.mybatisx.dom.description.ConfigurationDescription"/>
+                          implementation="com.baomidou.plugin.idea.mybatisx.dom.ConfigurationDescription"/>
 
         <!-- Ctrl+B, 定位类的跳转, 定位方法的跳转 -->
         <definitionsScopedSearch id="baomidou.MapperClassSearch"
@@ -169,19 +169,19 @@
                                         implementationClass="com.baomidou.plugin.idea.mybatisx.provider.InjectionLineMarkerProvider"/>
 
         <!-- 设置中的配置 -->
-        <applicationConfigurable id="com.baomidou.plugin.idea.mybatisx.setting.MyBatisXConfigurable"
+        <applicationConfigurable id="com.baomidou.plugin.idea.mybatisx.setting.configurable.MyBatisXConfigurable"
                                  displayName="MyBatisX"
-                                 instance="com.baomidou.plugin.idea.mybatisx.setting.MyBatisXConfigurable"/>
+                                 instance="com.baomidou.plugin.idea.mybatisx.setting.configurable.MyBatisXConfigurable"/>
         <!--模板设置-->
-        <applicationConfigurable id="com.baomidou.plugin.idea.mybatisx.setting.TemplateConfigurable"
+        <applicationConfigurable id="com.baomidou.plugin.idea.mybatisx.setting.configurable.TemplateConfigurable"
                                  displayName="Template"
-                                 parentId="com.baomidou.plugin.idea.mybatisx.setting.MyBatisXConfigurable"
-                                 instance="com.baomidou.plugin.idea.mybatisx.setting.TemplateConfigurable"/>
+                                 parentId="com.baomidou.plugin.idea.mybatisx.setting.configurable.MyBatisXConfigurable"
+                                 instance="com.baomidou.plugin.idea.mybatisx.setting.configurable.TemplateConfigurable"/>
 
-        <applicationConfigurable id="com.baomidou.plugin.idea.mybatisx.setting.DataTypeConfigurable"
+        <applicationConfigurable id="com.baomidou.plugin.idea.mybatisx.setting.configurable.DataTypeConfigurable"
                                  displayName="DataType"
-                                 parentId="com.baomidou.plugin.idea.mybatisx.setting.MyBatisXConfigurable"
-                                 instance="com.baomidou.plugin.idea.mybatisx.setting.DataTypeConfigurable"/>
+                                 parentId="com.baomidou.plugin.idea.mybatisx.setting.configurable.MyBatisXConfigurable"
+                                 instance="com.baomidou.plugin.idea.mybatisx.setting.configurable.DataTypeConfigurable"/>
 
         <!-- xml 标签提示 -->
         <!-- 在mapper.xml内部, 进行智能提示, 例如: #{提示位置} -->
@@ -277,11 +277,11 @@
             implementation="com.baomidou.plugin.idea.mybatisx.system.refactoring.MapperMethodSafeDeleteProcessor"/>
 
         <applicationConfigurable instance="com.baomidou.plugin.idea.mybatisx.ui.SettingPanelConfig"
-                                 groupId="com.baomidou.plugin.idea.mybatisx.setting.MyBatisXConfigurable"
+                                 groupId="com.baomidou.plugin.idea.mybatisx.setting.configurable.MyBatisXConfigurable"
                                  displayName="类型映射"/>
 
-        <applicationConfigurable instance="com.baomidou.plugin.idea.mybatisx.setting.TranslationConfigurable"
-                                 groupId="com.baomidou.plugin.idea.mybatisx.setting.MyBatisXConfigurable"
+        <applicationConfigurable instance="com.baomidou.plugin.idea.mybatisx.setting.configurable.TranslationConfigurable"
+                                 groupId="com.baomidou.plugin.idea.mybatisx.setting.configurable.MyBatisXConfigurable"
                                  displayName="翻译配置"/>
 
         <applicationService serviceImplementation="com.baomidou.plugin.idea.mybatisx.setting.JavaBean2DDLSetting"/>
@@ -295,7 +295,7 @@
     </applicationListeners>
 
     <projectListeners>
-        <listener class="com.baomidou.plugin.idea.mybatisx.agent.listener.ProjectExecutionListener"
+        <listener class="com.baomidou.plugin.idea.mybatisx.listener.LoadAgentExecutionListener"
                   topic="com.intellij.execution.ExecutionListener"/>
     </projectListeners>
 </idea-plugin>
