@@ -1,4 +1,4 @@
-package com.baomidou.mybatisx.plugin.setting;
+package com.baomidou.mybatisx.plugin.ui.components;
 
 import org.ini4j.Config;
 import org.ini4j.Ini;

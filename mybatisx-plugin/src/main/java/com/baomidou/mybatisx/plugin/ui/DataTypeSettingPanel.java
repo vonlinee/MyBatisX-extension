@@ -5,7 +5,7 @@ import com.baomidou.mybatisx.feat.ddl.SqlTypeEnum;
 import com.baomidou.mybatisx.model.ComboBoxItem;
 import com.baomidou.mybatisx.plugin.setting.JavaBean2DDLSetting;
 import com.baomidou.mybatisx.service.BaseTypeItemListener;
-import com.intellij.openapi.components.ServiceManager;
+import com.baomidou.mybatisx.util.IntellijSDK;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -15,11 +15,12 @@ import java.util.Objects;
 @Getter
 @Setter
 public class DataTypeSettingPanel {
-    private JPanel mainPanel;
+    private JTabbedPane rootPanel;
+
+    // 类型映射
+    private JPanel mapPanel;
     private JComboBox<ComboBoxItem> intMapComboBox;
     private JTextField intDefaultText;
-    private JPanel auxiliaryPanel;
-    private JPanel mapPanel;
     private JPanel commonlyUsedMapPanel;
     private JComboBox<ComboBoxItem> longMapComboBox;
     private JTextField longDefaultText;
@@ -47,21 +48,19 @@ public class DataTypeSettingPanel {
     private JavaBean2DDLSetting.MySettingProperties properties;
 
     public DataTypeSettingPanel() {
-        JavaBean2DDLSetting service = ServiceManager.getService(JavaBean2DDLSetting.class);
-        this.properties = service.myProperties;
-
+        this.properties = IntellijSDK.getService(JavaBean2DDLSetting.class).getProperties();
         /*自定义映射下拉框初始化*/
         commonlyUsedMapComboBoxInit();
         /*sql类型默认长度文本框初始化*/
-        sqlLengthTextInit();
-        showNoInMapFieldRadioInit();
+        initSqlLengthText();
+        initSowNoInMapFieldRadio();
     }
 
-    private void showNoInMapFieldRadioInit() {
+    private void initSowNoInMapFieldRadio() {
         showNoInMapFieldRadio.setSelected(properties.getShowNoInMapFieldRadio());
     }
 
-    private void sqlLengthTextInit() {
+    private void initSqlLengthText() {
         intDefaultText.setText(properties.getIntDefaultLength());
         longDefaultText.setText(properties.getLongDefaultLength());
         doubleDefaultText.setText(properties.getDoubleDefaultLength());

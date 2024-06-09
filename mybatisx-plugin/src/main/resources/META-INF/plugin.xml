@@ -86,7 +86,7 @@
         <!-- Add your actions here -->
         <action id="com.baomidou.mybatisx.feat.ddl.CreateTableDDL"
                 class="com.baomidou.mybatisx.feat.ddl.CreateTableDDL"
-                text="CreateTable DDL"
+                text="DDL"
                 description="Create Table DDL" popup="false">
             <!--<keyboard-shortcut keymap="$default" first-keystroke="shift alt C"/>-->
             <add-to-group group-id="GenerateGroup" anchor="last"/>
@@ -152,21 +152,6 @@
         <!-- 在service层注入了mapper对象, 在这个对象进行跳转到 mapper 类-->
         <codeInsight.lineMarkerProvider id="baomidou.InjectionLineMarkerProvider" language="JAVA"
                                         implementationClass="com.baomidou.mybatisx.plugin.provider.InjectionLineMarkerProvider"/>
-
-        <!-- 设置中的配置 -->
-        <applicationConfigurable id="com.baomidou.mybatisx.plugin.setting.configurable.MyBatisXConfigurable"
-                                 displayName="MyBatisX"
-                                 instance="com.baomidou.mybatisx.plugin.setting.configurable.MyBatisXConfigurable"/>
-        <!--模板设置-->
-        <applicationConfigurable id="com.baomidou.mybatisx.plugin.setting.configurable.TemplateConfigurable"
-                                 displayName="Template"
-                                 parentId="com.baomidou.mybatisx.plugin.setting.configurable.MyBatisXConfigurable"
-                                 instance="com.baomidou.mybatisx.plugin.setting.configurable.TemplateConfigurable"/>
-
-        <applicationConfigurable id="com.baomidou.mybatisx.plugin.setting.configurable.DataTypeConfigurable"
-                                 displayName="DataType"
-                                 parentId="com.baomidou.mybatisx.plugin.setting.configurable.MyBatisXConfigurable"
-                                 instance="com.baomidou.mybatisx.plugin.setting.configurable.DataTypeConfigurable"/>
 
         <!-- xml 标签提示 -->
         <!-- 在mapper.xml内部, 进行智能提示, 例如: #{提示位置} -->
@@ -264,20 +249,35 @@
         <refactoring.safeDeleteProcessor
             implementation="com.baomidou.mybatisx.plugin.extensions.MapperMethodSafeDeleteProcessor"/>
 
-        <applicationConfigurable
-            instance="com.baomidou.mybatisx.plugin.setting.configurable.DataTypeSettingConfigurable"
-            groupId="com.baomidou.mybatisx.plugin.setting.configurable.MyBatisXConfigurable"
-            displayName="类型映射"/>
 
-        <applicationConfigurable
-            instance="com.baomidou.mybatisx.plugin.setting.configurable.MyBatisGeneratorConfigurable"
-            groupId="com.baomidou.mybatisx.plugin.setting.configurable.MyBatisXConfigurable"
-            displayName="Generator"/>
+        <!-- 设置中的配置 -->
+        <applicationConfigurable id="com.baomidou.mybatisx.plugin.setting.configurable.MyBatisXConfigurable"
+                                 displayName="MyBatisX"
+                                 instance="com.baomidou.mybatisx.plugin.setting.configurable.MyBatisXConfigurable"/>
+        <!--模板设置-->
+        <!--        <applicationConfigurable id="com.baomidou.mybatisx.plugin.setting.configurable.TemplateConfigurable"-->
+        <!--                                 displayName="Template"-->
+        <!--                                 parentId="com.baomidou.mybatisx.plugin.setting.configurable.MyBatisXConfigurable"-->
+        <!--                                 instance="com.baomidou.mybatisx.plugin.setting.configurable.TemplateConfigurable"/>-->
 
-        <applicationConfigurable
-            instance="com.baomidou.mybatisx.plugin.setting.configurable.TranslationConfigurable"
-            groupId="com.baomidou.mybatisx.plugin.setting.configurable.MyBatisXConfigurable"
-            displayName="翻译配置"/>
+        <!--        <applicationConfigurable id="com.baomidou.mybatisx.plugin.setting.configurable.DataTypeConfigurable"-->
+        <!--                                 displayName="DataType"-->
+        <!--                                 parentId="com.baomidou.mybatisx.plugin.setting.configurable.MyBatisXConfigurable"-->
+        <!--                                 instance="com.baomidou.mybatisx.plugin.setting.configurable.DataTypeConfigurable"/>-->
+        <!--        <applicationConfigurable-->
+        <!--            instance="com.baomidou.mybatisx.plugin.setting.configurable.DataTypeSettingConfigurable"-->
+        <!--            groupId="com.baomidou.mybatisx.plugin.setting.configurable.MyBatisXConfigurable"-->
+        <!--            displayName="类型系统"/>-->
+
+        <!--        <applicationConfigurable-->
+        <!--            instance="com.baomidou.mybatisx.plugin.setting.configurable.MyBatisGeneratorConfigurable"-->
+        <!--            groupId="com.baomidou.mybatisx.plugin.setting.configurable.MyBatisXConfigurable"-->
+        <!--            displayName="Generator"/>-->
+
+        <!--        <applicationConfigurable-->
+        <!--            instance="com.baomidou.mybatisx.plugin.setting.configurable.TranslationConfigurable"-->
+        <!--            groupId="com.baomidou.mybatisx.plugin.setting.configurable.MyBatisXConfigurable"-->
+        <!--            displayName="翻译配置"/>-->
 
         <applicationService serviceImplementation="com.baomidou.mybatisx.plugin.setting.JavaBean2DDLSetting"/>
     </extensions>

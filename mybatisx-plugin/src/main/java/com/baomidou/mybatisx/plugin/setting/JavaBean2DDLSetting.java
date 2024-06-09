@@ -1,8 +1,8 @@
 package com.baomidou.mybatisx.plugin.setting;
 
 import com.baomidou.mybatisx.model.TranslationSettingVO;
+import com.baomidou.mybatisx.util.IntellijSDK;
 import com.intellij.openapi.components.PersistentStateComponent;
-import com.intellij.openapi.components.ServiceManager;
 import com.intellij.openapi.components.State;
 import com.intellij.openapi.components.Storage;
 import lombok.Getter;
@@ -32,7 +32,7 @@ public final class JavaBean2DDLSetting implements PersistentStateComponent<JavaB
     public MySettingProperties myProperties = new MySettingProperties();
 
     public static JavaBean2DDLSetting getInstance() {
-        return ServiceManager.getService(JavaBean2DDLSetting.class);
+        return IntellijSDK.getService(JavaBean2DDLSetting.class);
     }
 
     @Nullable

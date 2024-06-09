@@ -59,10 +59,6 @@ public class MyBatisXConfigurable implements SearchableConfigurable {
     public JComponent createComponent() {
         if (null == mybatisSettingForm) {
             this.mybatisSettingForm = new MyBatisSettingForm();
-            this.mybatisSettingForm.initUI();
-            if (mybatisXSettings != null) {
-                this.mybatisSettingForm.setDataTypeMappingTable(mybatisXSettings.getState().dataTypeMapping);
-            }
         }
         return mybatisSettingForm.root;
     }

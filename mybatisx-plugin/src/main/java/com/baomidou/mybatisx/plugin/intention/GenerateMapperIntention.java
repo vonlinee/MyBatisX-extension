@@ -101,17 +101,7 @@ public class GenerateMapperIntention extends GenericIntention {
 
     private ClickableListener getChooseFolderListener(final Editor editor, final PsiClass clazz) {
         final Project project = clazz.getProject();
-        return new ClickableListener() {
-            @Override
-            public void clicked() {
-                handleChooseNewFolder(project, editor, clazz);
-            }
-
-            @Override
-            public boolean isWriteAction() {
-                return false;
-            }
-        };
+        return () -> handleChooseNewFolder(project, editor, clazz);
     }
 
     private void handleChooseNewFolder(Project project, Editor editor, PsiClass clazz) {
