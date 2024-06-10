@@ -1,11 +1,11 @@
 package com.baomidou.mybatisx.plugin.setting;
 
 import com.baomidou.mybatisx.plugin.setting.config.AbstractStatementGenerator;
+import com.baomidou.mybatisx.util.IntellijSDK;
 import com.baomidou.mybatisx.util.MyBatisXPlugin;
 import com.google.common.base.Joiner;
 import com.intellij.openapi.components.PersistentStateComponent;
 import com.intellij.openapi.components.Service;
-import com.intellij.openapi.components.ServiceManager;
 import com.intellij.openapi.components.State;
 import com.intellij.openapi.components.Storage;
 import com.intellij.util.xmlb.XmlSerializerUtil;
@@ -26,8 +26,8 @@ import java.util.Map;
  */
 @Service
 @State(
-        name = "MybatisXSettings",
-        storages = @Storage(value = MyBatisXPlugin.PERSISTENT_STATE_FILE))
+    name = "MybatisXSettings",
+    storages = @Storage(value = MyBatisXPlugin.PERSISTENT_STATE_FILE))
 public final class MyBatisXSettings implements PersistentStateComponent<MyBatisXSettings.State> {
 
     private final State state = new State();
@@ -38,7 +38,7 @@ public final class MyBatisXSettings implements PersistentStateComponent<MyBatisX
      * @return the instance
      */
     public static MyBatisXSettings getInstance() {
-        return ServiceManager.getService(MyBatisXSettings.class);
+        return IntellijSDK.getService(MyBatisXSettings.class);
     }
 
     @NotNull

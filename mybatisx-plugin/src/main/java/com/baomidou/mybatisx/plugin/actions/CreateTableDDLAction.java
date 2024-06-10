@@ -1,5 +1,6 @@
-package com.baomidou.mybatisx.feat.ddl;
+package com.baomidou.mybatisx.plugin.actions;
 
+import com.baomidou.mybatisx.feat.ddl.TableField;
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.psi.PsiClass;
 import com.intellij.psi.PsiField;
@@ -7,7 +8,7 @@ import com.intellij.psi.PsiField;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CreateTableDDL extends CreatorSupport {
+public class CreateTableDDLAction extends CreatorSupport {
 
     /**
      * 分析获得建表语句

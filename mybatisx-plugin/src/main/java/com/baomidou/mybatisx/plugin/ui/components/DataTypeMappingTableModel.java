@@ -44,14 +44,4 @@ public class DataTypeMappingTableModel extends DefaultTableModel {
         }
         return rows;
     }
-
-    /**
-     * 加载 ini 配置文件
-     */
-    public void load(URI uri) {
-        List<Object[]> rows = readRows(uri);
-        for (Object[] row : rows) {
-            this.addRow(row);
-        }
-    }
 }

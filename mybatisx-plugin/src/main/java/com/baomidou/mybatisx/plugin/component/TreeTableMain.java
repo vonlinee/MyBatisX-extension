@@ -55,16 +55,13 @@ public class TreeTableMain extends JFrame {
     }
 
     public static void main(final String[] args) {
-        Runnable gui = new Runnable() {
-
-            public void run() {
-                try {
-                    UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-                new TreeTableMain().setVisible(true);
+        Runnable gui = () -> {
+            try {
+                UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+            } catch (Exception e) {
+                e.printStackTrace();
             }
+            new TreeTableMain().setVisible(true);
         };
         SwingUtilities.invokeLater(gui);
     }

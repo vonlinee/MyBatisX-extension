@@ -3,6 +3,8 @@ package com.baomidou.mybatisx.feat.bean;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.List;
+
 @Setter
 @Getter
 public class TemplateInfo {
@@ -31,6 +33,8 @@ public class TemplateInfo {
      * 模板内容
      */
     private String content;
+
+    private List<TemplateInfo> children;
 
     /**
      * 持久化状态Bean必须要默认构造器

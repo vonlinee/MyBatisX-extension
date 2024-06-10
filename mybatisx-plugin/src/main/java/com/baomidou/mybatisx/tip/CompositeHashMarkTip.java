@@ -52,7 +52,7 @@ public class CompositeHashMarkTip {
      */
     public static final String PARAM = "param";
     private static final Logger logger = LoggerFactory.getLogger(CompositeHashMarkTip.class);
-    private static final List<HashMarkTip> hashMarkTips = new ArrayList<HashMarkTip>() {
+    private static final List<HashMarkTip> hashMarkTips = new ArrayList<>() {
         {
             add(new JdbcTypeHashMarkTip());
             add(new TypeHandlerHashMarkTip());
@@ -83,7 +83,7 @@ public class CompositeHashMarkTip {
                                           String wrappedText,
                                           int editorCaret) {
         Optional<PsiMethod> methodOptional = JavaUtils.findMethod(project, idDomElement);
-        if (!methodOptional.isPresent()) {
+        if (methodOptional.isEmpty()) {
             logger.info("the psiMethod is null");
             return;
         }

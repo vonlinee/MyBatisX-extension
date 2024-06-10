@@ -15,6 +15,12 @@ public abstract class FileUtils {
         Files.deleteIfExists(path);
     }
 
+    /**
+     * 获取 user.home 下面的的绝对路径
+     *
+     * @param pathname 相对路径
+     * @return 绝对路径
+     */
     public static Path getUserHomePath(String... pathname) {
         String userDir = System.getProperty("user.home");
         return Paths.get(userDir, pathname);

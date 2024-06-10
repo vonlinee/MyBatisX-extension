@@ -3,6 +3,7 @@ package com.baomidou.mybatisx.util;
 import com.intellij.openapi.util.IconLoader;
 import com.intellij.util.ui.JBUI;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import javax.swing.*;
 import javax.swing.table.TableColumn;
@@ -102,7 +103,11 @@ public final class SwingUtils {
         SwingUtilities.invokeLater(runnable);
     }
 
+    @Nullable
     public static DefaultMutableTreeNode getSelectedNode(JTree tree) {
+        if (tree == null) {
+            return null;
+        }
         return (DefaultMutableTreeNode) tree.getSelectionModel().getSelectionPath().getLastPathComponent();
     }
 

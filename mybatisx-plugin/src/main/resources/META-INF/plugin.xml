@@ -49,7 +49,7 @@
       ]]>
     </change-notes>
 
-    <idea-version since-build="202.0"/>
+    <idea-version since-build="213.0"/>
     <depends>com.intellij.modules.java</depends>
     <depends optional="true" config-file="database.xml">com.intellij.database</depends>
     <!-- support aliases -->
@@ -84,8 +84,8 @@
         </group>
 
         <!-- Add your actions here -->
-        <action id="com.baomidou.mybatisx.feat.ddl.CreateTableDDL"
-                class="com.baomidou.mybatisx.feat.ddl.CreateTableDDL"
+        <action id="com.baomidou.mybatisx.plugin.actions.CreateTableDDLAction"
+                class="com.baomidou.mybatisx.plugin.actions.CreateTableDDLAction"
                 text="DDL"
                 description="Create Table DDL" popup="false">
             <!--<keyboard-shortcut keymap="$default" first-keystroke="shift alt C"/>-->
@@ -255,29 +255,25 @@
                                  displayName="MyBatisX"
                                  instance="com.baomidou.mybatisx.plugin.setting.configurable.MyBatisXConfigurable"/>
         <!--模板设置-->
-        <!--        <applicationConfigurable id="com.baomidou.mybatisx.plugin.setting.configurable.TemplateConfigurable"-->
-        <!--                                 displayName="Template"-->
-        <!--                                 parentId="com.baomidou.mybatisx.plugin.setting.configurable.MyBatisXConfigurable"-->
-        <!--                                 instance="com.baomidou.mybatisx.plugin.setting.configurable.TemplateConfigurable"/>-->
+        <applicationConfigurable id="com.baomidou.mybatisx.plugin.setting.configurable.TemplateConfigurable"
+                                 displayName="Template"
+                                 parentId="com.baomidou.mybatisx.plugin.setting.configurable.MyBatisXConfigurable"
+                                 instance="com.baomidou.mybatisx.plugin.setting.configurable.TemplateConfigurable"/>
 
-        <!--        <applicationConfigurable id="com.baomidou.mybatisx.plugin.setting.configurable.DataTypeConfigurable"-->
-        <!--                                 displayName="DataType"-->
-        <!--                                 parentId="com.baomidou.mybatisx.plugin.setting.configurable.MyBatisXConfigurable"-->
-        <!--                                 instance="com.baomidou.mybatisx.plugin.setting.configurable.DataTypeConfigurable"/>-->
-        <!--        <applicationConfigurable-->
-        <!--            instance="com.baomidou.mybatisx.plugin.setting.configurable.DataTypeSettingConfigurable"-->
-        <!--            groupId="com.baomidou.mybatisx.plugin.setting.configurable.MyBatisXConfigurable"-->
-        <!--            displayName="类型系统"/>-->
+        <applicationConfigurable
+            instance="com.baomidou.mybatisx.plugin.setting.configurable.MyBatisGeneratorConfigurable"
+            groupId="com.baomidou.mybatisx.plugin.setting.configurable.MyBatisXConfigurable"
+            displayName="Generator"/>
 
-        <!--        <applicationConfigurable-->
-        <!--            instance="com.baomidou.mybatisx.plugin.setting.configurable.MyBatisGeneratorConfigurable"-->
-        <!--            groupId="com.baomidou.mybatisx.plugin.setting.configurable.MyBatisXConfigurable"-->
-        <!--            displayName="Generator"/>-->
+        <applicationConfigurable
+            instance="com.baomidou.mybatisx.plugin.setting.configurable.DataTypeSettingConfigurable"
+            groupId="com.baomidou.mybatisx.plugin.setting.configurable.MyBatisXConfigurable"
+            displayName="TypeSystem"/>
 
-        <!--        <applicationConfigurable-->
-        <!--            instance="com.baomidou.mybatisx.plugin.setting.configurable.TranslationConfigurable"-->
-        <!--            groupId="com.baomidou.mybatisx.plugin.setting.configurable.MyBatisXConfigurable"-->
-        <!--            displayName="翻译配置"/>-->
+        <applicationConfigurable
+            instance="com.baomidou.mybatisx.plugin.setting.configurable.TranslationConfigurable"
+            groupId="com.baomidou.mybatisx.plugin.setting.configurable.MyBatisXConfigurable"
+            displayName="翻译配置"/>
 
         <applicationService serviceImplementation="com.baomidou.mybatisx.plugin.setting.JavaBean2DDLSetting"/>
     </extensions>

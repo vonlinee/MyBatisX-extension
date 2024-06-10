@@ -5,6 +5,7 @@ import com.intellij.ui.treeStructure.Tree;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.MutableTreeNode;
+import javax.swing.tree.TreeNode;
 
 public class TreeView<T> extends Tree {
 
@@ -12,7 +13,6 @@ public class TreeView<T> extends Tree {
 
     public TreeView() {
         root = new DefaultMutableTreeNode("");
-        setModel(new DefaultTreeModel(root));
         setOpaque(true);
     }
 
@@ -33,5 +33,9 @@ public class TreeView<T> extends Tree {
         for (int i = 0; i < rowCount; i++) {
             this.expandRow(i);
         }
+    }
+
+    public TreeNode getRoot() {
+        return root;
     }
 }

@@ -1,17 +1,17 @@
-package com.baomidou.mybatisx.feat.generate.ui;
+package com.baomidou.mybatisx.plugin.ui;
 
 import com.baomidou.mybatisx.feat.generate.DefaultNamingStrategy;
 import com.baomidou.mybatisx.feat.generate.NamingStrategy;
 import com.baomidou.mybatisx.feat.generate.dto.DomainInfo;
 import com.baomidou.mybatisx.feat.generate.dto.GenerateConfig;
 import com.baomidou.mybatisx.feat.generate.dto.TableUIInfo;
+import com.baomidou.mybatisx.util.IdeSDK;
 import com.baomidou.mybatisx.util.StringUtils;
 import com.intellij.database.psi.DbTable;
 import com.intellij.openapi.module.Module;
 import com.intellij.openapi.module.ModuleManager;
 import com.intellij.openapi.module.ModuleUtil;
 import com.intellij.openapi.project.Project;
-import com.intellij.openapi.roots.ui.configuration.ChooseModulesDialog;
 import com.intellij.psi.PsiElement;
 import com.intellij.ui.ToolbarDecorator;
 import com.intellij.ui.table.TableView;
@@ -32,13 +32,12 @@ import java.awt.event.ItemListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class TablePreviewUI {
     ListTableModel<TableUIInfo> model = new ListTableModel<>(
-            new MybaitsxTableColumnInfo("tableName", false),
-            new MybaitsxTableColumnInfo("className", true)
+        new MybaitsxTableColumnInfo("tableName", false),
+        new MybaitsxTableColumnInfo("className", true)
     );
     List<NamingStrategy> classNameStrategies = new ArrayList<NamingStrategy>() {
         {
@@ -78,12 +77,12 @@ public class TablePreviewUI {
         gridConstraints.setFill(GridConstraints.FILL_HORIZONTAL);
 
         listPanel.add(ToolbarDecorator.createDecorator(tableView)
-                        .setPreferredSize(new Dimension(860, 200))
-                        .disableAddAction()
-                        .disableRemoveAction()
-                        .disableUpDownActions()
-                        .createPanel(),
-                gridConstraints);
+                .setPreferredSize(new Dimension(860, 200))
+                .disableAddAction()
+                .disableRemoveAction()
+                .disableUpDownActions()
+                .createPanel(),
+            gridConstraints);
     }
 
     public DomainInfo buildDomainInfo() {
@@ -211,17 +210,10 @@ public class TablePreviewUI {
      * Project Structure > Module Settings
      */
     private void chooseModule(Project project) {
-        Module[] modules = ModuleManager.getInstance(project).getModules();
-        ChooseModulesDialog dialog = new ChooseModulesDialog(project, Arrays.asList(modules), "Choose Module", "Choose Single Module");
-        dialog.setSingleSelectionMode();
-        dialog.show();
-
-        List<Module> chosenElements = dialog.getChosenElements();
-        if (!chosenElements.isEmpty()) {
-            Module module = chosenElements.get(0);
+        IdeSDK.chooseSingleModule(project).ifPresent(module -> {
             chooseModulePath(module);
             moduleName = module.getName();
-        }
+        });
     }
 
     /**

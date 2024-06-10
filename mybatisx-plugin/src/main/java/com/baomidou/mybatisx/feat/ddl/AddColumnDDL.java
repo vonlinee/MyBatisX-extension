@@ -1,5 +1,6 @@
 package com.baomidou.mybatisx.feat.ddl;
 
+import com.baomidou.mybatisx.plugin.actions.CreatorSupport;
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.actionSystem.CommonDataKeys;
 import com.intellij.openapi.actionSystem.LangDataKeys;
@@ -115,6 +116,9 @@ public class AddColumnDDL extends CreatorSupport {
         PsiFile psiFile = e.getData(LangDataKeys.PSI_FILE);
         // 获取当前编辑的文件, 通过PsiFile可获得PsiClass, PsiField等对象
         final Editor editor = e.getData(CommonDataKeys.EDITOR);
+        if (editor == null) {
+            return;
+        }
         if (!editor.getSelectionModel().hasSelection()) {
             e.getPresentation().setEnabled(false);
         }

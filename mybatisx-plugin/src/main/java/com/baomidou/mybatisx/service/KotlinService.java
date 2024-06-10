@@ -2,8 +2,8 @@ package com.baomidou.mybatisx.service;
 
 import com.baomidou.mybatisx.dom.model.IdDomElement;
 import com.baomidou.mybatisx.dom.model.Mapper;
+import com.baomidou.mybatisx.util.IntellijSDK;
 import com.baomidou.mybatisx.util.MapperUtils;
-import com.intellij.openapi.components.ServiceManager;
 import com.intellij.openapi.project.Project;
 import com.intellij.psi.util.PsiTreeUtil;
 import com.intellij.util.Processor;
@@ -17,7 +17,7 @@ import java.util.Collection;
 public class KotlinService {
 
     public static KotlinService getInstance(@NotNull Project project) {
-        return ServiceManager.getService(project, KotlinService.class);
+        return IntellijSDK.getService(KotlinService.class, project);
     }
 
     /**
@@ -52,9 +52,6 @@ public class KotlinService {
         String packageName = KtPsiUtil.getPackageName(parentClass);
         String id = packageName + "." + parentClass.getName() + "." + ktMethod.getName();
         Collection<Mapper> mappers = MapperUtils.findMappers(ktMethod.getProject());
-        mappers.stream()
-            .flatMap(mapper -> mapper.getDaoElements().stream())
-            .filter(idDom -> MapperUtils.getIdSignature(idDom).equals(id))
-            .forEach(processor::process);
+        mappers.stream().flatMap(mapper -> mapper.getDaoElements().stream()).filter(idDom -> MapperUtils.getIdSignature(idDom).equals(id)).forEach(processor::process);
     }
 }

@@ -1,4 +1,4 @@
-package com.baomidou.mybatisx.feat.generate.ui;
+package com.baomidou.mybatisx.plugin.ui;
 
 import com.baomidou.mybatisx.feat.generate.DomainPlaceHolder;
 import com.baomidou.mybatisx.feat.generate.dto.DomainInfo;
@@ -21,6 +21,7 @@ import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.util.PlatformIcons;
 import com.intellij.util.ui.ColumnInfo;
 import com.intellij.util.ui.ListTableModel;
+import lombok.Getter;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -44,13 +45,16 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 public class CodeGenerateUI {
+
+    public static final String MODULE_PATH = "module path";
     public static final String DOMAIN = "domain";
     ListTableModel<ModuleInfoGo> model = new ListTableModel<>(
-            new MyBaitsXModuleInfo("config name", 120, false),
-            new MyBaitsXModuleInfo("module path", 420, true, true),
-            new MyBaitsXModuleInfo("base path", 140, true),
-            new MyBaitsXModuleInfo("package name", 160, true)
+        new MyBaitsXModuleInfo("config name", 120, false),
+        new MyBaitsXModuleInfo(MODULE_PATH, 420, true, true),
+        new MyBaitsXModuleInfo("base path", 140, true),
+        new MyBaitsXModuleInfo("package name", 160, true)
     );
+    @Getter
     private JPanel rootPanel;
     private JCheckBox commentCheckBox;
     private JCheckBox lombokCheckBox;
@@ -65,16 +69,13 @@ public class CodeGenerateUI {
     private JRadioButton noneRadioButton;
     private JPanel templateExtraPanel;
     private JPanel templateExtraRadiosPanel;
-    private ButtonGroup templateButtonGroup = new ButtonGroup();
     private Project project;
     private DomainInfo domainInfo;
     private String selectedTemplateName;
     private boolean refresh = false;
     private boolean initRadioTemplates = false;
 
-    public JPanel getRootPanel() {
-        return rootPanel;
-    }
+    private final ButtonGroup templateButtonGroup = new ButtonGroup();
 
     public void fillData(Project project,
                          GenerateConfig generateConfig,
@@ -153,27 +154,27 @@ public class CodeGenerateUI {
         gridConstraints.setFill(GridConstraints.FILL_HORIZONTAL);
 
         templateExtraPanel.add(ToolbarDecorator.createDecorator(tableView)
-                .setToolbarPosition(ActionToolbarPosition.LEFT)
-                .addExtraAction(new AnActionButton("Refresh Template", PlatformIcons.SYNCHRONIZE_ICON) {
-                    @Override
-                    public void actionPerformed(@NotNull AnActionEvent e) {
-                        AbstractButton selectedTemplateName = findSelectedTemplateName();
-                        if (selectedTemplateName == null) {
-                            return;
-                        }
-                        List<TemplateSettingDTO> templateSettingDTOS = templateSettingMap.get(selectedTemplateName.getText());
-                        if (templateSettingDTOS == null) {
-                            return;
-                        }
-                        initSelectedModuleTable(templateSettingDTOS, domainInfo.getModulePath());
-                        refresh = true;
+            .setToolbarPosition(ActionToolbarPosition.LEFT)
+            .addExtraAction(new AnActionButton("Refresh Template", PlatformIcons.SYNCHRONIZE_ICON) {
+                @Override
+                public void actionPerformed(@NotNull AnActionEvent e) {
+                    AbstractButton selectedTemplateName = findSelectedTemplateName();
+                    if (selectedTemplateName == null) {
+                        return;
                     }
+                    List<TemplateSettingDTO> templateSettingDTOS = templateSettingMap.get(selectedTemplateName.getText());
+                    if (templateSettingDTOS == null) {
+                        return;
+                    }
+                    initSelectedModuleTable(templateSettingDTOS, domainInfo.getModulePath());
+                    refresh = true;
+                }
 
-                })
-                .disableAddAction()
-                .disableUpDownActions()
-                .setPreferredSize(new Dimension(840, 150))
-                .createPanel(), gridConstraints);
+            })
+            .disableAddAction()
+            .disableUpDownActions()
+            .setPreferredSize(new Dimension(840, 150))
+            .createPanel(), gridConstraints);
 
         initRaidoLayout(templateSettingMap);
 
@@ -367,8 +368,8 @@ public class CodeGenerateUI {
     public void refreshGenerateConfig(GenerateConfig generateConfig) {
 
         List<ModuleInfoGo> moduleUIInfoList = IntStream.range(0, model.getRowCount())
-                .mapToObj(index -> model.getRowValue(index))
-                .collect(Collectors.toList());
+            .mapToObj(index -> model.getRowValue(index))
+            .collect(Collectors.toList());
         generateConfig.setModuleUIInfoList(moduleUIInfoList);
         // 从1.4.7起改为基于模板生成, 所以不再需要那么多针对mapper的插件了
 //        generateConfig.setOffsetLimit(pageCheckBox.isSelected());
@@ -455,7 +456,7 @@ public class CodeGenerateUI {
 
         private void chooseModule(JTextField textField, ModuleInfoGo moduleUIInfo) {
             Module[] modules = ModuleManager.getInstance(project).getModules();
-            ChooseModulesDialog dialog = new ChooseModulesDialog(project, Arrays.asList(modules), "Choose Module", "Choose Single Module");
+            ChooseModulesDialog dialog = new ChooseModulesDialog(project, Arrays.asList(modules), "Choose Module", "Choose single module");
             dialog.setSingleSelectionMode();
             dialog.show();
 
@@ -492,7 +493,7 @@ public class CodeGenerateUI {
                         return;
                     }
                     String s = defaultCellEditor.getCellEditorValue().toString();
-                    if (getName().equals("module path")) {
+                    if (getName().equals(MODULE_PATH)) {
                         moduleUIInfo.setModulePath(s);
                     } else if (getName().equals("base path")) {
                         moduleUIInfo.setBasePath(s);
@@ -527,7 +528,7 @@ public class CodeGenerateUI {
             String value = null;
             if (getName().equals("config name")) {
                 value = item.getConfigName();
-            } else if (getName().equals("module path")) {
+            } else if (getName().equals(MODULE_PATH)) {
                 value = DomainPlaceHolder.replace(item.getModulePath(), domainInfo);
                 // domain 配置不可以更改模块
 //                if (item.getConfigName().equals("domain")) {
@@ -546,10 +547,7 @@ public class CodeGenerateUI {
 //                    value = domainInfo.getBasePackage() + "." + domainInfo.getRelativePackage();
 //                }
             }
-
             return value;
         }
     }
-
-
 }

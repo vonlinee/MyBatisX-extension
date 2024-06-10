@@ -74,7 +74,7 @@ public class PluginInitializer implements AppLifecycleListener {
                             IOUtils.copy(in, out);
                             String absolutePathname = FileUtils.getAbsolutePathname(path);
                             String filename = path.getFileName().toString();
-                            templates.add(new TemplateInfo(String.valueOf(++i), filename, absolutePathname));
+                            templates.add(new TemplateInfo(filename, filename, absolutePathname));
                         }
                     }
                 }

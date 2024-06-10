@@ -6,14 +6,15 @@ import com.baomidou.mybatisx.feat.generate.dto.GenerateConfig;
 import com.baomidou.mybatisx.feat.generate.dto.TemplateContext;
 import com.baomidou.mybatisx.feat.generate.dto.TemplateSettingDTO;
 import com.baomidou.mybatisx.feat.generate.setting.TemplatesSettings;
-import com.baomidou.mybatisx.feat.generate.ui.CodeGenerateUI;
-import com.baomidou.mybatisx.feat.generate.ui.TablePreviewUI;
+import com.baomidou.mybatisx.plugin.ui.CodeGenerateUI;
+import com.baomidou.mybatisx.plugin.ui.TablePreviewUI;
 import com.baomidou.mybatisx.util.StringUtils;
 import com.intellij.database.psi.DbTable;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.ui.DialogWrapper;
 import com.intellij.openapi.ui.Messages;
 import lombok.extern.slf4j.Slf4j;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import javax.swing.*;
@@ -25,11 +26,11 @@ import java.util.Map;
 @Slf4j
 public class ClassGenerateDialogWrapper extends DialogWrapper {
 
-    private CodeGenerateUI codeGenerateUI = new CodeGenerateUI();
+    private final CodeGenerateUI codeGenerateUI = new CodeGenerateUI();
 
-    private TablePreviewUI tablePreviewUI = new TablePreviewUI();
+    private final TablePreviewUI tablePreviewUI = new TablePreviewUI();
 
-    private JPanel rootPanel = new JPanel();
+    private final JPanel rootPanel = new JPanel();
 
     private List<JPanel> containerPanelList;
 
@@ -114,7 +115,7 @@ public class ClassGenerateDialogWrapper extends DialogWrapper {
     }
 
     @Override
-    protected Action[] createActions() {
+    protected Action @NotNull [] createActions() {
         return new Action[]{previousAction, getOKAction(), getCancelAction()};
     }
 

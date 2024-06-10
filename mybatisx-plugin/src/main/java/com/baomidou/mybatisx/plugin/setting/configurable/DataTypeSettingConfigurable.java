@@ -1,7 +1,6 @@
 package com.baomidou.mybatisx.plugin.setting.configurable;
 
-import com.baomidou.mybatisx.plugin.setting.JavaBean2DDLSetting;
-import com.baomidou.mybatisx.plugin.ui.components.DataTypeMappingTable;
+import com.baomidou.mybatisx.plugin.ui.components.DataTypeMappingSettingPanel;
 import com.intellij.openapi.options.ConfigurationException;
 import com.intellij.openapi.options.SearchableConfigurable;
 import org.jetbrains.annotations.Nls;
@@ -15,10 +14,10 @@ import javax.swing.*;
  */
 public final class DataTypeSettingConfigurable implements SearchableConfigurable {
 
-    DataTypeMappingTable dataTypeMappingTable;
+    DataTypeMappingSettingPanel dataTypeMappingSettingPanel;
 
     public DataTypeSettingConfigurable() {
-        dataTypeMappingTable = new DataTypeMappingTable();
+        dataTypeMappingSettingPanel = new DataTypeMappingSettingPanel();
     }
 
     @NotNull
@@ -36,7 +35,7 @@ public final class DataTypeSettingConfigurable implements SearchableConfigurable
     @Nullable
     @Override
     public JComponent createComponent() {
-        return dataTypeMappingTable;
+        return dataTypeMappingSettingPanel;
     }
 
     @Override

@@ -1,4 +1,4 @@
-package com.baomidou.mybatisx.plugin.ui.MyBatisGeneratorSettingPanel;
+package com.baomidou.mybatisx.plugin.ui;
 
 import com.baomidou.mybatisx.plugin.setting.JavaBean2DDLSetting;
 import com.baomidou.mybatisx.util.IntellijSDK;

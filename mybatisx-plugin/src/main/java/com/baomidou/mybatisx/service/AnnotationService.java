@@ -1,8 +1,8 @@
 package com.baomidou.mybatisx.service;
 
 import com.baomidou.mybatisx.annotation.Annotation;
+import com.baomidou.mybatisx.util.IntellijSDK;
 import com.baomidou.mybatisx.util.JavaUtils;
-import com.intellij.openapi.components.ServiceManager;
 import com.intellij.openapi.project.Project;
 import com.intellij.psi.JavaPsiFacade;
 import com.intellij.psi.PsiAnnotation;
@@ -41,7 +41,7 @@ public class AnnotationService {
      * @return the instance
      */
     public static AnnotationService getInstance(@NotNull Project project) {
-        return ServiceManager.getService(project, AnnotationService.class);
+        return IntellijSDK.getService(AnnotationService.class, project);
     }
 
     /**

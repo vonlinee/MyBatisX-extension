@@ -1,4 +1,4 @@
-package com.baomidou.mybatisx.feat.generate.ui;
+package com.baomidou.mybatisx.plugin.ui;
 
 import javax.swing.*;
 

@@ -2,9 +2,9 @@ package com.baomidou.mybatisx.service;
 
 import com.baomidou.mybatisx.dom.model.IdDomElement;
 import com.baomidou.mybatisx.dom.model.Mapper;
+import com.baomidou.mybatisx.util.IntellijSDK;
 import com.baomidou.mybatisx.util.JavaUtils;
 import com.baomidou.mybatisx.util.MapperUtils;
-import com.intellij.openapi.components.ServiceManager;
 import com.intellij.openapi.project.Project;
 import com.intellij.psi.JavaPsiFacade;
 import com.intellij.psi.PsiClass;
@@ -59,7 +59,7 @@ public final class JavaService {
      * @return the instance
      */
     public static JavaService getInstance(@NotNull Project project) {
-        return ServiceManager.getService(project, JavaService.class);
+        return IntellijSDK.getService(JavaService.class, project);
     }
 
     /**
@@ -74,7 +74,7 @@ public final class JavaService {
         }
         PsiType type = ((PsiField) field).getType();
         return type instanceof PsiClassReferenceType ? Optional.ofNullable(((PsiClassReferenceType) type).resolve()) :
-                Optional.empty();
+            Optional.empty();
     }
 
     /**
@@ -114,9 +114,9 @@ public final class JavaService {
         }
 
         mappers.stream()
-                .flatMap(mapper -> mapper.getDaoElements().stream())
-                .filter(idDom -> ids.contains(MapperUtils.getIdSignature(idDom)))
-                .forEach(processor::process);
+            .flatMap(mapper -> mapper.getDaoElements().stream())
+            .filter(idDom -> ids.contains(MapperUtils.getIdSignature(idDom)))
+            .forEach(processor::process);
 
     }
 

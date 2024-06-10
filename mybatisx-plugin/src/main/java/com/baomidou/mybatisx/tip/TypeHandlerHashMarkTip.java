@@ -46,6 +46,9 @@ public class TypeHandlerHashMarkTip implements HashMarkTip {
                 if (typeHandlerImplClass.hasModifierProperty(PsiModifier.ABSTRACT)) {
                     continue;
                 }
+                if (typeHandlerImplClass.getQualifiedName() == null) {
+                    continue;
+                }
                 completionResultSet.addElement(LookupElementBuilder.create(typeHandlerImplClass.getQualifiedName()));
             }
         }

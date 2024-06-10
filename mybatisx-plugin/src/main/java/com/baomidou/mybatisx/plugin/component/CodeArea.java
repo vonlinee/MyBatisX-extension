@@ -1,16 +1,17 @@
 package com.baomidou.mybatisx.plugin.component;
 
 import com.intellij.openapi.editor.ex.EditorEx;
-import com.intellij.openapi.fileTypes.FileType;
 import com.intellij.openapi.fileTypes.PlainTextFileType;
 import com.intellij.ui.EditorTextField;
 import com.intellij.ui.HorizontalScrollBarEditorCustomization;
 import org.jetbrains.annotations.NotNull;
 
+import java.awt.*;
+
 public class CodeArea extends EditorTextField {
 
     public CodeArea() {
-        super(null, PlainTextFileType.INSTANCE);
+        super("", null, PlainTextFileType.INSTANCE);
     }
 
     @Override

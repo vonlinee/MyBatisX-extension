@@ -1,5 +1,8 @@
-package com.baomidou.mybatisx.feat.ddl;
+package com.baomidou.mybatisx.plugin.actions;
 
+import com.baomidou.mybatisx.feat.ddl.Convertor;
+import com.baomidou.mybatisx.feat.ddl.TableField;
+import com.baomidou.mybatisx.feat.ddl.TypeTranslator;
 import com.baomidou.mybatisx.plugin.ui.DDLResultDialog;
 import com.intellij.lang.jvm.annotation.JvmAnnotationAttribute;
 import com.intellij.openapi.actionSystem.AnAction;
