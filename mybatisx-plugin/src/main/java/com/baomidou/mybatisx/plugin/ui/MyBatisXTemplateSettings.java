@@ -1,8 +1,9 @@
-package com.baomidou.mybatisx.feat.generate.setting;
+package com.baomidou.mybatisx.plugin.ui;
 
 import com.baomidou.mybatisx.feat.generate.dto.TemplateContext;
 import com.baomidou.mybatisx.feat.generate.dto.TemplateSettingDTO;
-import com.intellij.debugger.JavaDebuggerBundle;
+import com.baomidou.mybatisx.feat.generate.setting.TemplatesSettings;
+import com.baomidou.mybatisx.util.IntellijSDK;
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.ui.AnActionButton;
 import com.intellij.ui.AnActionButtonRunnable;
@@ -49,6 +50,7 @@ public class MyBatisXTemplateSettings {
 
         // Go to leaf
         if (node.getChildCount() > 0) {
+            @SuppressWarnings("unchecked")
             Enumeration<TreeNode> children = (Enumeration<TreeNode>) node.children();
 
             while (children.hasMoreElements()) {
@@ -91,19 +93,19 @@ public class MyBatisXTemplateSettings {
         gridConstraints.setFill(GridConstraints.FILL_VERTICAL | GridConstraints.ALIGN_LEFT);
         gridConstraints.setHSizePolicy(GridConstraints.SIZEPOLICY_FIXED);
         rootPanel.add(ToolbarDecorator.createDecorator(configTree).setAddAction(new AnActionButtonRunnable() {
-                            @Override
-                            public void run(AnActionButton anActionButton) {
+                    @Override
+                    public void run(AnActionButton anActionButton) {
 
-                            }
-                        }).setRemoveAction(new AnActionButtonRunnable() {
-                            @Override
-                            public void run(AnActionButton anActionButton) {
+                    }
+                }).setRemoveAction(new AnActionButtonRunnable() {
+                    @Override
+                    public void run(AnActionButton anActionButton) {
 
-                            }
-                        }).addExtraAction(new CopyAction())
-                        .setPreferredSize(new Dimension(220, -1))
-                        .createPanel(),
-                gridConstraints);
+                    }
+                }).addExtraAction(new CopyAction())
+                .setPreferredSize(new Dimension(220, -1))
+                .createPanel(),
+            gridConstraints);
 
     }
 
@@ -156,9 +158,9 @@ public class MyBatisXTemplateSettings {
 
     private static class CopyAction extends AnActionButton {
         CopyAction() {
-            super(JavaDebuggerBundle.message("button.copy"),
-                    JavaDebuggerBundle.message("user.renderers.configurable.button.description.copy"),
-                    PlatformIcons.COPY_ICON);
+            super(IntellijSDK.message("button.copy"),
+                IntellijSDK.message("user.renderers.configurable.button.description.copy"),
+                PlatformIcons.COPY_ICON);
         }
 
         @Override

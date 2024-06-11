@@ -6,6 +6,8 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import javax.swing.*;
+import javax.swing.border.EtchedBorder;
+import javax.swing.border.TitledBorder;
 import javax.swing.table.TableColumn;
 import javax.swing.tree.DefaultMutableTreeNode;
 import java.awt.*;
@@ -22,6 +24,12 @@ public final class SwingUtils {
         return newBoxLayoutPanel(false);
     }
 
+    /**
+     * 创建一个BoxLayout布局的Panel
+     *
+     * @param vertical
+     * @return
+     */
     public static JPanel newBoxLayoutPanel(boolean vertical) {
         JPanel jPanel = new JPanel();
         BoxLayout layout = new BoxLayout(jPanel, vertical ? BoxLayout.Y_AXIS : BoxLayout.X_AXIS);
@@ -165,5 +173,19 @@ public final class SwingUtils {
         // Dimension min, Dimension pref, Dimension max
         return new Box.Filler(new Dimension(0, 0), new Dimension(0, h),
             new Dimension(0, Short.MAX_VALUE));
+    }
+
+    /**
+     * 添加带标题的分组边框
+     *
+     * @param component 组件
+     * @param title     标题文本
+     */
+    public static void addTitleBorder(JComponent component, String title) {
+        component.setBorder(new TitledBorder(new EtchedBorder(), title));
+    }
+
+    public static Component createStrut(int width) {
+        return Box.createHorizontalStrut(width);
     }
 }

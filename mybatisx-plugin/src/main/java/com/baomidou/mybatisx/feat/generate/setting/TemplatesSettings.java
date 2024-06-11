@@ -1,11 +1,11 @@
 package com.baomidou.mybatisx.feat.generate.setting;
 
+import com.baomidou.mybatisx.feat.bean.TemplateInfo;
 import com.baomidou.mybatisx.feat.generate.dto.TemplateContext;
 import com.baomidou.mybatisx.feat.generate.dto.TemplateSettingDTO;
-import com.baomidou.mybatisx.feat.bean.TemplateInfo;
+import com.baomidou.mybatisx.util.IntellijSDK;
 import com.baomidou.mybatisx.util.MyBatisXPlugin;
 import com.intellij.openapi.components.PersistentStateComponent;
-import com.intellij.openapi.components.ServiceManager;
 import com.intellij.openapi.components.State;
 import com.intellij.openapi.components.Storage;
 import com.intellij.openapi.project.Project;
@@ -33,7 +33,7 @@ public final class TemplatesSettings implements PersistentStateComponent<Templat
 
     @NotNull
     public static TemplatesSettings getInstance(@NotNull Project project) {
-        TemplatesSettings service = ServiceManager.getService(project, TemplatesSettings.class);
+        TemplatesSettings service = IntellijSDK.getService(TemplatesSettings.class, project);
         // 配置的默认值
         if (service.templateConfigs == null) {
             // 默认配置

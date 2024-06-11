@@ -1,8 +1,10 @@
 package com.baomidou.mybatisx.feat.generate.setting;
 
 import com.baomidou.mybatisx.feat.generate.dto.TemplateSettingDTO;
-import com.baomidou.mybatisx.util.XmlUtils;
 import com.baomidou.mybatisx.util.IOUtils;
+import com.baomidou.mybatisx.util.IntellijSDK;
+import com.baomidou.mybatisx.util.PluginUtils;
+import com.baomidou.mybatisx.util.XmlUtils;
 import com.intellij.ide.extensionResources.ExtensionsRootType;
 import com.intellij.ide.scratch.ScratchFileService;
 import com.intellij.openapi.extensions.PluginId;
@@ -14,6 +16,7 @@ import org.slf4j.LoggerFactory;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -29,12 +32,11 @@ public class DefaultSettingsConfig {
 
     private static File getPath() throws IOException {
         @NotNull
-        PluginId id = Objects.requireNonNull(PluginId.findId("com.baomidou.plugin.idea.mybatisx"));
+        PluginId id = IntellijSDK.findPluginId(PluginUtils.PLUGIN_ID);
         final ScratchFileService scratchFileService = ScratchFileService.getInstance();
         final ExtensionsRootType extensionsRootType = ExtensionsRootType.getInstance();
         final String path = scratchFileService.getRootPath(extensionsRootType) + "/" + id.getIdString() +
-                            (StringUtil.isEmpty(DefaultSettingsConfig.TEMPLATES) ? "" : "/"
-                                                                                        + DefaultSettingsConfig.TEMPLATES);
+                            (StringUtil.isEmpty(DefaultSettingsConfig.TEMPLATES) ? "" : "/" + DefaultSettingsConfig.TEMPLATES);
         final File file = new File(path);
         if (!file.exists()) {
             extensionsRootType.extractBundledResources(id, "");
@@ -55,7 +57,6 @@ public class DefaultSettingsConfig {
                 return Collections.emptyMap();
             }
             for (File file : Objects.requireNonNull(resourceDirectory.listFiles())) {
-
                 String configName = file.getName();
                 // 模板配置的元数据信息
                 File metaFile = new File(file, ".meta.xml");
@@ -87,7 +88,7 @@ public class DefaultSettingsConfig {
                     }
                     TemplateSettingDTO templateSettingDTO = defaultTemplateSettingMapping.get(configFileName);
                     try (FileInputStream fileInputStream = new FileInputStream(templateFile)) {
-                        String templateText = IOUtils.toString(fileInputStream, "UTF-8");
+                        String templateText = IOUtils.toString(fileInputStream, StandardCharsets.UTF_8);
                         TemplateSettingDTO templateSetting = copyFromTemplateText(templateSettingDTO, templateText);
                         templateSettingDTOS.add(templateSetting);
                     }

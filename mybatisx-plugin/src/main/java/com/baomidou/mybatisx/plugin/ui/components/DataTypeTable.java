@@ -13,7 +13,7 @@ public class DataTypeTable extends JBTableView<DataTypeItem> {
         ColumnInfo<DataTypeItem, String> col1 = new ColumnInfo<>("类型分组") {
             @Override
             public @Nullable String valueOf(DataTypeItem item) {
-                return item.getGroup();
+                return item.getGroupId();
             }
         };
 

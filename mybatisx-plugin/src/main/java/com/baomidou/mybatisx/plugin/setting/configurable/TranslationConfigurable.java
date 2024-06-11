@@ -1,12 +1,12 @@
 package com.baomidou.mybatisx.plugin.setting.configurable;
 
-import com.baomidou.mybatisx.plugin.setting.JavaBean2DDLSetting;
-import com.baomidou.mybatisx.plugin.ui.TranslationSettingPanel;
+import com.baomidou.mybatisx.feat.bean.TranslationAppComboBoxItem;
 import com.baomidou.mybatisx.feat.ddl.TranslationAppEnum;
 import com.baomidou.mybatisx.model.ComboBoxItem;
-import com.baomidou.mybatisx.feat.bean.TranslationAppComboBoxItem;
-import com.intellij.openapi.options.ConfigurationException;
+import com.baomidou.mybatisx.plugin.setting.JavaBean2DDLSetting;
+import com.baomidou.mybatisx.plugin.ui.TranslationSettingPanel;
 import com.baomidou.mybatisx.util.StringUtils;
+import com.intellij.openapi.options.ConfigurationException;
 import org.jetbrains.annotations.Nullable;
 
 import javax.swing.*;
@@ -15,6 +15,7 @@ public final class TranslationConfigurable extends SearchableConfigurableBase {
 
     TranslationSettingPanel settingPanel;
     private final JavaBean2DDLSetting javaBean2DDLSetting;
+
     public TranslationConfigurable() {
         settingPanel = new TranslationSettingPanel();
         this.javaBean2DDLSetting = JavaBean2DDLSetting.getInstance();
@@ -22,7 +23,7 @@ public final class TranslationConfigurable extends SearchableConfigurableBase {
 
     @Override
     public @Nullable JComponent createComponent() {
-        return settingPanel.getMainPanel();
+        return settingPanel.getRootPanel();
     }
 
 
@@ -67,9 +68,9 @@ public final class TranslationConfigurable extends SearchableConfigurableBase {
     public void reset() {
         JavaBean2DDLSetting.MySettingProperties myProperties = javaBean2DDLSetting.myProperties;
         settingPanel.getAutoTranslationRadio().setSelected((myProperties.getAutoTranslationRadio()));
-        settingPanel.getTranslationAppComboBox().setSelectedItem(new TranslationAppComboBoxItem(
-            TranslationAppEnum.findByValue(myProperties.getTranslationAppComboBox())
-        ));
+
+        TranslationAppEnum appEnum = TranslationAppEnum.findByValue(myProperties.getTranslationAppComboBox());
+        settingPanel.getTranslationAppComboBox().setSelectedItem(new TranslationAppComboBoxItem(appEnum.getName(), appEnum.getValue()));
         settingPanel.getAppIdText().setText(myProperties.getAppIdText());
         settingPanel.getSecretText().setText(myProperties.getSecretText());
         settingPanel.getSecretId().setText(myProperties.getSecretId());

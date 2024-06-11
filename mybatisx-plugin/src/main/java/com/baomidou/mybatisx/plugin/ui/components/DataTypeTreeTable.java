@@ -118,7 +118,7 @@ public class DataTypeTreeTable extends JBTreeTableView<DataTypeItem> {
         }
 
         public void addChildDataType(String identifier) {
-            add(new DataTypeNode(new DataTypeItem(this.item.getGroup(), identifier)));
+            add(new DataTypeNode(new DataTypeItem(this.item.getGroupId(), identifier)));
         }
     }
 }

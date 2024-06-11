@@ -1,5 +1,7 @@
-package com.baomidou.mybatisx.feat.generate.setting;
+package com.baomidou.mybatisx.plugin.setting.configurable;
 
+import com.baomidou.mybatisx.feat.generate.setting.TemplatesSettings;
+import com.baomidou.mybatisx.plugin.ui.MyBatisXTemplateSettings;
 import com.intellij.openapi.options.ConfigurableBase;
 import com.intellij.openapi.options.ConfigurableUi;
 import com.intellij.openapi.options.ConfigurationException;
@@ -11,7 +13,7 @@ import javax.swing.*;
 /**
  * Mybatisx 模板生成代码配置
  */
-public class MybatisTemplateGeneratorConfigurable extends ConfigurableBase<MybatisTemplateGeneratorConfigurable.MyConfigurableUi, MyBatisXTemplateSettings> {
+public class MyBatisTemplateGeneratorConfigurable extends ConfigurableBase<MyBatisTemplateGeneratorConfigurable.MyConfigurableUi, MyBatisXTemplateSettings> {
 
     /**
      * 项目
@@ -19,7 +21,7 @@ public class MybatisTemplateGeneratorConfigurable extends ConfigurableBase<Mybat
     private final Project project;
     private final MyBatisXTemplateSettings mybatisXTemplateSettings = new MyBatisXTemplateSettings();
 
-    protected MybatisTemplateGeneratorConfigurable(Project project) {
+    protected MyBatisTemplateGeneratorConfigurable(Project project) {
         super("mybatisx.template", "MybatisX Template", "mybatisx.template");
         this.project = project;
     }

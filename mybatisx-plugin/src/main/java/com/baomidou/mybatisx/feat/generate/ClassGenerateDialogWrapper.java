@@ -23,6 +23,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * 生成器配置
+ */
 @Slf4j
 public class ClassGenerateDialogWrapper extends DialogWrapper {
 
@@ -60,13 +63,11 @@ public class ClassGenerateDialogWrapper extends DialogWrapper {
         // 默认禁用 上一个设置
         previousAction.setEnabled(false);
         // 初始化容器列表
-        List<JPanel> list = new ArrayList<>();
-        list.add(tablePreviewUI.getRootPanel());
-        list.add(codeGenerateUI.getRootPanel());
-        containerPanelList = list;
+        containerPanelList = new ArrayList<>();
+        containerPanelList.add(tablePreviewUI.getRootPanel());
+        containerPanelList.add(codeGenerateUI.getRootPanel());
         // 默认切换到第一页
         switchPage(0);
-
         super.init();
     }
 
@@ -101,6 +102,7 @@ public class ClassGenerateDialogWrapper extends DialogWrapper {
     }
 
     private void switchPage(int newPage) {
+        System.out.println("Switch " + newPage);
         rootPanel.removeAll();
         JPanel comp = containerPanelList.get(newPage);
         rootPanel.add(comp);

@@ -1,24 +1,27 @@
 package com.baomidou.mybatisx.plugin.ui;
 
 import com.baomidou.mybatisx.feat.bean.SqlTypeComboBoxItem;
+import com.baomidou.mybatisx.feat.bean.TranslationAppComboBoxItem;
 import com.baomidou.mybatisx.feat.ddl.SqlTypeEnum;
 import com.baomidou.mybatisx.model.ComboBoxItem;
 import com.baomidou.mybatisx.plugin.setting.JavaBean2DDLSetting;
 import com.baomidou.mybatisx.service.BaseTypeItemListener;
 import com.baomidou.mybatisx.util.IntellijSDK;
+import com.intellij.ui.SimpleListCellRenderer;
 import lombok.Getter;
 import lombok.Setter;
+import org.jetbrains.annotations.NotNull;
 
 import javax.swing.*;
 import java.util.Objects;
 
+/**
+ * Java类型映射为sql数据类型
+ */
 @Getter
 @Setter
-public class DataTypeSettingPanel {
-    private JTabbedPane rootPanel;
-
-    // 类型映射
-    private JPanel mapPanel;
+public class SqlDataTypeMappingPanel {
+    private JPanel rootPanel;
     private JComboBox<ComboBoxItem> intMapComboBox;
     private JTextField intDefaultText;
     private JPanel commonlyUsedMapPanel;
@@ -47,7 +50,7 @@ public class DataTypeSettingPanel {
 
     private JavaBean2DDLSetting.MySettingProperties properties;
 
-    public DataTypeSettingPanel() {
+    public SqlDataTypeMappingPanel() {
         this.properties = IntellijSDK.getService(JavaBean2DDLSetting.class).getProperties();
         /*自定义映射下拉框初始化*/
         commonlyUsedMapComboBoxInit();
@@ -113,6 +116,13 @@ public class DataTypeSettingPanel {
     }
 
     private void addSqlItem(JComboBox<ComboBoxItem> comboBox) {
+        comboBox.setRenderer(new SimpleListCellRenderer<>() {
+            @Override
+            public void customize(@NotNull JList<? extends ComboBoxItem> list, ComboBoxItem value, int index, boolean selected, boolean hasFocus) {
+                // 设置选项显示的文本
+                setText(value.getName());
+            }
+        });
         for (SqlTypeEnum typeEnum : SqlTypeEnum.values()) {
             comboBox.addItem(new SqlTypeComboBoxItem(typeEnum));
         }

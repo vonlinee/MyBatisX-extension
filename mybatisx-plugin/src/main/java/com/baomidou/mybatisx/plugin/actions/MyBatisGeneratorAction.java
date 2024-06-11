@@ -125,7 +125,7 @@ public final class MyBatisGeneratorAction extends AnAction {
             }
             for (PsiElement psiElement : psiElements) {
                 if (checkAssignableFrom(psiElement)) {
-                    visible = false;
+                    visible = true;
                     break;
                 }
             }

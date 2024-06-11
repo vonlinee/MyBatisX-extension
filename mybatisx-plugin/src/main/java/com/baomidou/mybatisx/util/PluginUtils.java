@@ -11,6 +11,7 @@ import org.jetbrains.annotations.NotNull;
 public class PluginUtils {
 
     public static final String PLUGIN_NAME = "MyBatisX";
+    public static final String PLUGIN_ID = "com.baomidou.plugin.idea.mybatisx";
     private static volatile Boolean existsDatabaseTools = null;
 
     private PluginUtils() {
@@ -51,6 +52,7 @@ public class PluginUtils {
 
     /**
      * 获取当前的 Project 实例
+     *
      * @return Project
      */
     public static Project getCurrentProject() {

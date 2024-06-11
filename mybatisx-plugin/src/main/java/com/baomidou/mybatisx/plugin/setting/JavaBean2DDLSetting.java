@@ -10,16 +10,16 @@ import lombok.Setter;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import static com.baomidou.mybatisx.feat.ddl.SqlTypeAndJavaTypeEnum.BIGINT;
-import static com.baomidou.mybatisx.feat.ddl.SqlTypeAndJavaTypeEnum.DATE;
-import static com.baomidou.mybatisx.feat.ddl.SqlTypeAndJavaTypeEnum.DATETIME;
-import static com.baomidou.mybatisx.feat.ddl.SqlTypeAndJavaTypeEnum.DECIMAL;
-import static com.baomidou.mybatisx.feat.ddl.SqlTypeAndJavaTypeEnum.DOUBLE;
-import static com.baomidou.mybatisx.feat.ddl.SqlTypeAndJavaTypeEnum.INT;
-import static com.baomidou.mybatisx.feat.ddl.SqlTypeAndJavaTypeEnum.TIME;
-import static com.baomidou.mybatisx.feat.ddl.SqlTypeAndJavaTypeEnum.TIMESTAMP;
-import static com.baomidou.mybatisx.feat.ddl.SqlTypeAndJavaTypeEnum.TINYINT;
-import static com.baomidou.mybatisx.feat.ddl.SqlTypeAndJavaTypeEnum.VARCHAR;
+import static com.baomidou.mybatisx.feat.ddl.SqlAndJavaTypeEnum.BIGINT;
+import static com.baomidou.mybatisx.feat.ddl.SqlAndJavaTypeEnum.DATE;
+import static com.baomidou.mybatisx.feat.ddl.SqlAndJavaTypeEnum.DATETIME;
+import static com.baomidou.mybatisx.feat.ddl.SqlAndJavaTypeEnum.DECIMAL;
+import static com.baomidou.mybatisx.feat.ddl.SqlAndJavaTypeEnum.DOUBLE;
+import static com.baomidou.mybatisx.feat.ddl.SqlAndJavaTypeEnum.INT;
+import static com.baomidou.mybatisx.feat.ddl.SqlAndJavaTypeEnum.TIME;
+import static com.baomidou.mybatisx.feat.ddl.SqlAndJavaTypeEnum.TIMESTAMP;
+import static com.baomidou.mybatisx.feat.ddl.SqlAndJavaTypeEnum.TINYINT;
+import static com.baomidou.mybatisx.feat.ddl.SqlAndJavaTypeEnum.VARCHAR;
 
 @State(
     name = "JavaBean2DDL.Settings",

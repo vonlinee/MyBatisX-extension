@@ -1,8 +1,10 @@
 package com.baomidou.mybatisx.model;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
-@Data
+@Setter
+@Getter
 public class ComboBoxItem {
 
     protected String name;

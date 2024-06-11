@@ -81,9 +81,7 @@ public class MyBatisXConfigurable implements SearchableConfigurable {
         mybatisXSettings.setUpdateGenerator(mybatisSettingForm.updatePatternTextField.getText());
         mybatisXSettings.setSelectGenerator(mybatisSettingForm.selectPatternTextField.getText());
 
-        MapperIcon mapperIcon = mybatisSettingForm.defaultRadioButton.isSelected() ?
-                MapperIcon.DEFAULT :
-                MapperIcon.BIRD;
+        MapperIcon mapperIcon = mybatisSettingForm.defaultRadioButton.isSelected() ? MapperIcon.DEFAULT : MapperIcon.BIRD;
         mybatisXSettings.setMapperIcon(mapperIcon.name());
     }
 

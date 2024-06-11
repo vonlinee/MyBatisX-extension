@@ -10,13 +10,10 @@ import javax.swing.*;
 @Getter
 @Setter
 public class MyBatisGeneratorSettingPanel {
-    private JPanel mainPanel;
+    private JPanel rootPanel;
     private JTextField tableText;
     private JTextField idText;
     private JTextField commendText;
-    private JPanel auxiliaryPanel;
-    private JPanel annotationPanel;
-    private JPanel docPanel;
     private JTextField tablePropertyText;
 
     private JavaBean2DDLSetting.MySettingProperties properties;

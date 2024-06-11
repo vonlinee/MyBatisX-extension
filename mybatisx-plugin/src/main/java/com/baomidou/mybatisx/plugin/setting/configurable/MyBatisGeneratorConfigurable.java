@@ -23,7 +23,7 @@ public class MyBatisGeneratorConfigurable extends SearchableConfigurableBase {
 
     @Override
     public @Nullable JComponent createComponent() {
-        return panel.getMainPanel();
+        return panel.getRootPanel();
     }
 
     @Override

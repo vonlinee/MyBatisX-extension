@@ -8,7 +8,7 @@ import java.util.Collections;
 import java.util.List;
 
 @Getter
-public enum SqlTypeAndJavaTypeEnum {
+public enum SqlAndJavaTypeEnum {
 
     BIGINT("BIGINT", Arrays.asList("long", "Long"), "(20)"),
     INT("INT", Arrays.asList("int", "Integer"), "(11)"),
@@ -27,17 +27,17 @@ public enum SqlTypeAndJavaTypeEnum {
 
     private final String defaultLength;
 
-    SqlTypeAndJavaTypeEnum(String sqlType, List<String> javaType, String defaultLength) {
+    SqlAndJavaTypeEnum(String sqlType, List<String> javaType, String defaultLength) {
         this.sqlType = sqlType;
         this.javaType = javaType;
         this.defaultLength = defaultLength;
     }
 
-    public static SqlTypeAndJavaTypeEnum findByJavaType(String javaType) {
+    public static SqlAndJavaTypeEnum findByJavaType(String javaType) {
         if (StringUtils.isBlank(javaType)) {
             throw new RuntimeException();
         }
-        for (SqlTypeAndJavaTypeEnum sqlTypeEnum : values()) {
+        for (SqlAndJavaTypeEnum sqlTypeEnum : values()) {
             if (sqlTypeEnum.getJavaType().contains(javaType)) {
                 return sqlTypeEnum;
             }

@@ -1,6 +1,6 @@
 package com.baomidou.mybatisx.feat.bean;
 
-import com.baomidou.mybatisx.feat.ddl.SqlTypeAndJavaTypeEnum;
+import com.baomidou.mybatisx.feat.ddl.SqlAndJavaTypeEnum;
 import com.baomidou.mybatisx.util.SqlTypeMapUtil;
 import com.google.common.base.CaseFormat;
 import lombok.Getter;
@@ -53,11 +53,11 @@ public class Field {
      * 获取mysql类型
      */
     public String getSqlTypeForMapping() {
-        return SqlTypeAndJavaTypeEnum.findByJavaType(this.type).getSqlType();
+        return SqlAndJavaTypeEnum.findByJavaType(this.type).getSqlType();
     }
 
     public String getSqlTypeSize() {
-        return SqlTypeAndJavaTypeEnum.findByJavaType(this.type).getDefaultLength();
+        return SqlAndJavaTypeEnum.findByJavaType(this.type).getDefaultLength();
     }
 
     public Field() {
