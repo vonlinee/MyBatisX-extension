@@ -24,18 +24,18 @@ Idea 2020.2
 
 在Mapper XML里，光标移动到select, update, delete, insert上，alt + enter调出调试窗口
 
-![image-20240415202850064](assets\image-20240415202850064.png)
+![image-20240415202850064](https://raw.githubusercontent.com/vonlinee/MyBatisX-extension\blob/dev/assets\image-20240415202850064.png)
 
 通过填入参数得到可执行的SQL语句
 
-![image-20240415203251134](assets\image-20240415203251134.png)
+![image-20240415203251134](https://raw.githubusercontent.com/vonlinee/MyBatisX-extension\blob/dev/assets\image-20240415203251134.png)
 
 
 2. 一些常用的Mapper XML中用到的模板片段
 
 生成 <if test=""></if>，生成<foreach>等标签
 
-![GIF 2024-4-15 20-23-03](assets\GIF 2024-4-15 20-23-03.gif)
+![GIF 2024-4-15 20-23-03](https://raw.githubusercontent.com/vonlinee/MyBatisX-extension\assets\GIF 2024-4-15 20-23-03.gif)
 
 
 # 致谢
