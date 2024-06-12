@@ -1,6 +1,8 @@
 package com.baomidou.mybatisx.plugin.ui.components;
 
 import com.baomidou.mybatisx.plugin.component.TreeView;
+import com.intellij.ui.AnActionButton;
+import com.intellij.ui.AnActionButtonRunnable;
 
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
@@ -17,7 +19,19 @@ public final class DataTypeTreeView extends TreeView<DataTypeItem> {
 
     public DataTypeTreeView() {
         super();
-        setModel(new DefaultTreeModel(getRoot()));
+        setModel(new Model(getRoot()));
+
+        setShowsRootHandles(false);
+    }
+
+    @Override
+    protected AnActionButtonRunnable getAddAction() {
+        return new AnActionButtonRunnable() {
+            @Override
+            public void run(AnActionButton anActionButton) {
+                addChild(new DefaultMutableTreeNode("java"));
+            }
+        };
     }
 
     public void addDataType(String groupId, String identifier) {
@@ -63,6 +77,13 @@ public final class DataTypeTreeView extends TreeView<DataTypeItem> {
                 DefaultMutableTreeNode newTypeNode = new DefaultMutableTreeNode(identifier);
                 node.add(newTypeNode);
             }
+        }
+    }
+
+    static class Model extends DefaultTreeModel {
+
+        public Model(TreeNode root) {
+            super(root);
         }
     }
 }

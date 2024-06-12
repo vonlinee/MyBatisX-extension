@@ -26,7 +26,6 @@ public final class TranslationConfigurable extends SearchableConfigurableBase {
         return settingPanel.getRootPanel();
     }
 
-
     @Override
     public boolean isModified() {
         JavaBean2DDLSetting.MySettingProperties myProperties = javaBean2DDLSetting.myProperties;

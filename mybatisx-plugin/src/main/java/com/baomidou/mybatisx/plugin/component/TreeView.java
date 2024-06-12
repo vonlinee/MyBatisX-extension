@@ -7,7 +7,7 @@ import org.jetbrains.annotations.NotNull;
 
 import javax.swing.*;
 import javax.swing.tree.DefaultMutableTreeNode;
-import javax.swing.tree.TreeNode;
+import javax.swing.tree.MutableTreeNode;
 import java.awt.*;
 
 public class TreeView<T> extends Tree {
@@ -15,7 +15,7 @@ public class TreeView<T> extends Tree {
     DefaultMutableTreeNode root;
 
     public TreeView() {
-        root = new DefaultMutableTreeNode("");
+        root = new DefaultMutableTreeNode("11111111");
         setOpaque(true);
     }
 
@@ -38,7 +38,7 @@ public class TreeView<T> extends Tree {
         }
     }
 
-    public final TreeNode getRoot() {
+    public final MutableTreeNode getRoot() {
         return root;
     }
 

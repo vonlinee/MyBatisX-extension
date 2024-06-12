@@ -39,12 +39,15 @@ public abstract class CreatorSupport extends AnAction {
         // TODO: insert action logic here
         // 获取当前编辑的文件, 通过PsiFile可获得PsiClass, PsiField等对象
         PsiFile psiFile = e.getData(LangDataKeys.PSI_FILE);
+        if (psiFile == null) {
+            return;
+        }
         PsiJavaFile javaFile = (PsiJavaFile) psiFile;
         //获得当前编辑的类，如果定义了多个类就直接返回多个DDL语句 当然几乎不可能
         PsiClass[] psiClasses = javaFile.getClasses();
         StringBuilder result = new StringBuilder();
         for (PsiClass pClass : psiClasses) {
-            //分析并获得DDL语句
+            // 分析并获得DDL语句
             String ddl = createDDL(e, pClass);
             result.append(ddl);
         }
