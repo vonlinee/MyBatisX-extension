@@ -154,7 +154,7 @@ public class CodeGenerateUI {
         gridConstraints.setFill(GridConstraints.FILL_HORIZONTAL);
 
         templateExtraPanel.add(ToolbarDecorator.createDecorator(tableView)
-            .setToolbarPosition(ActionToolbarPosition.LEFT)
+            .setToolbarPosition(ActionToolbarPosition.TOP) // 工具栏的位置，相对表格的位置
             .addExtraAction(new AnActionButton("Refresh Template", PlatformIcons.SYNCHRONIZE_ICON) {
                 @Override
                 public void actionPerformed(@NotNull AnActionEvent e) {
@@ -169,14 +169,13 @@ public class CodeGenerateUI {
                     initSelectedModuleTable(templateSettingDTOS, domainInfo.getModulePath());
                     refresh = true;
                 }
-
             })
             .disableAddAction()
             .disableUpDownActions()
-            .setPreferredSize(new Dimension(840, 150))
+            //.setPreferredSize(new Dimension(840, 150))
             .createPanel(), gridConstraints);
 
-        initRaidoLayout(templateSettingMap);
+        initRadioLayout(templateSettingMap);
 
         final ItemListener itemListener = new ItemListener() {
 
@@ -253,7 +252,7 @@ public class CodeGenerateUI {
 
     }
 
-    private void initRaidoLayout(Map<String, List<TemplateSettingDTO>> templateSettingMap) {
+    private void initRadioLayout(Map<String, List<TemplateSettingDTO>> templateSettingMap) {
         if (initRadioTemplates) {
             return;
         }
@@ -316,10 +315,14 @@ public class CodeGenerateUI {
     /**
      * 初始化默认的模块选择表格
      *
-     * @param list
-     * @param modulePath
+     * @param list       模板列表
+     * @param modulePath 模块路径
      */
     private void initSelectedModuleTable(List<TemplateSettingDTO> list, String modulePath) {
+        if (list == null) {
+            return;
+        }
+
         // 扩展面板的列表内容
         // 移除所有行, 重新刷新
         for (int rowCount = model.getRowCount(); rowCount > 0; rowCount--) {
@@ -346,7 +349,7 @@ public class CodeGenerateUI {
     /**
      * 选择注解类型
      *
-     * @param annotationType
+     * @param annotationType 注解类型
      */
     private void selectAnnotation(String annotationType) {
         if (annotationType == null) {

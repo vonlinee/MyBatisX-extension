@@ -4,11 +4,11 @@ import com.baomidou.mybatisx.feat.generate.dto.TemplateSettingDTO;
 import com.baomidou.mybatisx.util.IOUtils;
 import com.baomidou.mybatisx.util.IntellijSDK;
 import com.baomidou.mybatisx.util.PluginUtils;
+import com.baomidou.mybatisx.util.StringUtils;
 import com.baomidou.mybatisx.util.XmlUtils;
 import com.intellij.ide.extensionResources.ExtensionsRootType;
 import com.intellij.ide.scratch.ScratchFileService;
 import com.intellij.openapi.extensions.PluginId;
-import com.intellij.openapi.util.text.StringUtil;
 import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -36,7 +36,7 @@ public class DefaultSettingsConfig {
         final ScratchFileService scratchFileService = ScratchFileService.getInstance();
         final ExtensionsRootType extensionsRootType = ExtensionsRootType.getInstance();
         final String path = scratchFileService.getRootPath(extensionsRootType) + "/" + id.getIdString() +
-                            (StringUtil.isEmpty(DefaultSettingsConfig.TEMPLATES) ? "" : "/" + DefaultSettingsConfig.TEMPLATES);
+                            (StringUtils.isEmpty(DefaultSettingsConfig.TEMPLATES) ? "" : "/" + DefaultSettingsConfig.TEMPLATES);
         final File file = new File(path);
         if (!file.exists()) {
             extensionsRootType.extractBundledResources(id, "");
@@ -47,7 +47,7 @@ public class DefaultSettingsConfig {
     /**
      * 读取 mybatisx/templates 下面的所有默认模板
      *
-     * @return
+     * @return 模板设置
      */
     public static Map<String, List<TemplateSettingDTO>> defaultSettings() {
         Map<String, List<TemplateSettingDTO>> map = new HashMap<>();
@@ -64,8 +64,7 @@ public class DefaultSettingsConfig {
                     logger.error("元数据文件不存在,无法加载配置.  元数据信息: {}", metaFile.getAbsolutePath());
                     continue;
                 }
-                Map<String, TemplateSettingDTO> defaultTemplateSettingMapping = null;
-
+                Map<String, TemplateSettingDTO> defaultTemplateSettingMapping;
                 try (FileInputStream metaInputStream = new FileInputStream(metaFile)) {
                     defaultTemplateSettingMapping = XmlUtils.loadTemplatesByFile(metaInputStream);
                 } catch (IOException e) {

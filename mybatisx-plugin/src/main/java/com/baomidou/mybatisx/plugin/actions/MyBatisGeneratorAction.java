@@ -84,11 +84,11 @@ public final class MyBatisGeneratorAction extends AnAction {
         try {
             // 保存配置, 更新最后一次存储的配置
             TemplatesSettings templatesSettings = TemplatesSettings.getInstance(project);
-            TemplateContext templateConfigs = templatesSettings.getTemplateConfigs();
+            TemplateContext templateConfigs = templatesSettings.getTemplateContext();
             templateConfigs.setGenerateConfig(generateConfig);
             templateConfigs.setTemplateName(generateConfig.getTemplatesName());
             templateConfigs.setModuleName(generateConfig.getModuleName());
-            templatesSettings.setTemplateConfigs(templateConfigs);
+            templatesSettings.setTemplateContext(templateConfigs);
 
             Map<String, DbTable> tableMapping = psiElements.stream()
                     .collect(Collectors.toMap(DasObject::getName, a -> a, (a, b) -> a));

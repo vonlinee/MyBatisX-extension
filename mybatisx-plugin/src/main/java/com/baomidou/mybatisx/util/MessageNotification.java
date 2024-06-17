@@ -7,6 +7,10 @@ import com.intellij.notification.NotificationType;
 import com.intellij.notification.Notifications;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.ui.Messages;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
+import javax.swing.*;
 
 /**
  * 消息通知
@@ -43,5 +47,11 @@ public abstract class MessageNotification {
 
     public static void showErrorDialog(String message) {
         Messages.showErrorDialog(message, "ERROR");
+    }
+
+    public static void showMessageDialog(String message,
+                                         @NotNull String title,
+                                         @Nullable Icon icon) {
+        Messages.showMessageDialog(message, title, icon);
     }
 }

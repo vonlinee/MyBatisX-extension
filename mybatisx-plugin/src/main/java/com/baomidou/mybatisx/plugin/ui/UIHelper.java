@@ -4,7 +4,9 @@ import com.intellij.util.ui.GridBag;
 
 import java.awt.*;
 
-public class UIHelper {
+public final class UIHelper {
+
+    private UIHelper() {}
 
     public static GridBag newGridBagLayoutConstraints() {
         return new GridBag()

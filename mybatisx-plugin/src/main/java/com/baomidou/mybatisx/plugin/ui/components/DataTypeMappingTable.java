@@ -23,9 +23,11 @@ import java.util.Map;
 import java.util.Set;
 
 /**
- * 类型映射表
+ * 数据类型映射表
  */
 public class DataTypeMappingTable extends JBTableView<DataTypeMappingItem> {
+
+    ListTableModel<DataTypeMappingItem> model;
 
     public DataTypeMappingTable() {
 
@@ -61,7 +63,7 @@ public class DataTypeMappingTable extends JBTableView<DataTypeMappingItem> {
             }
         };
 
-        ListTableModel<DataTypeMappingItem> model = new ListTableModel<>(col1, col2, col3, col4);
+        model = new ListTableModel<>(col1, col2, col3, col4);
 
         this.setModelAndUpdateColumns(model);
     }
@@ -119,7 +121,7 @@ public class DataTypeMappingTable extends JBTableView<DataTypeMappingItem> {
         return new AnActionButtonRunnable() {
             @Override
             public void run(AnActionButton anActionButton) {
-
+                model.addRow(new DataTypeMappingItem());
             }
         };
     }

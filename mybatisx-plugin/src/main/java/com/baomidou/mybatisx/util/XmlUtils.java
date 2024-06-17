@@ -34,7 +34,6 @@ public class XmlUtils {
         }
     }
 
-
     static class SAXDemoHandel extends DefaultHandler {
         Stack<Object> objects = new Stack<>();
         Map<String, TemplateSettingDTO> map = new HashMap<>();
@@ -81,8 +80,6 @@ public class XmlUtils {
                 TemplateSettingDTO templateSettingDTO = (TemplateSettingDTO) objects.pop();
                 map.put(templateSettingDTO.getConfigFile(), templateSettingDTO);
             }
-
         }
-
     }
 }

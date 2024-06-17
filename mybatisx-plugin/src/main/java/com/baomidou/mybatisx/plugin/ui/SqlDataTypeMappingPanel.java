@@ -1,7 +1,6 @@
 package com.baomidou.mybatisx.plugin.ui;
 
 import com.baomidou.mybatisx.feat.bean.SqlTypeComboBoxItem;
-import com.baomidou.mybatisx.feat.bean.TranslationAppComboBoxItem;
 import com.baomidou.mybatisx.feat.ddl.SqlTypeEnum;
 import com.baomidou.mybatisx.model.ComboBoxItem;
 import com.baomidou.mybatisx.plugin.setting.JavaBean2DDLSetting;
@@ -24,7 +23,6 @@ public class SqlDataTypeMappingPanel {
     private JPanel rootPanel;
     private JComboBox<ComboBoxItem> intMapComboBox;
     private JTextField intDefaultText;
-    private JPanel commonlyUsedMapPanel;
     private JComboBox<ComboBoxItem> longMapComboBox;
     private JTextField longDefaultText;
     private JComboBox<ComboBoxItem> stringMapComboBox;
@@ -45,8 +43,6 @@ public class SqlDataTypeMappingPanel {
     private JTextField localTimeDefaultText;
     private JComboBox<ComboBoxItem> localDateTimeMapComboBox;
     private JTextField localDateTimeDefaultText;
-    private JPanel mapControlPanel;
-    private JRadioButton showNoInMapFieldRadio;
 
     private JavaBean2DDLSetting.MySettingProperties properties;
 
@@ -56,11 +52,6 @@ public class SqlDataTypeMappingPanel {
         commonlyUsedMapComboBoxInit();
         /*sql类型默认长度文本框初始化*/
         initSqlLengthText();
-        initSowNoInMapFieldRadio();
-    }
-
-    private void initSowNoInMapFieldRadio() {
-        showNoInMapFieldRadio.setSelected(properties.getShowNoInMapFieldRadio());
     }
 
     private void initSqlLengthText() {

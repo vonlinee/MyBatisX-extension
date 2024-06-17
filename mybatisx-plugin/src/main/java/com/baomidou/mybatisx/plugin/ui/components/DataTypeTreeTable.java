@@ -2,12 +2,12 @@ package com.baomidou.mybatisx.plugin.ui.components;
 
 import com.baomidou.mybatisx.plugin.component.JBTreeTableView;
 import com.intellij.ui.treeStructure.treetable.ListTreeTableModelOnColumns;
-import com.intellij.ui.treeStructure.treetable.TreeColumnInfo;
+import com.intellij.ui.treeStructure.treetable.TreeTableModel;
 import com.intellij.util.ui.ColumnInfo;
-import lombok.Getter;
-import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.TableCellRenderer;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.TreeNode;
 import javax.swing.tree.TreePath;
@@ -19,6 +19,8 @@ import java.util.Date;
 
 /**
  * 数据类型表
+ *
+ * @see com.intellij.openapi.vfs.encoding.FileEncodingConfigurable
  */
 public class DataTypeTreeTable extends JBTreeTableView<DataTypeItem> {
 
@@ -28,7 +30,7 @@ public class DataTypeTreeTable extends JBTreeTableView<DataTypeItem> {
         super(new Model(DataTypeNode.ROOT));
         this.root = (DataTypeNode) treeTableModel.getRoot();
 
-        DataTypeNode javaGroup = new DataTypeNode(new DataTypeItem("java"));
+        DataTypeNode javaGroup = new DataTypeNode("Java");
 
         javaGroup.addChildDataType(int.class.getName());
         javaGroup.addChildDataType(short.class.getName());
@@ -60,12 +62,13 @@ public class DataTypeTreeTable extends JBTreeTableView<DataTypeItem> {
 
         getTree().setShowsRootHandles(true);
 
-        getTree().expandPath(new TreePath(root));
         // 不展示根节点
         getTree().setRootVisible(false);
 
         setShowGrid(true);
         setShowColumns(true);
+
+        getTree().expandPath(new TreePath(root));
     }
 
     /**
@@ -74,51 +77,46 @@ public class DataTypeTreeTable extends JBTreeTableView<DataTypeItem> {
     static class Model extends ListTreeTableModelOnColumns {
 
         public Model(TreeNode root) {
-            super(root, new ColumnInfo[]{
-                    new TreeColumnInfo("")
-                    , new ColumnInfo<DefaultMutableTreeNode, String>("类型名称") {
-                    @Override
-                    public @Nullable String valueOf(DefaultMutableTreeNode node) {
-                        if (node instanceof DataTypeNode) {
-                            return ((DataTypeNode) node).getItem().getIdentifier();
-                        }
-                        return null;
+            super(root, new ColumnInfo[]{new ColumnInfo<DefaultMutableTreeNode, String>("A") {
+
+                @Nullable
+                @Override
+                public String valueOf(DefaultMutableTreeNode node) {
+                    return null;
+                }
+
+                /**
+                 * @see com.intellij.ui.table.JBTable#getCellRenderer(int, int)
+                 * @param o 节点
+                 * @param renderer 单元格渲染器
+                 * @return
+                 */
+                @Override
+                public TableCellRenderer getCustomizedRenderer(DefaultMutableTreeNode o, TableCellRenderer renderer) {
+                    return super.getCustomizedRenderer(o, renderer);
+                }
+
+                @Override
+                public Class<?> getColumnClass() {
+                    return TreeTableModel.class;
+                }
+            }, new ColumnInfo<DefaultMutableTreeNode, String>("类型名称") {
+                @Override
+                public @Nullable String valueOf(DefaultMutableTreeNode node) {
+                    if (node instanceof DataTypeNode) {
+                        return ((DataTypeNode) node).getItem().getIdentifier();
                     }
-                }}
-            );
+                    return null;
+                }
+            }});
         }
 
         @Override
         public Object getValueAt(Object value, int column) {
-            System.out.println(value.getClass());
             if (column == 0) {
                 return null;
             }
             return super.getValueAt(value, column);
-        }
-    }
-
-    @Getter
-    static class DataTypeNode extends DefaultMutableTreeNode {
-
-        public static final DataTypeNode ROOT = new DataTypeNode(new DataTypeItem("Root"));
-
-        @NotNull DataTypeItem item;
-
-        DataTypeNode(@NotNull DataTypeItem item) {
-            super(item);
-            this.item = item;
-        }
-
-        public void addDataType(DataTypeNode dataTypeNode) {
-            if (dataTypeNode == null) {
-                return;
-            }
-            add(dataTypeNode);
-        }
-
-        public void addChildDataType(String identifier) {
-            add(new DataTypeNode(new DataTypeItem(this.item.getGroupId(), identifier)));
         }
     }
 }

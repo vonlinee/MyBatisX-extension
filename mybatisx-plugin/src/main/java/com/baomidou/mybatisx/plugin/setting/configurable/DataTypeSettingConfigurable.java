@@ -23,7 +23,7 @@ public final class DataTypeSettingConfigurable implements SearchableConfigurable
     @NotNull
     @Override
     public String getId() {
-        return "top.breezes.javabean2ddl.java-bean-2-ddl-idea-plugin";
+        return getClass().getName();
     }
 
     @Nls(capitalization = Nls.Capitalization.Title)
@@ -45,11 +45,6 @@ public final class DataTypeSettingConfigurable implements SearchableConfigurable
 
     @Override
     public void apply() throws ConfigurationException {
-
-    }
-
-    @Override
-    public void reset() {
 
     }
 }

@@ -3,7 +3,8 @@ package com.baomidou.mybatisx.boot;
 import com.baomidou.mybatisx.feat.bean.TemplateInfo;
 import com.baomidou.mybatisx.plugin.setting.GlobalTemplateSettings;
 import com.baomidou.mybatisx.plugin.setting.MyBatisXSettings;
-import com.baomidou.mybatisx.plugin.ui.components.DataTypeMappingTableModel;
+import com.baomidou.mybatisx.plugin.ui.components.DataTypeMappingItem;
+import com.baomidou.mybatisx.plugin.ui.components.DataTypeMappingTable;
 import com.baomidou.mybatisx.util.FileUtils;
 import com.baomidou.mybatisx.util.IOUtils;
 import com.baomidou.mybatisx.util.PluginUtils;
@@ -91,10 +92,10 @@ public class PluginInitializer implements AppLifecycleListener {
         URL resource = getClass().getClassLoader().getResource("typemapping.ini");
         if (resource != null) {
             try {
-                List<Object[]> rows = DataTypeMappingTableModel.readRows(resource.toURI());
+                List<DataTypeMappingItem> items = DataTypeMappingTable.readRows(resource.toURI());
                 Map<String, Map<String, String>> dataTypeMappingMap = new HashMap<>();
-                for (Object[] row : rows) {
-                    String sectionName = String.valueOf(row[0]);
+                for (DataTypeMappingItem row : items) {
+                    String sectionName = String.valueOf(row.getGroup());
                     Map<String, String> map;
                     if (dataTypeMappingMap.containsKey(sectionName)) {
                         map = dataTypeMappingMap.get(sectionName);
@@ -102,7 +103,7 @@ public class PluginInitializer implements AppLifecycleListener {
                         map = new HashMap<>();
                         dataTypeMappingMap.put(sectionName, map);
                     }
-                    map.put(String.valueOf(row[1]), String.valueOf(row[2]));
+                    map.put(String.valueOf(row.getAnotherGroup()), row.getAnotherIdentifier());
                 }
                 settings.getState().dataTypeMapping.putAll(dataTypeMappingMap);
             } catch (URISyntaxException e) {

@@ -1,5 +1,8 @@
 package com.baomidou.mybatisx.plugin.ui;
 
+import com.baomidou.mybatisx.plugin.extensions.ClickableListener;
+import com.baomidou.mybatisx.plugin.extensions.ExecutableListener;
+import com.baomidou.mybatisx.plugin.extensions.ListSelectionListener;
 import com.intellij.openapi.application.Application;
 import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.editor.Editor;

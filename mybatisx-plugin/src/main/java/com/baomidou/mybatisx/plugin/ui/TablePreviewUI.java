@@ -27,7 +27,6 @@ import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.table.TableCellEditor;
 import java.awt.*;
-import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -36,8 +35,8 @@ import java.util.List;
 
 public class TablePreviewUI {
     ListTableModel<TableUIInfo> model = new ListTableModel<>(
-        new MybaitsxTableColumnInfo("tableName", false),
-        new MybaitsxTableColumnInfo("className", true)
+        new MyBatisXTableColumnInfo("tableName", false),
+        new MyBatisXTableColumnInfo("className", true)
     );
     List<NamingStrategy> classNameStrategies = new ArrayList<NamingStrategy>() {
         {
@@ -95,7 +94,6 @@ public class TablePreviewUI {
         // 放一个自己名字的引用
         domainInfo.setFileName("${domain.fileName}");
         return domainInfo;
-
     }
 
     public JPanel getRootPanel() {
@@ -156,19 +154,16 @@ public class TablePreviewUI {
             }
         };
 
-        final ItemListener classNameChangeListener = new ItemListener() {
-            @Override
-            public void itemStateChanged(ItemEvent e) {
-                final Object source = e.getItem();
-                if (!(source instanceof JRadioButton)) {
-                    return;
-                }
-                JRadioButton radioButton = (JRadioButton) source;
-                if (!radioButton.isSelected()) {
-                    return;
-                }
-                refreshTableNames(findClassNameStrategy(), dbTables, ignorePrefix, ignoreSuffix);
+        final ItemListener classNameChangeListener = e -> {
+            final Object source = e.getItem();
+            if (!(source instanceof JRadioButton)) {
+                return;
             }
+            JRadioButton radioButton = (JRadioButton) source;
+            if (!radioButton.isSelected()) {
+                return;
+            }
+            refreshTableNames(findClassNameStrategy(), dbTables, ignorePrefix, ignoreSuffix);
         };
         camelRadioButton.addItemListener(classNameChangeListener);
         sameAsTablenameRadioButton.addItemListener(classNameChangeListener);
@@ -276,11 +271,11 @@ public class TablePreviewUI {
         return name;
     }
 
-    private static class MybaitsxTableColumnInfo extends ColumnInfo<TableUIInfo, String> {
+    private static class MyBatisXTableColumnInfo extends ColumnInfo<TableUIInfo, String> {
 
         private boolean editable;
 
-        public MybaitsxTableColumnInfo(String name, boolean editable) {
+        public MyBatisXTableColumnInfo(String name, boolean editable) {
             super(name);
             this.editable = editable;
         }

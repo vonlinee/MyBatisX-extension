@@ -4,7 +4,7 @@ import com.baomidou.mybatisx.dom.model.IdDomElement;
 import com.baomidou.mybatisx.dom.model.Mapper;
 import com.baomidou.mybatisx.service.EditorService;
 import com.baomidou.mybatisx.service.JavaService;
-import com.baomidou.mybatisx.plugin.ui.ListSelectionListener;
+import com.baomidou.mybatisx.plugin.extensions.ListSelectionListener;
 import com.baomidou.mybatisx.plugin.ui.UiComponentFacade;
 import com.baomidou.mybatisx.util.CollectionUtils;
 import com.baomidou.mybatisx.util.JavaUtils;

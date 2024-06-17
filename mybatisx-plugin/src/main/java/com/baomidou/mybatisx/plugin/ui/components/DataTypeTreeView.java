@@ -1,6 +1,7 @@
 package com.baomidou.mybatisx.plugin.ui.components;
 
 import com.baomidou.mybatisx.plugin.component.TreeView;
+import com.baomidou.mybatisx.plugin.ui.dialog.DataTypeAddDialog;
 import com.intellij.ui.AnActionButton;
 import com.intellij.ui.AnActionButtonRunnable;
 
@@ -8,6 +9,11 @@ import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.MutableTreeNode;
 import javax.swing.tree.TreeNode;
+import java.math.BigDecimal;
+import java.math.BigInteger;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.Objects;
 
 /**
@@ -17,11 +23,15 @@ import java.util.Objects;
  */
 public final class DataTypeTreeView extends TreeView<DataTypeItem> {
 
+    DataTypeAddDialog dialog;
+
     public DataTypeTreeView() {
         super();
         setModel(new Model(getRoot()));
+        // 设置不显示根节点需要在setModel调用之后调用才行
+        setRootVisible(false);
 
-        setShowsRootHandles(false);
+        initDefaultDataTypes();
     }
 
     @Override
@@ -29,9 +39,45 @@ public final class DataTypeTreeView extends TreeView<DataTypeItem> {
         return new AnActionButtonRunnable() {
             @Override
             public void run(AnActionButton anActionButton) {
-                addChild(new DefaultMutableTreeNode("java"));
+                if (dialog == null || dialog.isDisposed()) {
+                    dialog = new DataTypeAddDialog(DataTypeTreeView.this);
+                }
+                dialog.show();
             }
         };
+    }
+
+    private void initDefaultDataTypes() {
+        DefaultMutableTreeNode root = (DefaultMutableTreeNode) getRoot();
+
+        DataTypeNode javaGroup = new DataTypeNode("Java");
+        javaGroup.addChildDataType(int.class.getName());
+        javaGroup.addChildDataType(short.class.getName());
+        javaGroup.addChildDataType(byte.class.getName());
+        javaGroup.addChildDataType(char.class.getName());
+        javaGroup.addChildDataType(long.class.getName());
+        javaGroup.addChildDataType(double.class.getName());
+        javaGroup.addChildDataType(float.class.getName());
+        javaGroup.addChildDataType(boolean.class.getName());
+
+        javaGroup.addChildDataType(Integer.class.getName());
+        javaGroup.addChildDataType(Short.class.getName());
+        javaGroup.addChildDataType(Byte.class.getName());
+        javaGroup.addChildDataType(Character.class.getName());
+        javaGroup.addChildDataType(Long.class.getName());
+        javaGroup.addChildDataType(Double.class.getName());
+        javaGroup.addChildDataType(Float.class.getName());
+        javaGroup.addChildDataType(Boolean.class.getName());
+
+        javaGroup.addChildDataType(BigDecimal.class.getName());
+        javaGroup.addChildDataType(String.class.getName());
+        javaGroup.addChildDataType(CharSequence.class.getName());
+        javaGroup.addChildDataType(BigInteger.class.getName());
+        javaGroup.addChildDataType(Date.class.getName());
+        javaGroup.addChildDataType(LocalDateTime.class.getName());
+        javaGroup.addChildDataType(LocalDate.class.getName());
+
+        root.add(javaGroup);
     }
 
     public void addDataType(String groupId, String identifier) {

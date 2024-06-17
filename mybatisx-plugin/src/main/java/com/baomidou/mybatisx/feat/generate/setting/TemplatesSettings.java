@@ -27,7 +27,7 @@ public final class TemplatesSettings implements PersistentStateComponent<Templat
 
     @Setter
     @Getter
-    private TemplateContext templateConfigs;
+    private TemplateContext templateContext;
 
     private final State state = new State();
 
@@ -35,12 +35,12 @@ public final class TemplatesSettings implements PersistentStateComponent<Templat
     public static TemplatesSettings getInstance(@NotNull Project project) {
         TemplatesSettings service = IntellijSDK.getService(TemplatesSettings.class, project);
         // 配置的默认值
-        if (service.templateConfigs == null) {
+        if (service.getTemplateContext() == null) {
             // 默认配置
             TemplateContext templateContext = new TemplateContext();
             templateContext.setTemplateSettingMap(new HashMap<>());
             templateContext.setProjectPath(project.getBasePath());
-            service.templateConfigs = templateContext;
+            service.setTemplateContext(templateContext);
         }
         return service;
     }
@@ -62,7 +62,7 @@ public final class TemplatesSettings implements PersistentStateComponent<Templat
      */
     public Map<String, List<TemplateSettingDTO>> getTemplateSettingMap() {
         final Map<String, List<TemplateSettingDTO>> templateSettingMap = new HashMap<>();
-        final Map<String, List<TemplateSettingDTO>> settingMap = templateConfigs.getTemplateSettingMap();
+        final Map<String, List<TemplateSettingDTO>> settingMap = templateContext.getTemplateSettingMap();
         Map<String, List<TemplateSettingDTO>> setTemplateSettingMap = DefaultSettingsConfig.defaultSettings();
         templateSettingMap.putAll(settingMap);
         templateSettingMap.putAll(setTemplateSettingMap);

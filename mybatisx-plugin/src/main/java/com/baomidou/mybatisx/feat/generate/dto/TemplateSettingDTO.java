@@ -1,7 +1,12 @@
 package com.baomidou.mybatisx.feat.generate.dto;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import java.io.Serializable;
 
+@Setter
+@Getter
 public class TemplateSettingDTO implements Serializable {
     /**
      * 配置名称
@@ -35,68 +40,4 @@ public class TemplateSettingDTO implements Serializable {
      * 相对模块的资源文件路径
      */
     private String basePath;
-
-    public String getConfigName() {
-        return configName;
-    }
-
-    public void setConfigName(String configName) {
-        this.configName = configName;
-    }
-
-    public String getConfigFile() {
-        return configFile;
-    }
-
-    public void setConfigFile(String configFile) {
-        this.configFile = configFile;
-    }
-
-    public String getFileName() {
-        return fileName;
-    }
-
-    public void setFileName(String fileName) {
-        this.fileName = fileName;
-    }
-
-    public String getSuffix() {
-        return suffix;
-    }
-
-    public void setSuffix(String suffix) {
-        this.suffix = suffix;
-    }
-
-    public String getPackageName() {
-        return packageName;
-    }
-
-    public void setPackageName(String packageName) {
-        this.packageName = packageName;
-    }
-
-    public String getEncoding() {
-        return encoding;
-    }
-
-    public void setEncoding(String encoding) {
-        this.encoding = encoding;
-    }
-
-    public String getTemplateText() {
-        return templateText;
-    }
-
-    public void setTemplateText(String templateText) {
-        this.templateText = templateText;
-    }
-
-    public String getBasePath() {
-        return basePath;
-    }
-
-    public void setBasePath(String basePath) {
-        this.basePath = basePath;
-    }
 }

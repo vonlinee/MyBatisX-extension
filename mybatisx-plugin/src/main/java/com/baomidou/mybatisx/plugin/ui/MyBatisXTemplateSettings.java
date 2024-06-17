@@ -68,7 +68,7 @@ public class MyBatisXTemplateSettings {
     }
 
     public void loadBySettings(TemplatesSettings templatesSettings) {
-        TemplateContext templateContext = templatesSettings.getTemplateConfigs();
+        TemplateContext templateContext = templatesSettings.getTemplateContext();
         // 第一个版本只有一个不可更改的配置, 这里直接取默认就可以了
         Map<String, List<TemplateSettingDTO>> templateSettingMap = templatesSettings.getTemplateSettingMap();
         configTree.addTreeSelectionListener(new MyTreeSelectionListener(templateSettingMap));
@@ -121,7 +121,7 @@ public class MyBatisXTemplateSettings {
         if (key == null) {
             return;
         }
-        TemplateContext templateConfigs = templatesSettings.getTemplateConfigs();
+        TemplateContext templateConfigs = templatesSettings.getTemplateContext();
         Map<String, List<TemplateSettingDTO>> templateSettingMap = templateConfigs.getTemplateSettingMap();
         String DEFAULT_TEMPLATE_NAME = "mybatis-plus3";
         List<TemplateSettingDTO> templateSettingDTOS = templateSettingMap.get(DEFAULT_TEMPLATE_NAME);
@@ -149,7 +149,7 @@ public class MyBatisXTemplateSettings {
 
         templateSettingMap.put(DEFAULT_TEMPLATE_NAME, replacedSettings);
 
-        templatesSettings.setTemplateConfigs(templateConfigs);
+        templatesSettings.setTemplateContext(templateConfigs);
     }
 
     public boolean isModified() {

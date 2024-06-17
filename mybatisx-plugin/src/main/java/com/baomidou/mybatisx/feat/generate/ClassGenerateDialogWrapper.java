@@ -8,6 +8,7 @@ import com.baomidou.mybatisx.feat.generate.dto.TemplateSettingDTO;
 import com.baomidou.mybatisx.feat.generate.setting.TemplatesSettings;
 import com.baomidou.mybatisx.plugin.ui.CodeGenerateUI;
 import com.baomidou.mybatisx.plugin.ui.TablePreviewUI;
+import com.baomidou.mybatisx.util.MessageNotification;
 import com.baomidou.mybatisx.util.StringUtils;
 import com.intellij.database.psi.DbTable;
 import com.intellij.openapi.project.Project;
@@ -24,7 +25,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * 生成器配置
+ * 代码生成器配置
  */
 @Slf4j
 public class ClassGenerateDialogWrapper extends DialogWrapper {
@@ -37,7 +38,7 @@ public class ClassGenerateDialogWrapper extends DialogWrapper {
 
     private List<JPanel> containerPanelList;
 
-    private Action previousAction;
+    private final Action previousAction;
 
     private int page = 0;
     private int lastPage = 1;
@@ -80,7 +81,7 @@ public class ClassGenerateDialogWrapper extends DialogWrapper {
         // 替换第二个panel的占位符
         DomainInfo domainInfo = tablePreviewUI.buildDomainInfo();
         if (StringUtils.isEmpty(domainInfo.getModulePath())) {
-            Messages.showMessageDialog("Please select module to generate files", "Generate File", Messages.getWarningIcon());
+            MessageNotification.showMessageDialog("Please select module to generate files", "Generate File", Messages.getWarningIcon());
             return;
         }
         page = page + 1;
@@ -88,7 +89,7 @@ public class ClassGenerateDialogWrapper extends DialogWrapper {
         previousAction.setEnabled(true);
 
         TemplatesSettings templatesSettings = TemplatesSettings.getInstance(project);
-        final TemplateContext templateContext = templatesSettings.getTemplateConfigs();
+        final TemplateContext templateContext = templatesSettings.getTemplateContext();
         final Map<String, List<TemplateSettingDTO>> settingMap = templatesSettings.getTemplateSettingMap();
         if (settingMap.isEmpty()) {
             throw new RuntimeException("无法获取模板");
@@ -102,7 +103,6 @@ public class ClassGenerateDialogWrapper extends DialogWrapper {
     }
 
     private void switchPage(int newPage) {
-        System.out.println("Switch " + newPage);
         rootPanel.removeAll();
         JPanel comp = containerPanelList.get(newPage);
         rootPanel.add(comp);
@@ -125,7 +125,7 @@ public class ClassGenerateDialogWrapper extends DialogWrapper {
         this.project = project;
         this.tableElements = tableElements;
         TemplatesSettings templatesSettings = TemplatesSettings.getInstance(project);
-        TemplateContext templateContext = templatesSettings.getTemplateConfigs();
+        TemplateContext templateContext = templatesSettings.getTemplateContext();
         generateConfig = templateContext.getGenerateConfig();
         if (generateConfig == null) {
             generateConfig = new DefaultGenerateConfig(templateContext);

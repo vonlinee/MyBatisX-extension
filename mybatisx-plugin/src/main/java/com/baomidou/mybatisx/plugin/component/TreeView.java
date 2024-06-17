@@ -15,8 +15,7 @@ public class TreeView<T> extends Tree {
     DefaultMutableTreeNode root;
 
     public TreeView() {
-        root = new DefaultMutableTreeNode("11111111");
-        setOpaque(true);
+        root = new DefaultMutableTreeNode("");
     }
 
     public final void addChild(DefaultMutableTreeNode newChild) {

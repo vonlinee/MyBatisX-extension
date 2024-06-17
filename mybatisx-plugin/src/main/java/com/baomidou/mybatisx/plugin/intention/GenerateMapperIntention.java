@@ -2,8 +2,8 @@ package com.baomidou.mybatisx.plugin.intention;
 
 import com.baomidou.mybatisx.service.EditorService;
 import com.baomidou.mybatisx.plugin.extensions.MyBatisFileTemplateDescriptorFactory;
-import com.baomidou.mybatisx.plugin.ui.ClickableListener;
-import com.baomidou.mybatisx.plugin.ui.ListSelectionListener;
+import com.baomidou.mybatisx.plugin.extensions.ClickableListener;
+import com.baomidou.mybatisx.plugin.extensions.ListSelectionListener;
 import com.baomidou.mybatisx.plugin.ui.UiComponentFacade;
 import com.baomidou.mybatisx.util.CollectionUtils;
 import com.baomidou.mybatisx.util.MapperUtils;

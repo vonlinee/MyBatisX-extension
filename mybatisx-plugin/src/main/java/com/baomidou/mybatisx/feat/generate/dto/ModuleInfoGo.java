@@ -31,7 +31,6 @@ public class ModuleInfoGo implements Serializable {
      * 模块路径
      */
     private String modulePath;
-
     /**
      * 相对包路径
      */

@@ -1,4 +1,4 @@
-package com.baomidou.mybatisx.plugin.ui;
+package com.baomidou.mybatisx.plugin.extensions;
 
 /**
  * The interface List selection listener.

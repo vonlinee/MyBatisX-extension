@@ -10,7 +10,7 @@ import java.util.stream.Collectors;
 /**
  * The type String utils.
  */
-public class StringUtils {
+public abstract class StringUtils {
 
     public static final String EMPTY = "";
     public static final String[] EMPTY_STRING_ARRAY = new String[0];
@@ -29,6 +29,21 @@ public class StringUtils {
         }
     }
 
+    /**
+     * 将第几个字符转换为大写
+     *
+     * @param str 字符串
+     * @param i   第几个字符
+     * @return 转换结果
+     */
+    public static String toUpperCase(String str, int i) {
+        if (str == null) {
+            return null;
+        } else if (i >= 0 && i < str.length()) {
+            return str.substring(0, 1).toUpperCase() + str.substring(1);
+        }
+        return str;
+    }
 
     /**
      * Lower case first char string.
