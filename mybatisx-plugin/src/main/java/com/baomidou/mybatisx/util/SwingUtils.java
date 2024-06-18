@@ -20,8 +20,12 @@ public final class SwingUtils {
     private SwingUtils() {
     }
 
-    public static JPanel newBoxLayoutPanel() {
+    public static JPanel newHBoxLayoutPanel() {
         return newBoxLayoutPanel(false);
+    }
+
+    public static JPanel newVBoxLayoutPanel() {
+        return newBoxLayoutPanel(true);
     }
 
     /**

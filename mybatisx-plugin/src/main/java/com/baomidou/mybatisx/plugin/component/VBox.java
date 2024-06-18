@@ -1,7 +1,12 @@
 package com.baomidou.mybatisx.plugin.component;
 
-import com.intellij.ui.components.panels.VerticalBox;
+import org.jdesktop.swingx.VerticalLayout;
 
-public class VBox extends VerticalBox {
+import javax.swing.*;
 
+public class VBox extends JPanel {
+
+    public VBox() {
+        super(new VerticalLayout());
+    }
 }

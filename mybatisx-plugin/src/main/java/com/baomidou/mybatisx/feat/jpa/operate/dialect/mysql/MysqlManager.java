@@ -1,12 +1,12 @@
 package com.baomidou.mybatisx.feat.jpa.operate.dialect.mysql;
 
-import com.baomidou.mybatisx.feat.jpa.operate.DeleteOperator;
-import com.baomidou.mybatisx.feat.jpa.operate.UpdateOperator;
-import com.baomidou.mybatisx.feat.jpa.operate.dialect.BaseDialectManager;
 import com.baomidou.mybatisx.feat.jpa.component.TxField;
 import com.baomidou.mybatisx.feat.jpa.operate.CountOperator;
+import com.baomidou.mybatisx.feat.jpa.operate.DeleteOperator;
 import com.baomidou.mybatisx.feat.jpa.operate.InsertOperator;
 import com.baomidou.mybatisx.feat.jpa.operate.SelectOperator;
+import com.baomidou.mybatisx.feat.jpa.operate.UpdateOperator;
+import com.baomidou.mybatisx.feat.jpa.operate.dialect.BaseDialectManager;
 import com.intellij.psi.PsiClass;
 
 import java.util.List;

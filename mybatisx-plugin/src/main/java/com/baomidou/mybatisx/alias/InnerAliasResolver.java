@@ -9,10 +9,7 @@ import org.jetbrains.annotations.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 
 /**
  * The type Inner alias resolver.
@@ -85,10 +82,6 @@ public class InnerAliasResolver extends AliasResolver {
                 }
             }
         }
-        if (innerAliasDescriptions == null) {
-            return Collections.emptySet();
-        }
-        return innerAliasDescriptions;
+        return Objects.requireNonNullElse(innerAliasDescriptions, Collections.emptySet());
     }
-
 }

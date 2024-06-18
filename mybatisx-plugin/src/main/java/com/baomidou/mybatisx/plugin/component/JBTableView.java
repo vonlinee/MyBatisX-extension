@@ -3,6 +3,7 @@ package com.baomidou.mybatisx.plugin.component;
 import com.intellij.ui.AnActionButtonRunnable;
 import com.intellij.ui.ToolbarDecorator;
 import com.intellij.ui.table.TableView;
+import com.intellij.util.ui.ColumnInfo;
 import com.intellij.util.ui.ListTableModel;
 import com.intellij.util.ui.TableViewModel;
 import org.jetbrains.annotations.NotNull;
@@ -15,6 +16,15 @@ import java.util.Collection;
  * 必须把JTable添加到JScrollPane控件中，否则默认不显示列标题
  */
 public abstract class JBTableView<T> extends TableView<T> {
+
+    public JBTableView() {
+        this(new ListTableModel<>(ColumnInfo.EMPTY_ARRAY));
+    }
+
+    public JBTableView(final ListTableModel<T> model) {
+        super(model);
+        setModelAndUpdateColumns(model);
+    }
 
     protected AnActionButtonRunnable getAddAction() {
         return null;

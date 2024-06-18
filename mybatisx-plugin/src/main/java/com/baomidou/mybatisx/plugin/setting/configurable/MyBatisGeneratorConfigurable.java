@@ -1,6 +1,6 @@
 package com.baomidou.mybatisx.plugin.setting.configurable;
 
-import com.baomidou.mybatisx.plugin.setting.JavaBean2DDLSetting;
+import com.baomidou.mybatisx.plugin.setting.OtherSetting;
 import com.baomidou.mybatisx.plugin.ui.MyBatisGeneratorSettingPanel;
 import com.baomidou.mybatisx.util.StringUtils;
 import com.intellij.openapi.options.ConfigurationException;
@@ -14,11 +14,11 @@ import javax.swing.*;
 public class MyBatisGeneratorConfigurable extends SearchableConfigurableBase {
 
     MyBatisGeneratorSettingPanel panel;
-    JavaBean2DDLSetting javaBean2DDLSetting;
+    OtherSetting otherSetting;
 
     public MyBatisGeneratorConfigurable() {
         panel = new MyBatisGeneratorSettingPanel();
-        this.javaBean2DDLSetting = JavaBean2DDLSetting.getInstance();
+        this.otherSetting = OtherSetting.getInstance();
     }
 
     @Override
@@ -28,7 +28,7 @@ public class MyBatisGeneratorConfigurable extends SearchableConfigurableBase {
 
     @Override
     public boolean isModified() {
-        JavaBean2DDLSetting.MySettingProperties myProperties = javaBean2DDLSetting.getProperties();
+        OtherSetting.State myProperties = otherSetting.getProperties();
         if (!StringUtils.equals(myProperties.getIdAnnotation(), panel.getIdText().getText())) {
             return true;
         }
@@ -43,7 +43,7 @@ public class MyBatisGeneratorConfigurable extends SearchableConfigurableBase {
 
     @Override
     public void apply() throws ConfigurationException {
-        JavaBean2DDLSetting.MySettingProperties myProperties = javaBean2DDLSetting.myProperties;
+        OtherSetting.State myProperties = otherSetting.myProperties;
 
         myProperties.setIdAnnotation(panel.getIdText().getText());
         myProperties.setTableAnnotation(panel.getTableText().getText());
@@ -53,7 +53,7 @@ public class MyBatisGeneratorConfigurable extends SearchableConfigurableBase {
 
     @Override
     public void reset() {
-        JavaBean2DDLSetting.MySettingProperties myProperties = javaBean2DDLSetting.myProperties;
+        OtherSetting.State myProperties = otherSetting.myProperties;
         panel.getIdText().setText(myProperties.getIdAnnotation());
         panel.getTableText().setText(myProperties.getTableAnnotation());
         panel.getTablePropertyText().setText(myProperties.getTableAnnotationProperty());

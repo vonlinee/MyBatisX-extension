@@ -22,37 +22,37 @@ import static com.baomidou.mybatisx.feat.ddl.SqlAndJavaTypeEnum.TINYINT;
 import static com.baomidou.mybatisx.feat.ddl.SqlAndJavaTypeEnum.VARCHAR;
 
 @State(
-    name = "JavaBean2DDL.Settings",
+    name = "Other",
     storages = {
         @Storage(value = "$APP_CONFIG$/javabean2ddl.settings.xml")
     }
 )
-public final class JavaBean2DDLSetting implements PersistentStateComponent<JavaBean2DDLSetting.MySettingProperties> {
+public final class OtherSetting implements PersistentStateComponent<OtherSetting.State> {
 
-    public MySettingProperties myProperties = new MySettingProperties();
+    public State myProperties = new State();
 
-    public static JavaBean2DDLSetting getInstance() {
-        return IntellijSDK.getService(JavaBean2DDLSetting.class);
+    public static OtherSetting getInstance() {
+        return IntellijSDK.getService(OtherSetting.class);
     }
 
     @Nullable
     @Override
-    public JavaBean2DDLSetting.MySettingProperties getState() {
+    public OtherSetting.State getState() {
         return myProperties;
     }
 
     @Override
-    public void loadState(@NotNull JavaBean2DDLSetting.MySettingProperties state) {
+    public void loadState(@NotNull OtherSetting.State state) {
         myProperties = state;
     }
 
-    public MySettingProperties getProperties() {
+    public State getProperties() {
         return myProperties;
     }
 
     @Setter
     @Getter
-    public static class MySettingProperties {
+    public static class State {
 
         public TranslationSettingVO translationSetting;
 

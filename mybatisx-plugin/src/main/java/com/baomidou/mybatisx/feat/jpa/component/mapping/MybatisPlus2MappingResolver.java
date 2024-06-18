@@ -1,9 +1,9 @@
 package com.baomidou.mybatisx.feat.jpa.component.mapping;
 
 
+import com.baomidou.mybatisx.util.StringUtils;
 import com.intellij.psi.PsiAnnotation;
 import com.intellij.psi.PsiField;
-import com.baomidou.mybatisx.util.StringUtils;
 import org.jetbrains.annotations.NotNull;
 
 /**
@@ -47,13 +47,13 @@ public class MybatisPlus2MappingResolver extends AbstractMybatisPlusMappingResol
         // 获取 mp 的 TableField 注解
         PsiAnnotation fieldAnnotation = field.getAnnotation(TABLE_FIELD);
         if (fieldAnnotation != null) {
-            columnName = getAttributeValue(fieldAnnotation, VALUE);
+            columnName = getAttributeValue(fieldAnnotation);
         }
         //  获取 mp 的 id 注解
         if (StringUtils.isBlank(columnName)) {
             PsiAnnotation idAnnotation = field.getAnnotation(TABLE_ID);
             if (idAnnotation != null) {
-                columnName = getAttributeValue(idAnnotation, VALUE);
+                columnName = getAttributeValue(idAnnotation);
             }
         }
         // 获取 jpa 注解

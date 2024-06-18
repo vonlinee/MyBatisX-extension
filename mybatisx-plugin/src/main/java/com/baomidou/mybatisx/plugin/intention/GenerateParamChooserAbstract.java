@@ -1,6 +1,6 @@
 package com.baomidou.mybatisx.plugin.intention;
 
-import com.baomidou.mybatisx.annotation.Annotation;
+import com.baomidou.mybatisx.feat.mybatis.Annotation;
 import com.baomidou.mybatisx.util.JavaUtils;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiMethod;

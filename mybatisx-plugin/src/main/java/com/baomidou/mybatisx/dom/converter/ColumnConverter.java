@@ -29,7 +29,7 @@ public class ColumnConverter extends ConverterAdaptor<XmlAttributeValue> impleme
 
     @NotNull
     @Override
-    public PsiReference[] createReferences(GenericDomValue<XmlAttributeValue> value, PsiElement element, ConvertContext context) {
+    public PsiReference @NotNull [] createReferences(GenericDomValue<XmlAttributeValue> value, PsiElement element, ConvertContext context) {
         String stringValue = value.getStringValue();
         if (stringValue == null) {
             return PsiReference.EMPTY_ARRAY;

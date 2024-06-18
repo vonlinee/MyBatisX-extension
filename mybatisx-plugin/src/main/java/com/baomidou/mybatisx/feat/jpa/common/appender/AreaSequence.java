@@ -1,8 +1,11 @@
 package com.baomidou.mybatisx.feat.jpa.common.appender;
 
+import lombok.Getter;
+
 /**
  * The enum Area sequence.
  */
+@Getter
 public enum AreaSequence {
     /**
      * Un known area sequence.
@@ -30,16 +33,6 @@ public enum AreaSequence {
     private final int sequence;
 
     AreaSequence(int sequence) {
-
         this.sequence = sequence;
-    }
-
-    /**
-     * Gets sequence.
-     *
-     * @return the sequence
-     */
-    public int getSequence() {
-        return this.sequence;
     }
 }

@@ -1,4 +1,4 @@
-package com.baomidou.mybatisx.annotation;
+package com.baomidou.mybatisx.feat.mybatis;
 
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Iterables;

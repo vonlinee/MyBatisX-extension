@@ -8,8 +8,8 @@ import com.baomidou.mybatisx.feat.jpa.common.appender.CustomAreaAppender;
 import com.baomidou.mybatisx.feat.jpa.common.command.AppendTypeCommand;
 import com.baomidou.mybatisx.feat.jpa.common.iftest.ConditionFieldWrapper;
 import com.baomidou.mybatisx.feat.jpa.component.TxParameter;
-import com.intellij.psi.PsiClass;
 import com.baomidou.mybatisx.util.StringUtils;
+import com.intellij.psi.PsiClass;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -45,10 +45,10 @@ public abstract class BaseAppenderFactory implements SyntaxAppenderFactory {
         return "\n" + rootSyntaxWrapper.getCollector().stream().map(syntaxAppenderWrapper -> {
             LinkedList<SyntaxAppenderWrapper> collector = syntaxAppenderWrapper.getCollector();
             return syntaxAppenderWrapper.getAppender().getTemplateText(tableName,
-                    entityClass,
-                    parameters,
-                    collector,
-                    conditionFieldWrapper
+                entityClass,
+                parameters,
+                collector,
+                conditionFieldWrapper
             );
         }).filter(StringUtils::isNotBlank).collect(Collectors.joining("\n"));
     }
@@ -164,10 +164,10 @@ public abstract class BaseAppenderFactory implements SyntaxAppenderFactory {
         final String factorySyntaxPrefix = getTipText();
         if (StringUtils.isNotBlank(factorySyntaxPrefix) && splitStr.startsWith(factorySyntaxPrefix)) {
             CustomAreaAppender customAreaAppender = CustomAreaAppender.createCustomAreaAppender(factorySyntaxPrefix,
-                    getTipText(),
-                    AreaSequence.AREA,
-                    getAreaSequence(),
-                    this);
+                getTipText(),
+                AreaSequence.AREA,
+                getAreaSequence(),
+                this);
             priorityQueue.add(customAreaAppender);
         }
     }

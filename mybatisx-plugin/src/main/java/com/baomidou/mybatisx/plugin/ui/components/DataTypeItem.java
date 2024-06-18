@@ -1,9 +1,12 @@
 package com.baomidou.mybatisx.plugin.ui.components;
 
-import lombok.Data;
+import com.baomidou.mybatisx.model.ComboBoxItem;
+import lombok.Getter;
+import lombok.Setter;
 
-@Data
-public class DataTypeItem {
+@Getter
+@Setter
+public class DataTypeItem implements ComboBoxItem {
 
     /**
      * 类型组唯一ID
@@ -15,9 +18,6 @@ public class DataTypeItem {
      */
     private String identifier;
 
-    public DataTypeItem() {
-    }
-
     public DataTypeItem(String groupId) {
         this.groupId = groupId;
     }
@@ -25,5 +25,15 @@ public class DataTypeItem {
     public DataTypeItem(String groupId, String identifier) {
         this.groupId = groupId;
         this.identifier = identifier;
+    }
+
+    @Override
+    public String getName() {
+        return groupId;
+    }
+
+    @Override
+    public Object getValue() {
+        return groupId;
     }
 }

@@ -2,9 +2,6 @@ package com.baomidou.mybatisx.boot;
 
 import com.baomidou.mybatisx.feat.bean.TemplateInfo;
 import com.baomidou.mybatisx.plugin.setting.GlobalTemplateSettings;
-import com.baomidou.mybatisx.plugin.setting.MyBatisXSettings;
-import com.baomidou.mybatisx.plugin.ui.components.DataTypeMappingItem;
-import com.baomidou.mybatisx.plugin.ui.components.DataTypeMappingTable;
 import com.baomidou.mybatisx.util.FileUtils;
 import com.baomidou.mybatisx.util.IOUtils;
 import com.baomidou.mybatisx.util.PluginUtils;
@@ -17,7 +14,6 @@ import org.slf4j.LoggerFactory;
 import java.io.File;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.net.URISyntaxException;
 import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -25,9 +21,7 @@ import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
 import java.util.Enumeration;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 
@@ -85,31 +79,6 @@ public class PluginInitializer implements AppLifecycleListener {
         }
 
         GlobalTemplateSettings.getInstance().setTemplates(templates);
-
-        MyBatisXSettings settings = MyBatisXSettings.getInstance();
-
-        // 数据类型映射信息
-        URL resource = getClass().getClassLoader().getResource("typemapping.ini");
-        if (resource != null) {
-            try {
-                List<DataTypeMappingItem> items = DataTypeMappingTable.readRows(resource.toURI());
-                Map<String, Map<String, String>> dataTypeMappingMap = new HashMap<>();
-                for (DataTypeMappingItem row : items) {
-                    String sectionName = String.valueOf(row.getGroup());
-                    Map<String, String> map;
-                    if (dataTypeMappingMap.containsKey(sectionName)) {
-                        map = dataTypeMappingMap.get(sectionName);
-                    } else {
-                        map = new HashMap<>();
-                        dataTypeMappingMap.put(sectionName, map);
-                    }
-                    map.put(String.valueOf(row.getAnotherGroup()), row.getAnotherIdentifier());
-                }
-                settings.getState().dataTypeMapping.putAll(dataTypeMappingMap);
-            } catch (URISyntaxException e) {
-                logger.error("failed to init data type mapping data", e);
-            }
-        }
     }
 
     @Nullable

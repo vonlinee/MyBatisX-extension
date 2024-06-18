@@ -1,12 +1,14 @@
 package com.baomidou.mybatisx.plugin.ui;
 
+import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.util.ui.GridBag;
 
 import java.awt.*;
 
 public final class UIHelper {
 
-    private UIHelper() {}
+    private UIHelper() {
+    }
 
     public static GridBag newGridBagLayoutConstraints() {
         return new GridBag()
@@ -14,5 +16,9 @@ public final class UIHelper {
             .setDefaultAnchor(1, GridBagConstraints.WEST)
             .setDefaultWeightX(1, 1)
             .setDefaultFill(GridBagConstraints.HORIZONTAL);
+    }
+
+    public static GridConstraints newGridLayoutConstraints() {
+        return new GridConstraints();
     }
 }

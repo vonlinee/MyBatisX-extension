@@ -11,6 +11,7 @@ import com.intellij.openapi.module.ModuleUtil;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.psi.PsiElement;
+import com.intellij.spring.boot.model.SpringBootConfigurationFileService;
 import com.intellij.spring.boot.model.SpringBootModelConfigFileContributor;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -80,17 +81,16 @@ public class SpringBootPackageResolver extends PackageAliasResolver {
             }
             return Collections.emptyList();
         }
+        SpringBootConfigurationFileService springBootService = SpringBootConfigurationFileService.getInstance();
         for (SpringBootModelConfigFileContributor extension : extensionList) {
             Collection<Module> modulesOfType = ModuleUtil.getModulesOfType(project, JavaModuleType.getModuleType());
             for (Module module : modulesOfType) {
-                List<VirtualFile> configurationFiles = extension.getConfigurationFiles(module, true);
+                List<VirtualFile> configurationFiles = springBootService.findConfigFiles(module, true);
                 for (VirtualFile configurationFile : configurationFiles) {
                     readAliasesPackage(pkgSet, configurationFile);
                 }
             }
         }
-
-
         return pkgSet;
     }
 

@@ -405,6 +405,10 @@ public abstract class StringUtils {
         return Objects.equals(s1, s2);
     }
 
+    public static boolean equals(String s1, Object s2) {
+        return Objects.equals(s1, s2);
+    }
+
     public static boolean isNotBlank(String str) {
         return !isBlank(str);
     }

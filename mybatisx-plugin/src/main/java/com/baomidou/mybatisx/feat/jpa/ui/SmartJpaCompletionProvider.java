@@ -1,14 +1,18 @@
 package com.baomidou.mybatisx.feat.jpa.ui;
 
-import com.baomidou.mybatisx.feat.jpa.operate.manager.AreaOperateManager;
-import com.baomidou.mybatisx.feat.jpa.operate.manager.AreaOperateManagerFactory;
 import com.baomidou.mybatisx.feat.jpa.common.SyntaxAppender;
 import com.baomidou.mybatisx.feat.jpa.component.TxField;
 import com.baomidou.mybatisx.feat.jpa.component.mapping.EntityMappingHolder;
 import com.baomidou.mybatisx.feat.jpa.component.mapping.EntityMappingResolverFactory;
 import com.baomidou.mybatisx.feat.jpa.db.DbmsAdaptor;
+import com.baomidou.mybatisx.feat.jpa.operate.manager.AreaOperateManager;
+import com.baomidou.mybatisx.feat.jpa.operate.manager.AreaOperateManagerFactory;
 import com.baomidou.mybatisx.util.Icons;
-import com.intellij.codeInsight.completion.*;
+import com.intellij.codeInsight.completion.CompletionParameters;
+import com.intellij.codeInsight.completion.CompletionResultSet;
+import com.intellij.codeInsight.completion.CompletionUtil;
+import com.intellij.codeInsight.completion.InsertHandler;
+import com.intellij.codeInsight.completion.JavaCompletionSorting;
 import com.intellij.codeInsight.lookup.LookupElement;
 import com.intellij.codeInsight.lookup.LookupElementBuilder;
 import com.intellij.openapi.editor.Editor;
@@ -88,11 +92,11 @@ public class SmartJpaCompletionProvider {
         }
         // 自动提示
         SmartJpaCompletionInsertHandler daoCompletionInsertHandler =
-                new SmartJpaCompletionInsertHandler(parameters.getEditor(), parameters.getEditor().getProject());
+            new SmartJpaCompletionInsertHandler(parameters.getEditor(), parameters.getEditor().getProject());
         // 通用字段
         List<LookupElement> lookupElementList = appendList.stream()
-                .map(x -> buildLookupElement(x, daoCompletionInsertHandler))
-                .collect(Collectors.toList());
+            .map(x -> buildLookupElement(x, daoCompletionInsertHandler))
+            .collect(Collectors.toList());
         // 添加到提示
         completionResultSet.addAllElements(lookupElementList);
 
@@ -128,16 +132,16 @@ public class SmartJpaCompletionProvider {
         try {
             SqlPsiFacade instance = SqlPsiFacade.getInstance(Objects.requireNonNull(editor.getProject()));
             SqlLanguageDialect dialectMapping = instance.getDialectMapping(mapperClass.getContainingFile()
-                    .getVirtualFile());
+                .getVirtualFile());
             dbms = DbmsAdaptor.castOf(dialectMapping.getDbms());
         } catch (NoClassDefFoundError ignore) {
         }
 
         AreaOperateManager areaOperateManager = AreaOperateManagerFactory.getAreaOperateManagerByDbms(dbms,
-                mappingField,
-                entityClass,
-                null,
-                null);
+            mappingField,
+            entityClass,
+            null,
+            null);
         foundAreaOperateManager = true;
 
         editor.putUserData(FOUND_OPERATOR_MANAGER, foundAreaOperateManager);
@@ -156,7 +160,7 @@ public class SmartJpaCompletionProvider {
             final String newFragmentPrefix = prefix.substring(splitString.length());
             completionResultSet = completionResultSet.withPrefixMatcher(newFragmentPrefix);
             logger.info("getCompletionResultSet changed prefix: {}", completionResultSet.getPrefixMatcher()
-                    .getPrefix());
+                .getPrefix());
         }
         return completionResultSet;
     }
@@ -165,9 +169,9 @@ public class SmartJpaCompletionProvider {
     private LookupElement buildLookupElement(final String str,
                                              InsertHandler<LookupElement> insertHandler) {
         return LookupElementBuilder.create(str)
-                .withIcon(Icons.MAPPER_LINE_MARKER_ICON)
-                .bold()
-                .withInsertHandler(insertHandler);
+            .withIcon(Icons.MAPPER_LINE_MARKER_ICON)
+            .bold()
+            .withInsertHandler(insertHandler);
 
     }
 

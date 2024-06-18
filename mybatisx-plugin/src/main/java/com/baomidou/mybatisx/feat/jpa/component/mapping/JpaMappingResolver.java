@@ -115,7 +115,7 @@ public abstract class JpaMappingResolver {
             PsiAnnotationMemberValue originFieldAnnotation = annotation.findAttributeValue(COLUMN_NAME);
 
             PsiConstantEvaluationHelper constantEvaluationHelper = JavaPsiFacade.getInstance(field.getProject())
-                    .getConstantEvaluationHelper();
+                .getConstantEvaluationHelper();
             if (originFieldAnnotation != null) {
                 Object value = constantEvaluationHelper.computeConstantExpression(originFieldAnnotation);
                 if (value != null) {
@@ -134,7 +134,7 @@ public abstract class JpaMappingResolver {
     private String getUnderLineName(String camelName) {
         String[] strings = org.apache.commons.lang3.StringUtils.splitByCharacterTypeCamelCase(camelName);
         return Arrays.stream(strings).map(StringUtils::lowerCaseFirstChar)
-                .collect(Collectors.joining("_"));
+            .collect(Collectors.joining("_"));
     }
 
     /**
@@ -147,28 +147,28 @@ public abstract class JpaMappingResolver {
         // 去除有 static, transient 标记的字段
         List<PsiField> psiFieldList = PsiHelper.getPsiFieldList(entityClass);
         return psiFieldList.stream()
-                .filter(this::filterField)
-                .map(field -> {
-                    TxField txField = new TxField();
-                    txField.setTipName(StringUtils.upperCaseFirstChar(field.getName()));
-                    txField.setFieldType(field.getType().getCanonicalText());
+            .filter(this::filterField)
+            .map(field -> {
+                TxField txField = new TxField();
+                txField.setTipName(StringUtils.upperCaseFirstChar(field.getName()));
+                txField.setFieldType(field.getType().getCanonicalText());
 
-                    String columnName = getColumnNameByJpaOrCamel(field);
-                    // 实体的字段名称
-                    txField.setFieldName(field.getName());
+                String columnName = getColumnNameByJpaOrCamel(field);
+                // 实体的字段名称
+                txField.setFieldName(field.getName());
 
-                    // 表的列名
-                    txField.setColumnName(columnName);
-                    if (field.hasAnnotation(ID_ANNOTATION)) {
-                        txField.setPrimaryKey(true);
-                    }
+                // 表的列名
+                txField.setColumnName(columnName);
+                if (field.hasAnnotation(ID_ANNOTATION)) {
+                    txField.setPrimaryKey(true);
+                }
 
-                    txField.setClassName(field.getContainingClass().getQualifiedName());
-                    Optional<String> jdbcTypeByJavaType = JdbcTypeUtils.findJdbcTypeByJavaType(field.getType()
-                            .getCanonicalText());
-                    jdbcTypeByJavaType.ifPresent(txField::setJdbcType);
-                    return txField;
-                }).collect(Collectors.toList());
+                txField.setClassName(field.getContainingClass().getQualifiedName());
+                Optional<String> jdbcTypeByJavaType = JdbcTypeUtils.findJdbcTypeByJavaType(field.getType()
+                    .getCanonicalText());
+                jdbcTypeByJavaType.ifPresent(txField::setJdbcType);
+                return txField;
+            }).collect(Collectors.toList());
     }
 
     /**

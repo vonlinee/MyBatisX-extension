@@ -1,6 +1,5 @@
 package com.baomidou.mybatisx.feat.jpa.common.command;
 
-
 import com.baomidou.mybatisx.feat.jpa.common.SyntaxAppender;
 import com.baomidou.mybatisx.feat.jpa.operate.model.AppendTypeEnum;
 

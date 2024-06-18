@@ -2,6 +2,7 @@ package com.baomidou.mybatisx.feat.jpa.operate.generate;
 
 import com.baomidou.mybatisx.feat.jpa.db.DasTableAdaptor;
 import com.baomidou.mybatisx.feat.jpa.db.DbmsAdaptor;
+import com.baomidou.mybatisx.util.StringUtils;
 import com.intellij.database.model.DasTable;
 import com.intellij.database.psi.DbDataSource;
 import com.intellij.database.psi.DbPsiFacade;
@@ -12,11 +13,11 @@ import com.intellij.psi.PsiElement;
 import com.intellij.sql.dialects.SqlLanguageDialect;
 import com.intellij.sql.psi.SqlPsiFacade;
 import com.intellij.util.containers.JBIterable;
-import com.baomidou.mybatisx.util.StringUtils;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Comparator;
 import java.util.List;
+import java.util.Objects;
 import java.util.PriorityQueue;
 
 /**
@@ -33,7 +34,7 @@ public class PlatformDbGenerator extends PlatformSimpleGenerator {
         try {
             SqlPsiFacade instance = SqlPsiFacade.getInstance(project);
             SqlLanguageDialect dialectMapping = instance.getDialectMapping(element.getContainingFile()
-                    .getVirtualFile());
+                .getVirtualFile());
             dbms = DbmsAdaptor.castOf(dialectMapping.getDbms());
         } catch (NoClassDefFoundError ignore) {
         }
@@ -53,7 +54,7 @@ public class PlatformDbGenerator extends PlatformSimpleGenerator {
             for (DbDataSource dataSource : dataSources) {
                 JBIterable<? extends DasTable> tables = DasUtil.getTables(dataSource);
                 for (DasTable table : tables) {
-                    String entityTableName = entityClass.getName().toLowerCase();
+                    String entityTableName = Objects.requireNonNull(entityClass.getName()).toLowerCase();
                     String tableName = table.getName();
                     String guessTableName = tableName.replaceAll("_", "").toUpperCase();
                     // 完全相等的情况下就不用候选了
@@ -73,7 +74,7 @@ public class PlatformDbGenerator extends PlatformSimpleGenerator {
         if (!priorityQueue.isEmpty()) {
             return priorityQueue.peek();
         }
-        return entityClass.getName().toUpperCase();
+        return Objects.requireNonNull(entityClass.getName()).toUpperCase();
     }
 
 }

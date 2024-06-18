@@ -1,6 +1,6 @@
 package com.baomidou.mybatisx.plugin.ui;
 
-import com.baomidou.mybatisx.plugin.setting.JavaBean2DDLSetting;
+import com.baomidou.mybatisx.plugin.setting.OtherSetting;
 import com.baomidou.mybatisx.util.IntellijSDK;
 import lombok.Getter;
 import lombok.Setter;
@@ -16,9 +16,9 @@ public class MyBatisGeneratorSettingPanel {
     private JTextField commendText;
     private JTextField tablePropertyText;
 
-    private JavaBean2DDLSetting.MySettingProperties properties;
+    private OtherSetting.State properties;
 
     public MyBatisGeneratorSettingPanel() {
-        this.properties = IntellijSDK.getService(JavaBean2DDLSetting.class).getProperties();
+        this.properties = IntellijSDK.getService(OtherSetting.class).getProperties();
     }
 }

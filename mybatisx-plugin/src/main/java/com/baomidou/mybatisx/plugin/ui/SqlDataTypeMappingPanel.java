@@ -3,7 +3,7 @@ package com.baomidou.mybatisx.plugin.ui;
 import com.baomidou.mybatisx.feat.bean.SqlTypeComboBoxItem;
 import com.baomidou.mybatisx.feat.ddl.SqlTypeEnum;
 import com.baomidou.mybatisx.model.ComboBoxItem;
-import com.baomidou.mybatisx.plugin.setting.JavaBean2DDLSetting;
+import com.baomidou.mybatisx.plugin.setting.OtherSetting;
 import com.baomidou.mybatisx.service.BaseTypeItemListener;
 import com.baomidou.mybatisx.util.IntellijSDK;
 import com.intellij.ui.SimpleListCellRenderer;
@@ -44,10 +44,10 @@ public class SqlDataTypeMappingPanel {
     private JComboBox<ComboBoxItem> localDateTimeMapComboBox;
     private JTextField localDateTimeDefaultText;
 
-    private JavaBean2DDLSetting.MySettingProperties properties;
+    private OtherSetting.State properties;
 
     public SqlDataTypeMappingPanel() {
-        this.properties = IntellijSDK.getService(JavaBean2DDLSetting.class).getProperties();
+        this.properties = IntellijSDK.getService(OtherSetting.class).getProperties();
         /*自定义映射下拉框初始化*/
         commonlyUsedMapComboBoxInit();
         /*sql类型默认长度文本框初始化*/

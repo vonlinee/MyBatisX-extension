@@ -23,7 +23,7 @@ public class PropertySetterFind {
             return Optional.empty();
         }
         Optional<PsiClass> clazz = MapperBacktrackingUtils.getPropertyClazz(element);
-        if (!clazz.isPresent()) {
+        if (clazz.isEmpty()) {
             return Optional.empty();
         }
         return getPsiField(firstText, clazz.get());

@@ -1,21 +1,21 @@
 package com.baomidou.mybatisx.feat.jpa.operate;
 
 
+import com.baomidou.mybatisx.feat.jpa.SyntaxAppenderWrapper;
+import com.baomidou.mybatisx.feat.jpa.common.SyntaxAppender;
 import com.baomidou.mybatisx.feat.jpa.common.appender.AreaSequence;
 import com.baomidou.mybatisx.feat.jpa.common.appender.CustomAreaAppender;
 import com.baomidou.mybatisx.feat.jpa.common.appender.CustomSuffixAppender;
 import com.baomidou.mybatisx.feat.jpa.common.appender.JdbcTypeUtils;
 import com.baomidou.mybatisx.feat.jpa.common.appender.operator.SuffixOperator;
 import com.baomidou.mybatisx.feat.jpa.common.factory.ResultAppenderFactory;
-import com.baomidou.mybatisx.feat.jpa.operate.generate.Generator;
-import com.baomidou.mybatisx.feat.jpa.operate.manager.StatementBlock;
-import com.baomidou.mybatisx.plugin.setting.config.AbstractStatementGenerator;
-import com.baomidou.mybatisx.feat.jpa.common.SyntaxAppender;
 import com.baomidou.mybatisx.feat.jpa.common.iftest.ConditionFieldWrapper;
 import com.baomidou.mybatisx.feat.jpa.component.TxField;
 import com.baomidou.mybatisx.feat.jpa.component.TxParameter;
 import com.baomidou.mybatisx.feat.jpa.component.TxReturnDescriptor;
-import com.baomidou.mybatisx.feat.jpa.SyntaxAppenderWrapper;
+import com.baomidou.mybatisx.feat.jpa.operate.generate.Generator;
+import com.baomidou.mybatisx.feat.jpa.operate.manager.StatementBlock;
+import com.baomidou.mybatisx.plugin.setting.config.AbstractStatementGenerator;
 import com.baomidou.mybatisx.util.MybatisXCollectors;
 import com.baomidou.mybatisx.util.StringUtils;
 import com.intellij.psi.PsiClass;
@@ -78,8 +78,8 @@ public class InsertOperator extends BaseOperatorManager {
                                           ConditionFieldWrapper conditionFieldWrapper) {
                 // 定制参数
                 SyntaxAppender selective = InsertCustomSuffixAppender.createInsertBySuffixOperator("Selective",
-                        new InsertSelectiveSuffixOperator(mappingField),
-                        AreaSequence.RESULT);
+                    new InsertSelectiveSuffixOperator(mappingField),
+                    AreaSequence.RESULT);
                 LinkedList<SyntaxAppenderWrapper> syntaxAppenderWrappers = new LinkedList<>();
                 syntaxAppenderWrappers.add(new SyntaxAppenderWrapper(selective));
                 return super.getTemplateText(tableName, entityClass, parameters, syntaxAppenderWrappers, conditionFieldWrapper);
@@ -88,7 +88,7 @@ public class InsertOperator extends BaseOperatorManager {
 
         // insert + Selective
         final SyntaxAppender selectiveAppender =
-                CustomAreaAppender.createCustomAreaAppender(newAreaName, ResultAppenderFactory.RESULT, AreaSequence.AREA, AreaSequence.RESULT, insertResultAppenderFactory);
+            CustomAreaAppender.createCustomAreaAppender(newAreaName, ResultAppenderFactory.RESULT, AreaSequence.AREA, AreaSequence.RESULT, insertResultAppenderFactory);
         insertResultAppenderFactory.registerAppender(selectiveAppender);
 
         StatementBlock statementBlock = new StatementBlock();
@@ -111,8 +111,8 @@ public class InsertOperator extends BaseOperatorManager {
                                           LinkedList<SyntaxAppenderWrapper> collector, ConditionFieldWrapper conditionFieldWrapper) {
                 // 定制参数
                 SyntaxAppender insertAll = InsertCustomSuffixAppender.createInsertBySuffixOperator("All",
-                        new InsertAllSuffixOperator(mappingField),
-                        AreaSequence.RESULT);
+                    new InsertAllSuffixOperator(mappingField),
+                    AreaSequence.RESULT);
                 LinkedList<SyntaxAppenderWrapper> syntaxAppenderWrappers = new LinkedList<>();
                 syntaxAppenderWrappers.add(new SyntaxAppenderWrapper(insertAll));
                 return super.getTemplateText(tableName, entityClass, parameters, syntaxAppenderWrappers, conditionFieldWrapper);
@@ -122,11 +122,11 @@ public class InsertOperator extends BaseOperatorManager {
         };
         // insert + All
         final SyntaxAppender allAppender =
-                CustomAreaAppender.createCustomAreaAppender(newAreaName,
-                        ResultAppenderFactory.RESULT,
-                        AreaSequence.AREA,
-                        AreaSequence.RESULT,
-                        insertResultAppenderFactory);
+            CustomAreaAppender.createCustomAreaAppender(newAreaName,
+                ResultAppenderFactory.RESULT,
+                AreaSequence.AREA,
+                AreaSequence.RESULT,
+                insertResultAppenderFactory);
         insertResultAppenderFactory.registerAppender(allAppender);
 
         StatementBlock statementBlock = new StatementBlock();
@@ -211,7 +211,7 @@ public class InsertOperator extends BaseOperatorManager {
             mapperXml.append("insert into ").append(tableName).append("\n");
             for (SyntaxAppenderWrapper syntaxAppenderWrapper : collector) {
                 String templateText = syntaxAppenderWrapper.getAppender()
-                        .getTemplateText(tableName, entityClass, parameters, collector, conditionFieldWrapper);
+                    .getTemplateText(tableName, entityClass, parameters, collector, conditionFieldWrapper);
                 mapperXml.append(templateText);
             }
             return mapperXml.toString();
@@ -223,10 +223,10 @@ public class InsertOperator extends BaseOperatorManager {
             String variableName = StringUtils.lowerCaseFirstChar(defineName);
             List<String> importClass = Collections.singletonList(entityClass.getQualifiedName());
             TxParameter parameter = TxParameter.createByOrigin(variableName,
-                    defineName,
-                    entityClass.getQualifiedName(),
-                    false,
-                    importClass);
+                defineName,
+                entityClass.getQualifiedName(),
+                false,
+                importClass);
             return Collections.singletonList(parameter);
         }
 
@@ -251,16 +251,16 @@ public class InsertOperator extends BaseOperatorManager {
             StringBuilder stringBuilder = new StringBuilder();
             // 追加列名
             final String columns = mappingField.stream()
-                    .map(TxField::getColumnName)
-                    .collect(MybatisXCollectors.joining(",", conditionFieldWrapper.getNewline()));
+                .map(TxField::getColumnName)
+                .collect(MybatisXCollectors.joining(",", conditionFieldWrapper.getNewline()));
             stringBuilder.append("(").append(columns).append(")").append("\n");
             // values 连接符
             stringBuilder.append("values").append("\n");
             final String fields = mappingField.stream()
-                    .map(field -> {
-                        String fieldValue = JdbcTypeUtils.wrapperField(field.getFieldName(), field.getFieldType());
-                        return conditionFieldWrapper.wrapDefaultDateIfNecessary(field.getColumnName(), fieldValue);
-                    }).collect(MybatisXCollectors.joining(",", conditionFieldWrapper.getNewline()));
+                .map(field -> {
+                    String fieldValue = JdbcTypeUtils.wrapperField(field.getFieldName(), field.getFieldType());
+                    return conditionFieldWrapper.wrapDefaultDateIfNecessary(field.getColumnName(), fieldValue);
+                }).collect(MybatisXCollectors.joining(",", conditionFieldWrapper.getNewline()));
             stringBuilder.append("(\n");
             stringBuilder.append(fields).append("\n");
             stringBuilder.append(")").append("\n");
@@ -288,19 +288,19 @@ public class InsertOperator extends BaseOperatorManager {
             StringBuilder stringBuilder = new StringBuilder();
             // 追加列名
             final String columns = mappingField.stream()
-                    .map(field -> selective(field.getFieldName(), field.getColumnName()))
-                    .collect(Collectors.joining("\n"));
+                .map(field -> selective(field.getFieldName(), field.getColumnName()))
+                .collect(Collectors.joining("\n"));
 
             stringBuilder.append(trimFieldStart()).append(columns).append(trimEnd()).append("\n");
             // values 连接符
             stringBuilder.append("values").append("\n");
             final String fields = mappingField.stream()
-                    .map(field -> {
-                        String fieldValue = conditionFieldWrapper.wrapperField(field.getFieldName(), field.getFieldName(), field.getFieldType());
-                        fieldValue = conditionFieldWrapper.wrapDefaultDateIfNecessary(field.getColumnName(), fieldValue);
-                        return selective(field.getFieldName(), fieldValue);
-                    })
-                    .collect(Collectors.joining("\n"));
+                .map(field -> {
+                    String fieldValue = conditionFieldWrapper.wrapperField(field.getFieldName(), field.getFieldName(), field.getFieldType());
+                    fieldValue = conditionFieldWrapper.wrapDefaultDateIfNecessary(field.getColumnName(), fieldValue);
+                    return selective(field.getFieldName(), fieldValue);
+                })
+                .collect(Collectors.joining("\n"));
 
             stringBuilder.append(trimFieldStart());
             stringBuilder.append(fields).append("\n");

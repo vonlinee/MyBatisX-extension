@@ -22,7 +22,7 @@ import java.util.Set;
  */
 public class TxParameter {
     public static final String JAVA_LANG = "java.lang";
-    private static Set<String> primitiveType = new HashSet<String>() {
+    private static final Set<String> primitiveType = new HashSet<>() {
         {
             add("boolean");
             add("byte");
@@ -100,13 +100,13 @@ public class TxParameter {
 
     public static TxParameter createCollectionByTxParameter(TxParameter txParameter) {
         return createByOrigin(txParameter.getName() + "List",
-                "Collection<" + txParameter.getTypeText() + ">",
-                "java.util.Collection");
+            "Collection<" + txParameter.getTypeText() + ">",
+            "java.util.Collection");
     }
 
     public static TxParameter createByPsiParameter(PsiParameter psiParameter) {
         TxParameter byOrigin = createByOrigin(psiParameter.getName(), psiParameter.getType()
-                .getCanonicalText(), psiParameter.getType().getCanonicalText());
+            .getCanonicalText(), psiParameter.getType().getCanonicalText());
 
         PsiTypeElement typeElement = psiParameter.getTypeElement();
         if (typeElement != null) {
@@ -158,10 +158,10 @@ public class TxParameter {
     public static TxParameter createByEntityClass(PsiClass entityClass) {
         String name = StringUtils.lowerCaseFirstChar(entityClass.getName());
         return TxParameter.createByOrigin(name,
-                entityClass.getQualifiedName(),
-                entityClass.getQualifiedName(),
-                true,
-                Collections.singletonList(entityClass.getQualifiedName())
+            entityClass.getQualifiedName(),
+            entityClass.getQualifiedName(),
+            true,
+            Collections.singletonList(entityClass.getQualifiedName())
         );
     }
 

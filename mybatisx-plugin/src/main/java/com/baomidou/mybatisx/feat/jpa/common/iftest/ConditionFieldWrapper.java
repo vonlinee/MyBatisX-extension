@@ -2,8 +2,8 @@ package com.baomidou.mybatisx.feat.jpa.common.iftest;
 
 import com.baomidou.mybatisx.dom.model.Mapper;
 import com.baomidou.mybatisx.feat.jpa.common.MapperClassGenerateFactory;
-import com.baomidou.mybatisx.feat.jpa.operate.generate.Generator;
 import com.baomidou.mybatisx.feat.jpa.component.TxField;
+import com.baomidou.mybatisx.feat.jpa.operate.generate.Generator;
 
 import java.util.List;
 

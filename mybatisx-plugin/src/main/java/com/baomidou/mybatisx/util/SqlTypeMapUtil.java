@@ -2,7 +2,7 @@ package com.baomidou.mybatisx.util;
 
 import com.baomidou.mybatisx.plugin.actions.Bean2DDLAction;
 import com.baomidou.mybatisx.feat.bean.ConvertBean;
-import com.baomidou.mybatisx.plugin.setting.JavaBean2DDLSetting;
+import com.baomidou.mybatisx.plugin.setting.OtherSetting;
 
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -25,7 +25,7 @@ public class SqlTypeMapUtil {
     }
 
     public ConcurrentHashMap<String, ConvertBean> convertMapInit() {
-        JavaBean2DDLSetting.MySettingProperties properties = JavaBean2DDLSetting.getInstance().myProperties;
+        OtherSetting.State properties = OtherSetting.getInstance().myProperties;
         ConcurrentHashMap<String, ConvertBean> convertMap = new ConcurrentHashMap<>();
         convertMap.put("int", new ConvertBean(properties.getIntType(), properties.getIntDefaultLength()));
         convertMap.put("Integer", new ConvertBean(properties.getIntType(), properties.getIntDefaultLength()));

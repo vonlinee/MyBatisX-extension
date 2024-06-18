@@ -1,18 +1,18 @@
 package com.baomidou.mybatisx.feat.jpa.common.appender;
 
 
+import com.baomidou.mybatisx.feat.jpa.SyntaxAppenderWrapper;
 import com.baomidou.mybatisx.feat.jpa.common.SyntaxAppender;
-import com.baomidou.mybatisx.feat.jpa.common.command.AppendTypeCommand;
-import com.baomidou.mybatisx.feat.jpa.common.command.FieldSuffixAppendTypeService;
-import com.baomidou.mybatisx.feat.jpa.common.iftest.ConditionFieldWrapper;
-import com.baomidou.mybatisx.feat.jpa.operate.model.AppendTypeEnum;
 import com.baomidou.mybatisx.feat.jpa.common.appender.operator.FixedSuffixOperator;
 import com.baomidou.mybatisx.feat.jpa.common.appender.operator.ParamAroundSuffixOperator;
 import com.baomidou.mybatisx.feat.jpa.common.appender.operator.ParamBeforeSuffixOperator;
 import com.baomidou.mybatisx.feat.jpa.common.appender.operator.SuffixOperator;
+import com.baomidou.mybatisx.feat.jpa.common.command.AppendTypeCommand;
+import com.baomidou.mybatisx.feat.jpa.common.command.FieldSuffixAppendTypeService;
+import com.baomidou.mybatisx.feat.jpa.common.iftest.ConditionFieldWrapper;
 import com.baomidou.mybatisx.feat.jpa.component.TxField;
 import com.baomidou.mybatisx.feat.jpa.component.TxParameter;
-import com.baomidou.mybatisx.feat.jpa.SyntaxAppenderWrapper;
+import com.baomidou.mybatisx.feat.jpa.operate.model.AppendTypeEnum;
 import com.intellij.psi.PsiClass;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
@@ -209,12 +209,12 @@ public class CustomSuffixAppender implements SyntaxAppender {
             }
             if (appender instanceof CustomJoinAppender) {
                 String joinTemplateText =
-                        getFieldTemplateText(tableName,
-                                entityClass,
-                                parameters,
-                                collector,
-                                conditionFieldWrapper,
-                                appender);
+                    getFieldTemplateText(tableName,
+                        entityClass,
+                        parameters,
+                        collector,
+                        conditionFieldWrapper,
+                        appender);
                 if (i > 0) {
                     stringBuilder.append(" ");
                 }
@@ -223,7 +223,7 @@ public class CustomSuffixAppender implements SyntaxAppender {
             }
         }
         String suffixTemplateText = suffixOperator.
-                getTemplateText(columnName, parameters, conditionFieldWrapper);
+            getTemplateText(columnName, parameters, conditionFieldWrapper);
         stringBuilder.append(suffixTemplateText);
 
         return conditionFieldWrapper.wrapConditionText(fieldName, stringBuilder.toString());
@@ -277,11 +277,11 @@ public class CustomSuffixAppender implements SyntaxAppender {
     @Override
     public String toString() {
         return new ToStringBuilder(this, ToStringStyle.SIMPLE_STYLE)
-                .append("tipName", tipName)
-                .append("suffixOperator", suffixOperator)
-                .append("mxParameterFinder", mxParameterFinder)
-                .append("areaSequence", areaSequence)
-                .toString();
+            .append("tipName", tipName)
+            .append("suffixOperator", suffixOperator)
+            .append("mxParameterFinder", mxParameterFinder)
+            .append("areaSequence", areaSequence)
+            .toString();
     }
 
     @Override

@@ -1,7 +1,6 @@
 package com.baomidou.mybatisx.feat.jpa.operate;
 
-
-import com.baomidou.mybatisx.plugin.setting.config.AbstractStatementGenerator;
+import com.baomidou.mybatisx.feat.jpa.SyntaxAppenderWrapper;
 import com.baomidou.mybatisx.feat.jpa.common.SyntaxAppender;
 import com.baomidou.mybatisx.feat.jpa.common.appender.AreaSequence;
 import com.baomidou.mybatisx.feat.jpa.common.appender.CompositeAppender;
@@ -16,7 +15,7 @@ import com.baomidou.mybatisx.feat.jpa.component.TxParameter;
 import com.baomidou.mybatisx.feat.jpa.component.TxReturnDescriptor;
 import com.baomidou.mybatisx.feat.jpa.operate.generate.Generator;
 import com.baomidou.mybatisx.feat.jpa.operate.manager.StatementBlock;
-import com.baomidou.mybatisx.feat.jpa.SyntaxAppenderWrapper;
+import com.baomidou.mybatisx.plugin.setting.config.AbstractStatementGenerator;
 import com.intellij.psi.PsiClass;
 import com.intellij.psi.PsiMethod;
 
@@ -28,7 +27,6 @@ import java.util.List;
  */
 public class DeleteOperator extends BaseOperatorManager {
 
-
     /**
      * Instantiates a new Delete operator.
      *
@@ -38,7 +36,6 @@ public class DeleteOperator extends BaseOperatorManager {
         super.setOperatorNameList(AbstractStatementGenerator.DELETE_GENERATOR.getPatterns());
         this.init(mappingField);
     }
-
 
     /**
      * Init.
@@ -53,27 +50,25 @@ public class DeleteOperator extends BaseOperatorManager {
             for (TxField field : mappingField) {
                 // 区域条件 : delete + By + field
                 CompositeAppender areaByAppender = new CompositeAppender(
-                        CustomAreaAppender.createCustomAreaAppender(areaName, ResultAppenderFactory.RESULT, AreaSequence.AREA, AreaSequence.RESULT, resultAppenderFactory),
-                        CustomAreaAppender.createCustomAreaAppender("By", "By", AreaSequence.AREA, AreaSequence.CONDITION, conditionAppenderFactory),
-                        new CustomFieldAppender(field, AreaSequence.CONDITION)
+                    CustomAreaAppender.createCustomAreaAppender(areaName, ResultAppenderFactory.RESULT, AreaSequence.AREA, AreaSequence.RESULT, resultAppenderFactory),
+                    CustomAreaAppender.createCustomAreaAppender("By", "By", AreaSequence.AREA, AreaSequence.CONDITION, conditionAppenderFactory),
+                    new CustomFieldAppender(field, AreaSequence.CONDITION)
                 );
                 resultAppenderFactory.registerAppender(areaByAppender);
-
                 // 区域条件 : delete  By : and + field
                 CompositeAppender andAppender = new CompositeAppender(
-                        new CustomJoinAppender("And", " AND", AreaSequence.CONDITION),
-                        new CustomFieldAppender(field, AreaSequence.CONDITION)
+                    new CustomJoinAppender("And", " AND", AreaSequence.CONDITION),
+                    new CustomFieldAppender(field, AreaSequence.CONDITION)
                 );
                 resultAppenderFactory.registerAppender(andAppender);
 
                 // 区域条件 : delete  By : or + field
                 CompositeAppender orAppender = new CompositeAppender(
-                        new CustomJoinAppender("Or", " OR", AreaSequence.CONDITION),
-                        new CustomFieldAppender(field, AreaSequence.CONDITION)
+                    new CustomJoinAppender("Or", " OR", AreaSequence.CONDITION),
+                    new CustomFieldAppender(field, AreaSequence.CONDITION)
                 );
                 resultAppenderFactory.registerAppender(orAppender);
             }
-
             StatementBlock statementBlock = new StatementBlock();
             statementBlock.setTagName(areaName);
             statementBlock.setResultAppenderFactory(resultAppenderFactory);

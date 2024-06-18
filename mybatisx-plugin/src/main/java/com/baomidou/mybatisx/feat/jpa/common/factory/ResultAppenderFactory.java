@@ -1,14 +1,14 @@
 package com.baomidou.mybatisx.feat.jpa.common.factory;
 
 
+import com.baomidou.mybatisx.feat.jpa.SyntaxAppenderWrapper;
 import com.baomidou.mybatisx.feat.jpa.common.BaseAppenderFactory;
 import com.baomidou.mybatisx.feat.jpa.common.SyntaxAppender;
-import com.baomidou.mybatisx.feat.jpa.common.iftest.ConditionFieldWrapper;
 import com.baomidou.mybatisx.feat.jpa.common.appender.AreaSequence;
 import com.baomidou.mybatisx.feat.jpa.common.appender.CustomFieldAppender;
+import com.baomidou.mybatisx.feat.jpa.common.iftest.ConditionFieldWrapper;
 import com.baomidou.mybatisx.feat.jpa.component.TxField;
 import com.baomidou.mybatisx.feat.jpa.component.TxParameter;
-import com.baomidou.mybatisx.feat.jpa.SyntaxAppenderWrapper;
 import com.intellij.psi.PsiClass;
 
 import java.util.ArrayList;
@@ -22,8 +22,8 @@ import java.util.List;
 public class ResultAppenderFactory extends BaseAppenderFactory {
     /**
      * The constant RESULT.
+     * 区域类型
      */
-// 区域类型
     public static final String RESULT = "Result";
     /**
      * 区域前缀

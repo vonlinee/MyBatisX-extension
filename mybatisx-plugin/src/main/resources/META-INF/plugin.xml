@@ -275,7 +275,7 @@
             groupId="com.baomidou.mybatisx.plugin.setting.configurable.MyBatisXConfigurable"
             displayName="翻译配置"/>
 
-        <applicationService serviceImplementation="com.baomidou.mybatisx.plugin.setting.JavaBean2DDLSetting"/>
+        <applicationService serviceImplementation="com.baomidou.mybatisx.plugin.setting.OtherSetting"/>
     </extensions>
 
     <applicationListeners>

@@ -1,16 +1,16 @@
 package com.baomidou.mybatisx.feat.jpa.operate.dialect;
 
 
-import com.baomidou.mybatisx.feat.jpa.operate.DeleteOperator;
-import com.baomidou.mybatisx.feat.jpa.operate.UpdateOperator;
 import com.baomidou.mybatisx.feat.jpa.common.SyntaxAppender;
 import com.baomidou.mybatisx.feat.jpa.common.iftest.ConditionFieldWrapper;
 import com.baomidou.mybatisx.feat.jpa.component.TxField;
 import com.baomidou.mybatisx.feat.jpa.component.TxParameter;
 import com.baomidou.mybatisx.feat.jpa.component.TypeDescriptor;
 import com.baomidou.mybatisx.feat.jpa.operate.CountOperator;
+import com.baomidou.mybatisx.feat.jpa.operate.DeleteOperator;
 import com.baomidou.mybatisx.feat.jpa.operate.InsertOperator;
 import com.baomidou.mybatisx.feat.jpa.operate.SelectOperator;
+import com.baomidou.mybatisx.feat.jpa.operate.UpdateOperator;
 import com.baomidou.mybatisx.feat.jpa.operate.generate.Generator;
 import com.baomidou.mybatisx.feat.jpa.operate.manager.AreaOperateManager;
 import com.baomidou.mybatisx.feat.jpa.operate.model.AppendTypeEnum;
@@ -69,7 +69,7 @@ public class BaseDialectManager implements AreaOperateManager {
     public List<String> getCompletionContent(final LinkedList<SyntaxAppender> splitList) {
         final List<String> results = new ArrayList<>();
         for (final AreaOperateManager typeManager : this.typeManagers) {
-            if (splitList.size() > 0) {
+            if (!splitList.isEmpty()) {
                 results.addAll(typeManager.getCompletionContent(splitList));
             }
         }
@@ -88,7 +88,7 @@ public class BaseDialectManager implements AreaOperateManager {
     @Override
     public List<TxParameter> getParameters(PsiClass entityClass,
                                            LinkedList<SyntaxAppender> jpaStringList) {
-        if (jpaStringList.size() == 0 || jpaStringList.get(0).getType() != AppendTypeEnum.AREA) {
+        if (jpaStringList.isEmpty() || jpaStringList.get(0).getType() != AppendTypeEnum.AREA) {
             return Collections.emptyList();
         }
         SyntaxAppender syntaxAppender = jpaStringList.peek();
@@ -104,7 +104,7 @@ public class BaseDialectManager implements AreaOperateManager {
 
     @Override
     public TypeDescriptor getReturnWrapper(String text, PsiClass entityClass, @NotNull LinkedList<SyntaxAppender> linkedList) {
-        if (linkedList.size() == 0 || linkedList.get(0).getType() != AppendTypeEnum.AREA) {
+        if (linkedList.isEmpty() || linkedList.get(0).getType() != AppendTypeEnum.AREA) {
             return null;
         }
         SyntaxAppender syntaxAppender = linkedList.peek();
@@ -131,7 +131,7 @@ public class BaseDialectManager implements AreaOperateManager {
                                   Generator mybatisXmlGenerator,
                                   ConditionFieldWrapper conditionFieldWrapper,
                                   List<TxField> resultFields) {
-        if (jpaList.size() == 0 || jpaList.get(0).getType() != AppendTypeEnum.AREA) {
+        if (jpaList.isEmpty() || jpaList.get(0).getType() != AppendTypeEnum.AREA) {
             return;
         }
         SyntaxAppender syntaxAppender = jpaList.peek();
@@ -139,13 +139,13 @@ public class BaseDialectManager implements AreaOperateManager {
         for (AreaOperateManager typeManager : this.typeManagers) {
             if (typeManager.support(syntaxAppender.getText())) {
                 typeManager.generateMapperXml(id,
-                        jpaList,
-                        entityClass,
-                        psiMethod,
-                        tableNameByEntityName,
-                        mybatisXmlGenerator,
-                        conditionFieldWrapper,
-                        resultFields);
+                    jpaList,
+                    entityClass,
+                    psiMethod,
+                    tableNameByEntityName,
+                    mybatisXmlGenerator,
+                    conditionFieldWrapper,
+                    resultFields);
                 break;
             }
         }

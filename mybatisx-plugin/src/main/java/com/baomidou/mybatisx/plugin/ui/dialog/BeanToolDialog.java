@@ -54,7 +54,7 @@ public class BeanToolDialog extends DialogWrapper {
             }
         });
 
-        JPanel topPanel = SwingUtils.newBoxLayoutPanel();
+        JPanel topPanel = SwingUtils.newHBoxLayoutPanel();
         topPanel.add(button);
 
         Box box = Box.createVerticalBox();

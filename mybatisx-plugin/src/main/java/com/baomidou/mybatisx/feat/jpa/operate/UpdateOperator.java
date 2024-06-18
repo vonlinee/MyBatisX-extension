@@ -1,7 +1,6 @@
 package com.baomidou.mybatisx.feat.jpa.operate;
 
-
-import com.baomidou.mybatisx.plugin.setting.config.AbstractStatementGenerator;
+import com.baomidou.mybatisx.feat.jpa.SyntaxAppenderWrapper;
 import com.baomidou.mybatisx.feat.jpa.common.SyntaxAppender;
 import com.baomidou.mybatisx.feat.jpa.common.appender.AreaSequence;
 import com.baomidou.mybatisx.feat.jpa.common.appender.CompositeAppender;
@@ -16,7 +15,7 @@ import com.baomidou.mybatisx.feat.jpa.component.TxParameter;
 import com.baomidou.mybatisx.feat.jpa.component.TxReturnDescriptor;
 import com.baomidou.mybatisx.feat.jpa.operate.generate.Generator;
 import com.baomidou.mybatisx.feat.jpa.operate.manager.StatementBlock;
-import com.baomidou.mybatisx.feat.jpa.SyntaxAppenderWrapper;
+import com.baomidou.mybatisx.plugin.setting.config.AbstractStatementGenerator;
 import com.intellij.psi.PsiClass;
 import com.intellij.psi.PsiMethod;
 
@@ -74,20 +73,20 @@ public class UpdateOperator extends BaseOperatorManager {
             // field
             // and + field
             final CompositeAppender andAppender = new CompositeAppender(
-                    new CustomJoinAppender("And", ",\n", AreaSequence.RESULT),
-                    new ResultAppenderFactory.WrapDateCustomFieldAppender(field, AreaSequence.RESULT));
+                new CustomJoinAppender("And", ",\n", AreaSequence.RESULT),
+                new ResultAppenderFactory.WrapDateCustomFieldAppender(field, AreaSequence.RESULT));
             updateFactory.registerAppender(andAppender);
 
             // update + field
             final CompositeAppender areaAppender =
-                    new CompositeAppender(
-                            CustomAreaAppender.createCustomAreaAppender(areaName,
-                                    ResultAppenderFactory.RESULT,
-                                    AreaSequence.AREA,
-                                    AreaSequence.RESULT,
-                                    updateFactory),
-                            new CustomFieldAppender(field, AreaSequence.RESULT)
-                    );
+                new CompositeAppender(
+                    CustomAreaAppender.createCustomAreaAppender(areaName,
+                        ResultAppenderFactory.RESULT,
+                        AreaSequence.AREA,
+                        AreaSequence.RESULT,
+                        updateFactory),
+                    new CustomFieldAppender(field, AreaSequence.RESULT)
+                );
             updateFactory.registerAppender(areaAppender);
 
         }
@@ -130,7 +129,7 @@ public class UpdateOperator extends BaseOperatorManager {
             String operatorXml = "update " + tableName + "\n set ";
 
             return operatorXml + collector.stream().map(syntaxAppenderWrapper -> syntaxAppenderWrapper.getAppender()
-                    .getTemplateText(tableName, entityClass, parameters, collector, conditionFieldWrapper)).collect(Collectors.joining());
+                .getTemplateText(tableName, entityClass, parameters, collector, conditionFieldWrapper)).collect(Collectors.joining());
         }
 
         @Override

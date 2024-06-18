@@ -1,12 +1,7 @@
 package com.baomidou.mybatisx.feat.jpa.operate;
 
 
-import com.baomidou.mybatisx.feat.jpa.common.factory.ConditionAppenderFactory;
-import com.baomidou.mybatisx.feat.jpa.common.factory.ResultAppenderFactory;
-import com.baomidou.mybatisx.feat.jpa.common.factory.SortAppenderFactory;
-import com.baomidou.mybatisx.feat.jpa.operate.generate.Generator;
-import com.baomidou.mybatisx.feat.jpa.operate.manager.StatementBlock;
-import com.baomidou.mybatisx.plugin.setting.config.AbstractStatementGenerator;
+import com.baomidou.mybatisx.feat.jpa.SyntaxAppenderWrapper;
 import com.baomidou.mybatisx.feat.jpa.common.SyntaxAppender;
 import com.baomidou.mybatisx.feat.jpa.common.SyntaxAppenderFactory;
 import com.baomidou.mybatisx.feat.jpa.common.appender.AreaSequence;
@@ -14,11 +9,16 @@ import com.baomidou.mybatisx.feat.jpa.common.appender.CompositeAppender;
 import com.baomidou.mybatisx.feat.jpa.common.appender.CustomAreaAppender;
 import com.baomidou.mybatisx.feat.jpa.common.appender.CustomFieldAppender;
 import com.baomidou.mybatisx.feat.jpa.common.appender.CustomJoinAppender;
+import com.baomidou.mybatisx.feat.jpa.common.factory.ConditionAppenderFactory;
+import com.baomidou.mybatisx.feat.jpa.common.factory.ResultAppenderFactory;
+import com.baomidou.mybatisx.feat.jpa.common.factory.SortAppenderFactory;
 import com.baomidou.mybatisx.feat.jpa.common.iftest.ConditionFieldWrapper;
 import com.baomidou.mybatisx.feat.jpa.component.TxField;
 import com.baomidou.mybatisx.feat.jpa.component.TxParameter;
 import com.baomidou.mybatisx.feat.jpa.component.TxReturnDescriptor;
-import com.baomidou.mybatisx.feat.jpa.SyntaxAppenderWrapper;
+import com.baomidou.mybatisx.feat.jpa.operate.generate.Generator;
+import com.baomidou.mybatisx.feat.jpa.operate.manager.StatementBlock;
+import com.baomidou.mybatisx.plugin.setting.config.AbstractStatementGenerator;
 import com.intellij.psi.PsiClass;
 import com.intellij.psi.PsiMethod;
 
@@ -112,12 +112,12 @@ public class SelectOperator extends BaseOperatorManager {
         for (TxField txField : mappingField) {
             // select + One + By + field
             CompositeAppender selectAllAppender =
-                    new CompositeAppender(
-                            new SelectCustomAreaAppender(newAreaName, ResultAppenderFactory.RESULT,
-                                    resultAppenderFactory),
-                            CustomAreaAppender.createCustomAreaAppender("By", "By", AreaSequence.AREA, AreaSequence.CONDITION, conditionAppenderFactory),
-                            new CustomFieldAppender(txField, AreaSequence.CONDITION)
-                    );
+                new CompositeAppender(
+                    new SelectCustomAreaAppender(newAreaName, ResultAppenderFactory.RESULT,
+                        resultAppenderFactory),
+                    CustomAreaAppender.createCustomAreaAppender("By", "By", AreaSequence.AREA, AreaSequence.CONDITION, conditionAppenderFactory),
+                    new CustomFieldAppender(txField, AreaSequence.CONDITION)
+                );
             resultAppenderFactory.registerAppender(selectAllAppender);
         }
 
@@ -156,12 +156,12 @@ public class SelectOperator extends BaseOperatorManager {
         for (TxField txField : mappingField) {
             // select + One + By + field
             CompositeAppender selectAllAppender =
-                    new CompositeAppender(
-                            new SelectCustomAreaAppender(newAreaName, ResultAppenderFactory.RESULT,
-                                    resultAppenderFactory),
-                            CustomAreaAppender.createCustomAreaAppender("By", "By", AreaSequence.AREA, AreaSequence.CONDITION, conditionAppenderFactory),
-                            new CustomFieldAppender(txField, AreaSequence.CONDITION)
-                    );
+                new CompositeAppender(
+                    new SelectCustomAreaAppender(newAreaName, ResultAppenderFactory.RESULT,
+                        resultAppenderFactory),
+                    CustomAreaAppender.createCustomAreaAppender("By", "By", AreaSequence.AREA, AreaSequence.CONDITION, conditionAppenderFactory),
+                    new CustomFieldAppender(txField, AreaSequence.CONDITION)
+                );
             resultAppenderFactory.registerAppender(selectAllAppender);
         }
 
@@ -183,7 +183,7 @@ public class SelectOperator extends BaseOperatorManager {
         // 结果集区域
 
         ResultAppenderFactory resultAppenderFactory =
-                this.initCustomFieldResultAppender(mappingField, areaName, conditionAppenderFactory);
+            this.initCustomFieldResultAppender(mappingField, areaName, conditionAppenderFactory);
 
         statementBlock.setResultAppenderFactory(resultAppenderFactory);
 
@@ -204,24 +204,24 @@ public class SelectOperator extends BaseOperatorManager {
             // field
             // and + field
             CompositeAppender andAppender = new SelectCompositeAppender(
-                    new CustomJoinAppender("And", ",", AreaSequence.RESULT),
-                    new SelectFieldAppender(field));
+                new CustomJoinAppender("And", ",", AreaSequence.RESULT),
+                new SelectFieldAppender(field));
             selectFactory.registerAppender(andAppender);
 
             // select + field
             CompositeAppender areaAppender =
-                    new SelectCompositeAppender(
-                            new SelectCustomAreaAppender(areaName, ResultAppenderFactory.RESULT, selectFactory),
-                            new SelectFieldAppender(field)
-                    );
+                new SelectCompositeAppender(
+                    new SelectCustomAreaAppender(areaName, ResultAppenderFactory.RESULT, selectFactory),
+                    new SelectFieldAppender(field)
+                );
             selectFactory.registerAppender(areaAppender);
 
 
             // 区域条件 : select + By + field
             CompositeAppender areaByAppender = new CompositeAppender(
-                    new SelectCustomAreaAppender(areaName, ResultAppenderFactory.RESULT, selectFactory),
-                    CustomAreaAppender.createCustomAreaAppender("By", "By", AreaSequence.AREA, AreaSequence.CONDITION, conditionAppenderFactory),
-                    new CustomFieldAppender(field, AreaSequence.CONDITION)
+                new SelectCustomAreaAppender(areaName, ResultAppenderFactory.RESULT, selectFactory),
+                CustomAreaAppender.createCustomAreaAppender("By", "By", AreaSequence.AREA, AreaSequence.CONDITION, conditionAppenderFactory),
+                new CustomFieldAppender(field, AreaSequence.CONDITION)
             );
             selectFactory.registerAppender(areaByAppender);
 
@@ -242,12 +242,12 @@ public class SelectOperator extends BaseOperatorManager {
         String mapperXml = super.generateXml(jpaList, entityClass, psiMethod, tableName, conditionFieldWrapper);
 
         mybatisXmlGenerator.generateSelect(id,
-                mapperXml,
-                conditionFieldWrapper.isResultType(),
-                conditionFieldWrapper.getResultMap(),
-                conditionFieldWrapper.getResultType(),
-                resultFields,
-                entityClass);
+            mapperXml,
+            conditionFieldWrapper.isResultType(),
+            conditionFieldWrapper.getResultMap(),
+            conditionFieldWrapper.getResultType(),
+            resultFields,
+            entityClass);
     }
 
     @Override
@@ -313,7 +313,7 @@ public class SelectOperator extends BaseOperatorManager {
             for (SyntaxAppenderWrapper syntaxAppender : collector) {
                 // 列名 或者 逗号
                 String columnName = syntaxAppender.getAppender()
-                        .getTemplateText(tableName, entityClass, parameters, syntaxAppender.getCollector(), conditionFieldWrapper);
+                    .getTemplateText(tableName, entityClass, parameters, syntaxAppender.getCollector(), conditionFieldWrapper);
                 stringBuilder.append(columnName);
             }
             stringBuilder.append("\n").append("from").append(" ").append(tableName);
@@ -364,9 +364,9 @@ public class SelectOperator extends BaseOperatorManager {
         @Override
         public String getTemplateText(String tableName, PsiClass entityClass, LinkedList<TxParameter> parameters, LinkedList<SyntaxAppenderWrapper> collector, ConditionFieldWrapper conditionFieldWrapper) {
             return appenderList
-                    .stream()
-                    .map(x -> x.getTemplateText(tableName, entityClass, parameters, collector, conditionFieldWrapper))
-                    .collect(Collectors.joining(","));
+                .stream()
+                .map(x -> x.getTemplateText(tableName, entityClass, parameters, collector, conditionFieldWrapper))
+                .collect(Collectors.joining(","));
         }
     }
 }

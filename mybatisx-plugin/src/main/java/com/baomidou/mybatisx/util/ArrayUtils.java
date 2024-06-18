@@ -3,8 +3,11 @@ package com.baomidou.mybatisx.util;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
 import java.util.function.Function;
+import java.util.stream.Collectors;
 
 /**
  * The type Array utils.
@@ -67,5 +70,9 @@ public final class ArrayUtils {
             arr[i] = mapper.apply(array[i]);
         }
         return arr;
+    }
+
+    public static <R, T> List<R> asList(T[] array, Function<T, R> mapper) {
+        return Arrays.stream(array).map(mapper).collect(Collectors.toList());
     }
 }

@@ -2,7 +2,7 @@ package com.baomidou.mybatisx.service;
 
 import com.baomidou.mybatisx.plugin.actions.Bean2DDLAction;
 import com.baomidou.mybatisx.feat.bean.Field;
-import com.baomidou.mybatisx.plugin.setting.JavaBean2DDLSetting;
+import com.baomidou.mybatisx.plugin.setting.OtherSetting;
 import com.baomidou.mybatisx.util.BaseUtil;
 import com.baomidou.mybatisx.util.CollectionUtils;
 import com.baomidou.mybatisx.util.PsiHelper;
@@ -40,7 +40,7 @@ import static com.baomidou.mybatisx.util.Constant.STRING_PACKAGE;
 public final class BeanSqlService {
 
     public static String getTableName(PsiClass currentClass) {
-        JavaBean2DDLSetting.MySettingProperties properties = JavaBean2DDLSetting.getInstance().getProperties();
+        OtherSetting.State properties = OtherSetting.getInstance().getProperties();
         String tableAnnotation = properties.getTableAnnotation();
         if (StringUtils.isBlank(tableAnnotation)) {
             // table注解为空直接返回类名作为表名
@@ -86,7 +86,7 @@ public final class BeanSqlService {
         }
         // set command
         List<Field> fieldList = new ArrayList<>(fieldSet);
-        if (JavaBean2DDLSetting.getInstance().getProperties().getAutoTranslationRadio()) {
+        if (OtherSetting.getInstance().getProperties().getAutoTranslationRadio()) {
             getTranslationMap(fieldList, getTableName(currentClass));
         }
         for (Field field : fieldList) {
@@ -114,7 +114,7 @@ public final class BeanSqlService {
      */
     private static String getCommend(Field field, Map<String, String> translationMap) {
         if (!StringUtils.equals(field.getName(), "id")) {
-            if (JavaBean2DDLSetting.getInstance().myProperties.getAutoTranslationRadio()) {
+            if (OtherSetting.getInstance().myProperties.getAutoTranslationRadio()) {
                 return translationMap.getOrDefault(field.getTableColumn().replace("_", " "), "");
             }
             return translationMap.getOrDefault(field.getTableColumn().replace("_", " "), null);
@@ -124,7 +124,7 @@ public final class BeanSqlService {
 
     private static Field getField(PsiField field) {
         boolean primaryKey = false;
-        String idAnnotation = JavaBean2DDLSetting.getInstance().getProperties().getIdAnnotation();
+        String idAnnotation = OtherSetting.getInstance().getProperties().getIdAnnotation();
         if (StringUtils.isNotBlank(idAnnotation)) {
             PsiAnnotation annotation = field.getAnnotation(idAnnotation);
             if (null != annotation) {
@@ -135,7 +135,7 @@ public final class BeanSqlService {
     }
 
     private static String getComment(PsiField field) {
-        String commentAnnotation = JavaBean2DDLSetting.getInstance().getProperties().getCommentAnnotation();
+        String commentAnnotation = OtherSetting.getInstance().getProperties().getCommentAnnotation();
         if (null != field.getDocComment() && StringUtils.isNotBlank(commentAnnotation)) {
             // 字段上携带了对应的标识备注注解
             PsiDocTag comment = field.getDocComment().findTagByName(commentAnnotation);
@@ -194,7 +194,7 @@ public final class BeanSqlService {
             return true;
         }
         // 是否开启显示所有非常用字段
-        return JavaBean2DDLSetting.getInstance().getProperties().getShowNoInMapFieldRadio();
+        return OtherSetting.getInstance().getProperties().getShowNoInMapFieldRadio();
     }
 
     private static boolean isAdditional(String canonicalText) {

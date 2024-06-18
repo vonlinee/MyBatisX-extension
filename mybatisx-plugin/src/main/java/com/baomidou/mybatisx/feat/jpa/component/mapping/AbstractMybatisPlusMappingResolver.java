@@ -18,6 +18,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -42,26 +43,26 @@ public abstract class AbstractMybatisPlusMappingResolver extends JpaMappingResol
     @NotNull
     private List<TxField> determineFields(PsiClass psiClass) {
         return Arrays.stream(psiClass.getAllFields())
-                .filter(this::filterField)
-                .map(field -> {
-                    TxField txField = new TxField();
-                    txField.setTipName(StringUtils.upperCaseFirstChar(field.getName()));
-                    txField.setFieldType(field.getType().getCanonicalText());
+            .filter(this::filterField)
+            .map(field -> {
+                TxField txField = new TxField();
+                txField.setTipName(StringUtils.upperCaseFirstChar(field.getName()));
+                txField.setFieldType(field.getType().getCanonicalText());
 
-                    String columnName = getTableFieldAnnotation(field);
-                    // 实体的字段名称
-                    txField.setFieldName(field.getName());
-                    // 表的列名
-                    txField.setColumnName(columnName);
+                String columnName = getTableFieldAnnotation(field);
+                // 实体的字段名称
+                txField.setFieldName(field.getName());
+                // 表的列名
+                txField.setColumnName(columnName);
 
-                    txField.setPrimaryKey(findIsPrimaryKeyFromField(field));
+                txField.setPrimaryKey(findIsPrimaryKeyFromField(field));
 
-                    txField.setClassName(field.getContainingClass().getQualifiedName());
-                    Optional<String> jdbcTypeByJavaType = JdbcTypeUtils.findJdbcTypeByJavaType(field.getType()
-                            .getCanonicalText());
-                    jdbcTypeByJavaType.ifPresent(txField::setJdbcType);
-                    return txField;
-                }).collect(Collectors.toList());
+                txField.setClassName(Objects.requireNonNull(field.getContainingClass()).getQualifiedName());
+                Optional<String> jdbcTypeByJavaType = JdbcTypeUtils.findJdbcTypeByJavaType(field.getType()
+                    .getCanonicalText());
+                jdbcTypeByJavaType.ifPresent(txField::setJdbcType);
+                return txField;
+            }).collect(Collectors.toList());
     }
 
     protected Boolean findIsPrimaryKeyFromField(PsiField psiField) {
@@ -81,10 +82,10 @@ public abstract class AbstractMybatisPlusMappingResolver extends JpaMappingResol
     public Optional<String> findTableName(PsiClass entityClass) {
         PsiAnnotation annotation = entityClass.getAnnotation(getTableNameAnnotation());
         // 获取 mp 的注解
-        Optional<String> tableName = Optional.ofNullable(getAttributeValue(annotation, VALUE));
+        Optional<String> tableName = Optional.ofNullable(getAttributeValue(annotation));
 
         // 获取 jpa 注解
-        if (!tableName.isPresent()) {
+        if (tableName.isEmpty()) {
             tableName = getTableNameByJpa(entityClass);
         }
         return tableName;
@@ -94,17 +95,18 @@ public abstract class AbstractMybatisPlusMappingResolver extends JpaMappingResol
      * Gets attribute value.
      *
      * @param fieldAnnotation the field annotation
-     * @param value           the value
      * @return the attribute value
      */
-    protected String getAttributeValue(PsiAnnotation fieldAnnotation, String value) {
+    protected String getAttributeValue(PsiAnnotation fieldAnnotation) {
         if (fieldAnnotation == null) {
             return null;
         }
-        PsiAnnotationMemberValue attributeValue = fieldAnnotation.findAttributeValue(value);
-        if (org.apache.commons.lang3.StringUtils.isNotBlank(attributeValue.getText())) {
-            PsiLiteralExpression psiLiteralExpression = (PsiLiteralExpression) attributeValue;
-            return psiLiteralExpression.getValue().toString();
+        PsiAnnotationMemberValue attributeValue = fieldAnnotation.findAttributeValue(AbstractMybatisPlusMappingResolver.VALUE);
+        if (attributeValue != null) {
+            if (org.apache.commons.lang3.StringUtils.isNotBlank(attributeValue.getText())) {
+                PsiLiteralExpression psiLiteralExpression = (PsiLiteralExpression) attributeValue;
+                return Objects.requireNonNull(psiLiteralExpression.getValue()).toString();
+            }
         }
         return null;
     }

@@ -1,11 +1,10 @@
 package com.baomidou.mybatisx.feat.bean;
 
-import com.baomidou.mybatisx.model.ComboBoxItem;
+import com.baomidou.mybatisx.model.AbstractComboBoxItem;
 
-public class TranslationAppComboBoxItem extends ComboBoxItem {
+public class TranslationAppComboBoxItem extends AbstractComboBoxItem {
 
     public TranslationAppComboBoxItem(String name, String value) {
-        this.name = name;
-        this.value = value;
+        super(name, value);
     }
 }

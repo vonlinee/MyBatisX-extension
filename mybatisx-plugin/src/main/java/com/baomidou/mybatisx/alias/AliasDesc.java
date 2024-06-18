@@ -1,13 +1,19 @@
 package com.baomidou.mybatisx.alias;
 
 import com.intellij.psi.PsiClass;
+import lombok.Getter;
+import lombok.Setter;
 import org.jetbrains.annotations.NotNull;
+
+import java.util.Objects;
 
 /**
  * The type Alias desc.
  *
  * @author yanglin
  */
+@Setter
+@Getter
 public class AliasDesc {
 
     private PsiClass clazz;
@@ -42,42 +48,6 @@ public class AliasDesc {
         return new AliasDesc(psiClass, alias);
     }
 
-    /**
-     * Gets clazz.
-     *
-     * @return the clazz
-     */
-    public PsiClass getClazz() {
-        return clazz;
-    }
-
-    /**
-     * Sets clazz.
-     *
-     * @param clazz the clazz
-     */
-    public void setClazz(PsiClass clazz) {
-        this.clazz = clazz;
-    }
-
-    /**
-     * Gets alias.
-     *
-     * @return the alias
-     */
-    public String getAlias() {
-        return alias;
-    }
-
-    /**
-     * Sets alias.
-     *
-     * @param alias the alias
-     */
-    public void setAlias(String alias) {
-        this.alias = alias;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -89,14 +59,10 @@ public class AliasDesc {
 
         AliasDesc aliasDesc = (AliasDesc) o;
 
-        if (alias != null ? !alias.equals(aliasDesc.alias) : aliasDesc.alias != null) {
+        if (!Objects.equals(alias, aliasDesc.alias)) {
             return false;
         }
-        if (clazz != null ? !clazz.equals(aliasDesc.clazz) : aliasDesc.clazz != null) {
-            return false;
-        }
-
-        return true;
+        return Objects.equals(clazz, aliasDesc.clazz);
     }
 
     @Override

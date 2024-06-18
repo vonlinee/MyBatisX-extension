@@ -36,13 +36,13 @@ public class TxParameterDescriptor implements TypeDescriptor {
     public TxParameterDescriptor(final List<TxParameter> parameterList, List<TxField> mappingField) {
         this.parameterList = parameterList;
         fieldColumnNameMapping = mappingField.stream()
-                .collect(Collectors.toMap(TxField::getFieldName, x -> x, (a, b) -> {
-                    if (!a.getFieldType().equals(b.getFieldType())) {
-                        final String format = MessageFormat.format("冲突字段:  {0}#{1} <===> {2}#{3}", a.getClassName(), a.getFieldName(), b.getClassName(), b.getFieldName());
-                        throw new JpaGenerateException("字段类型不匹配, 无法生成SQL. \n" + format);
-                    }
-                    return a;
-                }));
+            .collect(Collectors.toMap(TxField::getFieldName, x -> x, (a, b) -> {
+                if (!a.getFieldType().equals(b.getFieldType())) {
+                    final String format = MessageFormat.format("冲突字段:  {0}#{1} <===> {2}#{3}", a.getClassName(), a.getFieldName(), b.getClassName(), b.getFieldName());
+                    throw new JpaGenerateException("字段类型不匹配, 无法生成SQL. \n" + format);
+                }
+                return a;
+            }));
     }
 
     /**
@@ -66,18 +66,18 @@ public class TxParameterDescriptor implements TypeDescriptor {
     public String getContent(List<String> defaultDateList) {
         Set<String> addedParamNames = new HashSet<>();
         return parameterList.stream()
-                .filter(parameter -> {
-                    String fieldType = parameter.getTypeText();
-                    // 能通过字段名找到列名， 并且列名不是默认日期字段的，就可以加入到参数中
-                    TxField txField = fieldColumnNameMapping.get(parameter.getName());
-                    // 字段类型不为空 and 不是默认日期字段
-                    return fieldType != null
-                           && (txField == null
-                               || !defaultDateList.contains(txField.getColumnName())
-                               || parameter.getAreaSequence() != AreaSequence.RESULT);
-                })
-                .map(param -> this.getParameterName(param, addedParamNames))
-                .collect(Collectors.joining(",", "(", ");"));
+            .filter(parameter -> {
+                String fieldType = parameter.getTypeText();
+                // 能通过字段名找到列名， 并且列名不是默认日期字段的，就可以加入到参数中
+                TxField txField = fieldColumnNameMapping.get(parameter.getName());
+                // 字段类型不为空 and 不是默认日期字段
+                return fieldType != null
+                       && (txField == null
+                           || !defaultDateList.contains(txField.getColumnName())
+                           || parameter.getAreaSequence() != AreaSequence.RESULT);
+            })
+            .map(param -> this.getParameterName(param, addedParamNames))
+            .collect(Collectors.joining(",", "(", ");"));
     }
 
     /**
@@ -99,14 +99,12 @@ public class TxParameterDescriptor implements TypeDescriptor {
 
     /**
      * 要导入的类型列表
-     *
-     * @return
      */
     @Override
     public List<String> getImportList() {
         List<String> collect = parameterList.stream()
-                .flatMap(x -> x.getImportClass().stream())
-                .collect(Collectors.toList());
+            .flatMap(x -> x.getImportClass().stream())
+            .collect(Collectors.toList());
         if (!collect.isEmpty() || !parameterList.isEmpty()) {
             collect.add("org.apache.ibatis.annotations.Param");
         }

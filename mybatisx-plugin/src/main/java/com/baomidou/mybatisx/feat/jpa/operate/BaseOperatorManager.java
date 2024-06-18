@@ -1,17 +1,16 @@
 package com.baomidou.mybatisx.feat.jpa.operate;
 
-
-import com.baomidou.mybatisx.feat.jpa.common.appender.CompositeAppender;
-import com.baomidou.mybatisx.feat.jpa.operate.manager.AreaOperateManager;
-import com.baomidou.mybatisx.feat.jpa.operate.manager.StatementBlock;
-import com.baomidou.mybatisx.feat.jpa.operate.manager.StatementBlockFactory;
+import com.baomidou.mybatisx.feat.jpa.SyntaxAppenderWrapper;
 import com.baomidou.mybatisx.feat.jpa.common.SyntaxAppender;
 import com.baomidou.mybatisx.feat.jpa.common.SyntaxAppenderFactory;
+import com.baomidou.mybatisx.feat.jpa.common.appender.CompositeAppender;
 import com.baomidou.mybatisx.feat.jpa.common.iftest.ConditionFieldWrapper;
 import com.baomidou.mybatisx.feat.jpa.component.TxField;
 import com.baomidou.mybatisx.feat.jpa.component.TxParameter;
 import com.baomidou.mybatisx.feat.jpa.component.TypeDescriptor;
-import com.baomidou.mybatisx.feat.jpa.SyntaxAppenderWrapper;
+import com.baomidou.mybatisx.feat.jpa.operate.manager.AreaOperateManager;
+import com.baomidou.mybatisx.feat.jpa.operate.manager.StatementBlock;
+import com.baomidou.mybatisx.feat.jpa.operate.manager.StatementBlockFactory;
 import com.intellij.psi.PsiClass;
 import com.intellij.psi.PsiMethod;
 import org.apache.commons.lang.StringUtils;
@@ -101,16 +100,16 @@ public abstract class BaseOperatorManager implements AreaOperateManager {
         }
         List<SyntaxAppenderFactory> areaListByJpa = syntaxAppenderFactoryManager.findAreaListByJpa(jpaList);
         return areaListByJpa.stream().flatMap(x -> x.getCompletionContent(jpaList).stream())
-                .collect(Collectors.toList());
+            .collect(Collectors.toList());
     }
 
     @Override
     public List<String> getCompletionContent() {
         Collection<StatementBlock> allBlock = syntaxAppenderFactoryManager.getAllBlock();
         return allBlock.stream().map(StatementBlock::getResultAppenderFactory)
-                .filter(Objects::nonNull)
-                .flatMap(x -> x.getCompletionContent(new ArrayList<>()).stream())
-                .collect(Collectors.toList());
+            .filter(Objects::nonNull)
+            .flatMap(x -> x.getCompletionContent(new ArrayList<>()).stream())
+            .collect(Collectors.toList());
     }
 
     /**
@@ -134,7 +133,7 @@ public abstract class BaseOperatorManager implements AreaOperateManager {
         // 树形结构 根据区域转成map
         LinkedList<SyntaxAppenderWrapper> collector = rootSyntaxWrapper.getCollector();
         Map<String, SyntaxAppenderWrapper> areaAppenderWrapperMap = collector.stream()
-                .collect(Collectors.toMap(k -> k.getAppender().getText(), v -> v));
+            .collect(Collectors.toMap(k -> k.getAppender().getText(), v -> v));
         // 根据区域工厂处理所有区域下的所有符号追加器
         List<SyntaxAppenderFactory> areaListByJpa = syntaxAppenderFactoryManager.findAreaListByJpa(jpaList);
         return areaListByJpa.stream().flatMap(appenderFactory -> {
@@ -184,16 +183,16 @@ public abstract class BaseOperatorManager implements AreaOperateManager {
         List<SyntaxAppenderFactory> areaListByJpa = syntaxAppenderFactoryManager.findAreaListByJpa(jpaList);
 
         LinkedList<TxParameter> parameters = Arrays.stream(psiMethod.getParameterList().getParameters())
-                .map(TxParameter::createByPsiParameter)
-                .collect(Collectors.toCollection(LinkedList::new));
+            .map(TxParameter::createByPsiParameter)
+            .collect(Collectors.toCollection(LinkedList::new));
 
         return areaListByJpa.stream().map(syntaxAppenderFactory -> {
             // 区域生成的xml内容
             return syntaxAppenderFactory.getFactoryTemplateText(jpaList,
-                    entityClass,
-                    parameters,
-                    tableName,
-                    conditionFieldWrapper
+                entityClass,
+                parameters,
+                tableName,
+                conditionFieldWrapper
             );
         }).filter(StringUtils::isNotBlank).collect(Collectors.joining("\n")) + "\n";
 

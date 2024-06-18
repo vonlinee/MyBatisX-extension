@@ -29,7 +29,7 @@ public class JdbcTypeConverter extends ConverterAdaptor<XmlAttributeValue> imple
 
     @NotNull
     @Override
-    public PsiReference[] createReferences(GenericDomValue<XmlAttributeValue> value, PsiElement element, ConvertContext context) {
+    public PsiReference @NotNull [] createReferences(GenericDomValue<XmlAttributeValue> value, PsiElement element, ConvertContext context) {
         final String stringValue = value.getStringValue();
         if (stringValue == null) {
             return PsiReference.EMPTY_ARRAY;
@@ -80,10 +80,10 @@ public class JdbcTypeConverter extends ConverterAdaptor<XmlAttributeValue> imple
 
     }
 
-    private class JdbcTypePsiReferenceBase extends PsiReferenceBase {
+    private class JdbcTypePsiReferenceBase extends PsiReferenceBase<XmlAttributeValue> {
 
         private final ContextReferenceSetResolver<XmlAttributeValue, PsiField> resolver;
-        private int index;
+        private final int index;
 
         public JdbcTypePsiReferenceBase(@NotNull XmlAttributeValue element, TextRange rangeInElement, int index) {
             super(element, rangeInElement, false);
@@ -101,7 +101,7 @@ public class JdbcTypeConverter extends ConverterAdaptor<XmlAttributeValue> imple
 
         @NotNull
         @Override
-        public Object[] getVariants() {
+        public Object @NotNull [] getVariants() {
             Project project = resolver.getProject();
             Object[] objects = jdbcTypeVariantHolder.getVariants();
             if (objects != null) {
@@ -109,7 +109,7 @@ public class JdbcTypeConverter extends ConverterAdaptor<XmlAttributeValue> imple
             }
             // 找不到JdbcType类则始终不缓存
             Optional<PsiClass> classOptional = findJdbcTypeClass(project);
-            if (!classOptional.isPresent()) {
+            if (classOptional.isEmpty()) {
                 return PsiReference.EMPTY_ARRAY;
             }
             PsiClass psiClass = classOptional.get();
@@ -145,7 +145,7 @@ public class JdbcTypeConverter extends ConverterAdaptor<XmlAttributeValue> imple
                 return Optional.empty();
             }
             Optional<PsiClass> jdbcTypeOptional = findJdbcTypeClass(project);
-            if (!jdbcTypeOptional.isPresent()) {
+            if (jdbcTypeOptional.isEmpty()) {
                 return Optional.empty();
             }
             PsiClass psiClass = jdbcTypeOptional.get();

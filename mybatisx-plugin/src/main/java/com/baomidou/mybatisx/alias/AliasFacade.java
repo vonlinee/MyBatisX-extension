@@ -1,7 +1,7 @@
 package com.baomidou.mybatisx.alias;
 
 
-import com.intellij.openapi.components.ServiceManager;
+import com.baomidou.mybatisx.util.IntellijSDK;
 import com.intellij.openapi.project.Project;
 import com.intellij.psi.JavaPsiFacade;
 import com.intellij.psi.PsiClass;
@@ -25,11 +25,11 @@ import java.util.Optional;
  */
 public class AliasFacade {
 
-    private Project project;
+    private final Project project;
 
-    private JavaPsiFacade javaPsiFacade;
+    private final JavaPsiFacade javaPsiFacade;
 
-    private List<AliasResolver> resolvers;
+    private final List<AliasResolver> resolvers;
 
     /**
      * Instantiates a new Alias facade.
@@ -50,7 +50,7 @@ public class AliasFacade {
      * @return the instance
      */
     public static AliasFacade getInstance(@NotNull Project project) {
-        return ServiceManager.getService(project, AliasFacade.class);
+        return IntellijSDK.getService(AliasFacade.class, project);
     }
 
     private void initResolvers() {

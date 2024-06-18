@@ -71,9 +71,7 @@ public class XmlNode {
 
     private StringBuilder indent(StringBuilder builder, int level) {
         int count = Math.max(0, level);
-        for (int i = 0; i < count; i++) {
-            builder.append("  ");
-        }
+        builder.append("  ".repeat(count));
         return builder;
     }
 
@@ -86,7 +84,6 @@ public class XmlNode {
     private String getBodyData(Node child) {
         String bodyData = null;
         if (child instanceof CharacterData) {
-
             CharacterData characterData = (CharacterData) child;
             // CDATA节点
             if (child.getNodeType() == Node.CDATA_SECTION_NODE) {

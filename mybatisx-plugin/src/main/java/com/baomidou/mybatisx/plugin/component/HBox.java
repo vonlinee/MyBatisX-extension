@@ -1,10 +1,12 @@
 package com.baomidou.mybatisx.plugin.component;
 
-import com.intellij.ui.components.panels.HorizontalBox;
+import org.jdesktop.swingx.HorizontalLayout;
 
-public class HBox extends HorizontalBox {
+import javax.swing.*;
+
+public class HBox extends JPanel {
 
     public HBox() {
-
+        super(new HorizontalLayout());
     }
 }

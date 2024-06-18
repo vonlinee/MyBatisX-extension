@@ -75,7 +75,7 @@ public class IntellijIntrospector {
     private void reportIntrospectionWarnings(IntrospectedTable introspectedTable, TableConfiguration tableConfiguration, FullyQualifiedTable table) {
 
         for (ColumnOverride columnOverride : tableConfiguration.getColumnOverrides()) {
-            if (!introspectedTable.getColumn(columnOverride.getColumnName()).isPresent()) {
+            if (introspectedTable.getColumn(columnOverride.getColumnName()).isEmpty()) {
                 this.warnings.add(Messages.getString("Warning.3", columnOverride.getColumnName(), table.toString()));
             }
         }
@@ -85,7 +85,7 @@ public class IntellijIntrospector {
         }
 
         GeneratedKey generatedKey = tableConfiguration.getGeneratedKey();
-        if (generatedKey != null && !introspectedTable.getColumn(generatedKey.getColumn()).isPresent()) {
+        if (generatedKey != null && introspectedTable.getColumn(generatedKey.getColumn()).isEmpty()) {
             if (generatedKey.isIdentity()) {
                 this.warnings.add(Messages.getString("Warning.5", generatedKey.getColumn(), table.toString()));
             } else {

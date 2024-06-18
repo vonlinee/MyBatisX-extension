@@ -3,10 +3,10 @@ package com.baomidou.mybatisx.feat.jpa.common.iftest;
 import com.baomidou.mybatisx.dom.model.Mapper;
 import com.baomidou.mybatisx.feat.jpa.common.MapperClassGenerateFactory;
 import com.baomidou.mybatisx.feat.jpa.common.appender.JdbcTypeUtils;
+import com.baomidou.mybatisx.feat.jpa.component.TxField;
 import com.baomidou.mybatisx.feat.jpa.operate.generate.EmptyGenerator;
 import com.baomidou.mybatisx.feat.jpa.operate.generate.Generator;
 import com.baomidou.mybatisx.feat.jpa.operate.generate.MybatisXmlGenerator;
-import com.baomidou.mybatisx.feat.jpa.component.TxField;
 import com.intellij.openapi.project.Project;
 
 import java.util.Collections;

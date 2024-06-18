@@ -3,10 +3,10 @@ package com.baomidou.mybatisx.feat.jpa.common;
 
 import com.baomidou.mybatisx.feat.jpa.SyntaxAppenderWrapper;
 import com.baomidou.mybatisx.feat.jpa.common.appender.AreaSequence;
-import com.baomidou.mybatisx.feat.jpa.operate.model.AppendTypeEnum;
 import com.baomidou.mybatisx.feat.jpa.common.command.AppendTypeCommand;
 import com.baomidou.mybatisx.feat.jpa.common.iftest.ConditionFieldWrapper;
 import com.baomidou.mybatisx.feat.jpa.component.TxParameter;
+import com.baomidou.mybatisx.feat.jpa.operate.model.AppendTypeEnum;
 import com.intellij.psi.PsiClass;
 
 import java.util.Collections;
@@ -182,5 +182,4 @@ public interface SyntaxAppender {
     default AreaSequence getAreaSequence() {
         return AreaSequence.UN_KNOWN;
     }
-
 }

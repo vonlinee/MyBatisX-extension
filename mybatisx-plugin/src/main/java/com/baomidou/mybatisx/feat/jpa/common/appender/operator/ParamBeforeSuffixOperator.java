@@ -14,7 +14,7 @@ public class ParamBeforeSuffixOperator implements SuffixOperator {
     /**
      * 比较符号
      */
-    private String operatorName;
+    private final String operatorName;
 
     /**
      * Instantiates a new Param before suffix operator.
@@ -28,6 +28,9 @@ public class ParamBeforeSuffixOperator implements SuffixOperator {
     @Override
     public String getTemplateText(String columnName, LinkedList<TxParameter> parameters, ConditionFieldWrapper conditionFieldWrapper) {
         TxParameter parameter = parameters.poll();
+        if (parameter == null) {
+            return "";
+        }
         return columnName
                + " "
                + operatorName

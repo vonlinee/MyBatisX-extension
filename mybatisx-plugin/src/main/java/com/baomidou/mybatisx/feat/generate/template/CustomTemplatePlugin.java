@@ -36,6 +36,9 @@ public class CustomTemplatePlugin extends PluginAdapter {
     public List<GeneratedJavaFile> contextGenerateAdditionalJavaFiles(IntrospectedTable introspectedTable) {
         String root = properties.getProperty(ROOT);
         CustomTemplateRoot rootObject = readRootObject(root);
+        if (rootObject == null) {
+            return Collections.emptyList();
+        }
 
         ModuleInfoGo moduleUIInfo = rootObject.getModuleUIInfo();
 
@@ -50,11 +53,11 @@ public class CustomTemplatePlugin extends PluginAdapter {
         javaFormatter.setContext(context);
 
         GeneratedJavaFile generatedJavaFile = new FreeMarkerBasedGeneratedFile(topLevelClass,
-                javaFormatter,
-                modulePath,
-                moduleUIInfo.getEncoding(),
-                moduleUIInfo.getFileNameWithSuffix(),
-                moduleUIInfo.getPackageName());
+            javaFormatter,
+            modulePath,
+            moduleUIInfo.getEncoding(),
+            moduleUIInfo.getFileNameWithSuffix(),
+            moduleUIInfo.getPackageName());
         return Collections.singletonList(generatedJavaFile);
     }
 

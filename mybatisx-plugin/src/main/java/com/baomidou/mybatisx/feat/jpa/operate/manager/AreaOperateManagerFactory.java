@@ -1,9 +1,9 @@
 package com.baomidou.mybatisx.feat.jpa.operate.manager;
 
-import com.baomidou.mybatisx.feat.jpa.operate.dialect.mysql.MysqlManager;
 import com.baomidou.mybatisx.feat.jpa.component.TxField;
 import com.baomidou.mybatisx.feat.jpa.db.DasTableAdaptor;
 import com.baomidou.mybatisx.feat.jpa.db.DbmsAdaptor;
+import com.baomidou.mybatisx.feat.jpa.operate.dialect.mysql.MysqlManager;
 import com.baomidou.mybatisx.feat.jpa.operate.dialect.oracle.OracleManager;
 import com.intellij.psi.PsiClass;
 

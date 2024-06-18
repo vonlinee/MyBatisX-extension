@@ -1,21 +1,18 @@
 package com.baomidou.mybatisx.model;
 
-import lombok.Getter;
-import lombok.Setter;
+public interface ComboBoxItem {
 
-@Setter
-@Getter
-public class ComboBoxItem {
+    /**
+     * 选项展示的文本
+     *
+     * @return 选项展示的文本
+     */
+    String getName();
 
-    protected String name;
-
-    protected String value;
-
-    public ComboBoxItem() {
-    }
-
-    public ComboBoxItem(String name, String value) {
-        this.name = name;
-        this.value = value;
-    }
+    /**
+     * 选项选中的值
+     *
+     * @return 选项选中的值
+     */
+    Object getValue();
 }

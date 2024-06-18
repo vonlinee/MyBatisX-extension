@@ -34,11 +34,11 @@ public class PlatformSimpleGenerator {
         String tableName = findTableName(project, entityClass, entityMappingHolder.getTableName());
 
         return CommonGenerator.createEditorAutoCompletion(entityClass,
-                text,
-                dbms,
-                dasTableAdaptor,
-                tableName,
-                entityMappingHolder.getFields());
+            text,
+            dbms,
+            dasTableAdaptor,
+            tableName,
+            entityMappingHolder.getFields());
     }
 
     /**

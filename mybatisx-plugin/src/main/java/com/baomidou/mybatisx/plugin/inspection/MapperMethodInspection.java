@@ -1,6 +1,6 @@
 package com.baomidou.mybatisx.plugin.inspection;
 
-import com.baomidou.mybatisx.annotation.Annotation;
+import com.baomidou.mybatisx.feat.mybatis.Annotation;
 import com.baomidou.mybatisx.dom.model.Select;
 import com.baomidou.mybatisx.plugin.locator.MapperLocator;
 import com.baomidou.mybatisx.service.JavaService;

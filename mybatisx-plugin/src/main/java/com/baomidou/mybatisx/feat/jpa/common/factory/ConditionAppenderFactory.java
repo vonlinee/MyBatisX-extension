@@ -1,9 +1,8 @@
 package com.baomidou.mybatisx.feat.jpa.common.factory;
 
+import com.baomidou.mybatisx.feat.jpa.SyntaxAppenderWrapper;
 import com.baomidou.mybatisx.feat.jpa.common.BaseAppenderFactory;
 import com.baomidou.mybatisx.feat.jpa.common.SyntaxAppender;
-import com.baomidou.mybatisx.feat.jpa.common.iftest.ConditionFieldWrapper;
-import com.baomidou.mybatisx.feat.jpa.operate.model.AppendTypeEnum;
 import com.baomidou.mybatisx.feat.jpa.common.appender.AreaSequence;
 import com.baomidou.mybatisx.feat.jpa.common.appender.CompositeAppender;
 import com.baomidou.mybatisx.feat.jpa.common.appender.CustomAreaAppender;
@@ -15,9 +14,10 @@ import com.baomidou.mybatisx.feat.jpa.common.appender.changer.BooleanParameterCh
 import com.baomidou.mybatisx.feat.jpa.common.appender.changer.InParameterChanger;
 import com.baomidou.mybatisx.feat.jpa.common.appender.changer.NotInParameterChanger;
 import com.baomidou.mybatisx.feat.jpa.common.appender.operator.ParamIgnoreCaseSuffixOperator;
+import com.baomidou.mybatisx.feat.jpa.common.iftest.ConditionFieldWrapper;
 import com.baomidou.mybatisx.feat.jpa.component.TxField;
 import com.baomidou.mybatisx.feat.jpa.component.TxParameter;
-import com.baomidou.mybatisx.feat.jpa.SyntaxAppenderWrapper;
+import com.baomidou.mybatisx.feat.jpa.operate.model.AppendTypeEnum;
 import com.intellij.psi.PsiClass;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -64,23 +64,23 @@ public class ConditionAppenderFactory extends BaseAppenderFactory {
 
             // 区域 :  By + field
             final CompositeAppender areaFieldAppender = new CompositeAppender(
-                    CustomAreaAppender.createCustomAreaAppender(this.getTipText(),
-                            getTipText(),
-                            AreaSequence.AREA,
-                            AreaSequence.CONDITION,
-                            this),
-                    new CustomFieldAppender(field, AreaSequence.CONDITION));
+                CustomAreaAppender.createCustomAreaAppender(this.getTipText(),
+                    getTipText(),
+                    AreaSequence.AREA,
+                    AreaSequence.CONDITION,
+                    this),
+                new CustomFieldAppender(field, AreaSequence.CONDITION));
             syntaxAppenderArrayList.add(areaFieldAppender);
 
             // and :  and + field
             final CompositeAppender andAppender = new CompositeAppender(
-                    new CustomJoinAppender("And", " AND", AreaSequence.CONDITION),
-                    new CustomFieldAppender(field, AreaSequence.CONDITION));
+                new CustomJoinAppender("And", " AND", AreaSequence.CONDITION),
+                new CustomFieldAppender(field, AreaSequence.CONDITION));
             syntaxAppenderArrayList.add(andAppender);
             // or : or + field
             final CompositeAppender orAppender = new CompositeAppender(
-                    new CustomJoinAppender("Or", " OR", AreaSequence.CONDITION),
-                    new CustomFieldAppender(field, AreaSequence.CONDITION));
+                new CustomJoinAppender("Or", " OR", AreaSequence.CONDITION),
+                new CustomFieldAppender(field, AreaSequence.CONDITION));
             syntaxAppenderArrayList.add(orAppender);
         }
         // 添加字段后缀
@@ -127,7 +127,7 @@ public class ConditionAppenderFactory extends BaseAppenderFactory {
         syntaxAppenderArrayList.add(CustomSuffixAppender.createByParameterChanger("True", new BooleanParameterChanger(Boolean.TRUE), AreaSequence.CONDITION));
         // where x.active = false
         syntaxAppenderArrayList.add(CustomSuffixAppender.createByParameterChanger("False", new BooleanParameterChanger(Boolean.FALSE), AreaSequence.CONDITION));
-        // where UPPER(x.firstame) = UPPER(?1)
+        // where UPPER(x.firstname) = UPPER(?1)
         syntaxAppenderArrayList.add(CustomSuffixAppender.createBySuffixOperator("IgnoreCase", new ParamIgnoreCaseSuffixOperator(), AreaSequence.CONDITION));
 
         return syntaxAppenderArrayList;
@@ -159,7 +159,7 @@ public class ConditionAppenderFactory extends BaseAppenderFactory {
         for (SyntaxAppenderWrapper syntaxAppenderWrapper : collector) {
             SyntaxAppender appender = syntaxAppenderWrapper.getAppender();
             String templateText = appender
-                    .getTemplateText(tableName, entityClass, parameters, syntaxAppenderWrapper.getCollector(), conditionFieldWrapper);
+                .getTemplateText(tableName, entityClass, parameters, syntaxAppenderWrapper.getCollector(), conditionFieldWrapper);
             if (appender.getType() == AppendTypeEnum.JOIN) {
                 joinStack.push(templateText);
                 continue;

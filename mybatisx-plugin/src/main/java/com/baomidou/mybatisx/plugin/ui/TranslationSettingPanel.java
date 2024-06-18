@@ -2,16 +2,17 @@ package com.baomidou.mybatisx.plugin.ui;
 
 import com.baomidou.mybatisx.feat.bean.TranslationAppComboBoxItem;
 import com.baomidou.mybatisx.feat.ddl.TranslationAppEnum;
-import com.baomidou.mybatisx.plugin.component.VBox;
-import com.baomidou.mybatisx.plugin.setting.JavaBean2DDLSetting;
+import com.baomidou.mybatisx.plugin.component.HBox;
+import com.baomidou.mybatisx.plugin.setting.OtherSetting;
 import com.baomidou.mybatisx.plugin.ui.components.TransalationComboBox;
 import com.baomidou.mybatisx.util.IntellijSDK;
 import com.baomidou.mybatisx.util.StringUtils;
 import com.baomidou.mybatisx.util.SwingUtils;
-import com.intellij.ui.JBColor;
 import com.intellij.util.ui.GridBag;
+import com.intellij.util.ui.components.BorderLayoutPanel;
 import lombok.Getter;
 import lombok.Setter;
+import org.jdesktop.swingx.VerticalLayout;
 
 import javax.swing.*;
 import java.awt.*;
@@ -23,7 +24,7 @@ import static com.baomidou.mybatisx.feat.ddl.TranslationAppEnum.TENCENT;
 @Getter
 @Setter
 public class TranslationSettingPanel {
-    private VBox rootPanel;
+    private JPanel rootPanel;
     private JPanel baiduAccountPanel;
     private JPanel translationBasePanel;
     private TransalationComboBox translationAppComboBox;
@@ -34,32 +35,31 @@ public class TranslationSettingPanel {
     private JTextField secretId;
     private JTextField secretKey;
 
-    private JavaBean2DDLSetting.MySettingProperties properties;
+    private OtherSetting.State properties;
 
     public TranslationSettingPanel() {
-        JavaBean2DDLSetting service = IntellijSDK.getService(JavaBean2DDLSetting.class);
+        OtherSetting service = IntellijSDK.getService(OtherSetting.class);
         this.properties = service.myProperties;
 
-        rootPanel = new VBox();
+        rootPanel = new JPanel(new VerticalLayout());
         SwingUtils.addTitleBorder(rootPanel, "基础配置");
 
         // 基础配置面板
-        JPanel panel = new JPanel(new GridBagLayout());
-
+        HBox hBox = new HBox();
         GridBag gb = UIHelper.newGridBagLayoutConstraints();
-        panel.add(new Label("自动翻译 :"), gb.nextLine().next());
+        hBox.add(new Label("自动翻译 :"));
         autoTranslationRadio = new JRadioButton();
-        panel.add(autoTranslationRadio, gb.next());
-        panel.add(new Label("翻译组件 :"), gb.nextLine().next());
-        panel.add(translationAppComboBox = new TransalationComboBox(), gb.next());
+        hBox.add(autoTranslationRadio);
+        hBox.add(new Label("翻译组件 :"));
+        hBox.add(translationAppComboBox = new TransalationComboBox(), gb.next());
 
-        rootPanel.add(panel);
+        rootPanel.add(hBox, BorderLayout.NORTH);
 
-        // 翻译切换面板
         translationBasePanel = new JPanel(new CardLayout());
-        translationBasePanel.setPreferredSize(new Dimension(translationBasePanel.getWidth(), 200));
-        translationBasePanel.setBackground(JBColor.RED);
-        rootPanel.add(translationBasePanel);
+        // 翻译切换面板容器
+        BorderLayoutPanel jPanel = new BorderLayoutPanel();
+        jPanel.addToCenter(translationBasePanel);
+        rootPanel.add(jPanel, BorderLayout.SOUTH);
 
         // 不同的翻译实现面板
 
@@ -89,7 +89,8 @@ public class TranslationSettingPanel {
         translationBasePanel.add(tencentAccountPanel);
         translationBasePanel.add(baiduAccountPanel);
 
-        accountPanelInit();
+        baiduAccountPanel.setVisible(StringUtils.equals(BAIDU.getValue(), properties.getTranslationAppComboBox()));
+        tencentAccountPanel.setVisible(StringUtils.equals(TENCENT.getValue(), properties.getTranslationAppComboBox()));
         /*翻译组件下拉框初始化*/
         translationAppComboBoxInit();
         /*自动翻译单元框*/
@@ -102,11 +103,6 @@ public class TranslationSettingPanel {
         secretKey.setText(properties.getSecretKey());
     }
 
-    private void accountPanelInit() {
-        baiduAccountPanel.setVisible(StringUtils.equals(BAIDU.getValue(), properties.getTranslationAppComboBox()));
-        tencentAccountPanel.setVisible(StringUtils.equals(TENCENT.getValue(), properties.getTranslationAppComboBox()));
-    }
-
     private void autoTranslationRadioInit() {
         // 从配置中设置值
         autoTranslationRadio.setSelected(properties.getAutoTranslationRadio());
@@ -114,13 +110,22 @@ public class TranslationSettingPanel {
         autoTranslationRadio.addActionListener(e -> {
             if (autoTranslationRadio.isSelected()) {
                 TranslationAppComboBoxItem item = (TranslationAppComboBoxItem) translationAppComboBox.getSelectedItem();
-                assert item != null;
-                baiduAccountPanel.setVisible(StringUtils.equals(BAIDU.getValue(), item.getValue()));
-                tencentAccountPanel.setVisible(StringUtils.equals(TENCENT.getValue(), item.getValue()));
-                return;
+                if (item != null) {
+                    if (translationAppComboBox.getItemCount() > 2) {
+                        translationAppComboBox.setSelectedIndex(1);
+                    }
+                    baiduAccountPanel.setVisible(StringUtils.equals(BAIDU.getValue(), item.getValue()));
+                    tencentAccountPanel.setVisible(StringUtils.equals(TENCENT.getValue(), item.getValue()));
+                }
+                if (!translationBasePanel.isVisible()) {
+                    translationBasePanel.setVisible(true);
+                }
+            } else {
+                baiduAccountPanel.setVisible(false);
+                tencentAccountPanel.setVisible(false);
+                translationBasePanel.setVisible(false);
+                translationAppComboBox.setSelectedIndex(0);
             }
-            baiduAccountPanel.setVisible(false);
-            tencentAccountPanel.setVisible(false);
         });
     }
 
@@ -151,6 +156,9 @@ public class TranslationSettingPanel {
                 autoTranslationRadio.setSelected(false);
                 tencentAccountPanel.setVisible(false);
                 baiduAccountPanel.setVisible(false);
+            }
+            if (!translationBasePanel.isVisible()) {
+                translationBasePanel.setVisible(true);
             }
         });
     }

@@ -5,7 +5,7 @@ import com.baomidou.mybatisx.model.TranslationVO;
 import com.baomidou.mybatisx.service.BaiduTranslationService;
 import com.baomidou.mybatisx.service.TencentTranslationService;
 import com.baomidou.mybatisx.service.Translation;
-import com.baomidou.mybatisx.plugin.setting.JavaBean2DDLSetting;
+import com.baomidou.mybatisx.plugin.setting.OtherSetting;
 import org.springframework.util.CollectionUtils;
 
 import java.util.ArrayList;
@@ -23,7 +23,7 @@ import static com.baomidou.mybatisx.feat.ddl.TranslationAppEnum.TENCENT;
  */
 public class TranslationUtil {
 
-    public static Translation translationInit(JavaBean2DDLSetting.MySettingProperties properties) {
+    public static Translation translationInit(OtherSetting.State properties) {
         if (StringUtils.equals(BAIDU.getValue(), properties.getTranslationAppComboBox())) {
             return new BaiduTranslationService(properties.getAppIdText(), properties.getSecretText());
         }
@@ -35,7 +35,7 @@ public class TranslationUtil {
 
     public static Map<String, String> enToZh(List<Field> fieldList, String tableName) {
         tableName = tableName.replace("_", " ");
-        JavaBean2DDLSetting.MySettingProperties properties = JavaBean2DDLSetting.getInstance().myProperties;
+        OtherSetting.State properties = OtherSetting.getInstance().myProperties;
         String translationApp = properties.getTranslationAppComboBox();
 
         Map<String, String> dataMap = new HashMap<>();

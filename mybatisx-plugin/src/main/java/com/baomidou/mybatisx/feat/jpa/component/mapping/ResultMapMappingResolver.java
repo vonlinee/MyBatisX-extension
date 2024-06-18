@@ -124,8 +124,8 @@ public class ResultMapMappingResolver extends JpaMappingResolver implements Enti
 
     private Collection<? extends TxField> determineResults(List<Result> results, PsiClass mapperClass) {
         return results.stream()
-                .map(result -> determineField(mapperClass, result.getProperty(), result.getXmlTag(), result.getJdbcType(), false))
-                .filter(Objects::nonNull).collect(Collectors.toList());
+            .map(result -> determineField(mapperClass, result.getProperty(), result.getXmlTag(), result.getJdbcType(), false))
+            .filter(Objects::nonNull).collect(Collectors.toList());
     }
 
     /**
@@ -165,7 +165,7 @@ public class ResultMapMappingResolver extends JpaMappingResolver implements Enti
             }
             if (fieldJdbcType == null) {
                 Optional<String> jdbcTypeByJavaType = JdbcTypeUtils.findJdbcTypeByJavaType(field.getType()
-                        .getCanonicalText());
+                    .getCanonicalText());
                 if (jdbcTypeByJavaType.isPresent()) {
                     fieldJdbcType = jdbcTypeByJavaType.get();
                 }
@@ -185,7 +185,7 @@ public class ResultMapMappingResolver extends JpaMappingResolver implements Enti
      */
     private Collection<? extends TxField> determineIds(PsiClass mapperClass, List<Id> ids) {
         return ids.stream().map(id -> getTxField(mapperClass, id)).filter(Objects::nonNull)
-                .collect(Collectors.toList());
+            .collect(Collectors.toList());
     }
 
     /**
@@ -212,12 +212,12 @@ public class ResultMapMappingResolver extends JpaMappingResolver implements Enti
         }
         // 字符串长度维度比较
         Map<String, ResultMap> allResultMaps = resultMaps.stream().
-                collect(Collectors.toMap(k -> {
-                            String stringValue = k.getId().getStringValue();
-                            return stringValue == null ? "" : stringValue.toUpperCase();
-                        },
-                        v -> v,
-                        BinaryOperator.maxBy(Comparator.comparing(k -> k.getId().getStringValue()))));
+            collect(Collectors.toMap(k -> {
+                    String stringValue = k.getId().getStringValue();
+                    return stringValue == null ? "" : stringValue.toUpperCase();
+                },
+                v -> v,
+                BinaryOperator.maxBy(Comparator.comparing(k -> k.getId().getStringValue()))));
         // find ResultMapWithBLOBs
         ResultMap resultMap = allResultMaps.get(RESULT_MAP_WITH_BLOBS.toUpperCase());
         // find BaseResultMap

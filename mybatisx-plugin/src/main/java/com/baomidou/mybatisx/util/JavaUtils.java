@@ -1,7 +1,7 @@
 package com.baomidou.mybatisx.util;
 
-import com.baomidou.mybatisx.annotation.Annotation;
 import com.baomidou.mybatisx.dom.model.IdDomElement;
+import com.baomidou.mybatisx.feat.mybatis.Annotation;
 import com.intellij.openapi.project.Project;
 import com.intellij.psi.JavaPsiFacade;
 import com.intellij.psi.PsiAnnotation;
@@ -102,7 +102,10 @@ public final class JavaUtils {
      * @param clazzName the clazz name
      * @return the optional
      */
-    public static Optional<PsiClass> findClass(@NotNull Project project, @NotNull String clazzName) {
+    public static Optional<PsiClass> findClass(@NotNull Project project, @Nullable String clazzName) {
+        if (StringUtils.isBlank(clazzName)) {
+            return Optional.empty();
+        }
         String classNameNeedFind = clazzName;
         if (classNameNeedFind.contains("$")) {
             classNameNeedFind = classNameNeedFind.replace("$", ".");
@@ -118,9 +121,12 @@ public final class JavaUtils {
      * @param clazzName the clazz name
      * @return the optional
      */
-    public static Optional<PsiClass[]> findClasses(@NotNull Project project, @NotNull String clazzName) {
+    public static Optional<PsiClass[]> findClasses(@NotNull Project project, @Nullable String clazzName) {
+        if (StringUtils.isBlank(clazzName)) {
+            return Optional.empty();
+        }
         return Optional.of(JavaPsiFacade.getInstance(project)
-                .findClasses(clazzName, GlobalSearchScope.allScope(project)));
+            .findClasses(clazzName, GlobalSearchScope.allScope(project)));
     }
 
     /**
@@ -138,7 +144,7 @@ public final class JavaUtils {
         Optional<PsiClass> clazz = findClass(project, clazzName);
         if (clazz.isPresent()) {
             PsiMethod[] methods = clazz.get().findMethodsByName(methodName, true);
-            return ArrayUtils.isEmpty(methods) ? Optional.<PsiMethod>empty() : Optional.of(methods[0]);
+            return ArrayUtils.isEmpty(methods) ? Optional.empty() : Optional.of(methods[0]);
         }
         return Optional.empty();
     }
@@ -159,9 +165,9 @@ public final class JavaUtils {
         if (classes.isPresent()) {
 
             List<PsiMethod> collect = Arrays.stream(classes.get())
-                    .map(psiClass -> psiClass.findMethodsByName(methodName, true))
-                    .flatMap(Arrays::stream)
-                    .collect(Collectors.toList());
+                .map(psiClass -> psiClass.findMethodsByName(methodName, true))
+                .flatMap(Arrays::stream)
+                .collect(Collectors.toList());
             return collect.isEmpty() ? Optional.empty() : Optional.of(collect.toArray(new PsiMethod[0]));
 
         }

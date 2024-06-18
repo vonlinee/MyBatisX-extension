@@ -1,6 +1,6 @@
 package com.baomidou.mybatisx.feat.jpa.operate.dialect.oracle;
 
-import com.baomidou.mybatisx.feat.jpa.operate.dialect.mysql.MysqlInsertBatch;
+import com.baomidou.mybatisx.feat.jpa.SyntaxAppenderWrapper;
 import com.baomidou.mybatisx.feat.jpa.common.SyntaxAppender;
 import com.baomidou.mybatisx.feat.jpa.common.appender.AreaSequence;
 import com.baomidou.mybatisx.feat.jpa.common.appender.JdbcTypeUtils;
@@ -11,7 +11,7 @@ import com.baomidou.mybatisx.feat.jpa.component.TxField;
 import com.baomidou.mybatisx.feat.jpa.component.TxParameter;
 import com.baomidou.mybatisx.feat.jpa.db.DasTableAdaptor;
 import com.baomidou.mybatisx.feat.jpa.exp.GenerateException;
-import com.baomidou.mybatisx.feat.jpa.SyntaxAppenderWrapper;
+import com.baomidou.mybatisx.feat.jpa.operate.dialect.mysql.MysqlInsertBatch;
 import com.baomidou.mybatisx.util.MybatisXCollectors;
 import com.baomidou.mybatisx.util.StringUtils;
 import com.intellij.database.model.DasTableKey;
@@ -62,22 +62,21 @@ public class OracleInsertBatchWithAll extends MysqlInsertBatch {
 
     @Override
     protected ResultAppenderFactory getResultAppenderFactory(List<TxField> mappingField, String newAreaName) {
-        ResultAppenderFactory appenderFactory = new InsertBatchResultAppenderFactory(newAreaName) {
+        return new InsertBatchResultAppenderFactory(newAreaName) {
             @Override
-            public String getTemplateText(String tableName, PsiClass entityClass, LinkedList<TxParameter> parameters, LinkedList<SyntaxAppenderWrapper> collector, ConditionFieldWrapper conditionFieldWrapper) {
+            public String getTemplateText(String tableName1, PsiClass entityClass, LinkedList<TxParameter> parameters, LinkedList<SyntaxAppenderWrapper> collector, ConditionFieldWrapper conditionFieldWrapper) {
                 // 定制参数
                 SyntaxAppender suffixOperator = InsertCustomSuffixAppender.createInsertBySuffixOperator("BatchWithAll",
-                        getSuffixOperator(mappingField),
-                        AreaSequence.RESULT);
+                    getSuffixOperator(mappingField),
+                    AreaSequence.RESULT);
                 LinkedList<SyntaxAppenderWrapper> syntaxAppenderWrappers = new LinkedList<>();
                 syntaxAppenderWrappers.add(new SyntaxAppenderWrapper(suffixOperator));
-                return super.getTemplateText(tableName, entityClass, parameters, syntaxAppenderWrappers, conditionFieldWrapper);
+                return super.getTemplateText(tableName1, entityClass, parameters, syntaxAppenderWrappers, conditionFieldWrapper);
             }
         };
-        return appenderFactory;
     }
 
-    private class InsertBatchResultAppenderFactory extends ResultAppenderFactory {
+    private static class InsertBatchResultAppenderFactory extends ResultAppenderFactory {
 
         /**
          * Instantiates a new Insert batch result appender factory.
@@ -97,7 +96,7 @@ public class OracleInsertBatchWithAll extends MysqlInsertBatch {
             StringBuilder mapperXml = new StringBuilder("insert all ");
             for (SyntaxAppenderWrapper syntaxAppenderWrapper : collector) {
                 String templateText = syntaxAppenderWrapper.getAppender()
-                        .getTemplateText(tableName, entityClass, parameters, collector, conditionFieldWrapper);
+                    .getTemplateText(tableName, entityClass, parameters, collector, conditionFieldWrapper);
                 mapperXml.append(templateText);
             }
             mapperXml.append("select 1 from dual");
@@ -115,10 +114,10 @@ public class OracleInsertBatchWithAll extends MysqlInsertBatch {
             importClass.add(Collection.class.getName());
             importClass.add(entityClass.getQualifiedName());
             TxParameter parameter = TxParameter.createByOrigin(variableName,
-                    defineName,
-                    Collection.class.getName(),
-                    true,
-                    importClass);
+                defineName,
+                Collection.class.getName(),
+                true,
+                importClass);
             return Collections.singletonList(parameter);
         }
     }
@@ -138,7 +137,7 @@ public class OracleInsertBatchWithAll extends MysqlInsertBatch {
          * @param tableName    the table name
          * @param mappingField the mapping field
          */
-        public InsertBatchSuffixOperator(String tableName, List<TxField> mappingField) {
+        public InsertBatchSuffixOperator(String tableName, @NotNull List<TxField> mappingField) {
             this.tableName = tableName;
             this.mappingField = mappingField;
         }
@@ -152,8 +151,8 @@ public class OracleInsertBatchWithAll extends MysqlInsertBatch {
 
             // 追加列名
             final String columns = mappingField.stream()
-                    .map(TxField::getColumnName)
-                    .collect(MybatisXCollectors.joining(",", conditionFieldWrapper.getNewline()));
+                .map(TxField::getColumnName)
+                .collect(MybatisXCollectors.joining(",", conditionFieldWrapper.getNewline()));
 
             final TxParameter collection = parameters.poll();
             if (collection == null) {
@@ -162,24 +161,24 @@ public class OracleInsertBatchWithAll extends MysqlInsertBatch {
 
             final String collectionName = collection.getName();
             final String fields = mappingField.stream()
-                    .map(field -> {
-                        String fieldStr = JdbcTypeUtils.wrapperField(itemName + "." + field.getFieldName(), field.getFieldType());
-                        // 第一版写死字段变更, 后续重构
-                        // 变更主键生成规则为自定义函数
-                        if (sequenceName.isPresent() && dasTable != null) {
-                            DasTableKey primaryKey = dasTable.getPrimaryKey();
-                            // 当前字段是主键, 使用自定义函数替换主键
-                            if (primaryKey != null && primaryKey.getColumnsRef().size() == 1) {
-                                String pkFieldName = primaryKey.getColumnsRef().iterate().next();
-                                if (pkFieldName.equals(field.getColumnName())) {
-                                    fieldStr = "GET_SEQ_NO('" + sequenceName.get() + "')";
-                                }
+                .map(field -> {
+                    String fieldStr = JdbcTypeUtils.wrapperField(itemName + "." + field.getFieldName(), field.getFieldType());
+                    // 第一版写死字段变更, 后续重构
+                    // 变更主键生成规则为自定义函数
+                    if (sequenceName.isPresent() && dasTable != null) {
+                        DasTableKey primaryKey = dasTable.getPrimaryKey();
+                        // 当前字段是主键, 使用自定义函数替换主键
+                        if (primaryKey != null && primaryKey.getColumnsRef().size() == 1) {
+                            String pkFieldName = primaryKey.getColumnsRef().iterate().next();
+                            if (pkFieldName.equals(field.getColumnName())) {
+                                fieldStr = "GET_SEQ_NO('" + sequenceName.get() + "')";
                             }
                         }
-                        fieldStr = conditionFieldWrapper.wrapDefaultDateIfNecessary(field.getColumnName(), fieldStr);
-                        return fieldStr;
-                    })
-                    .collect(MybatisXCollectors.joining(",", conditionFieldWrapper.getNewline()));
+                    }
+                    fieldStr = conditionFieldWrapper.wrapDefaultDateIfNecessary(field.getColumnName(), fieldStr);
+                    return fieldStr;
+                })
+                .collect(MybatisXCollectors.joining(",", conditionFieldWrapper.getNewline()));
 
             stringBuilder.append("<foreach collection=\"").append(collectionName).append("\"");
             stringBuilder.append(" item=\"").append(itemName).append("\"").append(">").append("\n");

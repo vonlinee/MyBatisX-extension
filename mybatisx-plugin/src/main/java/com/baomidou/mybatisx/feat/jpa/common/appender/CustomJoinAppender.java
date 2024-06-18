@@ -1,13 +1,13 @@
 package com.baomidou.mybatisx.feat.jpa.common.appender;
 
 
+import com.baomidou.mybatisx.feat.jpa.SyntaxAppenderWrapper;
 import com.baomidou.mybatisx.feat.jpa.common.SyntaxAppender;
 import com.baomidou.mybatisx.feat.jpa.common.command.AppendTypeCommand;
 import com.baomidou.mybatisx.feat.jpa.common.command.JoinAppendTypeCommand;
 import com.baomidou.mybatisx.feat.jpa.common.iftest.ConditionFieldWrapper;
-import com.baomidou.mybatisx.feat.jpa.operate.model.AppendTypeEnum;
 import com.baomidou.mybatisx.feat.jpa.component.TxParameter;
-import com.baomidou.mybatisx.feat.jpa.SyntaxAppenderWrapper;
+import com.baomidou.mybatisx.feat.jpa.operate.model.AppendTypeEnum;
 import com.intellij.psi.PsiClass;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
@@ -103,10 +103,10 @@ public class CustomJoinAppender implements SyntaxAppender {
     @Override
     public String toString() {
         return new ToStringBuilder(this, ToStringStyle.SIMPLE_STYLE)
-                .append("tipText", tipText)
-                .append("sqlText", sqlText)
-                .append("areaSequence", areaSequence)
-                .toString();
+            .append("tipText", tipText)
+            .append("sqlText", sqlText)
+            .append("areaSequence", areaSequence)
+            .toString();
     }
 
     @Override

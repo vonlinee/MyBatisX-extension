@@ -17,8 +17,10 @@ public class ParamIgnoreCaseSuffixOperator implements SuffixOperator {
     public String getTemplateText(String fieldName,
                                   LinkedList<TxParameter> parameters,
                                   ConditionFieldWrapper conditionFieldWrapper) {
-
         TxParameter parameter = parameters.poll();
+        if (parameter == null) {
+            return "";
+        }
         return "UPPER(" + fieldName + ")"
                + " "
                + "="

@@ -88,7 +88,7 @@ public class EntityMappingResolverFactory {
 
             // 字段以 resultMap 标签的配置为准
             Map<String, TxField> resultMapMapping = defaultMappingResolver.findFields(mapperClass, entityClass).stream()
-                    .collect(Collectors.toMap(TxField::getFieldName, v -> v, (l, r) -> l));
+                .collect(Collectors.toMap(TxField::getFieldName, v -> v, (l, r) -> l));
             // 处理字段上面没有注解的情况,
             for (TxField field : entityMappingHolder.getFields()) {
                 TxField defaultField = resultMapMapping.get(field.getFieldName());
@@ -148,7 +148,7 @@ public class EntityMappingResolverFactory {
     private String getUnderLineFromEntityClassName(String camelName) {
         String[] strings = org.apache.commons.lang3.StringUtils.splitByCharacterTypeCamelCase(camelName);
         return Arrays.stream(strings).map(StringUtils::lowerCaseFirstChar)
-                .collect(Collectors.joining("_"));
+            .collect(Collectors.joining("_"));
     }
 
 }

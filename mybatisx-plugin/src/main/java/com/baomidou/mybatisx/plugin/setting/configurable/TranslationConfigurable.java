@@ -3,7 +3,7 @@ package com.baomidou.mybatisx.plugin.setting.configurable;
 import com.baomidou.mybatisx.feat.bean.TranslationAppComboBoxItem;
 import com.baomidou.mybatisx.feat.ddl.TranslationAppEnum;
 import com.baomidou.mybatisx.model.ComboBoxItem;
-import com.baomidou.mybatisx.plugin.setting.JavaBean2DDLSetting;
+import com.baomidou.mybatisx.plugin.setting.OtherSetting;
 import com.baomidou.mybatisx.plugin.ui.TranslationSettingPanel;
 import com.baomidou.mybatisx.util.StringUtils;
 import com.intellij.openapi.options.ConfigurationException;
@@ -14,11 +14,11 @@ import javax.swing.*;
 public final class TranslationConfigurable extends SearchableConfigurableBase {
 
     TranslationSettingPanel settingPanel;
-    private final JavaBean2DDLSetting javaBean2DDLSetting;
+    private final OtherSetting otherSetting;
 
     public TranslationConfigurable() {
         settingPanel = new TranslationSettingPanel();
-        this.javaBean2DDLSetting = JavaBean2DDLSetting.getInstance();
+        this.otherSetting = OtherSetting.getInstance();
     }
 
     @Override
@@ -28,14 +28,14 @@ public final class TranslationConfigurable extends SearchableConfigurableBase {
 
     @Override
     public boolean isModified() {
-        JavaBean2DDLSetting.MySettingProperties myProperties = javaBean2DDLSetting.myProperties;
+        OtherSetting.State myProperties = otherSetting.myProperties;
         if (!StringUtils.equals(String.valueOf(myProperties.getAutoTranslationRadio()),
             String.valueOf(settingPanel.getAutoTranslationRadio().isSelected()))) {
             return true;
         }
         ComboBoxItem appComboBox = (ComboBoxItem) settingPanel.getTranslationAppComboBox().getSelectedItem();
         assert appComboBox != null;
-        if (!StringUtils.equals(myProperties.getTranslationAppComboBox(), appComboBox.getValue())) {
+        if (!StringUtils.equals(myProperties.getTranslationAppComboBox(), String.valueOf(appComboBox.getValue()))) {
             return true;
         }
         if (!StringUtils.equals(myProperties.getAppIdText(), settingPanel.getAppIdText().getText())) {
@@ -52,7 +52,7 @@ public final class TranslationConfigurable extends SearchableConfigurableBase {
 
     @Override
     public void apply() throws ConfigurationException {
-        JavaBean2DDLSetting.MySettingProperties myProperties = javaBean2DDLSetting.myProperties;
+        OtherSetting.State myProperties = otherSetting.myProperties;
         myProperties.setAutoTranslationRadio(settingPanel.getAutoTranslationRadio().isSelected());
         myProperties.setAppIdText(settingPanel.getAppIdText().getText());
         myProperties.setSecretText(settingPanel.getSecretText().getText());
@@ -60,12 +60,12 @@ public final class TranslationConfigurable extends SearchableConfigurableBase {
         myProperties.setSecretKey(settingPanel.getSecretKey().getText());
         ComboBoxItem appComboBox = (ComboBoxItem) settingPanel.getTranslationAppComboBox().getSelectedItem();
         assert appComboBox != null;
-        myProperties.setTranslationAppComboBox(appComboBox.getValue());
+        myProperties.setTranslationAppComboBox(String.valueOf(appComboBox.getValue()));
     }
 
     @Override
     public void reset() {
-        JavaBean2DDLSetting.MySettingProperties myProperties = javaBean2DDLSetting.myProperties;
+        OtherSetting.State myProperties = otherSetting.myProperties;
         settingPanel.getAutoTranslationRadio().setSelected((myProperties.getAutoTranslationRadio()));
 
         TranslationAppEnum appEnum = TranslationAppEnum.findByValue(myProperties.getTranslationAppComboBox());

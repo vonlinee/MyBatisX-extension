@@ -1,6 +1,6 @@
 package com.baomidou.mybatisx.plugin.provider;
 
-import com.baomidou.mybatisx.annotation.Annotation;
+import com.baomidou.mybatisx.feat.mybatis.Annotation;
 import com.baomidou.mybatisx.dom.model.Mapper;
 import com.baomidou.mybatisx.util.Icons;
 import com.baomidou.mybatisx.util.JavaUtils;

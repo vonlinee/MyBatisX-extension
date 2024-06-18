@@ -17,7 +17,7 @@ public interface AppendType {
     /**
      * Gets allow after.
      *
-     * @return the allow after
+     * @return to allow after
      */
     List<String> getAllowAfter();
 

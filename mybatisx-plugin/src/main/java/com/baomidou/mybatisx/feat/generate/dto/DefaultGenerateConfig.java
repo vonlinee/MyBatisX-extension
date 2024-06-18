@@ -12,7 +12,7 @@ import java.util.List;
  * @date : 2021/7/2
  */
 public class DefaultGenerateConfig extends GenerateConfig {
-    private TemplateContext templateContext;
+    private final TemplateContext templateContext;
 
     public DefaultGenerateConfig(TemplateContext templateContext) {
         this.templateContext = templateContext;

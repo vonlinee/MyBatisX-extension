@@ -1,20 +1,20 @@
 package com.baomidou.mybatisx.feat.jpa.operate;
 
+import com.baomidou.mybatisx.feat.jpa.SyntaxAppenderWrapper;
+import com.baomidou.mybatisx.feat.jpa.common.SyntaxAppender;
 import com.baomidou.mybatisx.feat.jpa.common.appender.AreaSequence;
 import com.baomidou.mybatisx.feat.jpa.common.appender.CompositeAppender;
 import com.baomidou.mybatisx.feat.jpa.common.appender.CustomAreaAppender;
 import com.baomidou.mybatisx.feat.jpa.common.appender.CustomFieldAppender;
 import com.baomidou.mybatisx.feat.jpa.common.factory.ConditionAppenderFactory;
 import com.baomidou.mybatisx.feat.jpa.common.factory.ResultAppenderFactory;
-import com.baomidou.mybatisx.feat.jpa.operate.appender.SelectCustomAreaAppender;
-import com.baomidou.mybatisx.feat.jpa.operate.generate.Generator;
-import com.baomidou.mybatisx.feat.jpa.operate.manager.StatementBlock;
-import com.baomidou.mybatisx.feat.jpa.common.SyntaxAppender;
 import com.baomidou.mybatisx.feat.jpa.common.iftest.ConditionFieldWrapper;
 import com.baomidou.mybatisx.feat.jpa.component.TxField;
 import com.baomidou.mybatisx.feat.jpa.component.TxParameter;
 import com.baomidou.mybatisx.feat.jpa.component.TxReturnDescriptor;
-import com.baomidou.mybatisx.feat.jpa.SyntaxAppenderWrapper;
+import com.baomidou.mybatisx.feat.jpa.operate.appender.SelectCustomAreaAppender;
+import com.baomidou.mybatisx.feat.jpa.operate.generate.Generator;
+import com.baomidou.mybatisx.feat.jpa.operate.manager.StatementBlock;
 import com.intellij.psi.PsiClass;
 import com.intellij.psi.PsiMethod;
 
@@ -38,9 +38,9 @@ public class CountOperator extends SelectOperator {
 
     @Override
     protected ResultAppenderFactory initCustomFieldResultAppender(
-            final List<TxField> mappingField,
-            final String areaName,
-            ConditionAppenderFactory conditionAppenderFactory) {
+        final List<TxField> mappingField,
+        final String areaName,
+        ConditionAppenderFactory conditionAppenderFactory) {
         ResultAppenderFactory selectFactory = new ResultAppenderFactory(areaName) {
             @Override
             public String getTemplateText(String tableName, PsiClass entityClass, LinkedList<TxParameter> parameters, LinkedList<SyntaxAppenderWrapper> collector, ConditionFieldWrapper conditionFieldWrapper) {
@@ -54,13 +54,13 @@ public class CountOperator extends SelectOperator {
         // 区域条件 : count + By
         for (TxField txField : mappingField) {
             CompositeAppender areaByAppender = new CompositeAppender(
-                    new SelectCustomAreaAppender(areaName, ResultAppenderFactory.RESULT, selectFactory),
-                    CustomAreaAppender.createCustomAreaAppender("By",
-                            "By",
-                            AreaSequence.AREA,
-                            AreaSequence.CONDITION,
-                            conditionAppenderFactory),
-                    new CustomFieldAppender(txField, AreaSequence.CONDITION)
+                new SelectCustomAreaAppender(areaName, ResultAppenderFactory.RESULT, selectFactory),
+                CustomAreaAppender.createCustomAreaAppender("By",
+                    "By",
+                    AreaSequence.AREA,
+                    AreaSequence.CONDITION,
+                    conditionAppenderFactory),
+                new CustomFieldAppender(txField, AreaSequence.CONDITION)
             );
             selectFactory.registerAppender(areaByAppender);
         }
@@ -87,7 +87,7 @@ public class CountOperator extends SelectOperator {
         // 结果集区域
 
         ResultAppenderFactory resultAppenderFactory =
-                this.initCustomFieldResultAppender(mappingField, areaName, conditionAppenderFactory);
+            this.initCustomFieldResultAppender(mappingField, areaName, conditionAppenderFactory);
 
         statementBlock.setResultAppenderFactory(resultAppenderFactory);
 
@@ -112,9 +112,9 @@ public class CountOperator extends SelectOperator {
         String mapperXml = super.generateXml(jpaList, entityClass, psiMethod, tableName, conditionFieldWrapper);
 
         mybatisXmlGenerator.generateSelect(id,
-                mapperXml,
-                true,
-                null,
-                "int", resultFields, entityClass);
+            mapperXml,
+            true,
+            null,
+            "int", resultFields, entityClass);
     }
 }

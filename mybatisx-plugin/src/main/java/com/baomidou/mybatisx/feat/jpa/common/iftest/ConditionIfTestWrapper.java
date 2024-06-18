@@ -3,13 +3,14 @@ package com.baomidou.mybatisx.feat.jpa.common.iftest;
 import com.baomidou.mybatisx.dom.model.Mapper;
 import com.baomidou.mybatisx.feat.jpa.common.MapperClassGenerateFactory;
 import com.baomidou.mybatisx.feat.jpa.common.appender.JdbcTypeUtils;
+import com.baomidou.mybatisx.feat.jpa.component.TxField;
 import com.baomidou.mybatisx.feat.jpa.operate.generate.EmptyGenerator;
 import com.baomidou.mybatisx.feat.jpa.operate.generate.Generator;
 import com.baomidou.mybatisx.feat.jpa.operate.generate.MybatisAnnotationGenerator;
 import com.baomidou.mybatisx.feat.jpa.operate.generate.MybatisXmlGenerator;
-import com.baomidou.mybatisx.feat.jpa.component.TxField;
 import com.baomidou.mybatisx.plugin.ui.SmartJpaAdvanceUI;
 import com.intellij.openapi.project.Project;
+import lombok.Setter;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.HashSet;
@@ -26,21 +27,26 @@ import java.util.stream.Collectors;
  */
 public class ConditionIfTestWrapper implements ConditionFieldWrapper {
     public static final int DEFAULT_NEWLINE_VALUE = 3;
-    private Project project;
-    private Set<String> selectedWrapFields;
-    private String allFieldsStr;
-    private String resultMap;
-    private boolean resultType;
-    private String resultTypeClass;
-    private List<String> resultFields;
-    private Map<String, TxField> txFieldMap;
-    private List<TxField> allFields;
+    private final Project project;
+    private final Set<String> selectedWrapFields;
+    private final List<String> resultFields;
+    private final Map<String, TxField> txFieldMap;
+    private final List<TxField> allFields;
     /**
      * 默认字段的关键字：  oracle: SYSDATE, mysql: NOW()
      */
-    private String defaultDateWord;
+    private final String defaultDateWord;
+    private String allFieldsStr;
+    @Setter
+    private String resultMap;
+    @Setter
+    private boolean resultType;
+    @Setter
+    private String resultTypeClass;
+    @Setter
     private SmartJpaAdvanceUI.GeneratorEnum generatorType;
     private Mapper mapper;
+    @Setter
     private List<String> defaultDateList;
     private int newLine;
 
@@ -115,27 +121,9 @@ public class ConditionIfTestWrapper implements ConditionFieldWrapper {
         return resultType ? null : resultMap;
     }
 
-    /**
-     * Sets result map.
-     *
-     * @param resultMap the result map
-     */
-    public void setResultMap(String resultMap) {
-        this.resultMap = resultMap;
-    }
-
     @Override
     public String getResultType() {
         return resultTypeClass;
-    }
-
-    /**
-     * Sets result type.
-     *
-     * @param resultType the result type
-     */
-    public void setResultType(boolean resultType) {
-        this.resultType = resultType;
     }
 
     @Override
@@ -152,19 +140,6 @@ public class ConditionIfTestWrapper implements ConditionFieldWrapper {
             return new MybatisXmlGenerator(mapperClassGenerateFactory, mapper, project);
         }
         return new EmptyGenerator();
-    }
-
-    /**
-     * Sets result type class.
-     *
-     * @param resultTypeClass the result type class
-     */
-    public void setResultTypeClass(String resultTypeClass) {
-        this.resultTypeClass = resultTypeClass;
-    }
-
-    public void setGeneratorType(SmartJpaAdvanceUI.GeneratorEnum generatorType) {
-        this.generatorType = generatorType;
     }
 
     @Override
@@ -194,16 +169,12 @@ public class ConditionIfTestWrapper implements ConditionFieldWrapper {
         return defaultDateList;
     }
 
-    public void setDefaultDateList(List<String> defaultDateList) {
-        this.defaultDateList = defaultDateList;
-    }
-
     @Override
     public List<TxField> getResultTxFields() {
         Set<String> addedFields = new HashSet<>();
         return allFields.stream()
-                .filter(field -> resultFields.contains(field.getFieldName()) && addedFields.add(field.getFieldName()))
-                .collect(Collectors.toList());
+            .filter(field -> resultFields.contains(field.getFieldName()) && addedFields.add(field.getFieldName()))
+            .collect(Collectors.toList());
     }
 
     @Override

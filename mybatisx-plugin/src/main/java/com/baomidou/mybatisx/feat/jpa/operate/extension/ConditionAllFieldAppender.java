@@ -40,10 +40,10 @@ public class ConditionAllFieldAppender extends CustomFieldAppender {
         for (TxField txField : mappingField) {
             LinkedList<TxParameter> currentFieldParameters = new LinkedList<>();
             currentFieldParameters.add(TxParameter.createByOrigin(txField.getFieldName(),
-                    txField.getTipName(),
-                    txField.getFieldType(),
-                    false
-                    , Collections.singletonList(txField.getFieldType())));
+                txField.getTipName(),
+                txField.getFieldType(),
+                false
+                , Collections.singletonList(txField.getFieldType())));
 
             LinkedList<SyntaxAppenderWrapper> linkedList = new LinkedList<>();
             // 连接符追加器

@@ -1,6 +1,6 @@
 package com.baomidou.mybatisx.service;
 
-import com.baomidou.mybatisx.annotation.Annotation;
+import com.baomidou.mybatisx.feat.mybatis.Annotation;
 import com.baomidou.mybatisx.util.IntellijSDK;
 import com.baomidou.mybatisx.util.JavaUtils;
 import com.intellij.openapi.project.Project;

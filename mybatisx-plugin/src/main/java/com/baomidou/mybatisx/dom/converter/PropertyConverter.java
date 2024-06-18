@@ -27,7 +27,7 @@ public class PropertyConverter extends ConverterAdaptor<XmlAttributeValue> imple
 
     @NotNull
     @Override
-    public PsiReference[] createReferences(GenericDomValue<XmlAttributeValue> value, PsiElement element, ConvertContext context) {
+    public PsiReference @NotNull [] createReferences(GenericDomValue<XmlAttributeValue> value, PsiElement element, ConvertContext context) {
         final String fieldName = value.getStringValue();
         if (fieldName == null) {
             return PsiReference.EMPTY_ARRAY;

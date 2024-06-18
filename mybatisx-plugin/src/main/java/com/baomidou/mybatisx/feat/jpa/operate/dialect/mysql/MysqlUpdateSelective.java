@@ -1,6 +1,6 @@
 package com.baomidou.mybatisx.feat.jpa.operate.dialect.mysql;
 
-import com.baomidou.mybatisx.feat.jpa.operate.dialect.CustomStatement;
+import com.baomidou.mybatisx.feat.jpa.SyntaxAppenderWrapper;
 import com.baomidou.mybatisx.feat.jpa.common.SyntaxAppender;
 import com.baomidou.mybatisx.feat.jpa.common.appender.AreaSequence;
 import com.baomidou.mybatisx.feat.jpa.common.appender.CustomAreaAppender;
@@ -11,9 +11,9 @@ import com.baomidou.mybatisx.feat.jpa.common.iftest.ConditionFieldWrapper;
 import com.baomidou.mybatisx.feat.jpa.component.TxField;
 import com.baomidou.mybatisx.feat.jpa.component.TxParameter;
 import com.baomidou.mybatisx.feat.jpa.component.TxReturnDescriptor;
+import com.baomidou.mybatisx.feat.jpa.operate.dialect.CustomStatement;
 import com.baomidou.mybatisx.feat.jpa.operate.dialect.oracle.InsertCustomSuffixAppender;
 import com.baomidou.mybatisx.feat.jpa.operate.manager.StatementBlock;
-import com.baomidou.mybatisx.feat.jpa.SyntaxAppenderWrapper;
 import com.baomidou.mybatisx.util.StringUtils;
 import com.intellij.psi.PsiClass;
 import org.jetbrains.annotations.NotNull;
@@ -59,11 +59,11 @@ public class MysqlUpdateSelective implements CustomStatement {
         ResultAppenderFactory appenderFactory = getResultAppenderFactory(mappingField, newAreaName);
         // insert + Batch
         final SyntaxAppender batchAppender =
-                CustomAreaAppender.createCustomAreaAppender(newAreaName,
-                        ResultAppenderFactory.RESULT,
-                        AreaSequence.AREA,
-                        AreaSequence.RESULT,
-                        appenderFactory);
+            CustomAreaAppender.createCustomAreaAppender(newAreaName,
+                ResultAppenderFactory.RESULT,
+                AreaSequence.AREA,
+                AreaSequence.RESULT,
+                appenderFactory);
         appenderFactory.registerAppender(batchAppender);
 
         StatementBlock statementBlock = new StatementBlock();
@@ -92,8 +92,8 @@ public class MysqlUpdateSelective implements CustomStatement {
                                           ConditionFieldWrapper conditionFieldWrapper) {
                 // 定制参数
                 SyntaxAppender suffixOperator = InsertCustomSuffixAppender.createInsertBySuffixOperator(batchName(),
-                        getSuffixOperator(mappingField),
-                        AreaSequence.RESULT);
+                    getSuffixOperator(mappingField),
+                    AreaSequence.RESULT);
                 LinkedList<SyntaxAppenderWrapper> syntaxAppenderWrappers = new LinkedList<>();
                 syntaxAppenderWrappers.add(new SyntaxAppenderWrapper(suffixOperator));
                 return super.getTemplateText(tableName, entityClass, parameters, syntaxAppenderWrappers, conditionFieldWrapper);
@@ -144,7 +144,7 @@ public class MysqlUpdateSelective implements CustomStatement {
     }
 
 
-    private class UpdateSelectiveResultAppenderFactory extends ResultAppenderFactory {
+    private static class UpdateSelectiveResultAppenderFactory extends ResultAppenderFactory {
 
         /**
          * Instantiates a new Insert batch result appender factory.
@@ -163,7 +163,7 @@ public class MysqlUpdateSelective implements CustomStatement {
             StringBuilder mapperXml = new StringBuilder("update " + tableName + "\n");
             for (SyntaxAppenderWrapper syntaxAppenderWrapper : collector) {
                 String templateText = syntaxAppenderWrapper.getAppender()
-                        .getTemplateText(tableName, entityClass, parameters, collector, conditionFieldWrapper);
+                    .getTemplateText(tableName, entityClass, parameters, collector, conditionFieldWrapper);
                 mapperXml.append(templateText);
             }
             return mapperXml.toString();
@@ -187,7 +187,7 @@ public class MysqlUpdateSelective implements CustomStatement {
     /**
      * 可选更新
      */
-    private class UpdateSelectiveSuffixOperator implements SuffixOperator {
+    private static class UpdateSelectiveSuffixOperator implements SuffixOperator {
 
         private List<TxField> mappingField;
 
@@ -206,15 +206,15 @@ public class MysqlUpdateSelective implements CustomStatement {
             stringBuilder.append("<set>").append("\n");
             final TxParameter parameter = parameters.poll();
             final String selectiveItems = mappingField.stream()
-                    // 不是主键的就加到条件列表
-                    .filter(field -> !field.getPrimaryKey())
-                    .distinct()
-                    .map(field -> {
-                        String fieldValue = JdbcTypeUtils.wrapperField(field.getFieldName(), field.getFieldType());
-                        fieldValue = conditionFieldWrapper.wrapDefaultDateIfNecessary(field.getColumnName(), fieldValue);
-                        return "<if test=\"" + field.getFieldName() + " != null\">" + field.getColumnName() + "=" + fieldValue + ",</if>";
-                    })
-                    .collect(Collectors.joining("\n"));
+                // 不是主键的就加到条件列表
+                .filter(field -> !field.getPrimaryKey())
+                .distinct()
+                .map(field -> {
+                    String fieldValue = JdbcTypeUtils.wrapperField(field.getFieldName(), field.getFieldType());
+                    fieldValue = conditionFieldWrapper.wrapDefaultDateIfNecessary(field.getColumnName(), fieldValue);
+                    return "<if test=\"" + field.getFieldName() + " != null\">" + field.getColumnName() + "=" + fieldValue + ",</if>";
+                })
+                .collect(Collectors.joining("\n"));
             stringBuilder.append(selectiveItems);
             stringBuilder.append("</set>").append("\n");
             // 条件

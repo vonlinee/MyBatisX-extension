@@ -1,11 +1,11 @@
 package com.baomidou.mybatisx.feat.jpa.operate.appender;
 
+import com.baomidou.mybatisx.feat.jpa.SyntaxAppenderWrapper;
 import com.baomidou.mybatisx.feat.jpa.common.appender.AreaSequence;
 import com.baomidou.mybatisx.feat.jpa.common.appender.CustomFieldAppender;
 import com.baomidou.mybatisx.feat.jpa.common.iftest.ConditionFieldWrapper;
 import com.baomidou.mybatisx.feat.jpa.component.TxField;
 import com.baomidou.mybatisx.feat.jpa.component.TxParameter;
-import com.baomidou.mybatisx.feat.jpa.SyntaxAppenderWrapper;
 import com.intellij.psi.PsiClass;
 
 import java.util.LinkedList;
@@ -23,8 +23,8 @@ public class SelectFieldAppender extends CustomFieldAppender {
 
     @Override
     public String getTemplateText(String tableName, PsiClass
-            entityClass, LinkedList<TxParameter> parameters, LinkedList<SyntaxAppenderWrapper> collector, ConditionFieldWrapper
-                                          conditionFieldWrapper) {
+        entityClass, LinkedList<TxParameter> parameters, LinkedList<SyntaxAppenderWrapper> collector, ConditionFieldWrapper
+                                      conditionFieldWrapper) {
         return columnName;
     }
 }

@@ -1,13 +1,12 @@
 package com.baomidou.mybatisx.feat.jpa.common.appender;
 
-
+import com.baomidou.mybatisx.feat.jpa.SyntaxAppenderWrapper;
 import com.baomidou.mybatisx.feat.jpa.common.SyntaxAppender;
 import com.baomidou.mybatisx.feat.jpa.common.TemplateResolver;
 import com.baomidou.mybatisx.feat.jpa.common.command.AppendTypeCommand;
 import com.baomidou.mybatisx.feat.jpa.common.iftest.ConditionFieldWrapper;
-import com.baomidou.mybatisx.feat.jpa.operate.model.AppendTypeEnum;
 import com.baomidou.mybatisx.feat.jpa.component.TxParameter;
-import com.baomidou.mybatisx.feat.jpa.SyntaxAppenderWrapper;
+import com.baomidou.mybatisx.feat.jpa.operate.model.AppendTypeEnum;
 import com.intellij.psi.PsiClass;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -46,12 +45,16 @@ public class CompositeAppender implements SyntaxAppender {
 
     @Override
     public AreaSequence getAreaSequence() {
-        return appenderList.peek().getAreaSequence();
+        SyntaxAppender appender = appenderList.peek();
+        if (appender == null) {
+            return null;
+        }
+        return appender.getAreaSequence();
     }
 
     @Override
     public String getText() {
-        return this.appenderList.stream().map(x -> x.getText()).collect(Collectors.joining());
+        return this.appenderList.stream().map(SyntaxAppender::getText).collect(Collectors.joining());
     }
 
     /**
@@ -141,8 +144,8 @@ public class CompositeAppender implements SyntaxAppender {
     @Override
     public List<TxParameter> getMxParameter(LinkedList<SyntaxAppenderWrapper> syntaxAppenderWrapperLinkedList, PsiClass entityClass) {
         return appenderList.stream()
-                .flatMap(appender -> appender.getMxParameter(syntaxAppenderWrapperLinkedList, entityClass).stream())
-                .collect(Collectors.toList());
+            .flatMap(appender -> appender.getMxParameter(syntaxAppenderWrapperLinkedList, entityClass).stream())
+            .collect(Collectors.toList());
     }
 
     @Override

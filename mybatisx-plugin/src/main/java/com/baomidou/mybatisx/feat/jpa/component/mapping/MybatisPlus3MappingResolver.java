@@ -5,7 +5,6 @@ import com.baomidou.mybatisx.util.StringUtils;
 import com.intellij.psi.PsiAnnotation;
 import com.intellij.psi.PsiField;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 /**
  * The type Mybatis plus 3 mapping resolver.
@@ -40,15 +39,15 @@ public class MybatisPlus3MappingResolver extends AbstractMybatisPlusMappingResol
 
 
     @Override
-    protected @Nullable String getTableFieldAnnotation(@NotNull PsiField field) {
+    protected @NotNull String getTableFieldAnnotation(@NotNull PsiField field) {
         String columnName = null;
         PsiAnnotation fieldAnnotation = field.getAnnotation(TABLE_FIELD);
         if (fieldAnnotation != null) {
-            columnName = getAttributeValue(fieldAnnotation, AbstractMybatisPlusMappingResolver.VALUE);
+            columnName = getAttributeValue(fieldAnnotation);
         }
         PsiAnnotation idAnnotation = field.getAnnotation(TABLE_ID);
         if (StringUtils.isEmpty(columnName) && idAnnotation != null) {
-            columnName = getAttributeValue(idAnnotation, AbstractMybatisPlusMappingResolver.VALUE);
+            columnName = getAttributeValue(idAnnotation);
         }
         return columnName;
     }

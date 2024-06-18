@@ -1,7 +1,7 @@
 package com.baomidou.mybatisx.service;
 
-import com.baomidou.mybatisx.feat.ddl.SqlTypeEnum;
 import com.baomidou.mybatisx.feat.bean.SqlTypeComboBoxItem;
+import com.baomidou.mybatisx.feat.ddl.SqlTypeEnum;
 import com.baomidou.mybatisx.util.StringUtils;
 
 import javax.swing.*;
@@ -10,7 +10,7 @@ import java.awt.event.ItemListener;
 
 public class BaseTypeItemListener implements ItemListener {
 
-    private JTextField jTextField;
+    private final JTextField jTextField;
 
     public BaseTypeItemListener(JTextField jTextField) {
         this.jTextField = jTextField;
@@ -21,7 +21,7 @@ public class BaseTypeItemListener implements ItemListener {
         if (e.getStateChange() != ItemEvent.SELECTED) {
             return;
         }
-        String value = ((SqlTypeComboBoxItem) e.getItem()).getValue();
+        String value = String.valueOf(((SqlTypeComboBoxItem) e.getItem()).getValue());
         SqlTypeEnum typeEnum = SqlTypeEnum.findByType(value);
         if (null == typeEnum) {
             return;

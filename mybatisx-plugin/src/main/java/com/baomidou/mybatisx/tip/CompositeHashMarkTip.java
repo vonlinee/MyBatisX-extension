@@ -1,6 +1,6 @@
 package com.baomidou.mybatisx.tip;
 
-import com.baomidou.mybatisx.annotation.Annotation;
+import com.baomidou.mybatisx.feat.mybatis.Annotation;
 import com.baomidou.mybatisx.dom.model.IdDomElement;
 import com.baomidou.mybatisx.dom.model.Mapper;
 import com.baomidou.mybatisx.util.JavaUtils;

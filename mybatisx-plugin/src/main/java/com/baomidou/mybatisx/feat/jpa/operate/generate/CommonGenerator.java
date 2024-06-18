@@ -1,8 +1,5 @@
 package com.baomidou.mybatisx.feat.jpa.operate.generate;
 
-import com.baomidou.mybatisx.feat.jpa.operate.manager.AreaOperateManager;
-import com.baomidou.mybatisx.feat.jpa.operate.manager.AreaOperateManagerFactory;
-import com.baomidou.mybatisx.feat.jpa.operate.model.AppendTypeEnum;
 import com.baomidou.mybatisx.feat.jpa.common.SyntaxAppender;
 import com.baomidou.mybatisx.feat.jpa.common.appender.AreaSequence;
 import com.baomidou.mybatisx.feat.jpa.common.appender.CustomFieldAppender;
@@ -13,6 +10,9 @@ import com.baomidou.mybatisx.feat.jpa.component.TxParameterDescriptor;
 import com.baomidou.mybatisx.feat.jpa.component.TypeDescriptor;
 import com.baomidou.mybatisx.feat.jpa.db.DasTableAdaptor;
 import com.baomidou.mybatisx.feat.jpa.db.DbmsAdaptor;
+import com.baomidou.mybatisx.feat.jpa.operate.manager.AreaOperateManager;
+import com.baomidou.mybatisx.feat.jpa.operate.manager.AreaOperateManagerFactory;
+import com.baomidou.mybatisx.feat.jpa.operate.model.AppendTypeEnum;
 import com.intellij.openapi.application.WriteAction;
 import com.intellij.psi.PsiClass;
 import com.intellij.psi.PsiMethod;
@@ -37,13 +37,13 @@ public class CommonGenerator implements PlatformGenerator {
      */
     final AreaOperateManager appenderManager;
     private final String defaultDateWord;
-    private @NotNull
+    private final @NotNull
     LinkedList<SyntaxAppender> jpaList;
-    private List<TxField> mappingField;
-    private String tableName;
-    private PsiClass entityClass;
-    private String text;
-    private Set<String> notNeedsResult = new HashSet<String>() {
+    private final List<TxField> mappingField;
+    private final String tableName;
+    private final PsiClass entityClass;
+    private final String text;
+    private final Set<String> notNeedsResult = new HashSet<>() {
         {
             add("update");
             add("insert");
@@ -111,25 +111,25 @@ public class CommonGenerator implements PlatformGenerator {
         WriteAction.run(() -> {
             // 生成完整版的内容
             appenderManager.generateMapperXml(
-                    text,
-                    new LinkedList<>(jpaList),
-                    entityClass,
-                    psiMethod,
-                    tableName,
-                    generator,
-                    conditionFieldWrapper,
-                    resultFields);
+                text,
+                new LinkedList<>(jpaList),
+                entityClass,
+                psiMethod,
+                tableName,
+                generator,
+                conditionFieldWrapper,
+                resultFields);
         });
     }
 
     @Override
     public List<String> getConditionFields() {
         return jpaList.stream()
-                .filter(syntaxAppender -> syntaxAppender.getAreaSequence() == AreaSequence.CONDITION
-                                          && syntaxAppender.getType() == AppendTypeEnum.FIELD &&
-                                          syntaxAppender instanceof CustomFieldAppender)
-                .flatMap(x -> Arrays.stream(((CustomFieldAppender) x).getFieldName().split(",")))
-                .collect(Collectors.toList());
+            .filter(syntaxAppender -> syntaxAppender.getAreaSequence() == AreaSequence.CONDITION
+                                      && syntaxAppender.getType() == AppendTypeEnum.FIELD &&
+                                      syntaxAppender instanceof CustomFieldAppender)
+            .flatMap(x -> Arrays.stream(((CustomFieldAppender) x).getFieldName().split(",")))
+            .collect(Collectors.toList());
     }
 
     @Override
@@ -149,10 +149,10 @@ public class CommonGenerator implements PlatformGenerator {
             return Collections.emptyList();
         }
         return jpaList.stream()
-                .filter(syntaxAppender -> syntaxAppender.getAreaSequence() == AreaSequence.RESULT
-                                          && syntaxAppender.getType() == AppendTypeEnum.FIELD &&
-                                          syntaxAppender instanceof CustomFieldAppender)
-                .flatMap(x -> Arrays.stream(x.getText().split(",")))
-                .collect(Collectors.toList());
+            .filter(syntaxAppender -> syntaxAppender.getAreaSequence() == AreaSequence.RESULT
+                                      && syntaxAppender.getType() == AppendTypeEnum.FIELD &&
+                                      syntaxAppender instanceof CustomFieldAppender)
+            .flatMap(x -> Arrays.stream(x.getText().split(",")))
+            .collect(Collectors.toList());
     }
 }

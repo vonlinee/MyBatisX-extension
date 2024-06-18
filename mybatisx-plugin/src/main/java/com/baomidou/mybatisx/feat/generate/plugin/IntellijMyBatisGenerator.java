@@ -1,5 +1,6 @@
 package com.baomidou.mybatisx.feat.generate.plugin;
 
+import lombok.Getter;
 import org.mybatis.generator.api.GeneratedJavaFile;
 import org.mybatis.generator.api.GeneratedKotlinFile;
 import org.mybatis.generator.api.GeneratedXmlFile;
@@ -33,34 +34,28 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 
 public class IntellijMyBatisGenerator {
-    private Configuration configuration;
-    private ShellCallback shellCallback;
+    private final Configuration configuration;
+    private final ShellCallback shellCallback;
+    @Getter
     private List<GeneratedJavaFile> generatedJavaFiles = new ArrayList<>();
+    @Getter
     private List<GeneratedXmlFile> generatedXmlFiles = new ArrayList<>();
+    @Getter
     private List<GeneratedKotlinFile> generatedKotlinFiles = new ArrayList<>();
-    private List<String> warnings;
-    private Set<String> projects = new HashSet();
+    private final List<String> warnings;
+    private final Set<String> projects = new HashSet<>();
 
     public IntellijMyBatisGenerator(Configuration configuration, ShellCallback shellCallback, List<String> warnings) throws InvalidConfigurationException {
         if (configuration == null) {
             throw new IllegalArgumentException(Messages.getString("RuntimeError.2"));
         } else {
             this.configuration = configuration;
-            if (shellCallback == null) {
-                this.shellCallback = new DefaultShellCallback(false);
-            } else {
-                this.shellCallback = shellCallback;
-            }
-
-            if (warnings == null) {
-                this.warnings = new ArrayList<>();
-            } else {
-                this.warnings = warnings;
-            }
-
+            this.shellCallback = Objects.requireNonNullElseGet(shellCallback, () -> new DefaultShellCallback(false));
+            this.warnings = Objects.requireNonNullElseGet(warnings, ArrayList::new);
             this.configuration.validate();
         }
     }
@@ -187,9 +182,9 @@ public class IntellijMyBatisGenerator {
 
             tc = tableConfigurationIterator.next();
             tableName = StringUtility.composeFullyQualifiedTableName(tc.getCatalog(),
-                    tc.getSchema(),
-                    tc.getTableName(),
-                    '.');
+                tc.getSchema(),
+                tc.getTableName(),
+                '.');
         } while (fullyQualifiedTableNames != null
                  && !fullyQualifiedTableNames.isEmpty()
                  && !fullyQualifiedTableNames.contains(tableName));
@@ -357,15 +352,4 @@ public class IntellijMyBatisGenerator {
         }
     }
 
-    public List<GeneratedJavaFile> getGeneratedJavaFiles() {
-        return this.generatedJavaFiles;
-    }
-
-    public List<GeneratedKotlinFile> getGeneratedKotlinFiles() {
-        return this.generatedKotlinFiles;
-    }
-
-    public List<GeneratedXmlFile> getGeneratedXmlFiles() {
-        return this.generatedXmlFiles;
-    }
 }

@@ -1,12 +1,12 @@
 package com.baomidou.mybatisx.feat.jpa.operate.dialect.oracle;
 
+import com.baomidou.mybatisx.feat.jpa.SyntaxAppenderWrapper;
 import com.baomidou.mybatisx.feat.jpa.common.SyntaxAppender;
 import com.baomidou.mybatisx.feat.jpa.common.appender.AreaSequence;
 import com.baomidou.mybatisx.feat.jpa.common.appender.CustomSuffixAppender;
 import com.baomidou.mybatisx.feat.jpa.common.appender.operator.SuffixOperator;
 import com.baomidou.mybatisx.feat.jpa.common.iftest.ConditionFieldWrapper;
 import com.baomidou.mybatisx.feat.jpa.component.TxParameter;
-import com.baomidou.mybatisx.feat.jpa.SyntaxAppenderWrapper;
 import com.intellij.psi.PsiClass;
 
 import java.util.LinkedList;

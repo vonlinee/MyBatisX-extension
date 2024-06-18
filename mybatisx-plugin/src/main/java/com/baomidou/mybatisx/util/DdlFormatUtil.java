@@ -3,7 +3,7 @@ package com.baomidou.mybatisx.util;
 import com.baomidou.mybatisx.plugin.actions.Bean2DDLAction;
 import com.baomidou.mybatisx.feat.bean.Field;
 import com.baomidou.mybatisx.service.DdlBuilder;
-import com.baomidou.mybatisx.plugin.setting.JavaBean2DDLSetting;
+import com.baomidou.mybatisx.plugin.setting.OtherSetting;
 
 import java.util.List;
 
@@ -16,7 +16,7 @@ public class DdlFormatUtil {
 
     public static String buildDdlScript(String tableName, List<Field> fieldList) {
 
-        Boolean autoTranslation = JavaBean2DDLSetting.getInstance().myProperties.getAutoTranslationRadio();
+        Boolean autoTranslation = OtherSetting.getInstance().myProperties.getAutoTranslationRadio();
 
         DdlBuilder builder = new DdlBuilder().create()
                 .tableName(tableName)

@@ -1,20 +1,20 @@
 package com.baomidou.mybatisx.feat.jpa.common.factory;
 
 
+import com.baomidou.mybatisx.feat.jpa.SyntaxAppenderWrapper;
 import com.baomidou.mybatisx.feat.jpa.common.BaseAppenderFactory;
 import com.baomidou.mybatisx.feat.jpa.common.SyntaxAppender;
 import com.baomidou.mybatisx.feat.jpa.common.SyntaxAppenderFactory;
-import com.baomidou.mybatisx.feat.jpa.common.iftest.ConditionFieldWrapper;
-import com.baomidou.mybatisx.feat.jpa.operate.model.AppendTypeEnum;
 import com.baomidou.mybatisx.feat.jpa.common.appender.AreaSequence;
 import com.baomidou.mybatisx.feat.jpa.common.appender.CompositeAppender;
 import com.baomidou.mybatisx.feat.jpa.common.appender.CustomAreaAppender;
 import com.baomidou.mybatisx.feat.jpa.common.appender.CustomFieldAppender;
 import com.baomidou.mybatisx.feat.jpa.common.appender.CustomJoinAppender;
 import com.baomidou.mybatisx.feat.jpa.common.appender.CustomSuffixAppender;
+import com.baomidou.mybatisx.feat.jpa.common.iftest.ConditionFieldWrapper;
 import com.baomidou.mybatisx.feat.jpa.component.TxField;
 import com.baomidou.mybatisx.feat.jpa.component.TxParameter;
-import com.baomidou.mybatisx.feat.jpa.SyntaxAppenderWrapper;
+import com.baomidou.mybatisx.feat.jpa.operate.model.AppendTypeEnum;
 import com.intellij.psi.PsiClass;
 
 import java.util.ArrayList;
@@ -45,15 +45,15 @@ public class SortAppenderFactory extends BaseAppenderFactory {
         for (final TxField field : this.mappingField) {
             // order by: field
             final SyntaxAppender appender = new CompositeAppender(
-                    new SortCustomAreaAppender(this.getTipText(), getTipText(),
-                            AreaSequence.AREA,
-                            AreaSequence.SORT,
-                            this),
-                    new SortCustomFieldAppender(field, AreaSequence.SORT));
+                new SortCustomAreaAppender(this.getTipText(), getTipText(),
+                    AreaSequence.AREA,
+                    AreaSequence.SORT,
+                    this),
+                new SortCustomFieldAppender(field, AreaSequence.SORT));
             syntaxAppenderArrayList.add(appender);
             // order by: and field
             final CompositeAppender andAppender = new CompositeAppender(new CustomJoinAppender("And", ",", AreaSequence.SORT),
-                    new SortCustomFieldAppender(field, AreaSequence.SORT));
+                new SortCustomFieldAppender(field, AreaSequence.SORT));
             syntaxAppenderArrayList.add(andAppender);
         }
         return syntaxAppenderArrayList;
@@ -74,7 +74,7 @@ public class SortAppenderFactory extends BaseAppenderFactory {
         StringBuilder stringBuilder = new StringBuilder();
         for (SyntaxAppenderWrapper syntaxAppender : collector) {
             String templateText = syntaxAppender.getAppender()
-                    .getTemplateText(tableName, entityClass, parameters, syntaxAppender.getCollector(), conditionFieldWrapper);
+                .getTemplateText(tableName, entityClass, parameters, syntaxAppender.getCollector(), conditionFieldWrapper);
             stringBuilder.append(templateText).append(" ");
         }
         return "order by " + stringBuilder.toString();
@@ -92,7 +92,7 @@ public class SortAppenderFactory extends BaseAppenderFactory {
         return AreaSequence.SORT;
     }
 
-    private class SortCustomAreaAppender extends CustomAreaAppender {
+    private static class SortCustomAreaAppender extends CustomAreaAppender {
 
         public SortCustomAreaAppender(String area, String areaType, AreaSequence areaSequence, AreaSequence childAreaSequence, SyntaxAppenderFactory syntaxAppenderFactory) {
             super(area, areaType, areaSequence, childAreaSequence, syntaxAppenderFactory);
@@ -111,7 +111,7 @@ public class SortAppenderFactory extends BaseAppenderFactory {
         }
     }
 
-    private class SortCustomFieldAppender extends CustomFieldAppender {
+    private static class SortCustomFieldAppender extends CustomFieldAppender {
 
         /**
          * Instantiates a new Sort custom field appender.
