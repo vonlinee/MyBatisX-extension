@@ -44,18 +44,6 @@ public class MyDataModel extends MyAbstractTreeTableModel {
 
     @Override
     public Object getValueAt(Object node, int column) {
-//        switch (column) {
-//            case 0:
-//                return ((MyDataNode) node).getName();
-//            case 1:
-//                return ((MyDataNode) node).getCapital();
-//            case 2:
-//                return ((MyDataNode) node).getDeclared();
-//            case 3:
-//                return ((MyDataNode) node).getArea();
-//            default:
-//                break;
-//        }
         switch (column) {
             case 0:
                 return ((MyDataNode) node).getName();

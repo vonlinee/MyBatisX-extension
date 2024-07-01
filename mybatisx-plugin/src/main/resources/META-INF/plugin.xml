@@ -252,6 +252,7 @@
 
         <!-- 设置中的配置 -->
         <applicationConfigurable id="com.baomidou.mybatisx.plugin.setting.configurable.MyBatisXConfigurable"
+                                 parentId="tools"
                                  displayName="MyBatisX"
                                  instance="com.baomidou.mybatisx.plugin.setting.configurable.MyBatisXConfigurable"/>
         <!--模板设置-->
@@ -273,7 +274,7 @@
         <applicationConfigurable
             instance="com.baomidou.mybatisx.plugin.setting.configurable.TranslationConfigurable"
             groupId="com.baomidou.mybatisx.plugin.setting.configurable.MyBatisXConfigurable"
-            displayName="翻译配置"/>
+            displayName="Translation"/>
 
         <applicationService serviceImplementation="com.baomidou.mybatisx.plugin.setting.OtherSetting"/>
     </extensions>

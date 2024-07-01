@@ -1,3 +1,5 @@
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+
 buildscript {
     repositories {
         mavenLocal()
@@ -48,7 +50,7 @@ dependencies {
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine")
 
     implementation("org.apache.commons:commons-lang3:3.11")
-    implementation("com.google.guava:guava:29.0-jre")
+    implementation("com.google.guava:guava:33.2.1-jre")
     implementation("org.springframework:spring-web:5.2.12.RELEASE")
     implementation("org.apache.httpcomponents:httpclient:4.5.7")
     implementation("com.tencentcloudapi:tencentcloud-sdk-java:3.1.210")
@@ -59,11 +61,10 @@ dependencies {
 
     implementation(project(":agent-api"))
     implementation(project(":mybatisx-agent"))
-    implementation(files("./tools.jar"))
+    implementation(files("${rootDir}/tools.jar"))
 }
 
 // See https://github.com/JetBrains/gradle-intellij-plugin/
-//
 intellij {
     version = "2021.3.3"
     type = "IU"
@@ -85,6 +86,16 @@ tasks.patchPluginXml {
     changeNotes = """
     <b>初始版本</b>
     """
+}
+
+tasks.withType<KotlinCompile> {
+    /**
+     * Kotlin compiler options
+     */
+    kotlinOptions {
+        // This option specifies the target version of the generated JVM bytecode
+        jvmTarget = "11"
+    }
 }
 
 tasks.withType<JavaCompile> {
