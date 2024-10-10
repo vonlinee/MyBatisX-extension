@@ -1,46 +1,37 @@
-# MybatisX idea 快速开发插件
+# MyBatis-extension
 
-MybatisX 辅助 idea 快速开发 mybatis 插件，为效率而生。【入 Q 群 829161197 附件下载！ 或者 官方搜索 mybatisx 安装】
+This is a plugin based on Intellij Idea platform, forked
+from <a href="https://github.com/baomidou/MybatisX" title="MyBatisX">MyBatisX</a> repository, aimed at assisting the
+development process.
 
-官方安装： File -> Settings -> Plugins -> Browse Repositories.. 输入 mybatisx 安装下载
+# Requirements
 
-Jar 安装： File -> Settings -> Plugins -> Install plugin from disk.. 选中 mybatisx.zip(重要,是zip包) 安装
+- Java 11+
+- IntelliJ IDEA 2023.1.2 (Ultimate Edition)
+- Gradle 8.4+
 
-亲！好用 五分好评 哦！！
+# Features
 
-[Mybatis-Plus](https://gitee.com/baomidou/mybatis-plus) 简化开发
+## MyBatis Sql Debugger
 
-使用文档：https://mp.baomidou.com/guide/mybatisx-idea-plugin.html
+Right-Click on the Gutter Icon on every mybatis mapper statements.
 
-Idea 2020.2
+![mybatis-statement-debugger-entrypoint](assets/mybatis-statement-debugger-entrypoint.png)
 
-开发环境: IntelliJ IDEA 2023.1.2 (Ultimate Edition)
+Fill you params, and then you can get an executable sql without running you application.
 
-
-
-基于MyBatisX插件新增功能
-
-1. sql调试
-
-在Mapper XML里，光标移动到select, update, delete, insert上，alt + enter调出调试窗口
-
-![image-20240415202850064](assets/image-20240415202850064.png)
-
-通过填入参数得到可执行的SQL语句
-
-![image-20240415203251134](/assets/image-20240415203251134.png)
+![mybatis-statement-debugger](/assets/mybatis-statement-debugger.png)
 
 
-2. 一些常用的Mapper XML中用到的模板片段
+## MyBatis Mapper XML Fragments
 
-生成 <if test=""></if>，生成<foreach>等标签
+generate som common-used MyBatis Mapper XML Fragments template
 
 ![GIF 2024-4-15 20-23-03](assets/GIF_2024-4-15_20-23-03.gif)
 
+# Respect
 
-# 致谢
-
-1. 原mybatisx插件
-2. 插件Sql Params Setter：https://plugins.jetbrains.com/plugin/14608-sql-params-setter
-3. 插件SuperHotSwap: https://github.com/songbiaoself/SuperHotSwap
+1. Mybatisx
+2. Sql Params Setter：https://plugins.jetbrains.com/plugin/14608-sql-params-setter
+3. SuperHotSwap: https://github.com/songbiaoself/SuperHotSwap
 
