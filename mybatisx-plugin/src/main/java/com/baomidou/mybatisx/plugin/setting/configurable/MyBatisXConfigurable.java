@@ -1,11 +1,12 @@
 package com.baomidou.mybatisx.plugin.setting.configurable;
 
-import com.baomidou.mybatisx.util.MapperIcon;
 import com.baomidou.mybatisx.plugin.setting.MyBatisXSettings;
 import com.baomidou.mybatisx.plugin.ui.MyBatisSettingForm;
+import com.baomidou.mybatisx.util.MapperIcon;
 import com.intellij.openapi.options.SearchableConfigurable;
 import org.jetbrains.annotations.Nls;
 import org.jetbrains.annotations.Nullable;
+import org.mybatisx.extension.agent.server.AgentServer;
 
 import javax.swing.*;
 
@@ -70,8 +71,9 @@ public class MyBatisXConfigurable implements SearchableConfigurable {
                || !mybatisXSettings.getUpdateGenerator().equals(mybatisSettingForm.updatePatternTextField.getText())
                || !mybatisXSettings.getSelectGenerator().equals(mybatisSettingForm.selectPatternTextField.getText())
                || (mybatisSettingForm.defaultRadioButton.isSelected() ?
-                MapperIcon.BIRD.name().equals(mybatisXSettings.getMapperIcon())
-                : MapperIcon.DEFAULT.name().equals(mybatisXSettings.getMapperIcon()));
+            MapperIcon.BIRD.name().equals(mybatisXSettings.getMapperIcon())
+            : MapperIcon.DEFAULT.name().equals(mybatisXSettings.getMapperIcon()))
+               || mybatisXSettings.getState().hotswapEnabled != mybatisSettingForm.hotSwapCheckBox.isSelected();
     }
 
     @Override
@@ -83,15 +85,23 @@ public class MyBatisXConfigurable implements SearchableConfigurable {
 
         MapperIcon mapperIcon = mybatisSettingForm.defaultRadioButton.isSelected() ? MapperIcon.DEFAULT : MapperIcon.BIRD;
         mybatisXSettings.setMapperIcon(mapperIcon.name());
+
+        MyBatisXSettings.State state = mybatisXSettings.getState();
+        state.hotswapEnabled = mybatisSettingForm.hotSwapCheckBox.isSelected();
+
+        if (!state.hotswapEnabled) {
+
+        }
     }
 
     @Override
     public void reset() {
+        MyBatisXSettings.State state = mybatisXSettings.getState();
         mybatisSettingForm.insertPatternTextField.setText(mybatisXSettings.getInsertGenerator());
         mybatisSettingForm.deletePatternTextField.setText(mybatisXSettings.getDeleteGenerator());
         mybatisSettingForm.updatePatternTextField.setText(mybatisXSettings.getUpdateGenerator());
         mybatisSettingForm.selectPatternTextField.setText(mybatisXSettings.getSelectGenerator());
-
+        mybatisSettingForm.hotSwapCheckBox.setSelected(state.hotswapEnabled);
         JRadioButton jRadioButton = mybatisSettingForm.birdRadioButton;
         if (MapperIcon.DEFAULT.name().equals(mybatisXSettings.getMapperIcon())) {
             jRadioButton = mybatisSettingForm.defaultRadioButton;

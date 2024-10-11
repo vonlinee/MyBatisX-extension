@@ -35,7 +35,6 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.Properties;
 
-
 /**
  * The type Mapper utils.
  *
@@ -242,7 +241,7 @@ public final class MapperUtils {
     @NonNls
     public static Optional<Mapper> findFirstMapper(@NotNull Project project, @NotNull PsiClass clazz) {
         String qualifiedName = clazz.getQualifiedName();
-        return null != qualifiedName ? findFirstMapper(project, qualifiedName) : Optional.<Mapper>empty();
+        return null != qualifiedName ? findFirstMapper(project, qualifiedName) : Optional.empty();
     }
 
     /**
@@ -400,6 +399,4 @@ public final class MapperUtils {
             }
         }
     }
-
-
 }

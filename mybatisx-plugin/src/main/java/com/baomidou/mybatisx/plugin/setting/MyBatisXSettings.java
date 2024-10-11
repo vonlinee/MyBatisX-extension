@@ -1,6 +1,6 @@
 package com.baomidou.mybatisx.plugin.setting;
 
-import com.baomidou.mybatisx.plugin.setting.config.AbstractStatementGenerator;
+import com.baomidou.mybatisx.plugin.setting.config.StatementGenerators;
 import com.baomidou.mybatisx.util.IntellijSDK;
 import com.baomidou.mybatisx.util.MyBatisXPlugin;
 import com.google.common.base.Joiner;
@@ -103,7 +103,8 @@ public final class MyBatisXSettings implements PersistentStateComponent<MyBatisX
         public String updateGenerator;
         public String deleteGenerator;
         public String selectGenerator;
-
+        public boolean hotswapEnabled;
+        public String port;
         /**
          * 数据类型映射
          */
@@ -112,10 +113,10 @@ public final class MyBatisXSettings implements PersistentStateComponent<MyBatisX
         public State() {
             // 配置的默认值
             Joiner joiner = Joiner.on(";");
-            insertGenerator = joiner.join(AbstractStatementGenerator.INSERT_GENERATOR.getPatterns());
-            updateGenerator = joiner.join(AbstractStatementGenerator.UPDATE_GENERATOR.getPatterns());
-            deleteGenerator = joiner.join(AbstractStatementGenerator.DELETE_GENERATOR.getPatterns());
-            selectGenerator = joiner.join(AbstractStatementGenerator.SELECT_GENERATOR.getPatterns());
+            insertGenerator = joiner.join(StatementGenerators.INSERT_GENERATOR.getPatterns());
+            updateGenerator = joiner.join(StatementGenerators.UPDATE_GENERATOR.getPatterns());
+            deleteGenerator = joiner.join(StatementGenerators.DELETE_GENERATOR.getPatterns());
+            selectGenerator = joiner.join(StatementGenerators.SELECT_GENERATOR.getPatterns());
         }
     }
 }

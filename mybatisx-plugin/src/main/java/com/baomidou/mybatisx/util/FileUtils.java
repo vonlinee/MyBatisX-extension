@@ -1,6 +1,7 @@
 package com.baomidou.mybatisx.util;
 
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
@@ -9,6 +10,14 @@ import java.nio.file.Paths;
 import java.util.stream.Stream;
 
 public abstract class FileUtils {
+
+    public static void writeToFile(String text, String pathname) {
+        try (FileWriter writer = new FileWriter(pathname)) {
+            writer.write(text);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
     public static void createNewFile(Path path) throws IOException {
         Files.createDirectories(path.getParent());
@@ -90,6 +99,14 @@ public abstract class FileUtils {
     public static String readString(File file) {
         try {
             return org.apache.commons.io.FileUtils.readFileToString(file, StandardCharsets.UTF_8);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public static String readStringUTF8(String pathname) {
+        try {
+            return org.apache.commons.io.FileUtils.readFileToString(new File(pathname), StandardCharsets.UTF_8);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

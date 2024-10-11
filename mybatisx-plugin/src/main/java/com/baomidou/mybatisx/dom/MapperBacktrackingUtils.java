@@ -19,7 +19,6 @@ import org.jetbrains.annotations.Nullable;
 import java.util.Objects;
 import java.util.Optional;
 
-
 /**
  * The type Mapper backtracking utils.
  *

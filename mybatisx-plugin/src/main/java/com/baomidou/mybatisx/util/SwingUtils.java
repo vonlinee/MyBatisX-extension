@@ -192,4 +192,14 @@ public final class SwingUtils {
     public static Component createStrut(int width) {
         return Box.createHorizontalStrut(width);
     }
+
+    public static boolean isEventThread() {
+        return EventQueue.isDispatchThread();
+    }
+
+    public static void ensureEventDispatchThread() {
+        if (!EventQueue.isDispatchThread()) {
+            throw new IllegalStateException("The operation can only be used in event dispatch thread. Current thread: " + Thread.currentThread());
+        }
+    }
 }

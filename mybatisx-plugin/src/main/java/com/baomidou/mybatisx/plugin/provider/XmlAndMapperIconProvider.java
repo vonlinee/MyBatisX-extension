@@ -14,6 +14,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import javax.swing.*;
+import java.util.Objects;
 import java.util.Optional;
 
 /**
@@ -24,7 +25,7 @@ public class XmlAndMapperIconProvider extends IconProvider {
 
     @Override
     public @Nullable Icon getIcon(@NotNull PsiElement element, int flags) {
-        if (instance.getMapperIcon() != null && MapperIcon.DEFAULT.name().equals(instance.getMapperIcon())) {
+        if (instance.getMapperIcon() != null && Objects.equals(MapperIcon.DEFAULT.name(), instance.getMapperIcon())) {
             return null;
         }
         Language language = element.getLanguage();

@@ -1,7 +1,7 @@
 package com.baomidou.mybatisx.boot;
 
 import com.baomidou.mybatisx.feat.bean.TemplateInfo;
-import com.baomidou.mybatisx.plugin.setting.GlobalTemplateSettings;
+import com.baomidou.mybatisx.plugin.setting.TemplatesSettings;
 import com.baomidou.mybatisx.util.FileUtils;
 import com.baomidou.mybatisx.util.IOUtils;
 import com.baomidou.mybatisx.util.PluginUtils;
@@ -55,7 +55,6 @@ public class PluginInitializer implements AppLifecycleListener {
              */
             final String rootDirString = rootDir.toString();
             Enumeration<JarEntry> jarEntry = jarFile.entries();
-            int i = 0;
             while (jarEntry.hasMoreElements()) {
                 JarEntry entry = jarEntry.nextElement();
                 String name = entry.getName();
@@ -67,18 +66,18 @@ public class PluginInitializer implements AppLifecycleListener {
                         try (InputStream in = jarFile.getInputStream(entry);
                              OutputStream out = Files.newOutputStream(path, StandardOpenOption.CREATE_NEW)) {
                             IOUtils.copy(in, out);
-                            String absolutePathname = FileUtils.getAbsolutePathname(path);
-                            String filename = path.getFileName().toString();
-                            templates.add(new TemplateInfo(filename, filename, absolutePathname));
                         }
                     }
+                    String absolutePathname = FileUtils.getAbsolutePathname(path);
+                    String filename = path.getFileName().toString();
+                    templates.add(new TemplateInfo(filename, filename, absolutePathname));
                 }
             }
         } catch (Exception exception) {
             logger.error("failed to copy templates", exception);
         }
 
-        GlobalTemplateSettings.getInstance().setTemplates(templates);
+        TemplatesSettings.getInstance().setTemplates(templates);
     }
 
     @Nullable

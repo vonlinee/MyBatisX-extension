@@ -11,5 +11,4 @@ public interface ClickableListener extends ExecutableListener {
      * Clicked.
      */
     void clicked();
-
 }

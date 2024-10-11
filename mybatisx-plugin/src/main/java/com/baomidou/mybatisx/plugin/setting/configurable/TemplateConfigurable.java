@@ -1,6 +1,6 @@
 package com.baomidou.mybatisx.plugin.setting.configurable;
 
-import com.baomidou.mybatisx.plugin.ui.components.TemplateSettingPanel;
+import com.baomidou.mybatisx.plugin.ui.components.TemplateSettingPane;
 import com.intellij.openapi.options.ConfigurationException;
 import com.intellij.openapi.options.SearchableConfigurable;
 import org.jetbrains.annotations.NotNull;
@@ -13,10 +13,10 @@ import javax.swing.*;
  */
 public class TemplateConfigurable implements SearchableConfigurable {
 
-    TemplateSettingPanel rootPanel;
+    TemplateSettingPane rootPanel;
 
     public TemplateConfigurable() {
-        rootPanel = new TemplateSettingPanel();
+        rootPanel = new TemplateSettingPane();
     }
 
     @Override
@@ -36,7 +36,11 @@ public class TemplateConfigurable implements SearchableConfigurable {
 
     @Override
     public boolean isModified() {
-        return false;
+
+        boolean b = rootPanel.hasChanged();
+
+        System.out.println(b);
+        return b;
     }
 
     @Override

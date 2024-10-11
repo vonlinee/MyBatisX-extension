@@ -1,7 +1,7 @@
 package com.baomidou.mybatisx.util;
 
-import org.mybatisx.extension.agent.AgentException;
-import org.mybatisx.extension.agent.Log;
+import org.mybatisx.extension.agent.api.AgentException;
+import org.mybatisx.extension.agent.api.Log;
 import org.mybatisx.extension.agent.client.TargetProxy;
 
 import java.io.BufferedReader;

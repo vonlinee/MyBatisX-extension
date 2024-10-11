@@ -16,6 +16,7 @@ import com.baomidou.mybatisx.feat.jpa.component.TxReturnDescriptor;
 import com.baomidou.mybatisx.feat.jpa.operate.generate.Generator;
 import com.baomidou.mybatisx.feat.jpa.operate.manager.StatementBlock;
 import com.baomidou.mybatisx.plugin.setting.config.AbstractStatementGenerator;
+import com.baomidou.mybatisx.plugin.setting.config.StatementGenerators;
 import com.intellij.psi.PsiClass;
 import com.intellij.psi.PsiMethod;
 
@@ -37,7 +38,7 @@ public class UpdateOperator extends BaseOperatorManager {
      * @param entityClass
      */
     public UpdateOperator(final List<TxField> mappingField, PsiClass entityClass) {
-        final Set<String> patterns = AbstractStatementGenerator.UPDATE_GENERATOR.getPatterns();
+        final Set<String> patterns = StatementGenerators.UPDATE_GENERATOR.getPatterns();
         this.init(mappingField, entityClass, patterns);
         patterns.forEach(this::addOperatorName);
     }

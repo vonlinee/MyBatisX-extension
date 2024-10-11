@@ -6,11 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class TreeTableMain extends JFrame {
-    /**
-     * 现在，数据模型部分已准备就绪。现在可以在主类中创建节点数据模型。
-     * 负责表示的类将在下一节中介绍。在实际用例中，数据结构很可能不是在开始时完全在方法中创建的，但是，
-     * 例如，如有必要，在运行时从数据库中读取数据
-     */
+
     public TreeTableMain() {
         super("swing树表");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

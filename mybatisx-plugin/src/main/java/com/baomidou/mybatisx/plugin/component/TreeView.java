@@ -6,24 +6,51 @@ import com.intellij.ui.treeStructure.Tree;
 import org.jetbrains.annotations.NotNull;
 
 import javax.swing.*;
+import javax.swing.event.TreeSelectionEvent;
 import javax.swing.tree.DefaultMutableTreeNode;
-import javax.swing.tree.MutableTreeNode;
 import java.awt.*;
 
+/**
+ * 默认不展示根节点
+ *
+ * @param <T>
+ */
 public class TreeView<T> extends Tree {
 
-    DefaultMutableTreeNode root;
+    private final DefaultMutableTreeNode root;
 
     public TreeView() {
-        root = new DefaultMutableTreeNode("");
+        root = new DefaultMutableTreeNode();
     }
 
     public final void addChild(DefaultMutableTreeNode newChild) {
         root.add(newChild);
     }
 
+    @Override
+    public void setRootVisible(boolean rootVisible) {
+        if (rootVisible) {
+            super.setRootVisible(true);
+        } else {
+            if (getRootNode().getChildCount() > 0) {
+                super.setRootVisible(true);
+                // 设置根节点展开, 需要有子节点才有效果
+                expandRow(0);
+                // 隐藏根节点
+                super.setRootVisible(false);
+            }
+        }
+    }
+
+    @SuppressWarnings("unchecked")
+    public final TreeModel<T> getTreeModel() {
+        return (TreeModel<T>) super.getModel();
+    }
+
+    /**
+     * 要等到根节点下面有节点后才能设置setRootVisible(false)
+     */
     public final void expandRoot() {
-        // 要等到根节点下面有节点后才能设置setRootVisible(false)
         expandRow(0); // 展开根节点，因为根节点已设置为不显示
     }
 
@@ -37,7 +64,7 @@ public class TreeView<T> extends Tree {
         }
     }
 
-    public final MutableTreeNode getRoot() {
+    public final DefaultMutableTreeNode getRootNode() {
         return root;
     }
 
@@ -69,5 +96,26 @@ public class TreeView<T> extends Tree {
         JPanel panel = decorator.createPanel();
         addActionPanelExtra(decorator.getActionsPanel());
         return panel;
+    }
+
+    public DefaultMutableTreeNode getLastSelectedNode() {
+        return (DefaultMutableTreeNode) getLastSelectedPathComponent();
+    }
+
+    @SuppressWarnings("unchecked")
+    public T getSelectedItem() {
+        DefaultMutableTreeNode node = getLastSelectedNode();
+        return (T) node.getUserObject();
+    }
+
+    // ===================================== Static Utility Methods ====================================
+
+    @SuppressWarnings("unchecked")
+    public static <T> TreeView<T> getTreeView(TreeSelectionEvent event) {
+        Object source = event.getSource();
+        if (source instanceof TreeView) {
+            return (TreeView<T>) source;
+        }
+        throw new UnsupportedOperationException("event source is not a TreeView.");
     }
 }

@@ -1,7 +1,7 @@
 package org.mybatisx.extension.agent.service;
 
-import org.mybatisx.extension.agent.AgentException;
-import org.mybatisx.extension.agent.AgentRequest;
+import org.mybatisx.extension.agent.api.AgentException;
+import org.mybatisx.extension.agent.api.AgentRequest;
 
 public interface AgentHandler<T> {
 

@@ -1,9 +1,9 @@
 package com.baomidou.mybatisx.agent;
 
-import org.mybatisx.extension.agent.AgentRequest;
-import org.mybatisx.extension.agent.AgentResponse;
-import org.mybatisx.extension.agent.MyBatisXAgent;
-import org.mybatisx.extension.agent.RPCTarget;
+import org.mybatisx.extension.agent.api.AgentRequest;
+import org.mybatisx.extension.agent.api.AgentResponse;
+import org.mybatisx.extension.agent.api.MyBatisXAgent;
+import org.mybatisx.extension.agent.api.RPCTarget;
 
 public class AgentConnectorImpl<T, R> implements AgentConnector<T, R> {
 

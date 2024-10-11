@@ -7,7 +7,7 @@ import com.intellij.openapi.actionSystem.PlatformDataKeys;
 import com.intellij.openapi.editor.Document;
 import com.intellij.openapi.editor.Editor;
 import com.intellij.psi.PsiFile;
-import org.mybatisx.extension.agent.*;
+import org.mybatisx.extension.agent.api.AgentException;
 import org.mybatisx.extension.agent.client.TargetProxy;
 
 import java.util.Collections;
@@ -17,10 +17,10 @@ import java.util.regex.Pattern;
 public class XmlFileHandler implements Handler {
 
     private static final String mapperClassRegex = "<mapper\\s+namespace\\s*=\\s*\"(.+)\">";
-    private final AgentConnector<MapperHotSwapDTO, Object> connector = TargetProxy.getProxy(new AgentConnectorImpl<>());
+    private final AgentConnector<org.mybatisx.extension.agent.api.MapperHotSwapDTO, Object> connector = TargetProxy.getProxy(new AgentConnectorImpl<>());
 
     @Override
-    public boolean isSupport(Object obj) {
+    public boolean supports(Object obj) {
         if (!(obj instanceof String)) {
             return false;
         }
@@ -45,16 +45,16 @@ public class XmlFileHandler implements Handler {
         if (matcher.find()) {
             String mapperClass = matcher.group(1).replace("\\s", "");
 
-            MapperHotSwapDTO dto = new MapperHotSwapDTO();
+            org.mybatisx.extension.agent.api.MapperHotSwapDTO dto = new org.mybatisx.extension.agent.api.MapperHotSwapDTO();
             dto.setMapperClass(mapperClass);
             dto.setMapperXmlPath(psiFile.getVirtualFile().getPath());
 
-            AgentRequest<MapperHotSwapDTO> command = new AgentRequest<>(AgentCommandEnum.MYBATIS_MAPPER_FILE_HOTSWAP, dto);
+            org.mybatisx.extension.agent.api.AgentRequest<org.mybatisx.extension.agent.api.MapperHotSwapDTO> command = new org.mybatisx.extension.agent.api.AgentRequest<>(org.mybatisx.extension.agent.api.AgentCommandEnum.MYBATIS_MAPPER_FILE_HOTSWAP, dto);
 
             // Run Configuration 名称
             String runConfigurationName = e.getPresentation().getText();
             connector.sendRequest(Collections.singletonList(VMContext.get(runConfigurationName)), vm -> {
-                AgentResponse<Object> response = connector.execute(command);
+                org.mybatisx.extension.agent.api.AgentResponse<Object> response = connector.execute(command);
                 String msg = "[" + vm.getProcessName() + "]:" + response.getMsg();
                 Notifications.notify(msg, response.isOk() ? NotificationType.INFORMATION : NotificationType.ERROR);
             });

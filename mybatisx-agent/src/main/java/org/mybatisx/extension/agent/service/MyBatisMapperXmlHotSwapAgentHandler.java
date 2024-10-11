@@ -6,7 +6,7 @@ import org.apache.ibatis.mapping.MappedStatement;
 import org.apache.ibatis.parsing.XNode;
 import org.apache.ibatis.parsing.XPathParser;
 import org.apache.ibatis.session.Configuration;
-import org.mybatisx.extension.agent.*;
+import org.mybatisx.extension.agent.api.*;
 import org.mybatisx.extension.agent.internal.Utils;
 
 import java.io.File;
@@ -14,10 +14,8 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.lang.reflect.Field;
-import java.lang.reflect.InvocationTargetException;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.stream.Collectors;
 
 /**
  * 更新整个MyBatis Xml Mapper文件

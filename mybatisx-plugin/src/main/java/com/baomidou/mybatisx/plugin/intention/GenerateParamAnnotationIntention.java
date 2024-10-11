@@ -45,5 +45,4 @@ public class GenerateParamAnnotationIntention extends GenericIntention {
             }
         }
     }
-
 }

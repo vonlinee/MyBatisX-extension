@@ -216,7 +216,9 @@ public abstract class CreatorSupport extends AnAction {
         //获得映射类
         PsiClass psiClass = JavaPsiFacade.getInstance(psiField.getProject())
             .findClass(psiField.getType().getCanonicalText(), GlobalSearchScope.projectScope(psiField.getProject()));
-
+        if (psiClass == null) {
+            return null;
+        }
         //寻找ID字段的路上
         for (PsiField targetField : psiClass.getFields()) {
             for (PsiAnnotation annotation : targetField.getAnnotations()) {
@@ -236,7 +238,9 @@ public abstract class CreatorSupport extends AnAction {
                 if (Objects.equals(annotation.getQualifiedName(), "javax.persistence.Id")) {
                     String fieldName = Convertor.getGetterFieldName(method.getName());
                     PsiField targetField = psiClass.findFieldByName(fieldName, true);
-                    return this.getTableField(targetField);
+                    if (targetField != null) {
+                        return this.getTableField(targetField);
+                    }
                 }
             }
         }
@@ -289,6 +293,9 @@ public abstract class CreatorSupport extends AnAction {
      */
     protected String getTableName(PsiClass psiClass) {
         String tableName = psiClass.getName();
+        if (tableName == null) {
+            return "Unknown";
+        }
         String firstLetter = tableName.substring(0, 1).toLowerCase();
         tableName = firstLetter + tableName.substring(1);
         tableName = Convertor.camel2Underline(tableName);

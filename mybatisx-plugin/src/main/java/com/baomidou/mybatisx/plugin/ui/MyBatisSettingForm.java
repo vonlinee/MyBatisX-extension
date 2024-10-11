@@ -42,14 +42,13 @@ public class MyBatisSettingForm {
      * Bird Icon
      */
     public JRadioButton birdRadioButton;
-
     /**
-     * data type mapping table
+     * default icon
      */
-    public JTable dataTypeMappingTable;
-
+    public JCheckBox hotSwapCheckBox;
     /**
      * root panel
      */
     public JPanel root;
+    public JTextField hotSwapAgentServerPortTextField;
 }

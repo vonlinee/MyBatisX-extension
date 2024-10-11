@@ -1,6 +1,6 @@
 package com.baomidou.mybatisx.agent;
 
-import org.mybatisx.extension.agent.AgentException;
+import org.mybatisx.extension.agent.api.AgentException;
 
 public interface Handler {
 
@@ -9,7 +9,7 @@ public interface Handler {
      *
      * @return 是否支持，如果支持则调用execute方法
      */
-    boolean isSupport(Object obj);
+    boolean supports(Object obj);
 
     /**
      * 执行

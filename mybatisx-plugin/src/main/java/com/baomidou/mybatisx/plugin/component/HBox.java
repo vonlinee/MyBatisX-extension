@@ -2,11 +2,17 @@ package com.baomidou.mybatisx.plugin.component;
 
 import org.jdesktop.swingx.HorizontalLayout;
 
-import javax.swing.*;
+import java.awt.*;
 
-public class HBox extends JPanel {
+public class HBox extends Pane {
 
     public HBox() {
         super(new HorizontalLayout());
+    }
+
+    public final void addChildren(Component... components) {
+        for (Component component : components) {
+            add(component);
+        }
     }
 }

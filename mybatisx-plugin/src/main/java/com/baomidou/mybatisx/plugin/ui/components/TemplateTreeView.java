@@ -1,13 +1,16 @@
 package com.baomidou.mybatisx.plugin.ui.components;
 
 import com.baomidou.mybatisx.feat.bean.TemplateInfo;
+import com.baomidou.mybatisx.plugin.component.TreeModel;
 import com.baomidou.mybatisx.plugin.component.TreeView;
+import com.intellij.ui.AnActionButtonRunnable;
 import com.intellij.util.ui.EditableTreeModel;
 
+import javax.swing.*;
 import javax.swing.tree.DefaultMutableTreeNode;
-import javax.swing.tree.DefaultTreeModel;
-import javax.swing.tree.TreeNode;
+import javax.swing.tree.DefaultTreeCellRenderer;
 import javax.swing.tree.TreePath;
+import java.awt.*;
 import java.util.Collection;
 
 /**
@@ -15,15 +18,39 @@ import java.util.Collection;
  */
 public class TemplateTreeView extends TreeView<TemplateInfo> {
 
+    TemplateTreeViewModel model;
+
     public TemplateTreeView() {
         super();
-        setModel(new TemplateTreeViewModel(getRoot()));
+        setModel(model = new TemplateTreeViewModel(this));
+        setCellRenderer(new DefaultTreeCellRenderer() {
+            @Override
+            public Component getTreeCellRendererComponent(JTree tree, Object value,
+                                                          boolean sel,
+                                                          boolean expanded,
+                                                          boolean leaf,
+                                                          int row,
+                                                          boolean hasFocus) {
+                super.getTreeCellRendererComponent(tree, value, sel, expanded, leaf, row, hasFocus);
+                // 检查节点是否为复杂对象
+                if (value instanceof DefaultMutableTreeNode) {
+                    DefaultMutableTreeNode node = (DefaultMutableTreeNode) value;
+                    Object userObject = node.getUserObject();
+                    if (userObject instanceof TemplateInfo) {
+                        TemplateInfo templateInfo = (TemplateInfo) userObject;
+                        // 自定义显示内容，例如显示姓名和年龄
+                        setText(templateInfo.getName());
+                    }
+                }
+                return this;
+            }
+        });
     }
 
-    static class TemplateTreeViewModel extends DefaultTreeModel implements EditableTreeModel {
+    private static class TemplateTreeViewModel extends TreeModel<TemplateInfo> implements EditableTreeModel {
 
-        public TemplateTreeViewModel(TreeNode root) {
-            super(root);
+        public TemplateTreeViewModel(TreeView<TemplateInfo> treeView) {
+            super(treeView);
         }
 
         /**
@@ -52,5 +79,11 @@ public class TemplateTreeView extends TreeView<TemplateInfo> {
         public void moveNodeTo(TreePath parentOrNeighbour) {
 
         }
+    }
+
+    @Override
+    protected AnActionButtonRunnable getAddAction() {
+        return anActionButton -> {
+        };
     }
 }

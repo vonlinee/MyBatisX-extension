@@ -12,11 +12,9 @@ import com.intellij.spring.model.utils.SpringPropertyUtils;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Optional;
 import java.util.Set;
 
 /**
@@ -26,16 +24,11 @@ import java.util.Set;
  */
 public class BeanAliasResolver extends PackageAliasResolver {
 
-    private static final List<String> MAPPER_ALIAS_PACKAGE_CLASSES = new ArrayList<String>() {
-        {
-            // default
-            add("org.mybatis.spring.SqlSessionFactoryBean");
-            // mybatis-plus3
-            add("com.baomidou.mybatisplus.extension.spring.MybatisSqlSessionFactoryBean");
-            // mybatis-plus2
-            add("com.baomidou.mybatisplus.spring.MybatisSqlSessionFactoryBean");
-        }
-    };
+    private static final List<String> MAPPER_ALIAS_PACKAGE_CLASSES = List.of(
+        "org.mybatis.spring.SqlSessionFactoryBean",  // default
+        "com.baomidou.mybatisplus.extension.spring.MybatisSqlSessionFactoryBean", // mybatis-plus3
+        "com.baomidou.mybatisplus.spring.MybatisSqlSessionFactoryBean" // mybatis-plus2
+    );
 
     private static final String MAPPER_ALIAS_PROPERTY = "typeAliasesPackage";
 
@@ -54,8 +47,7 @@ public class BeanAliasResolver extends PackageAliasResolver {
         Set<String> packages = new HashSet<>();
         Set<PsiClass> classes = findSqlSessionFactories();
         for (PsiClass sqlSessionFactoryClass : classes) {
-            CommonSpringModel springModel = SpringModelUtils.getInstance()
-                    .getPsiClassSpringModel(sqlSessionFactoryClass);
+            CommonSpringModel springModel = SpringModelUtils.getInstance().getPsiClassSpringModel(sqlSessionFactoryClass);
             SpringModelSearchParameters.BeanClass beanClass = SpringModelSearchParameters.BeanClass.byClass(sqlSessionFactoryClass);
             springModel.processByClass(beanClass, springBeanPointer -> {
                 String propertyStringValue = SpringPropertyUtils.getPropertyStringValue(springBeanPointer.getSpringBean(), MAPPER_ALIAS_PROPERTY);
@@ -72,10 +64,8 @@ public class BeanAliasResolver extends PackageAliasResolver {
     private Set<PsiClass> findSqlSessionFactories() {
         Set<PsiClass> sqlSessionFactorySet = new HashSet<>();
         for (String mapperAliasPackageClass : BeanAliasResolver.MAPPER_ALIAS_PACKAGE_CLASSES) {
-            Optional<PsiClass> clazz = JavaUtils.findClass(project, mapperAliasPackageClass);
-            clazz.ifPresent(sqlSessionFactorySet::add);
+            JavaUtils.findClass(project, mapperAliasPackageClass).ifPresent(sqlSessionFactorySet::add);
         }
         return sqlSessionFactorySet;
     }
-
 }

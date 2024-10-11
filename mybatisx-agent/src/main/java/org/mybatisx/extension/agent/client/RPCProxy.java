@@ -1,7 +1,7 @@
 package org.mybatisx.extension.agent.client;
 
-import org.mybatisx.extension.agent.Data;
-import org.mybatisx.extension.agent.Log;
+import org.mybatisx.extension.agent.api.Data;
+import org.mybatisx.extension.agent.api.Log;
 
 import java.io.InputStream;
 import java.io.ObjectInputStream;

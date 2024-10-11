@@ -2,7 +2,7 @@ package com.baomidou.mybatisx.plugin.ui;
 
 import com.baomidou.mybatisx.feat.generate.dto.TemplateContext;
 import com.baomidou.mybatisx.feat.generate.dto.TemplateSettingDTO;
-import com.baomidou.mybatisx.feat.generate.setting.TemplatesSettings;
+import com.baomidou.mybatisx.plugin.setting.TemplatesSettings;
 import com.baomidou.mybatisx.util.IntellijSDK;
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.ui.AnActionButton;

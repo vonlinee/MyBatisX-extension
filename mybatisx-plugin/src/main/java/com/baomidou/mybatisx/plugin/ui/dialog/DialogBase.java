@@ -19,8 +19,31 @@ public abstract class DialogBase extends DialogWrapper {
 
     @Override
     public void show() {
-        init();
+        if (!isDisposed()) {
+            super.init();
+        }
         super.show();
+    }
+
+    @Override
+    protected final void dispose() {
+        if (isDisposed()) {
+            return;
+        }
+        beforeDisposed();
+        super.dispose(); // this will free the resources associated with the dialog.
+    }
+
+    protected void beforeDisposed() {
+    }
+
+
+    public final void closeByCancel() {
+        close(DialogWrapper.CANCEL_EXIT_CODE);
+    }
+
+    public final void closeByOk() {
+        close(DialogWrapper.OK_EXIT_CODE);
     }
 
     public final Project getProject() {

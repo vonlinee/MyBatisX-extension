@@ -1,13 +1,14 @@
 package com.baomidou.mybatisx.plugin.ui.components;
 
-import com.baomidou.mybatisx.plugin.component.JBTableView;
+import com.baomidou.mybatisx.plugin.component.TableView;
 import com.intellij.ui.AnActionButton;
 import com.intellij.ui.AnActionButtonRunnable;
 import com.intellij.util.ui.ColumnInfo;
 import com.intellij.util.ui.ListTableModel;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-public class DataTypeTable extends JBTableView<DataTypeItem> {
+public class DataTypeTable extends TableView<DataTypeItem> {
 
     public DataTypeTable() {
         ColumnInfo<DataTypeItem, String> col1 = new ColumnInfo<>("类型分组") {
@@ -19,7 +20,7 @@ public class DataTypeTable extends JBTableView<DataTypeItem> {
 
         ColumnInfo<DataTypeItem, String> col2 = new ColumnInfo<>("类型名称") {
             @Override
-            public @Nullable String valueOf(DataTypeItem item) {
+            public @NotNull String valueOf(DataTypeItem item) {
                 return item.getIdentifier();
             }
         };

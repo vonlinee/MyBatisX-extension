@@ -6,7 +6,7 @@ import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.actionSystem.PlatformDataKeys;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.psi.PsiFile;
-import org.mybatisx.extension.agent.*;
+import org.mybatisx.extension.agent.api.AgentException;
 import org.mybatisx.extension.agent.client.TargetProxy;
 
 import java.lang.reflect.Field;
@@ -14,10 +14,10 @@ import java.util.Collections;
 
 public class JavaFileHandler implements Handler {
 
-    private final AgentConnector<JavaClassHotSwapDTO, Object> connector = TargetProxy.getProxy(new AgentConnectorImpl<>());
+    private final AgentConnector<org.mybatisx.extension.agent.api.JavaClassHotSwapDTO, Object> connector = TargetProxy.getProxy(new AgentConnectorImpl<>());
 
     @Override
-    public boolean isSupport(Object obj) {
+    public boolean supports(Object obj) {
         if (!(obj instanceof String)) {
             return false;
         }
@@ -25,7 +25,7 @@ public class JavaFileHandler implements Handler {
     }
 
     @Override
-    public void execute(Object obj) throws AgentException {
+    public void execute(Object obj) throws org.mybatisx.extension.agent.api.AgentException {
         try {
             AnActionEvent e = (AnActionEvent) obj;
             VirtualFile file = e.getData(PlatformDataKeys.VIRTUAL_FILE);
@@ -40,12 +40,12 @@ public class JavaFileHandler implements Handler {
             Class<?> clazz = psiFile.getClass().getSuperclass();
             Field packageNameField = clazz.getDeclaredField("myPackageName");
             String packageName = (String) packageNameField.get(psiFile);
-            JavaClassHotSwapDTO dto = new JavaClassHotSwapDTO(file.getPath());
-            AgentRequest<JavaClassHotSwapDTO> command = new AgentRequest<>(AgentCommandEnum.JAVA_CLASS_HOTSWAP, dto);
+            org.mybatisx.extension.agent.api.JavaClassHotSwapDTO dto = new org.mybatisx.extension.agent.api.JavaClassHotSwapDTO(file.getPath());
+            org.mybatisx.extension.agent.api.AgentRequest<org.mybatisx.extension.agent.api.JavaClassHotSwapDTO> command = new org.mybatisx.extension.agent.api.AgentRequest<>(org.mybatisx.extension.agent.api.AgentCommandEnum.JAVA_CLASS_HOTSWAP, dto);
 
             final String processName = e.getPresentation().getText();
             connector.sendRequest(Collections.singletonList(VMContext.get(processName)), vm -> {
-                AgentResponse<Object> agentResponse = connector.execute(command);
+                org.mybatisx.extension.agent.api.AgentResponse<Object> agentResponse = connector.execute(command);
                 Notifications.notify("[" + vm.getProcessName() + "]:" + agentResponse.getMsg(), agentResponse.isOk() ? NotificationType.INFORMATION : NotificationType.ERROR);
             });
         } catch (Exception exception) {

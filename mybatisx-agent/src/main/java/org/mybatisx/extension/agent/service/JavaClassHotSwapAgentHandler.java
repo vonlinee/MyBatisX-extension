@@ -1,6 +1,6 @@
 package org.mybatisx.extension.agent.service;
 
-import org.mybatisx.extension.agent.*;
+import org.mybatisx.extension.agent.api.*;
 import org.mybatisx.extension.agent.javac.JavaStringCompiler;
 import org.mybatisx.extension.agent.runtime.AgentContextHolder;
 

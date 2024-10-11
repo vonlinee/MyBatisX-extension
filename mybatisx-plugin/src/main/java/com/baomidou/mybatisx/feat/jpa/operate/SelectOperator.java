@@ -1,6 +1,5 @@
 package com.baomidou.mybatisx.feat.jpa.operate;
 
-
 import com.baomidou.mybatisx.feat.jpa.SyntaxAppenderWrapper;
 import com.baomidou.mybatisx.feat.jpa.common.SyntaxAppender;
 import com.baomidou.mybatisx.feat.jpa.common.SyntaxAppenderFactory;
@@ -19,6 +18,7 @@ import com.baomidou.mybatisx.feat.jpa.component.TxReturnDescriptor;
 import com.baomidou.mybatisx.feat.jpa.operate.generate.Generator;
 import com.baomidou.mybatisx.feat.jpa.operate.manager.StatementBlock;
 import com.baomidou.mybatisx.plugin.setting.config.AbstractStatementGenerator;
+import com.baomidou.mybatisx.plugin.setting.config.StatementGenerators;
 import com.intellij.psi.PsiClass;
 import com.intellij.psi.PsiMethod;
 
@@ -47,7 +47,7 @@ public class SelectOperator extends BaseOperatorManager {
     }
 
     protected Set<String> getPatterns() {
-        Set<String> patterns = AbstractStatementGenerator.SELECT_GENERATOR.getPatterns();
+        Set<String> patterns = StatementGenerators.SELECT_GENERATOR.getPatterns();
         HashSet<String> strings = new HashSet<>(patterns);
         // 1.4.x 支持countBy 语法, 由于历史原因， 查询必须排除count
         strings.remove("count");
@@ -77,11 +77,6 @@ public class SelectOperator extends BaseOperatorManager {
 
     /**
      * 初始化 selectOne+By+field区域
-     *
-     * @param areaName
-     * @param mappingField
-     * @param sortAppenderFactory
-     * @param entityClass
      */
     private void initSelectOneBlock(String areaName,
                                     List<TxField> mappingField,
@@ -285,19 +280,13 @@ public class SelectOperator extends BaseOperatorManager {
 
         /**
          * 查询的结果不需要添加到参数中
-         *
-         * @param entityClass
-         * @param jpaStringList
-         * @return
          */
         @Override
         public List<TxParameter> getMxParameter(PsiClass entityClass, LinkedList<SyntaxAppenderWrapper> jpaStringList) {
-
             // 移除select 标签
             List<TxParameter> txParameter = super.getMxParameter(entityClass, jpaStringList);
             return Collections.emptyList();
         }
-
 
         @Override
         public String getTemplateText(String tableName,
@@ -342,7 +331,6 @@ public class SelectOperator extends BaseOperatorManager {
          *
          * @param syntaxAppenderWrappers the jpa string list
          * @param entityClass            the entity class
-         * @return
          */
         @Override
         public List<TxParameter> getMxParameter(LinkedList<SyntaxAppenderWrapper> syntaxAppenderWrappers, PsiClass entityClass) {

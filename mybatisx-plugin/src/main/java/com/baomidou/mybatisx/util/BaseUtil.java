@@ -1,7 +1,8 @@
 package com.baomidou.mybatisx.util;
 
-import com.intellij.lang.jvm.types.JvmPrimitiveTypeKind;
-import com.intellij.psi.*;
+import com.intellij.psi.PsiClass;
+import com.intellij.psi.PsiElement;
+import com.intellij.psi.PsiLiteralExpression;
 import com.intellij.psi.util.PsiTreeUtil;
 import org.apache.commons.compress.utils.Lists;
 

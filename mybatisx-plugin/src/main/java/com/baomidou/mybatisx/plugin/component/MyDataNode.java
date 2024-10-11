@@ -1,8 +1,11 @@
 package com.baomidou.mybatisx.plugin.component;
 
+import lombok.Getter;
+
 import java.util.Collections;
 import java.util.List;
 
+@Getter
 public class MyDataNode {
 
     private String name;
@@ -22,30 +25,6 @@ public class MyDataNode {
         if (this.children == null) {
             this.children = Collections.emptyList();
         }
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public String getPopulation() {
-        return population;
-    }
-
-    public String getArea() {
-        return area;
-    }
-
-    public String getGDP() {
-        return GDP;
-    }
-
-    public String getMonsoonClimate() {
-        return monsoonClimate;
-    }
-
-    public List<MyDataNode> getChildren() {
-        return children;
     }
 
     public String toString() {

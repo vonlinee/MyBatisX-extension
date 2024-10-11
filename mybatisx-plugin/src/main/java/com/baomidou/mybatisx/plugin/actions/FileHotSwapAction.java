@@ -7,7 +7,7 @@ import com.intellij.openapi.actionSystem.PlatformDataKeys;
 import com.intellij.psi.PsiFile;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import org.mybatisx.extension.agent.AgentException;
+import org.mybatisx.extension.agent.api.AgentException;
 import com.baomidou.mybatisx.agent.Handler;
 import com.baomidou.mybatisx.agent.JavaFileHandler;
 import com.baomidou.mybatisx.agent.XmlFileHandler;
@@ -29,7 +29,7 @@ public class FileHotSwapAction extends AnAction {
             1,
             60,
             TimeUnit.SECONDS,
-            new LinkedBlockingQueue<>(),
+            new LinkedBlockingQueue<>(100),
             r -> new Thread(r, "action服务端线程"));
 
     /**
@@ -54,7 +54,7 @@ public class FileHotSwapAction extends AnAction {
         }
         final String fileName = psiFile.getName();
         for (Handler handler : fileHandlerList) {
-            if (handler.isSupport(fileName)) {
+            if (handler.supports(fileName)) {
                 ACTION_THREAD_POOL.execute(() -> {
                     try {
                         handler.execute(e);

@@ -103,7 +103,7 @@ public final class UiComponentFacade {
     public JBPopup showListPopup(@NotNull String title,
                                  @Nullable final ListSelectionListener listener,
                                  @NotNull Object[] objs) {
-        PopupChooserBuilder builder = createListPopupBuilder(title, listener, objs);
+        PopupChooserBuilder<Object> builder = createListPopupBuilder(title, listener, objs);
         JBPopup popup = builder.createPopup();
         setPositionForShown(popup);
         return popup;

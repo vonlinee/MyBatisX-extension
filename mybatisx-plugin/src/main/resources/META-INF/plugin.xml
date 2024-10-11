@@ -1,9 +1,9 @@
 <!-- Plugin Configuration File. Read more: https://plugins.jetbrains.com/docs/intellij/plugin-configuration-file.html -->
 <idea-plugin>
-
     <!--插件id-->
-    <id>com.baomidou.plugin.idea.mybatisx</id>
-    <name>MyBatisX</name>
+    <id>com.baomidou.plugin.idea.mybatisx.extension</id>
+    <name>MyBatisX-extension</name>
+    <version>1.6.4</version>
     <vendor email="jobob@qq.com" url="https://gitee.com/baomidou/MybatisX">MybatisX</vendor>
 
     <description>It aims to realize the most convenient IDEA hot update plug-in, reduce user operation steps, and
@@ -15,7 +15,6 @@
     <!-- please see https://plugins.jetbrains.com/docs/intellij/plugin-compatibility.html
          on how to target different products -->
     <depends>com.intellij.modules.platform</depends>
-
 
     <resource-bundle>messages.messages</resource-bundle>
 
@@ -58,7 +57,6 @@
     <depends optional="true" config-file="spring-boot.xml">com.intellij.spring.boot</depends>
     <depends optional="true" config-file="withKotlin.xml">org.jetbrains.kotlin</depends>
     <depends optional="true" config-file="injection-mybatisx.xml">org.intellij.intelliLang</depends>
-    <depends>com.intellij.modules.platform</depends>
     <depends>com.intellij.modules.lang</depends>
 
     <actions>
@@ -110,8 +108,6 @@
         <!--notify 2020.3版本后需在plugin中注册-->
         <notificationGroup displayType="BALLOON" id="notifyAction"/>
 
-        <projectService id="baomidou.TemplatesSettings"
-                        serviceImplementation="com.baomidou.mybatisx.feat.generate.setting.TemplatesSettings"/>
         <!--文件描述-->
         <!-- mapper.xml文件属性提示 -->
         <dom.fileMetaData id="baomidou.MapperDescription"
@@ -193,30 +189,36 @@
         <!--提示动作 start-->
         <!-- 生成参数注解 @Param -->
         <intentionAction id="baomidou.GenerateParamAnnotationIntention">
+            <language>JAVA</language>
             <className>com.baomidou.mybatisx.plugin.intention.GenerateParamAnnotationIntention</className>
         </intentionAction>
         <!-- 通过方法名生成对应的 查询语句 -->
         <intentionAction id="baomidou.GenerateStatementIntention">
+            <language>JAVA</language>
             <className>com.baomidou.mybatisx.plugin.intention.GenerateStatementIntention</className>
         </intentionAction>
         <!-- 生成mybatis mapper.xml文件 -->
         <intentionAction order="first" id="baomidou.GenerateMapperIntention">
+            <language>JAVA</language>
             <className>com.baomidou.mybatisx.plugin.intention.GenerateMapperIntention</className>
         </intentionAction>
         <!-- mybatis mapper.xml 文件 提示 if test -->
         <intentionAction id="baomidou.MapperXmlIfTestHintIntention">
+            <language>XML</language>
             <className>com.baomidou.mybatisx.plugin.intention.MapperXmlIfTestHintIntention</className>
         </intentionAction>
         <!-- mybatis mapper.xml 文件 提示 foreach -->
         <intentionAction id="baomidou.MapperXmlForeachHintIntention">
+            <language>XML</language>
             <className>com.baomidou.mybatisx.plugin.intention.MapperXmlForeachHintIntention</className>
         </intentionAction>
         <!-- 根据jpa名字生成方法和xml文件内容 -->
         <intentionAction id="baomidou.GenerateMapperMethodSmartJpaAction">
+            <language>JAVA</language>
             <className>com.baomidou.mybatisx.feat.jpa.GenerateSmartJpaAction</className>
         </intentionAction>
-
         <intentionAction id="baomidou.GenerateMapperMethodSmartAdvanceJpaAction">
+            <language>JAVA</language>
             <className>com.baomidou.mybatisx.feat.jpa.GenerateSmartJpaAdvanceAction</className>
         </intentionAction>
         <!--提示动作 end-->
@@ -242,8 +244,8 @@
             serviceImplementation="com.baomidou.mybatisx.plugin.setting.GlobalTemplateSettings"/>
 
         <applicationService
-            id="com.baomidou.mybatisx.plugin.setting.DataTypeMappingSettings"
-            serviceImplementation="com.baomidou.mybatisx.plugin.setting.DataTypeMappingSettings"/>
+            id="com.baomidou.mybatisx.plugin.setting.DataTypeSettings"
+            serviceImplementation="com.baomidou.mybatisx.plugin.setting.DataTypeSettings"/>
 
         <!-- 使用 Alt+Delete 删除方法时, 也删掉对应的标签 -->
         <refactoring.safeDeleteProcessor
@@ -277,6 +279,9 @@
             displayName="Translation"/>
 
         <applicationService serviceImplementation="com.baomidou.mybatisx.plugin.setting.OtherSetting"/>
+
+        <applicationService id="baomidou.TemplatesSettings"
+                            serviceImplementation="com.baomidou.mybatisx.plugin.setting.TemplatesSettings"/>
     </extensions>
 
     <applicationListeners>
@@ -287,7 +292,7 @@
     </applicationListeners>
 
     <projectListeners>
-        <listener class="com.baomidou.mybatisx.plugin.listener.LoadAgentExecutionListener"
+        <listener class="com.baomidou.mybatisx.plugin.listener.AgentSupportExecutionListener"
                   topic="com.intellij.execution.ExecutionListener"/>
     </projectListeners>
 </idea-plugin>

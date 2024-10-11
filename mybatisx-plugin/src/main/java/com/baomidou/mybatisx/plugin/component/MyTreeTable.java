@@ -14,13 +14,10 @@ public class MyTreeTable extends JTable {
 
     public MyTreeTable(MyAbstractTreeTableModel treeTableModel) {
         super();
-        // JTree编写.
         tree = new MyTreeTableCellRenderer(this, treeTableModel);
 
-        // 模型设定.
         super.setModel(new MyTreeTableModelAdapter(treeTableModel, tree));
 
-        // 同时进行同时选择树和表.
         MyTreeTableSelectionModel selectionModel = new MyTreeTableSelectionModel();
         tree.setSelectionModel(selectionModel);
         setSelectionModel(selectionModel.getListSelectionModel());

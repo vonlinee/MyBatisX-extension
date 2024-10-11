@@ -1,6 +1,5 @@
 package com.baomidou.mybatisx.feat.jpa.operate;
 
-
 import com.baomidou.mybatisx.feat.jpa.SyntaxAppenderWrapper;
 import com.baomidou.mybatisx.feat.jpa.common.SyntaxAppender;
 import com.baomidou.mybatisx.feat.jpa.common.appender.AreaSequence;
@@ -15,13 +14,11 @@ import com.baomidou.mybatisx.feat.jpa.component.TxParameter;
 import com.baomidou.mybatisx.feat.jpa.component.TxReturnDescriptor;
 import com.baomidou.mybatisx.feat.jpa.operate.generate.Generator;
 import com.baomidou.mybatisx.feat.jpa.operate.manager.StatementBlock;
-import com.baomidou.mybatisx.plugin.setting.config.AbstractStatementGenerator;
+import com.baomidou.mybatisx.plugin.setting.config.StatementGenerators;
 import com.baomidou.mybatisx.util.MybatisXCollectors;
 import com.baomidou.mybatisx.util.StringUtils;
 import com.intellij.psi.PsiClass;
 import com.intellij.psi.PsiMethod;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.util.Collections;
 import java.util.LinkedList;
@@ -34,17 +31,13 @@ import java.util.stream.Collectors;
  */
 public class InsertOperator extends BaseOperatorManager {
 
-
-    private static final Logger logger = LoggerFactory.getLogger(InsertOperator.class);
-
-
     /**
      * Instantiates a new Insert operator.
      *
      * @param mappingField the mapping field
      */
     public InsertOperator(final List<TxField> mappingField) {
-        Set<String> patterns = AbstractStatementGenerator.INSERT_GENERATOR.getPatterns();
+        Set<String> patterns = StatementGenerators.INSERT_GENERATOR.getPatterns();
         this.init(mappingField, patterns);
     }
 
@@ -62,7 +55,6 @@ public class InsertOperator extends BaseOperatorManager {
             this.initInsertAllAppender(areaName, mappingField);
             // insertBatch
 //            this.initInsertBatch(areaName, mappingField);
-
             this.initCustomArea(areaName, mappingField);
         }
     }
@@ -234,7 +226,7 @@ public class InsertOperator extends BaseOperatorManager {
 
     private static class InsertAllSuffixOperator implements SuffixOperator {
 
-        private List<TxField> mappingField;
+        private final List<TxField> mappingField;
 
         /**
          * Instantiates a new Insert all suffix operator.
@@ -247,7 +239,7 @@ public class InsertOperator extends BaseOperatorManager {
 
         @Override
         public String getTemplateText(String fieldName, LinkedList<TxParameter> parameters, ConditionFieldWrapper conditionFieldWrapper) {
-            TxParameter parameter = parameters.poll();
+            // TxParameter parameter = parameters.poll();
             StringBuilder stringBuilder = new StringBuilder();
             // 追加列名
             final String columns = mappingField.stream()
@@ -272,7 +264,7 @@ public class InsertOperator extends BaseOperatorManager {
 
     private static class InsertSelectiveSuffixOperator implements SuffixOperator {
 
-        private List<TxField> mappingField;
+        private final List<TxField> mappingField;
 
         /**
          * Instantiates a new Insert selective suffix operator.

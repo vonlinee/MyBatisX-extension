@@ -2,15 +2,14 @@ package com.baomidou.mybatisx.plugin.setting.config;
 
 import com.baomidou.mybatisx.dom.model.IdDomElement;
 import com.baomidou.mybatisx.dom.model.Mapper;
-import com.baomidou.mybatisx.service.EditorService;
-import com.baomidou.mybatisx.service.JavaService;
 import com.baomidou.mybatisx.plugin.extensions.ListSelectionListener;
 import com.baomidou.mybatisx.plugin.ui.UiComponentFacade;
+import com.baomidou.mybatisx.service.EditorService;
+import com.baomidou.mybatisx.service.JavaService;
 import com.baomidou.mybatisx.util.CollectionUtils;
 import com.baomidou.mybatisx.util.JavaUtils;
 import com.google.common.base.Function;
 import com.google.common.collect.Collections2;
-import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
@@ -27,6 +26,8 @@ import com.intellij.psi.PsiType;
 import com.intellij.psi.impl.source.PsiClassReferenceType;
 import com.intellij.psi.xml.XmlTag;
 import com.intellij.util.CommonProcessors.CollectProcessor;
+import lombok.Getter;
+import lombok.Setter;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -44,32 +45,9 @@ import java.util.Set;
  * @author jobob
  * @since 2018 -07-30
  */
+@Setter
+@Getter
 public abstract class AbstractStatementGenerator {
-
-    /**
-     * The constant UPDATE_GENERATOR.
-     */
-    public static final AbstractStatementGenerator UPDATE_GENERATOR = new UpdateGenerator("update", "modify", "set");
-
-    /**
-     * The constant SELECT_GENERATOR.
-     */
-    public static final AbstractStatementGenerator SELECT_GENERATOR = new SelectGenerator("select", "get", "look", "find", "list", "search", "query");
-
-    /**
-     * The constant DELETE_GENERATOR.
-     */
-    public static final AbstractStatementGenerator DELETE_GENERATOR = new DeleteGenerator("del", "delete", "cancel");
-
-    /**
-     * The constant INSERT_GENERATOR.
-     */
-    public static final AbstractStatementGenerator INSERT_GENERATOR = new InsertGenerator("insert", "add", "new");
-
-    /**
-     * The constant ALL.
-     */
-    public static final Set<AbstractStatementGenerator> ALL = ImmutableSet.of(UPDATE_GENERATOR, SELECT_GENERATOR, DELETE_GENERATOR, INSERT_GENERATOR);
 
     private static final Function<Mapper, String> FUN = mapper -> {
         XmlTag xmlTag = mapper.getXmlTag();
@@ -82,6 +60,7 @@ public abstract class AbstractStatementGenerator {
         }
         return vf.getCanonicalPath();
     };
+
     private Set<String> patterns;
 
     /**
@@ -130,7 +109,7 @@ public abstract class AbstractStatementGenerator {
      * Apply generate.
      *
      * @param method  the method
-     * @param project
+     * @param project the project instance
      */
     public static void applyGenerate(@Nullable final PsiMethod method, Project project) {
         if (null == method) {
@@ -142,9 +121,9 @@ public abstract class AbstractStatementGenerator {
         } else {
             BaseListPopupStep<AbstractStatementGenerator> step = new BaseListPopupStep<AbstractStatementGenerator>("[ Statement type for method: " + method.getName() + "]", generators) {
                 @Override
-                public PopupStep onChosen(AbstractStatementGenerator selectedValue, boolean finalChoice) {
+                public PopupStep<?> onChosen(AbstractStatementGenerator selectedValue, boolean finalChoice) {
                     return this.doFinalStep(() -> WriteCommandAction.writeCommandAction(project)
-                            .run(() -> selectedValue.execute(method, project)));
+                        .run(() -> selectedValue.execute(method, project)));
                 }
             };
             JBPopupFactory.getInstance().createListPopup(step).showInFocusCenter();
@@ -161,7 +140,7 @@ public abstract class AbstractStatementGenerator {
     public static AbstractStatementGenerator[] getGenerators(@NotNull PsiMethod method) {
         String target = method.getName();
         List<AbstractStatementGenerator> result = Lists.newArrayList();
-        for (AbstractStatementGenerator generator : ALL) {
+        for (AbstractStatementGenerator generator : StatementGenerators.ALL) {
             for (String pattern : generator.getPatterns()) {
                 // 一定是以关键字开头
                 if (target.startsWith(pattern)) {
@@ -169,14 +148,14 @@ public abstract class AbstractStatementGenerator {
                 }
             }
         }
-        return CollectionUtils.isNotEmpty(result) ? result.toArray(new AbstractStatementGenerator[0]) : ALL.toArray(new AbstractStatementGenerator[0]);
+        return CollectionUtils.isNotEmpty(result) ? result.toArray(new AbstractStatementGenerator[0]) : StatementGenerators.ALL.toArray(new AbstractStatementGenerator[0]);
     }
 
     /**
      * Execute.
      *
      * @param method  the method
-     * @param project
+     * @param project the project instance
      */
     public void execute(@NotNull final PsiMethod method, final Project project) {
         PsiClass psiClass = method.getContainingClass();
@@ -191,24 +170,18 @@ public abstract class AbstractStatementGenerator {
         } else if (mappers.size() > 1) {
             Collection<String> paths = Collections2.transform(mappers, FUN);
             UiComponentFacade.getInstance(project)
-                    .showListPopup("Choose target mapper xml to generate", new ListSelectionListener() {
-                        @Override
-                        public void selected(int index) {
-                            // 修复多模块生成标签, 修改xml内容不允许在用户线程操作的BUG
-                            WriteCommandAction.runWriteCommandAction(project, new Runnable() {
-                                @Override
-                                public void run() {
-                                    setupTag(method, mappers.get(index), method.getProject());
-                                }
-                            });
+                .showListPopup("Choose target mapper xml to generate", new ListSelectionListener() {
+                    @Override
+                    public void selected(int index) {
+                        // 修复多模块生成标签, 修改xml内容不允许在用户线程操作的BUG
+                        WriteCommandAction.runWriteCommandAction(project, () -> setupTag(method, mappers.get(index), method.getProject()));
+                    }
 
-                        }
-
-                        @Override
-                        public boolean isWriteAction() {
-                            return true;
-                        }
-                    }, paths.toArray(new String[0]));
+                    @Override
+                    public boolean isWriteAction() {
+                        return true;
+                    }
+                }, paths.toArray(new String[0]));
         }
     }
 
@@ -254,23 +227,5 @@ public abstract class AbstractStatementGenerator {
      */
     @NotNull
     public abstract String getDisplayText();
-
-    /**
-     * Gets patterns.
-     *
-     * @return the patterns
-     */
-    public Set<String> getPatterns() {
-        return patterns;
-    }
-
-    /**
-     * Sets patterns.
-     *
-     * @param patterns the patterns
-     */
-    public void setPatterns(Set<String> patterns) {
-        this.patterns = patterns;
-    }
 
 }

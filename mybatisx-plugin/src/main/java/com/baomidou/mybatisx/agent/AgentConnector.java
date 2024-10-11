@@ -1,9 +1,9 @@
 package com.baomidou.mybatisx.agent;
 
-import org.mybatisx.extension.agent.AgentException;
-import org.mybatisx.extension.agent.AgentRequest;
-import org.mybatisx.extension.agent.AgentResponse;
-import org.mybatisx.extension.agent.Log;
+import org.mybatisx.extension.agent.api.AgentException;
+import org.mybatisx.extension.agent.api.AgentRequest;
+import org.mybatisx.extension.agent.api.AgentResponse;
+import org.mybatisx.extension.agent.api.Log;
 
 import java.util.Collection;
 import java.util.function.Consumer;

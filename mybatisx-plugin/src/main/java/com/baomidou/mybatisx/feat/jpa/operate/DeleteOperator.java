@@ -16,6 +16,7 @@ import com.baomidou.mybatisx.feat.jpa.component.TxReturnDescriptor;
 import com.baomidou.mybatisx.feat.jpa.operate.generate.Generator;
 import com.baomidou.mybatisx.feat.jpa.operate.manager.StatementBlock;
 import com.baomidou.mybatisx.plugin.setting.config.AbstractStatementGenerator;
+import com.baomidou.mybatisx.plugin.setting.config.StatementGenerators;
 import com.intellij.psi.PsiClass;
 import com.intellij.psi.PsiMethod;
 
@@ -33,7 +34,7 @@ public class DeleteOperator extends BaseOperatorManager {
      * @param mappingField the mapping field
      */
     public DeleteOperator(final List<TxField> mappingField) {
-        super.setOperatorNameList(AbstractStatementGenerator.DELETE_GENERATOR.getPatterns());
+        super.setOperatorNameList(StatementGenerators.DELETE_GENERATOR.getPatterns());
         this.init(mappingField);
     }
 

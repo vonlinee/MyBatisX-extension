@@ -1,7 +1,7 @@
 package com.baomidou.mybatisx.plugin.ui.components;
 
 import com.baomidou.mybatisx.feat.bean.TemplateInfo;
-import com.baomidou.mybatisx.plugin.component.JBTableView;
+import com.baomidou.mybatisx.plugin.component.TableView;
 import com.intellij.util.ui.ColumnInfo;
 import com.intellij.util.ui.ListTableModel;
 import org.jetbrains.annotations.Nullable;
@@ -11,7 +11,7 @@ import javax.swing.*;
 /**
  * 模板信息表
  */
-public class TemplateTableView extends JBTableView<TemplateInfo> {
+public class TemplateTableView extends TableView<TemplateInfo> {
 
     public TemplateTableView() {
         ColumnInfo<TemplateInfo, String> col1 = new ColumnInfo<>("模板ID") {

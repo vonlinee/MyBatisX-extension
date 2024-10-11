@@ -1,6 +1,6 @@
 package org.mybatisx.extension.agent.client;
 
-import org.mybatisx.extension.agent.RPCTarget;
+import org.mybatisx.extension.agent.api.RPCTarget;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;

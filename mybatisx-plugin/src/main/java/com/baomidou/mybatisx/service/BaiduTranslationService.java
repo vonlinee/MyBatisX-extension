@@ -3,11 +3,11 @@ package com.baomidou.mybatisx.service;
 import com.baomidou.mybatisx.model.BaiduTranslationResponse;
 import com.baomidou.mybatisx.model.TranslationResult;
 import com.baomidou.mybatisx.model.TranslationVO;
+import com.baomidou.mybatisx.util.CollectionUtils;
 import com.baomidou.mybatisx.util.MD5;
 import com.baomidou.mybatisx.util.RestTemplateUtil;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.http.MediaType;
-import org.springframework.util.CollectionUtils;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 
@@ -59,8 +59,8 @@ public class BaiduTranslationService implements Translation {
                 }
                 return resultList;
             }
-        } catch (IOException e) {
-            e.printStackTrace();
+        } catch (IOException ignored) {
+
         }
         return new ArrayList<>();
     }

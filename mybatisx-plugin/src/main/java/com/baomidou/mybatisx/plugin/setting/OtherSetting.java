@@ -2,7 +2,9 @@ package com.baomidou.mybatisx.plugin.setting;
 
 import com.baomidou.mybatisx.model.TranslationSettingVO;
 import com.baomidou.mybatisx.util.IntellijSDK;
+import com.baomidou.mybatisx.util.MyBatisXPlugin;
 import com.intellij.openapi.components.PersistentStateComponent;
+import com.intellij.openapi.components.Service;
 import com.intellij.openapi.components.State;
 import com.intellij.openapi.components.Storage;
 import lombok.Getter;
@@ -21,12 +23,8 @@ import static com.baomidou.mybatisx.feat.ddl.SqlAndJavaTypeEnum.TIMESTAMP;
 import static com.baomidou.mybatisx.feat.ddl.SqlAndJavaTypeEnum.TINYINT;
 import static com.baomidou.mybatisx.feat.ddl.SqlAndJavaTypeEnum.VARCHAR;
 
-@State(
-    name = "Other",
-    storages = {
-        @Storage(value = "$APP_CONFIG$/javabean2ddl.settings.xml")
-    }
-)
+@Service
+@State(name = "Other", storages = @Storage(value = MyBatisXPlugin.PERSISTENT_STATE_FILE))
 public final class OtherSetting implements PersistentStateComponent<OtherSetting.State> {
 
     public State myProperties = new State();

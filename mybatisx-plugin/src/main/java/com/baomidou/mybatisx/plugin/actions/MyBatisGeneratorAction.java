@@ -4,7 +4,7 @@ import com.baomidou.mybatisx.feat.generate.ClassGenerateDialogWrapper;
 import com.baomidou.mybatisx.feat.generate.dto.GenerateConfig;
 import com.baomidou.mybatisx.feat.generate.dto.TableUIInfo;
 import com.baomidou.mybatisx.feat.generate.dto.TemplateContext;
-import com.baomidou.mybatisx.feat.generate.setting.TemplatesSettings;
+import com.baomidou.mybatisx.plugin.setting.TemplatesSettings;
 import com.baomidou.mybatisx.feat.generate.template.CodeGenerator;
 import com.baomidou.mybatisx.util.ArrayUtils;
 import com.baomidou.mybatisx.util.PluginUtils;

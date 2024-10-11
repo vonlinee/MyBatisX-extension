@@ -1,9 +1,13 @@
 package org.mybatisx.extension.agent.server;
 
-import org.mybatisx.extension.agent.Data;
-import org.mybatisx.extension.agent.Log;
+import org.mybatisx.extension.agent.api.Data;
+import org.mybatisx.extension.agent.api.Log;
 
-import java.io.*;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.OutputStream;
 import java.lang.invoke.MethodHandle;
 import java.lang.invoke.MethodType;
 import java.net.ServerSocket;
@@ -18,39 +22,45 @@ import static java.lang.invoke.MethodHandles.lookup;
 
 public class AgentServer {
 
+    private static ServerSocket serverSocket;
+
     /**
      * 只会存在一个非核心线程，60秒回收，
      */
-    private static final ExecutorService SERVER_THREAD_POOL = new ThreadPoolExecutor(
-            0,
-            1,
-            60,
-            TimeUnit.SECONDS,
-            new LinkedBlockingQueue<>(),
-            r -> new Thread(r, "RPC服务端线程"));
+    private static ExecutorService SERVER_THREAD_POOL = new ThreadPoolExecutor(
+        0,
+        1,
+        60,
+        TimeUnit.SECONDS,
+        new LinkedBlockingQueue<>(),
+        r -> new Thread(r, "RPC服务端线程"));
 
-    public static void start(int port) throws IOException {
-        ServerSocket serverSocket = new ServerSocket(port, 5);
-        SERVER_THREAD_POOL.execute(() -> {
-            while (!Thread.currentThread().isInterrupted()) {
-                try {
-                    Socket socket = serverSocket.accept();
-                    try (OutputStream outputStream = socket.getOutputStream(); InputStream inputStream = socket.getInputStream(); ObjectOutputStream objectOutputStream = new ObjectOutputStream(outputStream)) {
-                        //接受客户端数据
-                        ObjectInputStream objectInputStream = new ObjectInputStream(inputStream);
-                        Data receiveData = (Data) objectInputStream.readObject();
-                        Log.info("received from client[%s]: %s", socket.getRemoteSocketAddress(), receiveData);
-                        //反射调用
-                        Object result = invokeMethod(receiveData);
-                        //响应
-                        objectOutputStream.writeObject(result);
+    public static void start(int port) throws RuntimeException {
+        try {
+            serverSocket = new ServerSocket(port, 5);
+            SERVER_THREAD_POOL.execute(() -> {
+                while (!Thread.currentThread().isInterrupted()) {
+                    try {
+                        Socket socket = serverSocket.accept();
+                        try (OutputStream outputStream = socket.getOutputStream(); InputStream inputStream = socket.getInputStream(); ObjectOutputStream objectOutputStream = new ObjectOutputStream(outputStream)) {
+                            //接受客户端数据
+                            ObjectInputStream objectInputStream = new ObjectInputStream(inputStream);
+                            Data receiveData = (Data) objectInputStream.readObject();
+                            Log.info("received from client[%s]: %s", socket.getRemoteSocketAddress(), receiveData);
+                            //反射调用
+                            Object result = invokeMethod(receiveData);
+                            //响应
+                            objectOutputStream.writeObject(result);
 //                    System.out.println("服务端响应成功.");
+                        }
+                    } catch (Exception e) {
+                        Log.error("failed to handle client request", e);
                     }
-                } catch (Exception e) {
-                    Log.error("failed to handle client request", e);
                 }
-            }
-        });
+            });
+        } catch (Throwable throwable) {
+            throw new RuntimeException(throwable);
+        }
     }
 
     /**
@@ -63,7 +73,6 @@ public class AgentServer {
         //返回类型加参数类型
         MethodType methodType = MethodType.methodType(data.getReturnType(), data.getParameterTypes());
         try {
-
             Object impl = getRPCImpl(data);
             //除了static方法 每个方法都有一个隐式参数this
             MethodHandle methodHandle = lookup().findVirtual(data.getType(), data.getMethodName(), methodType).bindTo(impl);
@@ -88,5 +97,22 @@ public class AgentServer {
             }
         }
         throw new IllegalArgumentException(data.getType().getName() + " cannot find target implementation: " + data.getName());
+    }
+
+    public static void stop() {
+        try {
+            SERVER_THREAD_POOL.shutdown();
+        } catch (Throwable throwable) {
+            Log.error("failed to shutdown agent server thread pool");
+        }
+        if (serverSocket != null) {
+            if (serverSocket.isClosed()) {
+                try {
+                    serverSocket.close();
+                } catch (IOException e) {
+                    Log.error("failed to close agent server socket");
+                }
+            }
+        }
     }
 }

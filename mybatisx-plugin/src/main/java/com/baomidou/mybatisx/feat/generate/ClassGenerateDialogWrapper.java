@@ -5,7 +5,7 @@ import com.baomidou.mybatisx.feat.generate.dto.DomainInfo;
 import com.baomidou.mybatisx.feat.generate.dto.GenerateConfig;
 import com.baomidou.mybatisx.feat.generate.dto.TemplateContext;
 import com.baomidou.mybatisx.feat.generate.dto.TemplateSettingDTO;
-import com.baomidou.mybatisx.feat.generate.setting.TemplatesSettings;
+import com.baomidou.mybatisx.plugin.setting.TemplatesSettings;
 import com.baomidou.mybatisx.plugin.ui.CodeGenerateUI;
 import com.baomidou.mybatisx.plugin.ui.TablePreviewUI;
 import com.baomidou.mybatisx.util.MessageNotification;

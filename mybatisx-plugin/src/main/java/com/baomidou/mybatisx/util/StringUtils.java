@@ -412,4 +412,22 @@ public abstract class StringUtils {
     public static boolean isNotBlank(String str) {
         return !isBlank(str);
     }
+
+    public static boolean startWith(String str, String prefix1, String prefix2) {
+        return str != null
+               && (str.startsWith(prefix1)
+                   || str.startsWith(prefix2));
+    }
+
+    public static boolean startWith(String str, String... prefixes) {
+        if (str == null || str.isEmpty()) {
+            return false;
+        }
+        for (String prefix : prefixes) {
+            if (str.startsWith(prefix)) {
+                return true;
+            }
+        }
+        return false;
+    }
 }

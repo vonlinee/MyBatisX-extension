@@ -24,7 +24,6 @@ public class JpaAdvanceDialog extends DialogWrapper {
 
     private final SmartJpaAdvanceUI smartJpaAdvanceUI = new SmartJpaAdvanceUI();
 
-
     /**
      * Instantiates a new Jpa advance dialog.
      *
