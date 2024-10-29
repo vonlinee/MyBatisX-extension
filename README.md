@@ -1,4 +1,4 @@
-# MyBatis-extension
+# MyBatisX-extension
 
 This is a plugin based on Intellij Idea platform, forked
 from <a href="https://github.com/baomidou/MybatisX" title="MyBatisX">MyBatisX</a> repository, aimed at assisting the
@@ -18,14 +18,14 @@ Right-Click on the Gutter Icon on every mybatis mapper statements.
 
 ![mybatis-statement-debugger-entrypoint](assets/mybatis-statement-debugger-entrypoint.png)
 
-Fill you params, and then you can get an executable sql without running you application.
+Fill your params, and then you can get an executable sql without running you application.
 
 ![mybatis-statement-debugger](/assets/mybatis-statement-debugger.png)
 
 
 ## MyBatis Mapper XML Fragments
 
-generate som common-used MyBatis Mapper XML Fragments template
+generate som common-used MyBatis Mapper XML Fragments sql template content like belows:
 
 ![GIF 2024-4-15 20-23-03](assets/GIF_2024-4-15_20-23-03.gif)
 
