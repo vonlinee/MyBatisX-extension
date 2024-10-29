@@ -4,6 +4,9 @@ import com.intellij.openapi.project.Project;
 import com.intellij.openapi.ui.DialogWrapper;
 import org.jetbrains.annotations.Nullable;
 
+/**
+ * base class for dialog in application.
+ */
 public abstract class DialogBase extends DialogWrapper {
 
     private Project project;

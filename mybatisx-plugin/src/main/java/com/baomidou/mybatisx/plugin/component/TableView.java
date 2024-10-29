@@ -2,7 +2,6 @@ package com.baomidou.mybatisx.plugin.component;
 
 import com.intellij.ui.AnActionButtonRunnable;
 import com.intellij.ui.ToolbarDecorator;
-import com.intellij.util.ui.ColumnInfo;
 import com.intellij.util.ui.ListTableModel;
 import com.intellij.util.ui.TableViewModel;
 import org.jetbrains.annotations.NotNull;
@@ -17,12 +16,7 @@ import java.util.Collection;
 public class TableView<T> extends com.intellij.ui.table.TableView<T> {
 
     public TableView() {
-        this(new ListTableModel<>(ColumnInfo.EMPTY_ARRAY));
-    }
-
-    public TableView(final ListTableModel<T> model) {
-        super(model);
-        setModelAndUpdateColumns(model);
+        super(new DefaultListTableModel<>());
     }
 
     protected AnActionButtonRunnable getAddAction() {
@@ -67,5 +61,15 @@ public class TableView<T> extends com.intellij.ui.table.TableView<T> {
         if (model instanceof ListTableModel) {
             ((ListTableModel<T>) model).addRows(rowItems);
         }
+    }
+
+    @Override
+    public DefaultListTableModel<T> getModel() {
+        return (DefaultListTableModel<T>) super.getListTableModel();
+    }
+
+    public void clearAllRows() {
+        DefaultListTableModel<T> listTableModel = getModel();
+        listTableModel.removeAllRows();
     }
 }

@@ -11,6 +11,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 public final class DataTypeSystem {
 
@@ -57,6 +58,11 @@ public final class DataTypeSystem {
 
     public DataTypeSet getTypes(@NotNull String groupId) {
         return dataTypeMap.get(groupId);
+    }
+
+    public Set<String> getTypeIdentifiers(@NotNull String groupId) {
+        GroupedDataTypeSet typeSet = dataTypeMap.get(groupId);
+        return typeSet.stream().map(DataType::getIdentifier).collect(Collectors.toSet());
     }
 
     public DataType getType(String group, String typeId) {

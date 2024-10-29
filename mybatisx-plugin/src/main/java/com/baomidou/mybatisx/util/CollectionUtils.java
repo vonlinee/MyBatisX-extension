@@ -1,7 +1,11 @@
 package com.baomidou.mybatisx.util;
 
+import org.jetbrains.annotations.Nullable;
+
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
 
@@ -43,5 +47,15 @@ public final class CollectionUtils {
             map.put(key, element);
         }
         return map;
+    }
+
+    public static <E> List<E> modifiableList(@Nullable List<E> list) {
+        if (list == null) {
+            return new ArrayList<>();
+        }
+        if (list.getClass().getName().contains("Unmodifiable")) {
+            return new ArrayList<>(list);
+        }
+        return list;
     }
 }

@@ -120,6 +120,10 @@ public abstract class StringUtils {
         return !isBlank(str);
     }
 
+    public static boolean hasText(String str1, String str2) {
+        return !isBlank(str1) && !isBlank(str2);
+    }
+
     /**
      * 驼峰转下划线
      *

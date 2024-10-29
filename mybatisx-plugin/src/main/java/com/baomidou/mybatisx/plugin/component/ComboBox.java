@@ -8,6 +8,7 @@ import java.util.Collection;
  * 组合框
  *
  * @see com.intellij.openapi.ui.ComboBox
+ * @see SimpleComboBox
  */
 public class ComboBox<E extends ComboBoxItem> extends com.intellij.openapi.ui.ComboBox<E> {
 

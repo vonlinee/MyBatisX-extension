@@ -16,7 +16,6 @@ public class DataTypeAddDialog extends DialogBase {
 
     JTextField typeIdTextField;
     TypeGroupComboBox comboBox;
-
     Callback<DataType> callback;
 
     public DataTypeAddDialog() {

@@ -3,6 +3,7 @@ package com.baomidou.mybatisx.plugin.component;
 import com.intellij.database.run.ui.TableResultPanel;
 import com.intellij.database.run.ui.table.TableScrollPane;
 import com.intellij.ui.AnActionButtonRunnable;
+import com.intellij.util.ui.ListTableModel;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Collection;
@@ -25,7 +26,7 @@ public class TablePane<T> extends ScrollPane {
 
     @NotNull
     protected TableView<T> createTableView() {
-        return new TableView<T>() {
+        return new TableView<>() {
             @Override
             protected AnActionButtonRunnable getAddAction() {
                 return super.getAddAction();
@@ -55,5 +56,9 @@ public class TablePane<T> extends ScrollPane {
 
     public int getSelectedRow() {
         return tableView.getSelectedRow();
+    }
+
+    public DefaultListTableModel<T> getModel() {
+        return tableView.getModel();
     }
 }
