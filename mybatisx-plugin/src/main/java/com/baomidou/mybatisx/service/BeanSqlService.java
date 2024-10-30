@@ -5,7 +5,7 @@ import com.baomidou.mybatisx.feat.bean.Field;
 import com.baomidou.mybatisx.plugin.setting.OtherSetting;
 import com.baomidou.mybatisx.util.BaseUtil;
 import com.baomidou.mybatisx.util.CollectionUtils;
-import com.baomidou.mybatisx.util.PsiHelper;
+import com.baomidou.mybatisx.util.PsiUtils;
 import com.baomidou.mybatisx.util.StringUtils;
 import com.baomidou.mybatisx.util.TranslationUtil;
 import com.google.common.base.CaseFormat;
@@ -76,7 +76,7 @@ public final class BeanSqlService {
      * 获取需要转换的字段
      */
     public static List<Field> getFieldList(PsiClass currentClass, boolean allField) {
-        PsiField[] fields = PsiHelper.getPsiFields(currentClass, allField);
+        PsiField[] fields = PsiUtils.getPsiFields(currentClass, allField);
         // 利用set去重
         HashSet<Field> fieldSet = new LinkedHashSet<>();
         for (PsiField field : fields) {
@@ -185,7 +185,7 @@ public final class BeanSqlService {
         if (SERIAL_VERSION_UID.equals(psiField.getName())) {
             return false;
         }
-        if (PsiHelper.isPrimitiveType(psiField)) {
+        if (PsiUtils.isPrimitiveType(psiField)) {
             return true;
         }
         // 额外可支持的类型

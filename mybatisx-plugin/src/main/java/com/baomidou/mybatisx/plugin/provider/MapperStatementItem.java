@@ -1,7 +1,7 @@
 package com.baomidou.mybatisx.plugin.provider;
 
 import com.baomidou.mybatisx.util.MyBatisUtils;
-import com.baomidou.mybatisx.util.PsiHelper;
+import com.baomidou.mybatisx.util.PsiUtils;
 import com.intellij.openapi.project.Project;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.xml.XmlElement;
@@ -74,7 +74,7 @@ public class MapperStatementItem {
                     }
                 }
             }
-            this.mapperXmlFileLocation = PsiHelper.getPathOfContainingFile(element);
+            this.mapperXmlFileLocation = PsiUtils.getPathOfContainingFile(element);
         }
     }
 }

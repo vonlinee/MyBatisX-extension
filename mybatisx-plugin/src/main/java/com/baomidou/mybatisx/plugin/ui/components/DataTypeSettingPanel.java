@@ -1,13 +1,12 @@
 package com.baomidou.mybatisx.plugin.ui.components;
 
+import com.baomidou.mybatisx.plugin.component.TabPane;
 import com.baomidou.mybatisx.plugin.setting.DataTypeSettings;
-
-import javax.swing.*;
 
 /**
  * 数据类型映射设置面板
  */
-public class DataTypeSettingPanel extends JTabbedPane {
+public class DataTypeSettingPanel extends TabPane {
     private final DataTypeInfoPane dataTypeInfoPane;
     private final DataTypeMappingPane dataTypeMappingPane;
 
@@ -15,9 +14,15 @@ public class DataTypeSettingPanel extends JTabbedPane {
 
         DataTypeSettings dataTypeSettings = DataTypeSettings.getInstance();
 
-        dataTypeInfoPane = new DataTypeInfoPane(dataTypeSettings.getState());
         dataTypeMappingPane = new DataTypeMappingPane(dataTypeSettings.getState());
+
+        dataTypeInfoPane = new DataTypeInfoPane(dataTypeSettings.getState(), dataTypeMappingPane);
+
         addTab("类型信息", dataTypeInfoPane);
-        addTab("类型映射", dataTypeMappingPane);
+        addTab("", dataTypeMappingPane);
+    }
+
+    public boolean isModified() {
+        return dataTypeInfoPane.isModified() || dataTypeMappingPane.isModified();
     }
 }

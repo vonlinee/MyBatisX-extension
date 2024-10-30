@@ -40,11 +40,11 @@ public final class DataTypeSettingConfigurable implements SearchableConfigurable
 
     @Override
     public boolean isModified() {
-        return false;
+        return dataTypeSettingPanel.isModified();
     }
 
     @Override
     public void apply() throws ConfigurationException {
-
+        // 界面操作直接修改，因此不需要通过apply使修改生效
     }
 }

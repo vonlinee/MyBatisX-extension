@@ -1,5 +1,6 @@
 package com.baomidou.mybatisx.model;
 
+import com.baomidou.mybatisx.plugin.setting.configurable.ConfigurableObject;
 import com.baomidou.mybatisx.plugin.ui.components.DataType;
 import com.baomidou.mybatisx.plugin.ui.components.DataTypeItem;
 import lombok.Getter;
@@ -13,16 +14,21 @@ import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-public final class DataTypeSystem {
+public final class DataTypeSystem extends ConfigurableObject {
 
-    private final Map<String, GroupedDataTypeSet> dataTypeMap;
-
+    @NotNull
+    Map<String, GroupedDataTypeSet> dataTypeMap;
+    @NotNull
     @Getter
     DataTypeMappingSystem typeMapping;
 
     public DataTypeSystem() {
-        this.dataTypeMap = new HashMap<>();
-        this.typeMapping = new DataTypeMappingSystem();
+        this(new HashMap<>(), new DataTypeMappingSystem());
+    }
+
+    DataTypeSystem(@NotNull Map<String, GroupedDataTypeSet> dataTypeMap, @NotNull DataTypeMappingSystem typeMapping) {
+        this.dataTypeMap = dataTypeMap;
+        this.typeMapping = typeMapping;
     }
 
     public Set<String> getTypeGroupIds() {
@@ -106,5 +112,25 @@ public final class DataTypeSystem {
 
     public boolean isEmpty() {
         return dataTypeMap.isEmpty();
+    }
+
+    public boolean addTypeGroup(String typeGroup) {
+        if (typeGroup.matches("^[A-Za-z][A-Za-z0-9]*$")) {
+            if (dataTypeMap.containsKey(typeGroup)) {
+                return false;
+            }
+            dataTypeMap.put(typeGroup, new GroupedDataTypeSet(typeGroup));
+            return true;
+        }
+        return false;
+    }
+
+    public GroupedDataTypeSet removeTypeGroup(String typeGroup) {
+        return dataTypeMap.remove(typeGroup);
+    }
+
+    @NotNull
+    public DataTypeSystem copy() {
+        return new DataTypeSystem(new HashMap<>(dataTypeMap), typeMapping.copy());
     }
 }

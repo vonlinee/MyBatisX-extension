@@ -90,7 +90,7 @@ public class PsiColumnReferenceSetResolver {
 
     public Optional<DasTable> getStartElement(@Nullable String firstText) {
         Optional<PsiClass> clazz = MapperBacktrackingUtils.getEntityClass(getElement());
-        if (!clazz.isPresent()) {
+        if (clazz.isEmpty()) {
             return Optional.empty();
         }
         PsiClass entityClass = clazz.get();

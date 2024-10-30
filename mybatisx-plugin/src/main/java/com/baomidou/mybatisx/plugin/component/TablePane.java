@@ -2,10 +2,9 @@ package com.baomidou.mybatisx.plugin.component;
 
 import com.intellij.database.run.ui.TableResultPanel;
 import com.intellij.database.run.ui.table.TableScrollPane;
-import com.intellij.ui.AnActionButtonRunnable;
-import com.intellij.util.ui.ListTableModel;
 import org.jetbrains.annotations.NotNull;
 
+import java.awt.*;
 import java.util.Collection;
 
 /**
@@ -17,21 +16,20 @@ public class TablePane<T> extends ScrollPane {
 
     TableView<T> tableView;
 
-    @SuppressWarnings("unchecked")
     public TablePane() {
         super();
-        getViewport().setView(createTableView());
-        this.tableView = (TableView<T>) getViewport().getView();
+        this.tableView = createTableView();
+        getViewport().setView(getViewPortView(tableView));
     }
 
     @NotNull
     protected TableView<T> createTableView() {
-        return new TableView<>() {
-            @Override
-            protected AnActionButtonRunnable getAddAction() {
-                return super.getAddAction();
-            }
-        };
+        return new TableView<>();
+    }
+
+    @NotNull
+    protected Component getViewPortView(TableView<T> tableView) {
+        return tableView;
     }
 
     public final void addRows(Collection<T> rowItems) {
@@ -58,7 +56,7 @@ public class TablePane<T> extends ScrollPane {
         return tableView.getSelectedRow();
     }
 
-    public DefaultListTableModel<T> getModel() {
+    public DefaultListTableModel<T> getTableViewModel() {
         return tableView.getModel();
     }
 }

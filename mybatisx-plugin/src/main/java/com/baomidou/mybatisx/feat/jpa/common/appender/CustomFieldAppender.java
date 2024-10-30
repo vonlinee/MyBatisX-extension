@@ -9,7 +9,7 @@ import com.baomidou.mybatisx.feat.jpa.common.iftest.ConditionFieldWrapper;
 import com.baomidou.mybatisx.feat.jpa.component.TxField;
 import com.baomidou.mybatisx.feat.jpa.component.TxParameter;
 import com.baomidou.mybatisx.feat.jpa.operate.model.AppendTypeEnum;
-import com.baomidou.mybatisx.util.PsiHelper;
+import com.baomidou.mybatisx.util.PsiUtils;
 import com.baomidou.mybatisx.util.StringUtils;
 import com.intellij.psi.PsiClass;
 import com.intellij.psi.PsiField;
@@ -134,7 +134,7 @@ public class CustomFieldAppender implements SyntaxAppender {
 
     @Override
     public List<TxParameter> getMxParameter(LinkedList<SyntaxAppenderWrapper> syntaxAppenderWrapperLinkedList, PsiClass entityClass) {
-        Map<String, PsiField> fieldMap = PsiHelper.getStringPsiFieldMap(entityClass);
+        Map<String, PsiField> fieldMap = PsiUtils.getStringPsiFieldMap(entityClass);
         String text = this.getText();
         text = StringUtils.lowerCaseFirstChar(text);
         PsiField psiField = fieldMap.get(text);

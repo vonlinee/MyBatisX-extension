@@ -8,7 +8,7 @@ import com.baomidou.mybatisx.plugin.setting.TemplatesSettings;
 import com.baomidou.mybatisx.feat.generate.template.CodeGenerator;
 import com.baomidou.mybatisx.util.ArrayUtils;
 import com.baomidou.mybatisx.util.PluginUtils;
-import com.baomidou.mybatisx.util.PsiHelper;
+import com.baomidou.mybatisx.util.PsiUtils;
 import com.intellij.database.model.DasObject;
 import com.intellij.database.psi.DbTable;
 import com.intellij.openapi.actionSystem.AnAction;
@@ -115,7 +115,7 @@ public final class MyBatisGeneratorAction extends AnAction {
     @Override
     public void update(@NotNull AnActionEvent e) {
         boolean visible = true;
-        PsiElement[] psiElements = PsiHelper.getPsiElements(e);
+        PsiElement[] psiElements = PsiUtils.getPsiElements(e);
         if (ArrayUtils.isEmpty(psiElements)) {
             visible = false;
         } else {

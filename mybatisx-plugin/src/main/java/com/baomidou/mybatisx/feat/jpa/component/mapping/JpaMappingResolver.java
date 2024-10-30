@@ -2,7 +2,7 @@ package com.baomidou.mybatisx.feat.jpa.component.mapping;
 
 import com.baomidou.mybatisx.feat.jpa.common.appender.JdbcTypeUtils;
 import com.baomidou.mybatisx.feat.jpa.component.TxField;
-import com.baomidou.mybatisx.util.PsiHelper;
+import com.baomidou.mybatisx.util.PsiUtils;
 import com.baomidou.mybatisx.util.StringUtils;
 import com.intellij.psi.JavaPsiFacade;
 import com.intellij.psi.PsiAnnotation;
@@ -145,7 +145,7 @@ public abstract class JpaMappingResolver {
      */
     protected List<TxField> initDataByCamel(PsiClass entityClass) {
         // 去除有 static, transient 标记的字段
-        List<PsiField> psiFieldList = PsiHelper.getPsiFieldList(entityClass);
+        List<PsiField> psiFieldList = PsiUtils.getPsiFieldList(entityClass);
         return psiFieldList.stream()
             .filter(this::filterField)
             .map(field -> {

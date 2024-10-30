@@ -3,7 +3,7 @@ package com.baomidou.mybatisx.plugin.actions;
 import com.baomidou.mybatisx.feat.bean.ConvertBean;
 import com.baomidou.mybatisx.plugin.ui.dialog.BeanToolDialog;
 import com.baomidou.mybatisx.util.MessageNotification;
-import com.baomidou.mybatisx.util.PsiHelper;
+import com.baomidou.mybatisx.util.PsiUtils;
 import com.baomidou.mybatisx.util.SqlTypeMapUtil;
 import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;
@@ -22,8 +22,8 @@ public final class Bean2DDLAction extends AnAction {
 
     @Override
     public void actionPerformed(@NotNull AnActionEvent anActionEvent) {
-        PsiFile file = PsiHelper.getPsiFile(anActionEvent);
-        PsiClass currentClass = PsiHelper.getPsiClass(file);
+        PsiFile file = PsiUtils.getPsiFile(anActionEvent);
+        PsiClass currentClass = PsiUtils.getPsiClass(file);
         if (currentClass == null) {
             MessageNotification.showErrorDialog("No PsiClass Found");
             return;

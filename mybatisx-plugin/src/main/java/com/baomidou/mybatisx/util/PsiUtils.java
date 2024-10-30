@@ -20,7 +20,7 @@ import java.util.Map;
 import java.util.function.BinaryOperator;
 import java.util.stream.Collectors;
 
-public class PsiHelper {
+public class PsiUtils {
 
     public static PsiElement[] getPsiElements(AnActionEvent event) {
         return event.getData(LangDataKeys.PSI_ELEMENT_ARRAY);
@@ -47,8 +47,8 @@ public class PsiHelper {
     /**
      * 是否基础类型
      *
-     * @param field
-     * @return
+     * @param field PsiField
+     * @return test if the PsiField is a primitive type in java language.
      */
     public static boolean isPrimitiveType(PsiField field) {
         if (null == field) {

@@ -1,7 +1,11 @@
 package com.baomidou.mybatisx.util;
 
 import org.jetbrains.annotations.NotNull;
-import org.springframework.http.*;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.http.client.ClientHttpResponse;
 import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.web.client.ResponseErrorHandler;
@@ -9,6 +13,9 @@ import org.springframework.web.client.RestTemplate;
 
 import java.util.Map;
 
+/**
+ * TODO remove the spring RestTemplate dependency
+ */
 public class RestTemplateUtil {
 
     private final RestTemplate restTemplate;
@@ -43,7 +50,7 @@ public class RestTemplateUtil {
             for (Map.Entry<String, String> entry : headerParam.entrySet()) {
                 headers.add(entry.getKey(), entry.getKey());
             }
-            HttpEntity<Object> request = new HttpEntity<Object>(params, headers);
+            HttpEntity<Object> request = new HttpEntity<>(params, headers);
             ResponseEntity<String> responseEntity = restTemplate.exchange(url, HttpMethod.POST, request, String.class);
             return responseEntity.getBody();
         } catch (Exception e) {

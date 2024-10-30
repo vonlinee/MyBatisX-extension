@@ -3,21 +3,12 @@ package com.baomidou.mybatisx.plugin.ui.components;
 import com.baomidou.mybatisx.model.DataTypeMappingSystem;
 import com.baomidou.mybatisx.model.DataTypeSystem;
 import com.baomidou.mybatisx.plugin.component.BorderPane;
-import com.baomidou.mybatisx.plugin.component.Button;
-import com.baomidou.mybatisx.plugin.component.DefaultListTableModel;
 import com.baomidou.mybatisx.plugin.component.HBox;
 import com.baomidou.mybatisx.plugin.component.SimpleComboBox;
-import com.baomidou.mybatisx.plugin.ui.dialog.DataTypeMappingUpdateDialog;
 import com.baomidou.mybatisx.util.CollectionUtils;
-import com.baomidou.mybatisx.util.StringUtils;
-import org.jetbrains.annotations.NotNull;
 
-import javax.swing.*;
-import java.awt.event.ActionEvent;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -26,56 +17,16 @@ import java.util.Set;
 public class DataTypeMappingPane extends BorderPane {
 
     HBox hBox = new HBox();
-
     SimpleComboBox<String> type = new SimpleComboBox<>();
     SimpleComboBox<String> anotherType = new SimpleComboBox<>();
-    DataTypeMappingTable dataTypeMappingTable;
+    DataTypeMappingConfigTable dataTypeMappingConfigTable;
     DataTypeMappingSystem typeMapping;
 
     public DataTypeMappingPane(DataTypeSystem typeSystem) {
-        dataTypeMappingTable = new DataTypeMappingTable();
         typeMapping = typeSystem.getTypeMapping();
+        dataTypeMappingConfigTable = new DataTypeMappingConfigTable(typeMapping);
 
         hBox.addChildren(type, anotherType);
-
-        Button btnAdd = new Button("Add");
-        btnAdd.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                if (StringUtils.hasText(type.getItem(), anotherType.getItem())) {
-                    DataTypeMappingUpdateDialog dialog = new DataTypeMappingUpdateDialog(type.getItem(), anotherType.getItem()) {
-                        @Override
-                        protected @NotNull Action getOKAction() {
-                            return new DialogWrapperAction("Add Mapping") {
-                                @Override
-                                protected void doAction(ActionEvent e) {
-                                    DataTypeMappingItem typeMappingItem = getTypeMappingItem();
-                                    if (typeMapping.addTypeMappingItem(typeMappingItem)) {
-                                        dataTypeMappingTable.addRow(typeMappingItem);
-                                    }
-                                }
-                            };
-                        }
-                    };
-                    dialog.show();
-                }
-            }
-        });
-
-        Button btnRemove = new Button("Remove");
-        btnRemove.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                int selectedRow = dataTypeMappingTable.getSelectedRow();
-                DefaultListTableModel<DataTypeMappingItem> model = dataTypeMappingTable.getModel();
-                DataTypeMappingItem item = model.getItem(selectedRow);
-                typeMapping.removeTypeMapping(item);
-                model.removeRow(selectedRow);
-            }
-        });
-
-        hBox.add(btnAdd);
-        hBox.add(btnRemove);
 
         type.addItemListener(new ItemListener() {
             @Override
@@ -89,12 +40,10 @@ public class DataTypeMappingPane extends BorderPane {
             }
         });
 
-        type.addItems(typeSystem.getTypeGroupIds());
-        type.setSelectedIndex(0);
-        firePrimaryTypeGroupChange(type.getSelectedItem());
+        fireTypeSystemChange(typeSystem);
 
         addToTop(hBox);
-        addToCenter(dataTypeMappingTable);
+        addToCenter(dataTypeMappingConfigTable);
     }
 
     private void firePrimaryTypeGroupChange(String selectedItem) {
@@ -107,6 +56,8 @@ public class DataTypeMappingPane extends BorderPane {
         } else if (!items.isEmpty()) {
             anotherType.setSelectedIndex(0);
         }
+
+        dataTypeMappingConfigTable.setGroupMapping(selectedItem, anotherType.getSelectedItem());
     }
 
     private void changeDataTypeMappings() {
@@ -129,7 +80,32 @@ public class DataTypeMappingPane extends BorderPane {
                 }
             }
         }
-        dataTypeMappingTable.getModel().removeAllRows();
-        dataTypeMappingTable.addRows(mappingItems);
+        dataTypeMappingConfigTable.getTableViewModel().removeAllRows();
+        dataTypeMappingConfigTable.addRows(mappingItems);
+    }
+
+    public void fireTypeSystemChange(DataTypeSystem typeSystem) {
+        if (type.getItems().isEmpty()) {
+            type.addItems(typeSystem.getTypeGroupIds());
+        } else {
+            type.removeAllItems();
+            type.addItems(typeSystem.getTypeGroupIds());
+        }
+        type.setSelectedIndex(0);
+        firePrimaryTypeGroupChange(type.getSelectedItem());
+    }
+
+    public void addTypeGroup(String newTypeGroup) {
+        if (!type.getItems().contains(newTypeGroup)) {
+            type.addItem(newTypeGroup);
+        }
+    }
+
+    public void removeTypeGroup(String typeGroup) {
+        type.removeItem(typeGroup);
+    }
+
+    public boolean isModified() {
+        return dataTypeMappingConfigTable.isModified();
     }
 }

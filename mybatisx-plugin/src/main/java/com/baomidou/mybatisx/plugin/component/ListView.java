@@ -29,4 +29,9 @@ public class ListView<E> extends JBList<E> implements ToolbarDecoratedComponent<
         }
         return getModel().getElementAt(index);
     }
+
+    public boolean removeItem(E item) {
+        DefaultListModel<E> listModel = getListModel();
+        return listModel.removeElement(item);
+    }
 }

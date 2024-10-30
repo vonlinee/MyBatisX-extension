@@ -3,6 +3,7 @@ package com.baomidou.mybatisx.model;
 import com.baomidou.mybatisx.plugin.ui.components.DataType;
 import com.baomidou.mybatisx.plugin.ui.components.DataTypeMappingItem;
 import lombok.Data;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.HashMap;
@@ -112,5 +113,13 @@ public class DataTypeMappingSystem {
             return types.remove(item.getAnotherIdentifier());
         }
         return false;
+    }
+
+    @NotNull
+    public DataTypeMappingSystem copy() {
+        DataTypeMappingSystem dataTypeMappingSystem = new DataTypeMappingSystem();
+        dataTypeMappingSystem.groupMapping = new HashMap<>(groupMapping);
+        dataTypeMappingSystem.mappings = new HashMap<>(mappings);
+        return dataTypeMappingSystem;
     }
 }

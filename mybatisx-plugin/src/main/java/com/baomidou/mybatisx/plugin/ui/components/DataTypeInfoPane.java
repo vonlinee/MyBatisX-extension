@@ -7,11 +7,11 @@ import com.baomidou.mybatisx.plugin.component.ListView;
 import com.baomidou.mybatisx.plugin.component.SplitPane;
 import com.baomidou.mybatisx.plugin.component.TextFieldListCellRenderer;
 import com.baomidou.mybatisx.plugin.component.TitledListPane;
-import com.baomidou.mybatisx.plugin.setting.DataTypeSettings;
 import com.baomidou.mybatisx.plugin.ui.dialog.SingleValueEditorDialog;
 import com.baomidou.mybatisx.util.StringUtils;
 import com.intellij.ui.AnActionButton;
 import com.intellij.ui.AnActionButtonRunnable;
+import lombok.Getter;
 import org.jetbrains.annotations.NotNull;
 
 import javax.swing.event.ListSelectionEvent;
@@ -25,9 +25,17 @@ public class DataTypeInfoPane extends SplitPane {
 
     TitledListPane<String> typeGroupListView;
     TitledListPane<DataType> dataTypeListView;
+    DataTypeMappingPane dataTypeMappingPane;
 
-    public DataTypeInfoPane(DataTypeSystem typeSystem) {
+    @Getter
+    boolean modified;
 
+    public void markModified() {
+        modified = true;
+    }
+
+    public DataTypeInfoPane(DataTypeSystem typeSystem, DataTypeMappingPane dataTypeMappingPane) {
+        this.dataTypeMappingPane = dataTypeMappingPane;
         typeGroupListView = new TitledListPane<>("Type Group", typeSystem.getTypeGroupIds()) {
             @Override
             protected ListView<String> createListView(Collection<String> list) {
@@ -38,13 +46,34 @@ public class DataTypeInfoPane extends SplitPane {
                             SingleValueEditorDialog typeGroupEditDialog = new SingleValueEditorDialog("Please Input Type Group Identifier") {
                                 @Override
                                 public void onSubmit(String text) {
-                                    typeGroupListView.getListView().addItem(text);
+                                    if (typeSystem.addTypeGroup(text)) {
+                                        dataTypeMappingPane.addTypeGroup(text);
+                                        typeGroupListView.getListView().addItem(text);
+                                        markModified();
+                                    }
                                 }
                             };
                             typeGroupEditDialog.show();
                         };
                     }
 
+                    @Override
+                    public AnActionButtonRunnable getRemoveAction() {
+                        return new AnActionButtonRunnable() {
+                            @Override
+                            public void run(AnActionButton anActionButton) {
+                                @SuppressWarnings("unchecked")
+                                ListView<String> listView = (ListView<String>) anActionButton.getContextComponent();
+                                String selectedItem = listView.getSelectedValue();
+                                if (StringUtils.hasText(selectedItem)) {
+                                    typeSystem.removeTypeGroup(selectedItem);
+                                    dataTypeMappingPane.removeTypeGroup(selectedItem);
+                                    typeGroupListView.getListView().removeItem(selectedItem);
+                                    markModified();
+                                }
+                            }
+                        };
+                    }
                 };
 
                 listView.setCellRenderer(new TextFieldListCellRenderer<>());
@@ -82,6 +111,7 @@ public class DataTypeInfoPane extends SplitPane {
                                     @Override
                                     protected void submit(@NotNull MultableDataType target, boolean saveOrUpdate) {
                                         dataTypeListView.getListView().addItem(target);
+                                        markModified();
                                     }
                                 };
                                 dialog.show();

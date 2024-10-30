@@ -7,6 +7,11 @@ import javax.swing.event.ListSelectionListener;
 import java.awt.*;
 import java.util.Collection;
 
+/**
+ * list view with a title region
+ *
+ * @param <E>
+ */
 public class TitledListPane<E> extends BorderPane {
     @NotNull
     Label titleLabel;
@@ -35,7 +40,7 @@ public class TitledListPane<E> extends BorderPane {
         return new ListView<>();
     }
 
-    public ListView<E> getListView() {
+    public @NotNull ListView<E> getListView() {
         return listView;
     }
 
