@@ -284,10 +284,10 @@
             groupId="com.baomidou.mybatisx.plugin.setting.configurable.MyBatisXConfigurable"
             displayName="TypeSystem"/>
 
-        <applicationConfigurable
-            instance="com.baomidou.mybatisx.plugin.setting.configurable.TranslationConfigurable"
-            groupId="com.baomidou.mybatisx.plugin.setting.configurable.MyBatisXConfigurable"
-            displayName="Translation"/>
+<!--        <applicationConfigurable-->
+<!--            instance="com.baomidou.mybatisx.plugin.setting.configurable.TranslationConfigurable"-->
+<!--            groupId="com.baomidou.mybatisx.plugin.setting.configurable.MyBatisXConfigurable"-->
+<!--            displayName="Translation"/>-->
 
         <applicationService serviceImplementation="com.baomidou.mybatisx.plugin.setting.OtherSetting"/>
 
