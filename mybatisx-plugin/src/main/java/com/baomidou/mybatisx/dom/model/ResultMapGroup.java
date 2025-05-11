@@ -15,13 +15,13 @@ import org.jetbrains.annotations.NotNull;
  */
 public interface ResultMapGroup extends DomElement {
 
-    /**
-     * Gets result map.
-     *
-     * @return the result map
-     */
-    @NotNull
-    @Attribute("resultMap")
-    @Convert(ResultMapConverter.class)
-    GenericAttributeValue<XmlTag> getResultMap();
+  /**
+   * Gets result map.
+   *
+   * @return the result map
+   */
+  @NotNull
+  @Attribute("resultMap")
+  @Convert(ResultMapConverter.class)
+  GenericAttributeValue<XmlTag> getResultMap();
 }

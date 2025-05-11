@@ -29,85 +29,84 @@ import java.util.Map;
 @State(name = "TemplatesSettings", storages = {@Storage(value = MyBatisXPlugin.PERSISTENT_STATE_FILE)})
 public final class TemplatesSettings implements PersistentStateComponent<TemplatesSettings.State> {
 
-    @Setter
-    @Getter
-    private TemplateContext templateContext;
+  private final State state = new State();
+  @Setter
+  @Getter
+  private TemplateContext templateContext;
 
-    private final State state = new State();
+  public static TemplatesSettings getInstance() {
+    return IntellijSDK.getService(TemplatesSettings.class);
+  }
 
-    public static TemplatesSettings getInstance() {
-        return IntellijSDK.getService(TemplatesSettings.class);
+  /**
+   * @param project 为null，则获取全局的配置，不为null，则获取当前项目的模板配置
+   * @return 模板配置
+   */
+  @NotNull
+  public static TemplatesSettings getInstance(@Nullable Project project) {
+    if (project == null) {
+      return IntellijSDK.getService(TemplatesSettings.class);
     }
+    TemplatesSettings service = IntellijSDK.getService(TemplatesSettings.class, project);
+    // 配置的默认值
+    if (service.getTemplateContext() == null) {
+      // 默认配置
+      TemplateContext templateContext = new TemplateContext();
+      templateContext.setTemplateSettingMap(new HashMap<>());
+      templateContext.setProjectPath(project.getBasePath());
+      service.setTemplateContext(templateContext);
+    }
+    return service;
+  }
 
+  @Override
+  public TemplatesSettings.State getState() {
+    return state;
+  }
+
+  @Override
+  public void loadState(@NotNull TemplatesSettings.State state) {
+    XmlSerializerUtil.copyBean(state, this.state);
+  }
+
+  @Override
+  public void noStateLoaded() {
+    this.state.templates = GlobalTemplateSettings.getInstance().getTemplates();
+  }
+
+  @Override
+  public void initializeComponent() {
+
+  }
+
+  /**
+   * 默认的配置更改是无效的
+   *
+   * @return 模板设置
+   */
+  public Map<String, List<TemplateSettingDTO>> getTemplateSettingMap() {
+    final Map<String, List<TemplateSettingDTO>> templateSettingMap = new HashMap<>();
+    final Map<String, List<TemplateSettingDTO>> settingMap = templateContext.getTemplateSettingMap();
+    Map<String, List<TemplateSettingDTO>> setTemplateSettingMap = DefaultSettingsConfig.defaultSettings();
+    templateSettingMap.putAll(settingMap);
+    templateSettingMap.putAll(setTemplateSettingMap);
+    return templateSettingMap;
+  }
+
+  public List<TemplateInfo> getTemplates() {
+    return state.templates;
+  }
+
+  public void setTemplates(List<TemplateInfo> templates) {
+    state.templates.clear();
+    state.templates.addAll(templates);
+  }
+
+  public static class State {
     /**
-     * @param project 为null，则获取全局的配置，不为null，则获取当前项目的模板配置
-     * @return 模板配置
+     * 模板信息列表
+     * 序列化的对象需要有默认构造器，否则序列化失败
      */
-    @NotNull
-    public static TemplatesSettings getInstance(@Nullable Project project) {
-        if (project == null) {
-            return IntellijSDK.getService(TemplatesSettings.class);
-        }
-        TemplatesSettings service = IntellijSDK.getService(TemplatesSettings.class, project);
-        // 配置的默认值
-        if (service.getTemplateContext() == null) {
-            // 默认配置
-            TemplateContext templateContext = new TemplateContext();
-            templateContext.setTemplateSettingMap(new HashMap<>());
-            templateContext.setProjectPath(project.getBasePath());
-            service.setTemplateContext(templateContext);
-        }
-        return service;
-    }
-
-    @Override
-    public TemplatesSettings.State getState() {
-        return state;
-    }
-
-    @Override
-    public void loadState(@NotNull TemplatesSettings.State state) {
-        XmlSerializerUtil.copyBean(state, this.state);
-    }
-
-    @Override
-    public void noStateLoaded() {
-        this.state.templates = GlobalTemplateSettings.getInstance().getTemplates();
-    }
-
-    @Override
-    public void initializeComponent() {
-
-    }
-
-    /**
-     * 默认的配置更改是无效的
-     *
-     * @return 模板设置
-     */
-    public Map<String, List<TemplateSettingDTO>> getTemplateSettingMap() {
-        final Map<String, List<TemplateSettingDTO>> templateSettingMap = new HashMap<>();
-        final Map<String, List<TemplateSettingDTO>> settingMap = templateContext.getTemplateSettingMap();
-        Map<String, List<TemplateSettingDTO>> setTemplateSettingMap = DefaultSettingsConfig.defaultSettings();
-        templateSettingMap.putAll(settingMap);
-        templateSettingMap.putAll(setTemplateSettingMap);
-        return templateSettingMap;
-    }
-
-    public static class State {
-        /**
-         * 模板信息列表
-         * 序列化的对象需要有默认构造器，否则序列化失败
-         */
-        public List<TemplateInfo> templates = new ArrayList<>();
-    }
-
-    public List<TemplateInfo> getTemplates() {
-        return state.templates;
-    }
-
-    public void setTemplates(List<TemplateInfo> templates) {
-        state.templates.clear();
-        state.templates.addAll(templates);
-    }
+    public List<TemplateInfo> templates = new ArrayList<>();
+  }
 }

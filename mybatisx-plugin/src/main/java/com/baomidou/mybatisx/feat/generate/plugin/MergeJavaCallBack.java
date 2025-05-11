@@ -7,17 +7,17 @@ import java.io.File;
 
 public class MergeJavaCallBack extends DefaultShellCallback {
 
-    public MergeJavaCallBack(boolean overwrite) {
-        super(overwrite);
-    }
+  public MergeJavaCallBack(boolean overwrite) {
+    super(overwrite);
+  }
 
-    @Override
-    public boolean isMergeSupported() {
-        return true;
-    }
+  @Override
+  public boolean isMergeSupported() {
+    return true;
+  }
 
-    @Override
-    public String mergeJavaFile(String newFileSource, File existingFile, String[] javadocTags, String fileEncoding) throws ShellException {
-        return newFileSource;
-    }
+  @Override
+  public String mergeJavaFile(String newFileSource, File existingFile, String[] javadocTags, String fileEncoding) throws ShellException {
+    return newFileSource;
+  }
 }

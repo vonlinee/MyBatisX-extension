@@ -9,20 +9,20 @@ import java.util.Optional;
  */
 public class JoinAppendTypeCommand implements AppendTypeCommand {
 
-    private final SyntaxAppender syntaxAppender;
+  private final SyntaxAppender syntaxAppender;
 
-    /**
-     * Instantiates a new Join append type command.
-     *
-     * @param syntaxAppender the syntax appender
-     */
-    public JoinAppendTypeCommand(final SyntaxAppender syntaxAppender) {
+  /**
+   * Instantiates a new Join append type command.
+   *
+   * @param syntaxAppender the syntax appender
+   */
+  public JoinAppendTypeCommand(final SyntaxAppender syntaxAppender) {
 
-        this.syntaxAppender = syntaxAppender;
-    }
+    this.syntaxAppender = syntaxAppender;
+  }
 
-    @Override
-    public Optional<SyntaxAppender> execute() {
-        return Optional.of(this.syntaxAppender);
-    }
+  @Override
+  public Optional<SyntaxAppender> execute() {
+    return Optional.of(this.syntaxAppender);
+  }
 }

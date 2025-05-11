@@ -24,54 +24,54 @@ import java.util.List;
  */
 public class CustomTemplatePlugin extends PluginAdapter {
 
-    public static final String ROOT = "root";
-    private static final Logger logger = LoggerFactory.getLogger(CustomTemplatePlugin.class);
+  public static final String ROOT = "root";
+  private static final Logger logger = LoggerFactory.getLogger(CustomTemplatePlugin.class);
 
-    @Override
-    public boolean validate(List<String> warnings) {
-        return true;
+  @Override
+  public boolean validate(List<String> warnings) {
+    return true;
+  }
+
+  @Override
+  public List<GeneratedJavaFile> contextGenerateAdditionalJavaFiles(IntrospectedTable introspectedTable) {
+    String root = properties.getProperty(ROOT);
+    CustomTemplateRoot rootObject = readRootObject(root);
+    if (rootObject == null) {
+      return Collections.emptyList();
     }
 
-    @Override
-    public List<GeneratedJavaFile> contextGenerateAdditionalJavaFiles(IntrospectedTable introspectedTable) {
-        String root = properties.getProperty(ROOT);
-        CustomTemplateRoot rootObject = readRootObject(root);
-        if (rootObject == null) {
-            return Collections.emptyList();
-        }
+    ModuleInfoGo moduleUIInfo = rootObject.getModuleUIInfo();
 
-        ModuleInfoGo moduleUIInfo = rootObject.getModuleUIInfo();
-
-        String modulePath = rootObject.getModuleUIInfo().getModulePath() + "/" + moduleUIInfo.getBasePath();
-        final File file = new File(modulePath);
-        if (!file.exists()) {
-            final boolean created = file.mkdirs();
-            logger.info("模块目录不存在,已创建目录. modulePath: {},created:{}", file.getAbsolutePath(), created);
-        }
-        TopLevelClass topLevelClass = new TopLevelClass(moduleUIInfo.getFileName());
-        FreeMakerFormatter javaFormatter = new FreeMakerFormatter(rootObject, ClassInfo.build(introspectedTable));
-        javaFormatter.setContext(context);
-
-        GeneratedJavaFile generatedJavaFile = new FreeMarkerBasedGeneratedFile(topLevelClass,
-            javaFormatter,
-            modulePath,
-            moduleUIInfo.getEncoding(),
-            moduleUIInfo.getFileNameWithSuffix(),
-            moduleUIInfo.getPackageName());
-        return Collections.singletonList(generatedJavaFile);
+    String modulePath = rootObject.getModuleUIInfo().getModulePath() + "/" + moduleUIInfo.getBasePath();
+    final File file = new File(modulePath);
+    if (!file.exists()) {
+      final boolean created = file.mkdirs();
+      logger.info("模块目录不存在,已创建目录. modulePath: {},created:{}", file.getAbsolutePath(), created);
     }
+    TopLevelClass topLevelClass = new TopLevelClass(moduleUIInfo.getFileName());
+    FreeMakerFormatter javaFormatter = new FreeMakerFormatter(rootObject, ClassInfo.build(introspectedTable));
+    javaFormatter.setContext(context);
 
-    @Nullable
-    private CustomTemplateRoot readRootObject(String root) {
-        CustomTemplateRoot rootObject = null;
-        try {
-            byte[] decode = Base64.getDecoder().decode(root.getBytes(StandardCharsets.UTF_8));
-            try (ObjectInputStream objectInputStream = new ObjectInputStream(new ByteArrayInputStream(decode))) {
-                rootObject = (CustomTemplateRoot) objectInputStream.readObject();
-            }
-        } catch (IOException | ClassNotFoundException e) {
-            e.printStackTrace();
-        }
-        return rootObject;
+    GeneratedJavaFile generatedJavaFile = new FreeMarkerBasedGeneratedFile(topLevelClass,
+      javaFormatter,
+      modulePath,
+      moduleUIInfo.getEncoding(),
+      moduleUIInfo.getFileNameWithSuffix(),
+      moduleUIInfo.getPackageName());
+    return Collections.singletonList(generatedJavaFile);
+  }
+
+  @Nullable
+  private CustomTemplateRoot readRootObject(String root) {
+    CustomTemplateRoot rootObject = null;
+    try {
+      byte[] decode = Base64.getDecoder().decode(root.getBytes(StandardCharsets.UTF_8));
+      try (ObjectInputStream objectInputStream = new ObjectInputStream(new ByteArrayInputStream(decode))) {
+        rootObject = (CustomTemplateRoot) objectInputStream.readObject();
+      }
+    } catch (IOException | ClassNotFoundException e) {
+      e.printStackTrace();
     }
+    return rootObject;
+  }
 }

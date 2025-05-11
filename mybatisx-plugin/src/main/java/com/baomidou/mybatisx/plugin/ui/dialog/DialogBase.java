@@ -9,47 +9,47 @@ import org.jetbrains.annotations.Nullable;
  */
 public abstract class DialogBase extends DialogWrapper {
 
-    private Project project;
+  private Project project;
 
-    public DialogBase() {
-        super(null);
+  public DialogBase() {
+    super(null);
+  }
+
+  protected DialogBase(@Nullable Project project) {
+    super(project);
+    this.project = project;
+  }
+
+  @Override
+  public void show() {
+    if (!isDisposed()) {
+      super.init();
     }
+    super.show();
+  }
 
-    protected DialogBase(@Nullable Project project) {
-        super(project);
-        this.project = project;
+  @Override
+  protected final void dispose() {
+    if (isDisposed()) {
+      return;
     }
+    beforeDisposed();
+    super.dispose(); // this will free the resources associated with the dialog.
+  }
 
-    @Override
-    public void show() {
-        if (!isDisposed()) {
-            super.init();
-        }
-        super.show();
-    }
-
-    @Override
-    protected final void dispose() {
-        if (isDisposed()) {
-            return;
-        }
-        beforeDisposed();
-        super.dispose(); // this will free the resources associated with the dialog.
-    }
-
-    protected void beforeDisposed() {
-    }
+  protected void beforeDisposed() {
+  }
 
 
-    public final void closeByCancel() {
-        close(DialogWrapper.CANCEL_EXIT_CODE);
-    }
+  public final void closeByCancel() {
+    close(DialogWrapper.CANCEL_EXIT_CODE);
+  }
 
-    public final void closeByOk() {
-        close(DialogWrapper.OK_EXIT_CODE);
-    }
+  public final void closeByOk() {
+    close(DialogWrapper.OK_EXIT_CODE);
+  }
 
-    public final Project getProject() {
-        return project;
-    }
+  public final Project getProject() {
+    return project;
+  }
 }

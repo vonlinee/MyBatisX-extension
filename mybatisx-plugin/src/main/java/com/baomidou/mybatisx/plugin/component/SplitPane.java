@@ -10,47 +10,47 @@ import java.util.UUID;
  */
 public class SplitPane extends JBSplitter {
 
-    public SplitPane() {
-        this(false, 0.4f);
-    }
+  public SplitPane() {
+    this(false, 0.4f);
+  }
 
-    public SplitPane(boolean vertical) {
-        this(vertical, 0.4f);
-    }
+  public SplitPane(boolean vertical) {
+    this(vertical, 0.4f);
+  }
 
-    public SplitPane(int proportion) {
-        this(false, (float) proportion / 100);
-    }
+  public SplitPane(int proportion) {
+    this(false, (float) proportion / 100);
+  }
 
-    public SplitPane(float proportion) {
-        this(false, proportion);
-    }
+  public SplitPane(float proportion) {
+    this(false, proportion);
+  }
 
-    public SplitPane(boolean vertical, float proportion) {
-        super(vertical, proportion);
-        setSplitterProportionKey(UUID.randomUUID().toString());
-    }
+  public SplitPane(boolean vertical, float proportion) {
+    super(vertical, proportion);
+    setSplitterProportionKey(UUID.randomUUID().toString());
+  }
 
-    public SplitPane(float proportion, JComponent first, JComponent second) {
-        super(false, proportion);
-        setComponent(first, second);
-    }
+  public SplitPane(float proportion, JComponent first, JComponent second) {
+    super(false, proportion);
+    setComponent(first, second);
+  }
 
-    public SplitPane(boolean vertical, float proportion, JComponent first, JComponent second) {
-        super(vertical, proportion);
-        setComponent(first, second);
-    }
+  public SplitPane(boolean vertical, float proportion, JComponent first, JComponent second) {
+    super(vertical, proportion);
+    setComponent(first, second);
+  }
 
-    public final void setComponent(JComponent first, JComponent second) {
-        setFirstComponent(first);
-        setSecondComponent(second);
-    }
+  public final void setComponent(JComponent first, JComponent second) {
+    setFirstComponent(first);
+    setSecondComponent(second);
+  }
 
-    public void setLeftComponent(JComponent comp) {
-        super.setFirstComponent(comp);
-    }
+  public void setLeftComponent(JComponent comp) {
+    super.setFirstComponent(comp);
+  }
 
-    public void setRightComponent(JComponent comp) {
-        super.setSecondComponent(comp);
-    }
+  public void setRightComponent(JComponent comp) {
+    super.setSecondComponent(comp);
+  }
 }

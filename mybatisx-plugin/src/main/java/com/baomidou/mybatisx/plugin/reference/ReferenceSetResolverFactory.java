@@ -11,19 +11,19 @@ import org.jetbrains.annotations.NotNull;
  */
 public final class ReferenceSetResolverFactory {
 
-    private ReferenceSetResolverFactory() {
-        throw new UnsupportedOperationException();
-    }
+  private ReferenceSetResolverFactory() {
+    throw new UnsupportedOperationException();
+  }
 
-    /**
-     * Create psi field resolver context reference set resolver.
-     *
-     * @param <F>    the type parameter
-     * @param target the target
-     * @return the context reference set resolver
-     */
-    public static <F extends XmlAttributeValue> ContextReferenceSetResolver<XmlAttributeValue, PsiField> createPsiFieldResolver(@NotNull F target) {
-        return new PsiFieldReferenceSetResolver(target);
-    }
+  /**
+   * Create psi field resolver context reference set resolver.
+   *
+   * @param <F>    the type parameter
+   * @param target the target
+   * @return the context reference set resolver
+   */
+  public static <F extends XmlAttributeValue> ContextReferenceSetResolver<XmlAttributeValue, PsiField> createPsiFieldResolver(@NotNull F target) {
+    return new PsiFieldReferenceSetResolver(target);
+  }
 
 }

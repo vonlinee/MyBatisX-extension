@@ -4,9 +4,9 @@ import javax.swing.tree.TreeNode;
 
 public class TreeItem<T> {
 
-    TreeNode treeNode;
+  TreeNode treeNode;
 
-    final TreeNode getTreeNode() {
-        return this.treeNode;
-    }
+  final TreeNode getTreeNode() {
+    return this.treeNode;
+  }
 }

@@ -6,13 +6,13 @@ import java.awt.*;
 
 public class HBox extends Pane {
 
-    public HBox() {
-        super(new HorizontalLayout());
-    }
+  public HBox() {
+    super(new HorizontalLayout());
+  }
 
-    public final void addChildren(Component... components) {
-        for (Component component : components) {
-            add(component);
-        }
+  public final void addChildren(Component... components) {
+    for (Component component : components) {
+      add(component);
     }
+  }
 }

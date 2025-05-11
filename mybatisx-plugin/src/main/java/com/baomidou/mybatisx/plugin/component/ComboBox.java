@@ -12,16 +12,16 @@ import java.util.Collection;
  */
 public class ComboBox<E extends ComboBoxItem> extends com.intellij.openapi.ui.ComboBox<E> {
 
-    @SafeVarargs
-    public final void addItems(E... items) {
-        for (E item : items) {
-            addItem(item);
-        }
+  @SafeVarargs
+  public final void addItems(E... items) {
+    for (E item : items) {
+      addItem(item);
     }
+  }
 
-    public final void addItems(Collection<E> items) {
-        for (E item : items) {
-            addItem(item);
-        }
+  public final void addItems(Collection<E> items) {
+    for (E item : items) {
+      addItem(item);
     }
+  }
 }

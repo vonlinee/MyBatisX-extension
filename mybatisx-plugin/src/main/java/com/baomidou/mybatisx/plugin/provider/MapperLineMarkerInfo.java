@@ -14,23 +14,23 @@ import javax.swing.*;
 @Setter
 public class MapperLineMarkerInfo extends LineMarkerInfo<PsiElement> {
 
-    @NotNull
-    PsiElement element;
-    PsiElement[] targets;
+  @NotNull
+  PsiElement element;
+  PsiElement[] targets;
 
-    public MapperLineMarkerInfo(@NotNull PsiElement element, @Nullable Icon icon, PsiElement[] targets) {
-        super(element, element.getTextRange(), icon, null, null, GutterIconRenderer.Alignment.CENTER);
-        this.targets = targets;
-        this.element = element;
-    }
+  public MapperLineMarkerInfo(@NotNull PsiElement element, @Nullable Icon icon, PsiElement[] targets) {
+    super(element, element.getTextRange(), icon, null, null, GutterIconRenderer.Alignment.CENTER);
+    this.targets = targets;
+    this.element = element;
+  }
 
-    @Override
-    public GutterIconRenderer createGutterRenderer() {
-        return new MapperXmlGutterIconRenderer(this);
-    }
+  @Override
+  public GutterIconRenderer createGutterRenderer() {
+    return new MapperXmlGutterIconRenderer(this);
+  }
 
-    @Override
-    public String getLineMarkerTooltip() {
-        return "Left click navigate to mapper method in mapper class, right click to open the menu";
-    }
+  @Override
+  public String getLineMarkerTooltip() {
+    return "Left click navigate to mapper method in mapper class, right click to open the menu";
+  }
 }

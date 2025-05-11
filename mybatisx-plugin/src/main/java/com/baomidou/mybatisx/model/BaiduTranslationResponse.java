@@ -10,13 +10,13 @@ import java.util.List;
 @Getter
 public class BaiduTranslationResponse {
 
-    @JsonProperty("error_code")
-    private String errorCode;
-    @JsonProperty("error_msg")
-    private String errorMsg;
-    private String from;
-    private String to;
+  @JsonProperty("error_code")
+  private String errorCode;
+  @JsonProperty("error_msg")
+  private String errorMsg;
+  private String from;
+  private String to;
 
-    @JsonProperty("trans_result")
-    private List<TranslationResult> translationResult;
+  @JsonProperty("trans_result")
+  private List<TranslationResult> translationResult;
 }

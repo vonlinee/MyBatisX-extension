@@ -6,11 +6,11 @@ import java.util.List;
 
 public interface Translation {
 
-    /**
-     * 翻译成中文
-     *
-     * @param content 需要翻译的文本
-     * @return
-     */
-    List<TranslationVO> toChinese(String content);
+  /**
+   * 翻译成中文
+   *
+   * @param content 需要翻译的文本
+   * @return
+   */
+  List<TranslationVO> toChinese(String content);
 }

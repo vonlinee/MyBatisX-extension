@@ -11,27 +11,27 @@ import javax.swing.*;
  */
 public class ListView<E> extends JBList<E> implements ToolbarDecoratedComponent<ListView<E>> {
 
-    public ListView() {
-        super(new DefaultListModel<>());
-    }
+  public ListView() {
+    super(new DefaultListModel<>());
+  }
 
-    public DefaultListModel<E> getListModel() {
-        return (DefaultListModel<E>) getModel();
-    }
+  public DefaultListModel<E> getListModel() {
+    return (DefaultListModel<E>) getModel();
+  }
 
-    public void addItem(E item) {
-        getListModel().addElement(item);
-    }
+  public void addItem(E item) {
+    getListModel().addElement(item);
+  }
 
-    public E getItem(int index) {
-        if (index < 0 || index >= getItemsCount()) {
-            return null;
-        }
-        return getModel().getElementAt(index);
+  public E getItem(int index) {
+    if (index < 0 || index >= getItemsCount()) {
+      return null;
     }
+    return getModel().getElementAt(index);
+  }
 
-    public boolean removeItem(E item) {
-        DefaultListModel<E> listModel = getListModel();
-        return listModel.removeElement(item);
-    }
+  public boolean removeItem(E item) {
+    DefaultListModel<E> listModel = getListModel();
+    return listModel.removeElement(item);
+  }
 }

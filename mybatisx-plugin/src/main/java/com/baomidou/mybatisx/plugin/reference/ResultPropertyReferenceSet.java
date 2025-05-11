@@ -16,23 +16,23 @@ import org.jetbrains.annotations.Nullable;
  */
 public class ResultPropertyReferenceSet extends ReferenceSetBase<PsiReference> {
 
-    /**
-     * Instantiates a new Result property reference set.
-     *
-     * @param text    the text
-     * @param element the element
-     * @param offset  the offset
-     */
-    public ResultPropertyReferenceSet(String text, @NotNull PsiElement element, int offset) {
-        super(text, element, offset, DOT_SEPARATOR);
-    }
+  /**
+   * Instantiates a new Result property reference set.
+   *
+   * @param text    the text
+   * @param element the element
+   * @param offset  the offset
+   */
+  public ResultPropertyReferenceSet(String text, @NotNull PsiElement element, int offset) {
+    super(text, element, offset, DOT_SEPARATOR);
+  }
 
-    @Nullable
-    @NonNls
-    @Override
-    protected PsiReference createReference(TextRange range, int index) {
-        XmlAttributeValue element = (XmlAttributeValue) getElement();
-        return null == element ? null : new ContextPsiFieldReference(element, range, index);
-    }
+  @Nullable
+  @NonNls
+  @Override
+  protected PsiReference createReference(TextRange range, int index) {
+    XmlAttributeValue element = (XmlAttributeValue) getElement();
+    return null == element ? null : new ContextPsiFieldReference(element, range, index);
+  }
 
 }

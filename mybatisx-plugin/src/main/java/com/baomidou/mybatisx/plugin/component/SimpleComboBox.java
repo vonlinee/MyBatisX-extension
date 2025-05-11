@@ -13,45 +13,45 @@ import java.util.List;
  */
 public class SimpleComboBox<E> extends com.intellij.openapi.ui.ComboBox<E> {
 
-    public SimpleComboBox() {
-        super(new DefaultComboBoxModel<>());
-    }
+  public SimpleComboBox() {
+    super(new DefaultComboBoxModel<>());
+  }
 
-    public SimpleComboBox(@NotNull DefaultComboBoxModel<E> model) {
-        super(model);
-    }
+  public SimpleComboBox(@NotNull DefaultComboBoxModel<E> model) {
+    super(model);
+  }
 
-    public void addItems(Collection<E> items) {
-        if (CollectionUtils.isNotEmpty(items)) {
-            for (E item : items) {
-                addItem(item);
-            }
-        }
+  public void addItems(Collection<E> items) {
+    if (CollectionUtils.isNotEmpty(items)) {
+      for (E item : items) {
+        addItem(item);
+      }
     }
+  }
 
-    @Override
-    public DefaultComboBoxModel<E> getModel() {
-        return (DefaultComboBoxModel<E>) super.getModel();
-    }
+  @Override
+  public DefaultComboBoxModel<E> getModel() {
+    return (DefaultComboBoxModel<E>) super.getModel();
+  }
 
-    public final void clearItems() {
-        MutableComboBoxModel<E> model = (MutableComboBoxModel<E>) getModel();
-        model.removeElementAt(0);
-    }
+  public final void clearItems() {
+    MutableComboBoxModel<E> model = (MutableComboBoxModel<E>) getModel();
+    model.removeElementAt(0);
+  }
 
-    public final List<E> getItems() {
-        return getModel().getItems();
-    }
+  public final List<E> getItems() {
+    return getModel().getItems();
+  }
 
-    public final void setItems(List<E> collection) {
-        DefaultComboBoxModel<E> model = getModel();
-        model.removeAll();
-        model.addAll(0, collection);
-    }
+  public final void setItems(List<E> collection) {
+    DefaultComboBoxModel<E> model = getModel();
+    model.removeAll();
+    model.addAll(0, collection);
+  }
 
-    @Override
-    @SuppressWarnings("unchecked")
-    public E getSelectedItem() {
-        return (E) dataModel.getSelectedItem();
-    }
+  @Override
+  @SuppressWarnings("unchecked")
+  public E getSelectedItem() {
+    return (E) dataModel.getSelectedItem();
+  }
 }

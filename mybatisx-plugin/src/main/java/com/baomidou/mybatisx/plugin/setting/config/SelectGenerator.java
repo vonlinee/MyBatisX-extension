@@ -19,37 +19,37 @@ import java.util.Optional;
  */
 public class SelectGenerator extends AbstractStatementGenerator {
 
-    /**
-     * Instantiates a new Select generator.
-     *
-     * @param patterns the patterns
-     */
-    public SelectGenerator(@NotNull String... patterns) {
-        super(patterns);
-    }
+  /**
+   * Instantiates a new Select generator.
+   *
+   * @param patterns the patterns
+   */
+  public SelectGenerator(@NotNull String... patterns) {
+    super(patterns);
+  }
 
-    @NotNull
-    @Override
-    protected IdDomElement getTarget(@NotNull Mapper mapper, @NotNull PsiMethod method) {
-        Select select = mapper.addSelect();
-        setupResultType(method, select);
-        return select;
-    }
+  @NotNull
+  @Override
+  protected IdDomElement getTarget(@NotNull Mapper mapper, @NotNull PsiMethod method) {
+    Select select = mapper.addSelect();
+    setupResultType(method, select);
+    return select;
+  }
 
-    private void setupResultType(PsiMethod method, Select select) {
-        Optional<PsiClass> clazz = getSelectResultType(method);
-        clazz.ifPresent(psiClass -> select.getResultType().setValue(psiClass));
-    }
+  private void setupResultType(PsiMethod method, Select select) {
+    Optional<PsiClass> clazz = getSelectResultType(method);
+    clazz.ifPresent(psiClass -> select.getResultType().setValue(psiClass));
+  }
 
-    @NotNull
-    @Override
-    public String getId() {
-        return "SelectGenerator";
-    }
+  @NotNull
+  @Override
+  public String getId() {
+    return "SelectGenerator";
+  }
 
-    @NotNull
-    @Override
-    public String getDisplayText() {
-        return "Select Statement";
-    }
+  @NotNull
+  @Override
+  public String getDisplayText() {
+    return "Select Statement";
+  }
 }

@@ -10,16 +10,16 @@ import com.intellij.ui.FinderRecursivePanel;
  */
 public abstract class MyBatisBaseView extends SimpleToolWindowPanel implements Disposable {
 
-    protected final Project myProject;
+  protected final Project myProject;
 
-    protected FinderRecursivePanel<?> myRootPanel;
+  protected FinderRecursivePanel<?> myRootPanel;
 
-    protected MyBatisBaseView(Project project) {
-        super(false, true);
-        myProject = project;
-    }
+  protected MyBatisBaseView(Project project) {
+    super(false, true);
+    myProject = project;
+  }
 
-    @Override
-    public void dispose() {
-    }
+  @Override
+  public void dispose() {
+  }
 }

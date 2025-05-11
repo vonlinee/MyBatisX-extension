@@ -5,11 +5,11 @@ import com.baomidou.mybatisx.model.AbstractComboBoxItem;
 
 public class SqlTypeComboBoxItem extends AbstractComboBoxItem {
 
-    public SqlTypeComboBoxItem(String name, String value) {
-        super(name, value);
-    }
+  public SqlTypeComboBoxItem(String name, String value) {
+    super(name, value);
+  }
 
-    public SqlTypeComboBoxItem(SqlTypeEnum sqlTypeEnum) {
-        this(sqlTypeEnum.getType(), sqlTypeEnum.getType());
-    }
+  public SqlTypeComboBoxItem(SqlTypeEnum sqlTypeEnum) {
+    this(sqlTypeEnum.getType(), sqlTypeEnum.getType());
+  }
 }

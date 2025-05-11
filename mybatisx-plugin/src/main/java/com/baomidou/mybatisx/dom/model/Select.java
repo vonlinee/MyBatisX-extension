@@ -14,14 +14,14 @@ import org.jetbrains.annotations.NotNull;
  */
 public interface Select extends GroupTwo, ResultMapGroup, IdDomElement {
 
-    /**
-     * select 标签对应的 resultType
-     *
-     * @return the result type
-     */
-    @NotNull
-    @Attribute("resultType")
-    @Convert(AliasConverter.class)
-    GenericAttributeValue<PsiClass> getResultType();
+  /**
+   * select 标签对应的 resultType
+   *
+   * @return the result type
+   */
+  @NotNull
+  @Attribute("resultType")
+  @Convert(AliasConverter.class)
+  GenericAttributeValue<PsiClass> getResultType();
 
 }

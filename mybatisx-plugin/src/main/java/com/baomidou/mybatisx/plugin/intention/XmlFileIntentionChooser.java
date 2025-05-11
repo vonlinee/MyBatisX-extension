@@ -16,56 +16,56 @@ import org.jetbrains.annotations.NotNull;
  */
 public abstract class XmlFileIntentionChooser implements IntentionChooser {
 
-    @Override
-    public boolean isAvailable(@NotNull Project project, Editor editor, PsiFile file) {
-        return file instanceof XmlFile;
-    }
+  @Override
+  public boolean isAvailable(@NotNull Project project, Editor editor, PsiFile file) {
+    return file instanceof XmlFile;
+  }
 
-    /**
-     * Is available boolean.
-     *
-     * @param element the element
-     * @return the boolean
-     */
-    public abstract boolean isAvailable(@NotNull PsiElement element);
+  /**
+   * Is available boolean.
+   *
+   * @param element the element
+   * @return the boolean
+   */
+  public abstract boolean isAvailable(@NotNull PsiElement element);
 
-    /**
-     * Is position of parameter declaration boolean.
-     *
-     * @param element the element
-     * @return the boolean
-     */
-    public boolean isPositionOfParameterDeclaration(@NotNull PsiElement element) {
-        return element.getParent() instanceof PsiParameter;
-    }
+  /**
+   * Is position of parameter declaration boolean.
+   *
+   * @param element the element
+   * @return the boolean
+   */
+  public boolean isPositionOfParameterDeclaration(@NotNull PsiElement element) {
+    return element.getParent() instanceof PsiParameter;
+  }
 
-    /**
-     * Is position of method declaration boolean.
-     *
-     * @param element the element
-     * @return the boolean
-     */
-    public boolean isPositionOfMethodDeclaration(@NotNull PsiElement element) {
-        return element.getParent() instanceof PsiMethod;
-    }
+  /**
+   * Is position of method declaration boolean.
+   *
+   * @param element the element
+   * @return the boolean
+   */
+  public boolean isPositionOfMethodDeclaration(@NotNull PsiElement element) {
+    return element.getParent() instanceof PsiMethod;
+  }
 
-    /**
-     * Is position of interface declaration boolean.
-     *
-     * @param element the element
-     * @return the boolean
-     */
-    public boolean isPositionOfInterfaceDeclaration(@NotNull PsiElement element) {
-        return element.getParent() instanceof PsiClass;
-    }
+  /**
+   * Is position of interface declaration boolean.
+   *
+   * @param element the element
+   * @return the boolean
+   */
+  public boolean isPositionOfInterfaceDeclaration(@NotNull PsiElement element) {
+    return element.getParent() instanceof PsiClass;
+  }
 
-    /**
-     * Is target present in xml boolean.
-     *
-     * @param psiClass the element
-     * @return the boolean
-     */
-    public boolean isTargetPresentInXml(@NotNull PsiClass psiClass) {
-        return JavaService.getInstance(psiClass.getProject()).findWithFindFirstProcessor(psiClass).isPresent();
-    }
+  /**
+   * Is target present in xml boolean.
+   *
+   * @param psiClass the element
+   * @return the boolean
+   */
+  public boolean isTargetPresentInXml(@NotNull PsiClass psiClass) {
+    return JavaService.getInstance(psiClass.getProject()).findWithFindFirstProcessor(psiClass).isPresent();
+  }
 }

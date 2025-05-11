@@ -18,72 +18,72 @@ import java.util.Collection;
  */
 public class TemplateTreeView extends TreeView<TemplateInfo> {
 
-    TemplateTreeViewModel model;
+  TemplateTreeViewModel model;
 
-    public TemplateTreeView() {
-        super();
-        setModel(model = new TemplateTreeViewModel(this));
-        setCellRenderer(new DefaultTreeCellRenderer() {
-            @Override
-            public Component getTreeCellRendererComponent(JTree tree, Object value,
-                                                          boolean sel,
-                                                          boolean expanded,
-                                                          boolean leaf,
-                                                          int row,
-                                                          boolean hasFocus) {
-                super.getTreeCellRendererComponent(tree, value, sel, expanded, leaf, row, hasFocus);
-                // 检查节点是否为复杂对象
-                if (value instanceof DefaultMutableTreeNode) {
-                    DefaultMutableTreeNode node = (DefaultMutableTreeNode) value;
-                    Object userObject = node.getUserObject();
-                    if (userObject instanceof TemplateInfo) {
-                        TemplateInfo templateInfo = (TemplateInfo) userObject;
-                        // 自定义显示内容，例如显示姓名和年龄
-                        setText(templateInfo.getName());
-                    }
-                }
-                return this;
-            }
-        });
+  public TemplateTreeView() {
+    super();
+    setModel(model = new TemplateTreeViewModel(this));
+    setCellRenderer(new DefaultTreeCellRenderer() {
+      @Override
+      public Component getTreeCellRendererComponent(JTree tree, Object value,
+                                                    boolean sel,
+                                                    boolean expanded,
+                                                    boolean leaf,
+                                                    int row,
+                                                    boolean hasFocus) {
+        super.getTreeCellRendererComponent(tree, value, sel, expanded, leaf, row, hasFocus);
+        // 检查节点是否为复杂对象
+        if (value instanceof DefaultMutableTreeNode) {
+          DefaultMutableTreeNode node = (DefaultMutableTreeNode) value;
+          Object userObject = node.getUserObject();
+          if (userObject instanceof TemplateInfo) {
+            TemplateInfo templateInfo = (TemplateInfo) userObject;
+            // 自定义显示内容，例如显示姓名和年龄
+            setText(templateInfo.getName());
+          }
+        }
+        return this;
+      }
+    });
+  }
+
+  @Override
+  protected AnActionButtonRunnable getAddAction() {
+    return anActionButton -> {
+    };
+  }
+
+  private static class TemplateTreeViewModel extends TreeModel<TemplateInfo> implements EditableTreeModel {
+
+    public TemplateTreeViewModel(TreeView<TemplateInfo> treeView) {
+      super(treeView);
     }
 
-    private static class TemplateTreeViewModel extends TreeModel<TemplateInfo> implements EditableTreeModel {
-
-        public TemplateTreeViewModel(TreeView<TemplateInfo> treeView) {
-            super(treeView);
-        }
-
-        /**
-         * @param parentOrNeighbour selected node, maybe used as parent or as a neighbour
-         * @return 新创建的元素的路径
-         */
-        @Override
-        public TreePath addNode(TreePath parentOrNeighbour) {
-            if (parentOrNeighbour.getParentPath() == null) {
-                return new TreePath(new Object[]{getRoot(), new DefaultMutableTreeNode("New Template")});
-            }
-            return parentOrNeighbour.pathByAddingChild(new DefaultMutableTreeNode("New Template"));
-        }
-
-        @Override
-        public void removeNode(TreePath path) {
-
-        }
-
-        @Override
-        public void removeNodes(Collection<? extends TreePath> path) {
-
-        }
-
-        @Override
-        public void moveNodeTo(TreePath parentOrNeighbour) {
-
-        }
+    /**
+     * @param parentOrNeighbour selected node, maybe used as parent or as a neighbour
+     * @return 新创建的元素的路径
+     */
+    @Override
+    public TreePath addNode(TreePath parentOrNeighbour) {
+      if (parentOrNeighbour.getParentPath() == null) {
+        return new TreePath(new Object[]{getRoot(), new DefaultMutableTreeNode("New Template")});
+      }
+      return parentOrNeighbour.pathByAddingChild(new DefaultMutableTreeNode("New Template"));
     }
 
     @Override
-    protected AnActionButtonRunnable getAddAction() {
-        return anActionButton -> {
-        };
+    public void removeNode(TreePath path) {
+
     }
+
+    @Override
+    public void removeNodes(Collection<? extends TreePath> path) {
+
+    }
+
+    @Override
+    public void moveNodeTo(TreePath parentOrNeighbour) {
+
+    }
+  }
 }

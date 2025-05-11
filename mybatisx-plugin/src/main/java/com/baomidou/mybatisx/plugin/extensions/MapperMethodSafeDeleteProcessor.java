@@ -24,78 +24,78 @@ import java.util.List;
 public class MapperMethodSafeDeleteProcessor extends SafeDeleteProcessorDelegateBase {
 
 
-    @Override
-    public boolean handlesElement(PsiElement element) {
-        // 只处理方法重命名就好了
-        if (!(element instanceof PsiMethod)) {
-            return false;
-        }
-        PsiMethod psiMethod = (PsiMethod) element;
-        final PsiClass containingClass = psiMethod.getContainingClass();
-        if (containingClass == null) {
-            return false;
-        }
-        return MapperUtils.findMappers(psiMethod.getProject(), containingClass).size() > 0;
+  @Override
+  public boolean handlesElement(PsiElement element) {
+    // 只处理方法重命名就好了
+    if (!(element instanceof PsiMethod)) {
+      return false;
     }
-
-
-    @Override
-    public void prepareForDeletion(PsiElement element) throws IncorrectOperationException {
-        PsiMethod psiMethod = (PsiMethod) element;
-        final XmlTag tag = MapperUtils.findTag(psiMethod.getProject(), psiMethod);
-        if (tag != null) {
-            tag.delete();
-        }
+    PsiMethod psiMethod = (PsiMethod) element;
+    final PsiClass containingClass = psiMethod.getContainingClass();
+    if (containingClass == null) {
+      return false;
     }
+    return MapperUtils.findMappers(psiMethod.getProject(), containingClass).size() > 0;
+  }
 
-    @Override
-    public @Nullable
-    NonCodeUsageSearchInfo findUsages(@NotNull PsiElement element, @NotNull PsiElement[] allElementsToDelete, @NotNull List<UsageInfo> result) {
-        return null;
+
+  @Override
+  public void prepareForDeletion(PsiElement element) throws IncorrectOperationException {
+    PsiMethod psiMethod = (PsiMethod) element;
+    final XmlTag tag = MapperUtils.findTag(psiMethod.getProject(), psiMethod);
+    if (tag != null) {
+      tag.delete();
     }
+  }
 
-    @Override
-    public @Nullable
-    Collection<PsiElement> getAdditionalElementsToDelete(@NotNull PsiElement element, @NotNull Collection<PsiElement> allElementsToDelete, boolean askUser) {
-        return null;
-    }
+  @Override
+  public @Nullable
+  NonCodeUsageSearchInfo findUsages(@NotNull PsiElement element, @NotNull PsiElement[] allElementsToDelete, @NotNull List<UsageInfo> result) {
+    return null;
+  }
 
-    @Override
-    public @Nullable
-    Collection<String> findConflicts(@NotNull PsiElement element, @NotNull PsiElement[] allElementsToDelete) {
-        return null;
-    }
+  @Override
+  public @Nullable
+  Collection<PsiElement> getAdditionalElementsToDelete(@NotNull PsiElement element, @NotNull Collection<PsiElement> allElementsToDelete, boolean askUser) {
+    return null;
+  }
 
-    @Override
-    public @Nullable
-    UsageInfo[] preprocessUsages(Project project, UsageInfo[] usages) {
-        return new UsageInfo[0];
-    }
+  @Override
+  public @Nullable
+  Collection<String> findConflicts(@NotNull PsiElement element, @NotNull PsiElement[] allElementsToDelete) {
+    return null;
+  }
+
+  @Override
+  public @Nullable
+  UsageInfo[] preprocessUsages(Project project, UsageInfo[] usages) {
+    return new UsageInfo[0];
+  }
 
 
-    @Override
-    public boolean isToSearchInComments(PsiElement element) {
-        return false;
-    }
+  @Override
+  public boolean isToSearchInComments(PsiElement element) {
+    return false;
+  }
 
-    @Override
-    public void setToSearchInComments(PsiElement element, boolean enabled) {
+  @Override
+  public void setToSearchInComments(PsiElement element, boolean enabled) {
 
-    }
+  }
 
-    @Override
-    public boolean isToSearchForTextOccurrences(PsiElement element) {
-        return false;
-    }
+  @Override
+  public boolean isToSearchForTextOccurrences(PsiElement element) {
+    return false;
+  }
 
-    @Override
-    public void setToSearchForTextOccurrences(PsiElement element, boolean enabled) {
+  @Override
+  public void setToSearchForTextOccurrences(PsiElement element, boolean enabled) {
 
-    }
+  }
 
-    @Override
-    public @Nullable
-    Collection<? extends PsiElement> getElementsToSearch(@NotNull PsiElement element, @Nullable Module module, @NotNull Collection<PsiElement> allElementsToDelete) {
-        return null;
-    }
+  @Override
+  public @Nullable
+  Collection<? extends PsiElement> getElementsToSearch(@NotNull PsiElement element, @Nullable Module module, @NotNull Collection<PsiElement> allElementsToDelete) {
+    return null;
+  }
 }

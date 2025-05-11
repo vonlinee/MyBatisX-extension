@@ -12,35 +12,35 @@ import javax.swing.*;
 
 public class DataTypeMappingUpdateDialog extends DialogBase {
 
-    private SimpleComboBox<String> types = new SimpleComboBox<>();
-    private SimpleComboBox<String> anotherTypes = new SimpleComboBox<>();
-    String typeGroup;
-    String anotherTypeGroup;
+  String typeGroup;
+  String anotherTypeGroup;
+  private SimpleComboBox<String> types = new SimpleComboBox<>();
+  private SimpleComboBox<String> anotherTypes = new SimpleComboBox<>();
 
-    public DataTypeMappingUpdateDialog(@NotNull String typeGroup, @NotNull String anotherTypeGroup) {
-        this.typeGroup = typeGroup;
-        this.anotherTypeGroup = anotherTypeGroup;
-        DataTypeSettings dataTypeSettings = DataTypeSettings.getInstance();
-        DataTypeSystem typeSystem = dataTypeSettings.getState();
-        types.addItems(typeSystem.getTypeIdentifiers(typeGroup));
-        anotherTypes.addItems(typeSystem.getTypeIdentifiers(anotherTypeGroup));
-        setOKActionEnabled(true);
-        setTitle("Add DataType Mapping: " + typeGroup + " -> " + anotherTypeGroup);
-    }
+  public DataTypeMappingUpdateDialog(@NotNull String typeGroup, @NotNull String anotherTypeGroup) {
+    this.typeGroup = typeGroup;
+    this.anotherTypeGroup = anotherTypeGroup;
+    DataTypeSettings dataTypeSettings = DataTypeSettings.getInstance();
+    DataTypeSystem typeSystem = dataTypeSettings.getState();
+    types.addItems(typeSystem.getTypeIdentifiers(typeGroup));
+    anotherTypes.addItems(typeSystem.getTypeIdentifiers(anotherTypeGroup));
+    setOKActionEnabled(true);
+    setTitle("Add DataType Mapping: " + typeGroup + " -> " + anotherTypeGroup);
+  }
 
-    @Override
-    protected @Nullable JComponent createCenterPanel() {
-        HBox hBox = new HBox();
-        hBox.addChildren(types, anotherTypes);
-        return hBox;
-    }
+  @Override
+  protected @Nullable JComponent createCenterPanel() {
+    HBox hBox = new HBox();
+    hBox.addChildren(types, anotherTypes);
+    return hBox;
+  }
 
-    public DataTypeMappingItem getTypeMappingItem() {
-        DataTypeMappingItem item = new DataTypeMappingItem();
-        item.setGroup(typeGroup);
-        item.setAnotherGroup(anotherTypeGroup);
-        item.setIdentifier(types.getSelectedItem());
-        item.setAnotherIdentifier(anotherTypes.getSelectedItem());
-        return item;
-    }
+  public DataTypeMappingItem getTypeMappingItem() {
+    DataTypeMappingItem item = new DataTypeMappingItem();
+    item.setGroup(typeGroup);
+    item.setAnotherGroup(anotherTypeGroup);
+    item.setIdentifier(types.getSelectedItem());
+    item.setAnotherIdentifier(anotherTypes.getSelectedItem());
+    return item;
+  }
 }

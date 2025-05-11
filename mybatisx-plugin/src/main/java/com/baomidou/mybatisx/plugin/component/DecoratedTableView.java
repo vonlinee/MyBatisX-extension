@@ -13,28 +13,28 @@ import java.awt.*;
 @Getter
 public class DecoratedTableView<T> extends TableView<T> {
 
-    AnActionButtonRunnable addAction;
-    AnActionButtonRunnable removeAction;
+  AnActionButtonRunnable addAction;
+  AnActionButtonRunnable removeAction;
 
-    /**
-     * 返回的Panel的布局方式是BorderLayout
-     *
-     * @return 容器
-     */
-    public final JPanel createPanel() {
-        ToolbarDecorator decorator = ToolbarDecorator.createDecorator(this)
-            .setPreferredSize(new Dimension(-1, -1))
-            .setAddAction(getAddAction())
-            .setRemoveAction(getRemoveAction());
-        initToolbarDecoratorExtra(decorator);
-        JPanel panel = decorator.createPanel();
-        addActionPanelExtra(decorator.getActionsPanel());
-        return panel;
-    }
+  /**
+   * 返回的Panel的布局方式是BorderLayout
+   *
+   * @return 容器
+   */
+  public final JPanel createPanel() {
+    ToolbarDecorator decorator = ToolbarDecorator.createDecorator(this)
+      .setPreferredSize(new Dimension(-1, -1))
+      .setAddAction(getAddAction())
+      .setRemoveAction(getRemoveAction());
+    initToolbarDecoratorExtra(decorator);
+    JPanel panel = decorator.createPanel();
+    addActionPanelExtra(decorator.getActionsPanel());
+    return panel;
+  }
 
-    protected void initToolbarDecoratorExtra(ToolbarDecorator decorator) {
-    }
+  protected void initToolbarDecoratorExtra(ToolbarDecorator decorator) {
+  }
 
-    protected void addActionPanelExtra(@NotNull JPanel actionsPanel) {
-    }
+  protected void addActionPanelExtra(@NotNull JPanel actionsPanel) {
+  }
 }

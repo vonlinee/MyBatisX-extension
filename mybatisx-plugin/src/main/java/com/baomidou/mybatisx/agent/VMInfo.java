@@ -8,13 +8,13 @@ import lombok.Setter;
 @Getter
 public class VMInfo {
 
-    private VirtualMachine virtualMachine;
+  private VirtualMachine virtualMachine;
 
-    private String ip;
+  private String ip;
 
-    private int port;
+  private int port;
 
-    private String pid;
+  private String pid;
 
-    private String processName;
+  private String processName;
 }

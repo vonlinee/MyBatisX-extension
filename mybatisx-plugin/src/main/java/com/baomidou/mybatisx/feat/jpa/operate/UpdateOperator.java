@@ -31,111 +31,111 @@ import java.util.stream.Collectors;
 public class UpdateOperator extends BaseOperatorManager {
 
 
-    /**
-     * Instantiates a new Update operator.
-     *
-     * @param mappingField the mapping field
-     * @param entityClass
-     */
-    public UpdateOperator(final List<TxField> mappingField, PsiClass entityClass) {
-        final Set<String> patterns = StatementGenerators.UPDATE_GENERATOR.getPatterns();
-        this.init(mappingField, entityClass, patterns);
-        patterns.forEach(this::addOperatorName);
+  /**
+   * Instantiates a new Update operator.
+   *
+   * @param mappingField the mapping field
+   * @param entityClass
+   */
+  public UpdateOperator(final List<TxField> mappingField, PsiClass entityClass) {
+    final Set<String> patterns = StatementGenerators.UPDATE_GENERATOR.getPatterns();
+    this.init(mappingField, entityClass, patterns);
+    patterns.forEach(this::addOperatorName);
+  }
+
+  /**
+   * Init.
+   *
+   * @param mappingField     the mapping field
+   * @param entityClass
+   * @param operatorNameList
+   */
+  public void init(final List<TxField> mappingField, PsiClass entityClass, Set<String> operatorNameList) {
+    TxReturnDescriptor anInt = TxReturnDescriptor.createByOrigin(null, "int");
+
+    for (final String areaName : operatorNameList) {
+      final ResultAppenderFactory updateFactory = new UpdateResultAppenderFactory(areaName);
+      this.initResultAppender(updateFactory, mappingField, areaName);
+
+      StatementBlock statementBlock = new StatementBlock();
+      statementBlock.setTagName(areaName);
+      statementBlock.setResultAppenderFactory(updateFactory);
+      statementBlock.setConditionAppenderFactory(new ConditionAppenderFactory(areaName, mappingField));
+      statementBlock.setReturnWrapper(anInt);
+      this.registerStatementBlock(statementBlock);
+      // 初始化扩展信息
+      this.initCustomArea(areaName, mappingField);
     }
 
-    /**
-     * Init.
-     *
-     * @param mappingField     the mapping field
-     * @param entityClass
-     * @param operatorNameList
-     */
-    public void init(final List<TxField> mappingField, PsiClass entityClass, Set<String> operatorNameList) {
-        TxReturnDescriptor anInt = TxReturnDescriptor.createByOrigin(null, "int");
+  }
 
-        for (final String areaName : operatorNameList) {
-            final ResultAppenderFactory updateFactory = new UpdateResultAppenderFactory(areaName);
-            this.initResultAppender(updateFactory, mappingField, areaName);
+  private void initResultAppender(final ResultAppenderFactory updateFactory, final List<TxField> mappingField, final String areaName) {
+    for (final TxField field : mappingField) {
+      // field
+      // and + field
+      final CompositeAppender andAppender = new CompositeAppender(
+        new CustomJoinAppender("And", ",\n", AreaSequence.RESULT),
+        new ResultAppenderFactory.WrapDateCustomFieldAppender(field, AreaSequence.RESULT));
+      updateFactory.registerAppender(andAppender);
 
-            StatementBlock statementBlock = new StatementBlock();
-            statementBlock.setTagName(areaName);
-            statementBlock.setResultAppenderFactory(updateFactory);
-            statementBlock.setConditionAppenderFactory(new ConditionAppenderFactory(areaName, mappingField));
-            statementBlock.setReturnWrapper(anInt);
-            this.registerStatementBlock(statementBlock);
-            // 初始化扩展信息
-            this.initCustomArea(areaName, mappingField);
-        }
+      // update + field
+      final CompositeAppender areaAppender =
+        new CompositeAppender(
+          CustomAreaAppender.createCustomAreaAppender(areaName,
+            ResultAppenderFactory.RESULT,
+            AreaSequence.AREA,
+            AreaSequence.RESULT,
+            updateFactory),
+          new CustomFieldAppender(field, AreaSequence.RESULT)
+        );
+      updateFactory.registerAppender(areaAppender);
 
     }
+  }
 
-    private void initResultAppender(final ResultAppenderFactory updateFactory, final List<TxField> mappingField, final String areaName) {
-        for (final TxField field : mappingField) {
-            // field
-            // and + field
-            final CompositeAppender andAppender = new CompositeAppender(
-                new CustomJoinAppender("And", ",\n", AreaSequence.RESULT),
-                new ResultAppenderFactory.WrapDateCustomFieldAppender(field, AreaSequence.RESULT));
-            updateFactory.registerAppender(andAppender);
+  @Override
+  public String getTagName() {
+    return "update";
+  }
 
-            // update + field
-            final CompositeAppender areaAppender =
-                new CompositeAppender(
-                    CustomAreaAppender.createCustomAreaAppender(areaName,
-                        ResultAppenderFactory.RESULT,
-                        AreaSequence.AREA,
-                        AreaSequence.RESULT,
-                        updateFactory),
-                    new CustomFieldAppender(field, AreaSequence.RESULT)
-                );
-            updateFactory.registerAppender(areaAppender);
+  @Override
+  public void generateMapperXml(String id,
+                                LinkedList<SyntaxAppender> jpaList,
+                                PsiClass entityClass,
+                                PsiMethod psiMethod,
+                                String tableName,
+                                Generator mybatisXmlGenerator,
+                                ConditionFieldWrapper conditionFieldWrapper,
+                                List<TxField> resultFields) {
+    String mapperXml = super.generateXml(jpaList, entityClass, psiMethod, tableName, conditionFieldWrapper);
+    mybatisXmlGenerator.generateUpdate(id, mapperXml);
+  }
 
-        }
+  private static class UpdateResultAppenderFactory extends ResultAppenderFactory {
+
+    /**
+     * Instantiates a new Update result appender factory.
+     *
+     * @param areaPrefix the area prefix
+     */
+    public UpdateResultAppenderFactory(String areaPrefix) {
+      super(areaPrefix);
     }
 
     @Override
-    public String getTagName() {
-        return "update";
-    }
-
-    @Override
-    public void generateMapperXml(String id,
-                                  LinkedList<SyntaxAppender> jpaList,
+    public String getTemplateText(String tableName,
                                   PsiClass entityClass,
-                                  PsiMethod psiMethod,
-                                  String tableName,
-                                  Generator mybatisXmlGenerator,
-                                  ConditionFieldWrapper conditionFieldWrapper,
-                                  List<TxField> resultFields) {
-        String mapperXml = super.generateXml(jpaList, entityClass, psiMethod, tableName, conditionFieldWrapper);
-        mybatisXmlGenerator.generateUpdate(id, mapperXml);
+                                  LinkedList<TxParameter> parameters,
+                                  LinkedList<SyntaxAppenderWrapper> collector, ConditionFieldWrapper conditionFieldWrapper) {
+      String operatorXml = "update " + tableName + "\n set ";
+
+      return operatorXml + collector.stream().map(syntaxAppenderWrapper -> syntaxAppenderWrapper.getAppender()
+        .getTemplateText(tableName, entityClass, parameters, collector, conditionFieldWrapper)).collect(Collectors.joining());
     }
 
-    private static class UpdateResultAppenderFactory extends ResultAppenderFactory {
-
-        /**
-         * Instantiates a new Update result appender factory.
-         *
-         * @param areaPrefix the area prefix
-         */
-        public UpdateResultAppenderFactory(String areaPrefix) {
-            super(areaPrefix);
-        }
-
-        @Override
-        public String getTemplateText(String tableName,
-                                      PsiClass entityClass,
-                                      LinkedList<TxParameter> parameters,
-                                      LinkedList<SyntaxAppenderWrapper> collector, ConditionFieldWrapper conditionFieldWrapper) {
-            String operatorXml = "update " + tableName + "\n set ";
-
-            return operatorXml + collector.stream().map(syntaxAppenderWrapper -> syntaxAppenderWrapper.getAppender()
-                .getTemplateText(tableName, entityClass, parameters, collector, conditionFieldWrapper)).collect(Collectors.joining());
-        }
-
-        @Override
-        public List<TxParameter> getMxParameter(PsiClass entityClass, LinkedList<SyntaxAppenderWrapper> jpaStringList) {
-            return new SyntaxAppenderWrapper(null, jpaStringList).getMxParameter(entityClass);
-        }
+    @Override
+    public List<TxParameter> getMxParameter(PsiClass entityClass, LinkedList<SyntaxAppenderWrapper> jpaStringList) {
+      return new SyntaxAppenderWrapper(null, jpaStringList).getMxParameter(entityClass);
     }
+  }
 }

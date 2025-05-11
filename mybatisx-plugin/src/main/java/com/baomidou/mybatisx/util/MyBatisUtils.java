@@ -13,36 +13,36 @@ import com.intellij.psi.xml.XmlTag;
  */
 public final class MyBatisUtils {
 
-    public static final String NAMESPACE = "namespace";
+  public static final String NAMESPACE = "namespace";
 
-    /**
-     * The constant DOT_SEPARATOR.
-     */
-    public static final String DOT_SEPARATOR = String.valueOf(ReferenceSetBase.DOT_SEPARATOR);
-    /**
-     * The constant PRIORITY.
-     */
-    public static final double PRIORITY = 400.0;
+  /**
+   * The constant DOT_SEPARATOR.
+   */
+  public static final String DOT_SEPARATOR = String.valueOf(ReferenceSetBase.DOT_SEPARATOR);
+  /**
+   * The constant PRIORITY.
+   */
+  public static final double PRIORITY = 400.0;
 
-    private MyBatisUtils() {
-        throw new UnsupportedOperationException();
+  private MyBatisUtils() {
+    throw new UnsupportedOperationException();
+  }
+
+  public static boolean isCrudXmlTag(String tagName) {
+    return "select".equals(tagName) || "insert".equals(tagName) || "update".equals(tagName) || "delete".equals(tagName);
+  }
+
+  public static String getNamespace(XmlElement xmlElement) {
+    XmlFile containingFile = (XmlFile) xmlElement.getContainingFile();
+    // Mapper 标签
+    XmlDocument document = containingFile.getDocument();
+    if (document == null) {
+      return null;
     }
-
-    public static boolean isCrudXmlTag(String tagName) {
-        return "select".equals(tagName) || "insert".equals(tagName) || "update".equals(tagName) || "delete".equals(tagName);
+    XmlTag rootTag = containingFile.getDocument().getRootTag();
+    if (rootTag == null) {
+      return null;
     }
-
-    public static String getNamespace(XmlElement xmlElement) {
-        XmlFile containingFile = (XmlFile) xmlElement.getContainingFile();
-        // Mapper 标签
-        XmlDocument document = containingFile.getDocument();
-        if (document == null) {
-            return null;
-        }
-        XmlTag rootTag = containingFile.getDocument().getRootTag();
-        if (rootTag == null) {
-            return null;
-        }
-        return rootTag.getAttributeValue("namespace");
-    }
+    return rootTag.getAttributeValue("namespace");
+  }
 }

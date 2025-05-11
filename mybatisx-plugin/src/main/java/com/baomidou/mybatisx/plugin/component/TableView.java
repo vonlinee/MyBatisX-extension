@@ -13,33 +13,33 @@ import java.util.Collection;
  */
 public class TableView<T> extends com.intellij.ui.table.TableView<T> {
 
-    public TableView() {
-        super(new DefaultListTableModel<>());
-    }
+  public TableView() {
+    super(new DefaultListTableModel<>());
+  }
 
 
-    public final void addRow(T rowItem) {
-        TableViewModel<T> model = getTableViewModel();
-        if (model instanceof ListTableModel) {
-            ((ListTableModel<T>) model).addRow(rowItem);
-        }
+  public final void addRow(T rowItem) {
+    TableViewModel<T> model = getTableViewModel();
+    if (model instanceof ListTableModel) {
+      ((ListTableModel<T>) model).addRow(rowItem);
     }
+  }
 
-    public final void addRows(Collection<T> rowItems) {
-        TableViewModel<T> model = getTableViewModel();
-        if (model instanceof ListTableModel) {
-            ((ListTableModel<T>) model).addRows(rowItems);
-        }
+  public final void addRows(Collection<T> rowItems) {
+    TableViewModel<T> model = getTableViewModel();
+    if (model instanceof ListTableModel) {
+      ((ListTableModel<T>) model).addRows(rowItems);
     }
+  }
 
-    @Override
-    @NotNull
-    public DefaultListTableModel<T> getModel() {
-        return (DefaultListTableModel<T>) super.getListTableModel();
-    }
+  @Override
+  @NotNull
+  public DefaultListTableModel<T> getModel() {
+    return (DefaultListTableModel<T>) super.getListTableModel();
+  }
 
-    public final void clearAllRows() {
-        DefaultListTableModel<T> listTableModel = getModel();
-        listTableModel.removeAllRows();
-    }
+  public final void clearAllRows() {
+    DefaultListTableModel<T> listTableModel = getModel();
+    listTableModel.removeAllRows();
+  }
 }

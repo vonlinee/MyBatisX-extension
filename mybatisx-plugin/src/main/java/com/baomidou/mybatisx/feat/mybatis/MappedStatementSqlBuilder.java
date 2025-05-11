@@ -4,5 +4,5 @@ import org.apache.ibatis.mapping.MappedStatement;
 
 public interface MappedStatementSqlBuilder {
 
-    String build(MappedStatement mappedStatement, Object parameterObject);
+  String build(MappedStatement mappedStatement, Object parameterObject);
 }

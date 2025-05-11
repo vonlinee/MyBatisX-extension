@@ -10,12 +10,12 @@ import org.jetbrains.annotations.NotNull;
  */
 public abstract class LocateStrategy {
 
-    /**
-     * Apply boolean.
-     *
-     * @param clazz the clazz
-     * @return the boolean
-     */
-    public abstract boolean apply(@NotNull PsiClass clazz);
+  /**
+   * Apply boolean.
+   *
+   * @param clazz the clazz
+   * @return the boolean
+   */
+  public abstract boolean apply(@NotNull PsiClass clazz);
 
 }

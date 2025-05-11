@@ -8,38 +8,38 @@ import org.mybatisx.extension.agent.mybatis.XmlStatementParser;
 
 public class MyBatisMappedStatementAgentHandler<T> implements AgentHandler<T> {
 
-    private final XmlStatementParser parser;
+  private final XmlStatementParser parser;
 
-    public MyBatisMappedStatementAgentHandler() {
-        this.parser = new XmlStatementParser();
-    }
+  public MyBatisMappedStatementAgentHandler() {
+    this.parser = new XmlStatementParser();
+  }
 
-    @Override
-    public boolean validate() throws AgentException {
-        return true;
-    }
+  @Override
+  public boolean validate() throws AgentException {
+    return true;
+  }
 
-    /**
-     * com.baomidou.mybatisplus.core.MybatisConfiguration#addMappedStatement
-     * <p>
-     *
-     * @param command command
-     */
-    @Override
-    public void dispatch(AgentRequest<T> command) throws AgentException {
-        MapperHotSwapDTO dto = (MapperHotSwapDTO) command.getData();
-        MappedStatement mappedStatement;
-        try {
-            mappedStatement = parser.parse(MyBatisContext.getConfiguration(), dto.getMapperXmlPath(), dto.getNamespace(), dto.getContent());
-        } catch (Throwable throwable) {
-            throw new AgentException(String.format("failed to hotswap %s parse error", dto.getNamespace()), throwable);
-        }
-        if (mappedStatement != null) {
-            try {
-                MyBatisContext.replace(mappedStatement.getId(), mappedStatement);
-            } catch (Throwable throwable) {
-                throw new AgentException(String.format("failed to hotswap %s", mappedStatement.getId()), throwable);
-            }
-        }
+  /**
+   * com.baomidou.mybatisplus.core.MybatisConfiguration#addMappedStatement
+   * <p>
+   *
+   * @param command command
+   */
+  @Override
+  public void dispatch(AgentRequest<T> command) throws AgentException {
+    MapperHotSwapDTO dto = (MapperHotSwapDTO) command.getData();
+    MappedStatement mappedStatement;
+    try {
+      mappedStatement = parser.parse(MyBatisContext.getConfiguration(), dto.getMapperXmlPath(), dto.getNamespace(), dto.getContent());
+    } catch (Throwable throwable) {
+      throw new AgentException(String.format("failed to hotswap %s parse error", dto.getNamespace()), throwable);
     }
+    if (mappedStatement != null) {
+      try {
+        MyBatisContext.replace(mappedStatement.getId(), mappedStatement);
+      } catch (Throwable throwable) {
+        throw new AgentException(String.format("failed to hotswap %s", mappedStatement.getId()), throwable);
+      }
+    }
+  }
 }

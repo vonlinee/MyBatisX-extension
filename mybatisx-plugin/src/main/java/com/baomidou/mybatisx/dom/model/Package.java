@@ -12,13 +12,13 @@ import org.jetbrains.annotations.NotNull;
  */
 public interface Package extends DomElement {
 
-    /**
-     * Gets name.
-     *
-     * @return the name
-     */
-    @NotNull
-    @Attribute("name")
-    GenericAttributeValue<String> getName();
+  /**
+   * Gets name.
+   *
+   * @return the name
+   */
+  @NotNull
+  @Attribute("name")
+  GenericAttributeValue<String> getName();
 
 }

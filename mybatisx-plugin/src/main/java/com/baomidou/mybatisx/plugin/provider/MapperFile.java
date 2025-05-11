@@ -8,7 +8,7 @@ import lombok.Setter;
 @Getter
 public class MapperFile {
 
-    String filename;
+  String filename;
 
-    PsiElement element;
+  PsiElement element;
 }

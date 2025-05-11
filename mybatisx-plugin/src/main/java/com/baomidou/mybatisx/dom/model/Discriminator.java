@@ -13,13 +13,13 @@ import java.util.List;
  */
 public interface Discriminator extends DomElement {
 
-    /**
-     * Gets cases.
-     *
-     * @return the cases
-     */
-    @Required
-    @SubTagList("case")
-    List<Case> getCases();
+  /**
+   * Gets cases.
+   *
+   * @return the cases
+   */
+  @Required
+  @SubTagList("case")
+  List<Case> getCases();
 
 }

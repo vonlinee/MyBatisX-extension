@@ -13,8 +13,8 @@ import java.io.IOException;
  */
 public final class IgnoreDTDEntityResolver implements EntityResolver {
 
-    @Override
-    public InputSource resolveEntity(String arg0, String arg1) throws SAXException, IOException {
-        return new InputSource(new ByteArrayInputStream("<?xml version='1.0' encoding='UTF-8'?>".getBytes()));
-    }
+  @Override
+  public InputSource resolveEntity(String arg0, String arg1) throws SAXException, IOException {
+    return new InputSource(new ByteArrayInputStream("<?xml version='1.0' encoding='UTF-8'?>".getBytes()));
+  }
 }

@@ -6,14 +6,14 @@ import lombok.Setter;
 @Setter
 @Getter
 public class ConvertBean {
-    private String sqlType;
-    private String sqlTypeLength;
+  private String sqlType;
+  private String sqlTypeLength;
 
-    public ConvertBean() {
-    }
+  public ConvertBean() {
+  }
 
-    public ConvertBean(String sqlType, String sqlTypeLength) {
-        this.sqlType = sqlType;
-        this.sqlTypeLength = sqlTypeLength;
-    }
+  public ConvertBean(String sqlType, String sqlTypeLength) {
+    this.sqlType = sqlType;
+    this.sqlTypeLength = sqlTypeLength;
+  }
 }

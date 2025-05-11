@@ -10,6 +10,6 @@ import lombok.Setter;
 @Getter
 public class SqlColumn {
 
-    protected String tableName;
-    protected String columnName;
+  protected String tableName;
+  protected String columnName;
 }

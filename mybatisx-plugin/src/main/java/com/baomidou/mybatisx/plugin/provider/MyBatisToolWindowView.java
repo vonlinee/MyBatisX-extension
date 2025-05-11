@@ -6,20 +6,20 @@ import com.intellij.openapi.project.DumbAware;
 import com.intellij.openapi.project.Project;
 
 @State(
-    name = "MyBatisToolWindowView",
-    storages = {@Storage("$PRODUCT_WORKSPACE_FILE$")}
+  name = "MyBatisToolWindowView",
+  storages = {@Storage("$PRODUCT_WORKSPACE_FILE$")}
 )
 public class MyBatisToolWindowView extends MyBatisBaseView implements DumbAware {
 
-    public static final String NAME = "MyBatis";
+  public static final String NAME = "MyBatis";
 
-    public MyBatisToolWindowView(Project myProject) {
-        super(myProject);
-    }
+  public MyBatisToolWindowView(Project myProject) {
+    super(myProject);
+  }
 
-    @Override
-    public void dispose() {
+  @Override
+  public void dispose() {
 
-    }
+  }
 
 }

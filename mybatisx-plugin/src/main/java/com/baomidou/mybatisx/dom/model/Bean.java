@@ -13,13 +13,13 @@ import java.util.List;
  */
 public interface Bean extends DomElement {
 
-    /**
-     * Gets bean properties.
-     *
-     * @return the bean properties
-     */
-    @NotNull
-    @SubTagList("property")
-    List<BeanProperty> getBeanProperties();
+  /**
+   * Gets bean properties.
+   *
+   * @return the bean properties
+   */
+  @NotNull
+  @SubTagList("property")
+  List<BeanProperty> getBeanProperties();
 
 }

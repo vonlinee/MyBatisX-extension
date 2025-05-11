@@ -19,37 +19,37 @@ import java.util.Optional;
  */
 public class PsiFieldReferenceSetResolver extends ContextReferenceSetResolver<XmlAttributeValue, PsiField> {
 
-    /**
-     * Instantiates a new Psi field reference set resolver.
-     *
-     * @param from the form
-     */
-    protected PsiFieldReferenceSetResolver(XmlAttributeValue from) {
-        super(from);
-    }
+  /**
+   * Instantiates a new Psi field reference set resolver.
+   *
+   * @param from the form
+   */
+  protected PsiFieldReferenceSetResolver(XmlAttributeValue from) {
+    super(from);
+  }
 
-    @NotNull
-    @Override
-    public String getText() {
-        return getElement().getValue();
-    }
+  @NotNull
+  @Override
+  public String getText() {
+    return getElement().getValue();
+  }
 
-    @Override
-    public Optional<PsiField> resolve(PsiField current, String text) {
-        PsiType type = current.getType();
-        if (type instanceof PsiClassReferenceType && !((PsiClassReferenceType) type).hasParameters()) {
-            PsiClass clazz = ((PsiClassReferenceType) type).resolve();
-            if (null != clazz) {
-                return JavaUtils.findSettablePsiField(clazz, text);
-            }
-        }
-        return Optional.empty();
+  @Override
+  public Optional<PsiField> resolve(PsiField current, String text) {
+    PsiType type = current.getType();
+    if (type instanceof PsiClassReferenceType && !((PsiClassReferenceType) type).hasParameters()) {
+      PsiClass clazz = ((PsiClassReferenceType) type).resolve();
+      if (null != clazz) {
+        return JavaUtils.findSettablePsiField(clazz, text);
+      }
     }
+    return Optional.empty();
+  }
 
-    @Override
-    public @NotNull Optional<PsiField> getStartElement(@Nullable String firstText) {
-        PropertySetterFind propertySetterFind = new PropertySetterFind();
-        return propertySetterFind.getStartElement(firstText, getElement());
-    }
+  @Override
+  public @NotNull Optional<PsiField> getStartElement(@Nullable String firstText) {
+    PropertySetterFind propertySetterFind = new PropertySetterFind();
+    return propertySetterFind.getStartElement(firstText, getElement());
+  }
 
 }

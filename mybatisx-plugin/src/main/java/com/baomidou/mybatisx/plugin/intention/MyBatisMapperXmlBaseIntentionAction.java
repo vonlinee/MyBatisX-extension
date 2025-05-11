@@ -13,25 +13,25 @@ import org.jetbrains.annotations.NotNull;
  */
 public abstract class MyBatisMapperXmlBaseIntentionAction extends PsiElementBaseIntentionAction {
 
-    public boolean isMyBatisMapperXmlFile(PsiFile psiFile) {
-        if (psiFile instanceof XmlFile) {
-            XmlFile xmlFile = (XmlFile) psiFile;
-            XmlDocument document = xmlFile.getDocument();
-            if (document == null) {
-                return false;
-            }
-            XmlTag rootTag = document.getRootTag();
-            if (rootTag == null) {
-                return false;
-            }
-            return "mapper".equals(rootTag.getName());
-        }
+  public boolean isMyBatisMapperXmlFile(PsiFile psiFile) {
+    if (psiFile instanceof XmlFile) {
+      XmlFile xmlFile = (XmlFile) psiFile;
+      XmlDocument document = xmlFile.getDocument();
+      if (document == null) {
         return false;
+      }
+      XmlTag rootTag = document.getRootTag();
+      if (rootTag == null) {
+        return false;
+      }
+      return "mapper".equals(rootTag.getName());
     }
+    return false;
+  }
 
-    @Override
-    public @NotNull
-    @IntentionFamilyName String getFamilyName() {
-        return getText();
-    }
+  @Override
+  public @NotNull
+  @IntentionFamilyName String getFamilyName() {
+    return getText();
+  }
 }

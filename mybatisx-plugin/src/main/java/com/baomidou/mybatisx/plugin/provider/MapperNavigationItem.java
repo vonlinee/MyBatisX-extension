@@ -11,17 +11,17 @@ import java.awt.event.MouseEvent;
 @Setter
 @Getter
 public class MapperNavigationItem {
-    private Project project;
-    private String place;
-    private String configName;
-    private PsiElement element;
-    private MouseEvent originEvent;
+  private Project project;
+  private String place;
+  private String configName;
+  private PsiElement element;
+  private MouseEvent originEvent;
 
-    public MapperNavigationItem(String place, @Nullable PsiElement element) {
-        this.place = place;
-        this.element = element;
-        if (element != null) {
-            this.project = element.getProject();
-        }
+  public MapperNavigationItem(String place, @Nullable PsiElement element) {
+    this.place = place;
+    this.element = element;
+    if (element != null) {
+      this.project = element.getProject();
     }
+  }
 }

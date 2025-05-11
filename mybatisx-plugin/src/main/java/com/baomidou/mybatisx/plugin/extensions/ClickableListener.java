@@ -7,8 +7,8 @@ package com.baomidou.mybatisx.plugin.extensions;
  */
 public interface ClickableListener extends ExecutableListener {
 
-    /**
-     * Clicked.
-     */
-    void clicked();
+  /**
+   * Clicked.
+   */
+  void clicked();
 }

@@ -10,28 +10,28 @@ import java.awt.*;
  * 然后，您必须为树设置默认渲染器，并为表设置默认编辑器。
  */
 public class MyTreeTable extends JTable {
-    private MyTreeTableCellRenderer tree;
+  private MyTreeTableCellRenderer tree;
 
-    public MyTreeTable(MyAbstractTreeTableModel treeTableModel) {
-        super();
-        tree = new MyTreeTableCellRenderer(this, treeTableModel);
+  public MyTreeTable(MyAbstractTreeTableModel treeTableModel) {
+    super();
+    tree = new MyTreeTableCellRenderer(this, treeTableModel);
 
-        super.setModel(new MyTreeTableModelAdapter(treeTableModel, tree));
+    super.setModel(new MyTreeTableModelAdapter(treeTableModel, tree));
 
-        MyTreeTableSelectionModel selectionModel = new MyTreeTableSelectionModel();
-        tree.setSelectionModel(selectionModel);
-        setSelectionModel(selectionModel.getListSelectionModel());
+    MyTreeTableSelectionModel selectionModel = new MyTreeTableSelectionModel();
+    tree.setSelectionModel(selectionModel);
+    setSelectionModel(selectionModel.getListSelectionModel());
 
 
-        // Renderer fuer den Tree.
-        setDefaultRenderer(MyTreeTableModel.class, tree);
-        // Editor fuer die TreeTable
-        setDefaultEditor(MyTreeTableModel.class, new MyTreeTableCellEditor(tree, this));
+    // Renderer fuer den Tree.
+    setDefaultRenderer(MyTreeTableModel.class, tree);
+    // Editor fuer die TreeTable
+    setDefaultEditor(MyTreeTableModel.class, new MyTreeTableCellEditor(tree, this));
 
-        // Kein Grid anzeigen.
-        setShowGrid(false);
+    // Kein Grid anzeigen.
+    setShowGrid(false);
 
-        // Keine Abstaende.
-        setIntercellSpacing(new Dimension(0, 0));
-    }
+    // Keine Abstaende.
+    setIntercellSpacing(new Dimension(0, 0));
+  }
 }

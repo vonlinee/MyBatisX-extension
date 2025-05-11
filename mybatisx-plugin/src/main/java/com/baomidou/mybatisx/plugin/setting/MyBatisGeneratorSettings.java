@@ -15,19 +15,19 @@ import org.jetbrains.annotations.NotNull;
 @State(name = "GeneratorSettings", storages = @Storage(value = MyBatisXPlugin.PERSISTENT_STATE_FILE))
 public final class MyBatisGeneratorSettings implements PersistentStateComponent<MyBatisGeneratorSettings.State> {
 
-    private final State state = new State();
+  private final State state = new State();
 
-    @Override
-    public MyBatisGeneratorSettings.@NotNull State getState() {
-        return this.state;
-    }
+  @Override
+  public MyBatisGeneratorSettings.@NotNull State getState() {
+    return this.state;
+  }
 
-    @Override
-    public void loadState(@NotNull State state) {
-        XmlSerializerUtil.copyBean(state, this.state);
-    }
+  @Override
+  public void loadState(@NotNull State state) {
+    XmlSerializerUtil.copyBean(state, this.state);
+  }
 
-    public static class State {
+  public static class State {
 
-    }
+  }
 }

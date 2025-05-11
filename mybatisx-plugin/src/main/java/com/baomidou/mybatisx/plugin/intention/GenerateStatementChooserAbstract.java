@@ -15,22 +15,22 @@ import org.jetbrains.annotations.NotNull;
  */
 public class GenerateStatementChooserAbstract extends AbstractJavaFileIntentionChooser {
 
-    /**
-     * The constant INSTANCE.
-     */
-    public static final AbstractJavaFileIntentionChooser INSTANCE = new GenerateStatementChooserAbstract();
+  /**
+   * The constant INSTANCE.
+   */
+  public static final AbstractJavaFileIntentionChooser INSTANCE = new GenerateStatementChooserAbstract();
 
-    @Override
-    public boolean isAvailable(@NotNull PsiElement element) {
-        if (!isPositionOfMethodDeclaration(element)) {
-            return false;
-        }
-        PsiMethod method = PsiTreeUtil.getParentOfType(element, PsiMethod.class);
-        PsiClass clazz = PsiTreeUtil.getParentOfType(element, PsiClass.class);
-        //  不应该判断当前模块是不是已经有了这个mapper. 因为无法判断
-        // !isTargetPresentInXml(method) &&
-        return null != method && null != clazz &&
-               !JavaUtils.isAnyAnnotationPresent(method, Annotation.STATEMENT_SYMMETRIES) &&
-               isTargetPresentInXml(clazz);
+  @Override
+  public boolean isAvailable(@NotNull PsiElement element) {
+    if (!isPositionOfMethodDeclaration(element)) {
+      return false;
     }
+    PsiMethod method = PsiTreeUtil.getParentOfType(element, PsiMethod.class);
+    PsiClass clazz = PsiTreeUtil.getParentOfType(element, PsiClass.class);
+    //  不应该判断当前模块是不是已经有了这个mapper. 因为无法判断
+    // !isTargetPresentInXml(method) &&
+    return null != method && null != clazz &&
+           !JavaUtils.isAnyAnnotationPresent(method, Annotation.STATEMENT_SYMMETRIES) &&
+           isTargetPresentInXml(clazz);
+  }
 }

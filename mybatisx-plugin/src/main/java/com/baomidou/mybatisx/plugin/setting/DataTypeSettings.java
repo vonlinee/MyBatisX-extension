@@ -17,27 +17,27 @@ import org.jetbrains.annotations.NotNull;
 @State(name = "DataTypeSettings", storages = {@Storage(PluginUtils.PLUGIN_NAME + "/datatype-system.xml")})
 public final class DataTypeSettings implements PersistentStateComponent<DataTypeSystem> {
 
-    private final DataTypeSystem typeSystem = new DataTypeSystem();
+  private final DataTypeSystem typeSystem = new DataTypeSystem();
 
-    public static DataTypeSettings getInstance() {
-        return IntellijSDK.getService(DataTypeSettings.class);
-    }
+  public static DataTypeSettings getInstance() {
+    return IntellijSDK.getService(DataTypeSettings.class);
+  }
 
-    @Override
-    @NotNull
-    public DataTypeSystem getState() {
-        return typeSystem;
-    }
+  @Override
+  @NotNull
+  public DataTypeSystem getState() {
+    return typeSystem;
+  }
 
-    @Override
-    public void loadState(@NotNull DataTypeSystem state) {
-        XmlSerializerUtil.copyBean(state, this.typeSystem);
-    }
+  @Override
+  public void loadState(@NotNull DataTypeSystem state) {
+    XmlSerializerUtil.copyBean(state, this.typeSystem);
+  }
 
-    @Override
-    public void noStateLoaded() {
-        if (this.typeSystem.isEmpty()) {
-            this.typeSystem.initBuiltinTypeSystem();
-        }
+  @Override
+  public void noStateLoaded() {
+    if (this.typeSystem.isEmpty()) {
+      this.typeSystem.initBuiltinTypeSystem();
     }
+  }
 }

@@ -5,18 +5,18 @@ import java.util.List;
 
 public class ComboBoxCellEditor extends com.intellij.util.ui.ComboBoxCellEditor {
 
-    List<String> items;
+  List<String> items;
 
-    public ComboBoxCellEditor(List<String> items) {
-        this.items = items;
-    }
+  public ComboBoxCellEditor(List<String> items) {
+    this.items = items;
+  }
 
-    @Override
-    protected List<String> getComboBoxItems() {
-        return items;
-    }
+  @Override
+  protected List<String> getComboBoxItems() {
+    return items;
+  }
 
-    public JComboBox<?> getComboBox() {
-        return (JComboBox<?>) this.getComponent();
-    }
+  public JComboBox<?> getComboBox() {
+    return (JComboBox<?>) this.getComponent();
+  }
 }

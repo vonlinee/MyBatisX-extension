@@ -13,21 +13,21 @@ import java.util.List;
  */
 public class DataTypeSet extends HashSet<DataType> {
 
-    @Override
-    public boolean add(DataType s) {
-        if (StringUtils.isEmpty(s.getIdentifier())) {
-            return false;
-        }
-        return super.add(s);
+  @Override
+  public boolean add(DataType s) {
+    if (StringUtils.isEmpty(s.getIdentifier())) {
+      return false;
     }
+    return super.add(s);
+  }
 
-    @Override
-    public boolean addAll(@NotNull Collection<? extends DataType> c) {
-        return super.addAll(c);
-    }
+  @Override
+  public boolean addAll(@NotNull Collection<? extends DataType> c) {
+    return super.addAll(c);
+  }
 
-    @SafeVarargs
-    public final <T extends DataType> boolean addAll(T... dataTypeIds) {
-        return super.addAll(List.of(dataTypeIds));
-    }
+  @SafeVarargs
+  public final <T extends DataType> boolean addAll(T... dataTypeIds) {
+    return super.addAll(List.of(dataTypeIds));
+  }
 }

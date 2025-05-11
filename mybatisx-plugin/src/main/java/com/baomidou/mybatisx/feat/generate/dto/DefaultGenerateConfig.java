@@ -12,60 +12,60 @@ import java.util.List;
  * @date : 2021/7/2
  */
 public class DefaultGenerateConfig extends GenerateConfig {
-    private final TemplateContext templateContext;
+  private final TemplateContext templateContext;
 
-    public DefaultGenerateConfig(TemplateContext templateContext) {
-        this.templateContext = templateContext;
-    }
+  public DefaultGenerateConfig(TemplateContext templateContext) {
+    this.templateContext = templateContext;
+  }
 
-    @Override
-    public String getModuleName() {
-        return templateContext.getModuleName();
-    }
+  @Override
+  public String getModuleName() {
+    return templateContext.getModuleName();
+  }
 
-    @Override
-    public String getAnnotationType() {
-        return templateContext.getAnnotationType();
-    }
+  @Override
+  public String getAnnotationType() {
+    return templateContext.getAnnotationType();
+  }
 
-    @Override
-    public List<ModuleInfoGo> getModuleUIInfoList() {
-        return Collections.emptyList();
-    }
+  @Override
+  public List<ModuleInfoGo> getModuleUIInfoList() {
+    return Collections.emptyList();
+  }
 
-    @Override
-    public boolean isNeedsComment() {
-        return true;
-    }
+  @Override
+  public boolean isNeedsComment() {
+    return true;
+  }
 
-    @Override
-    public boolean isNeedToStringHashcodeEquals() {
-        return true;
-    }
+  @Override
+  public boolean isNeedToStringHashcodeEquals() {
+    return true;
+  }
 
-    @Override
-    public String getBasePackage() {
-        return "generator";
-    }
+  @Override
+  public String getBasePackage() {
+    return "generator";
+  }
 
-    @Override
-    public String getRelativePackage() {
-        return "domain";
-    }
+  @Override
+  public String getRelativePackage() {
+    return "domain";
+  }
 
-    @Override
-    public String getBasePath() {
-        return "src/main/java";
-    }
+  @Override
+  public String getBasePath() {
+    return "src/main/java";
+  }
 
 
-    @Override
-    public String getEncoding() {
-        return "UTF-8";
-    }
+  @Override
+  public String getEncoding() {
+    return "UTF-8";
+  }
 
-    @Override
-    public String getClassNameStrategy() {
-        return DefaultNamingStrategy.CAMEL.name();
-    }
+  @Override
+  public String getClassNameStrategy() {
+    return DefaultNamingStrategy.CAMEL.name();
+  }
 }

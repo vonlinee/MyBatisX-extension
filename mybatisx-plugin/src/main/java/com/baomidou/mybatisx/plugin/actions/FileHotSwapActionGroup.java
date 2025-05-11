@@ -12,12 +12,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class FileHotSwapActionGroup extends ActionGroup {
-    @Override
-    public AnAction @NotNull [] getChildren(@Nullable AnActionEvent e) {
-        List<AnAction> actions = new ArrayList<>();
-        for (VMInfo process : VMContext.values()) {
-            actions.add(new FileHotSwapAction(process.getProcessName()));
-        }
-        return actions.toArray(new AnAction[0]);
+  @Override
+  public AnAction @NotNull [] getChildren(@Nullable AnActionEvent e) {
+    List<AnAction> actions = new ArrayList<>();
+    for (VMInfo process : VMContext.values()) {
+      actions.add(new FileHotSwapAction(process.getProcessName()));
     }
+    return actions.toArray(new AnAction[0]);
+  }
 }

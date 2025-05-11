@@ -10,14 +10,14 @@ import com.intellij.ui.treeStructure.treetable.TreeTableModel;
  */
 public class JBTreeTableView<T> extends TreeTable {
 
-    protected TreeTableModel treeTableModel;
+  protected TreeTableModel treeTableModel;
 
-    public JBTreeTableView(TreeTableModel treeTableModel) {
-        super(treeTableModel);
-        this.treeTableModel = treeTableModel;
-    }
+  public JBTreeTableView(TreeTableModel treeTableModel) {
+    super(treeTableModel);
+    this.treeTableModel = treeTableModel;
+  }
 
-    public final TreeTableModel getTreeTableModel() {
-        return treeTableModel;
-    }
+  public final TreeTableModel getTreeTableModel() {
+    return treeTableModel;
+  }
 }

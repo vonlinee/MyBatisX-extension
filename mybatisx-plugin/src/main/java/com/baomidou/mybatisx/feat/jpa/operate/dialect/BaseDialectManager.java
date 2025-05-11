@@ -27,129 +27,129 @@ import java.util.List;
  * 基础方言管理器
  */
 public class BaseDialectManager implements AreaOperateManager {
-    private List<AreaOperateManager> typeManagers = new ArrayList<>();
+  private List<AreaOperateManager> typeManagers = new ArrayList<>();
 
 
-    /**
-     * Init.
-     *
-     * @param mappingField the mapping field
-     * @param entityClass  the entity class
-     */
-    protected void init(final List<TxField> mappingField, PsiClass entityClass) {
-        this.registerManagers(new SelectOperator(mappingField, entityClass));
-        this.registerManagers(new CountOperator(mappingField, entityClass));
-        this.registerManagers(new InsertOperator(mappingField));
-        this.registerManagers(new UpdateOperator(mappingField, entityClass));
-        this.registerManagers(new DeleteOperator(mappingField));
+  /**
+   * Init.
+   *
+   * @param mappingField the mapping field
+   * @param entityClass  the entity class
+   */
+  protected void init(final List<TxField> mappingField, PsiClass entityClass) {
+    this.registerManagers(new SelectOperator(mappingField, entityClass));
+    this.registerManagers(new CountOperator(mappingField, entityClass));
+    this.registerManagers(new InsertOperator(mappingField));
+    this.registerManagers(new UpdateOperator(mappingField, entityClass));
+    this.registerManagers(new DeleteOperator(mappingField));
+  }
+
+
+  /**
+   * Register managers.
+   *
+   * @param areaOperateManager the area operate manager
+   */
+  protected void registerManagers(AreaOperateManager areaOperateManager) {
+    this.typeManagers.add(areaOperateManager);
+  }
+
+  @NotNull
+  @Override
+  public LinkedList<SyntaxAppender> splitAppenderByText(final String splitParam) {
+    final LinkedList<SyntaxAppender> results = new LinkedList<>();
+    for (final AreaOperateManager typeManager : this.typeManagers) {
+      results.addAll(typeManager.splitAppenderByText(splitParam));
     }
+    return results;
+  }
 
 
-    /**
-     * Register managers.
-     *
-     * @param areaOperateManager the area operate manager
-     */
-    protected void registerManagers(AreaOperateManager areaOperateManager) {
-        this.typeManagers.add(areaOperateManager);
+  @Override
+  public List<String> getCompletionContent(final LinkedList<SyntaxAppender> splitList) {
+    final List<String> results = new ArrayList<>();
+    for (final AreaOperateManager typeManager : this.typeManagers) {
+      if (!splitList.isEmpty()) {
+        results.addAll(typeManager.getCompletionContent(splitList));
+      }
     }
+    return results;
+  }
 
-    @NotNull
-    @Override
-    public LinkedList<SyntaxAppender> splitAppenderByText(final String splitParam) {
-        final LinkedList<SyntaxAppender> results = new LinkedList<>();
-        for (final AreaOperateManager typeManager : this.typeManagers) {
-            results.addAll(typeManager.splitAppenderByText(splitParam));
-        }
-        return results;
+  @Override
+  public List<String> getCompletionContent() {
+    final List<String> results = new ArrayList<>();
+    for (final AreaOperateManager typeManager : this.typeManagers) {
+      results.addAll(typeManager.getCompletionContent());
     }
+    return results;
+  }
 
-
-    @Override
-    public List<String> getCompletionContent(final LinkedList<SyntaxAppender> splitList) {
-        final List<String> results = new ArrayList<>();
-        for (final AreaOperateManager typeManager : this.typeManagers) {
-            if (!splitList.isEmpty()) {
-                results.addAll(typeManager.getCompletionContent(splitList));
-            }
-        }
-        return results;
+  @Override
+  public List<TxParameter> getParameters(PsiClass entityClass,
+                                         LinkedList<SyntaxAppender> jpaStringList) {
+    if (jpaStringList.isEmpty() || jpaStringList.get(0).getType() != AppendTypeEnum.AREA) {
+      return Collections.emptyList();
     }
+    SyntaxAppender syntaxAppender = jpaStringList.peek();
 
-    @Override
-    public List<String> getCompletionContent() {
-        final List<String> results = new ArrayList<>();
-        for (final AreaOperateManager typeManager : this.typeManagers) {
-            results.addAll(typeManager.getCompletionContent());
-        }
-        return results;
+    final List<TxParameter> results = new ArrayList<>();
+    for (final AreaOperateManager typeManager : this.typeManagers) {
+      if (typeManager.support(syntaxAppender.getText())) {
+        results.addAll(typeManager.getParameters(entityClass, jpaStringList));
+      }
     }
+    return results;
+  }
 
-    @Override
-    public List<TxParameter> getParameters(PsiClass entityClass,
-                                           LinkedList<SyntaxAppender> jpaStringList) {
-        if (jpaStringList.isEmpty() || jpaStringList.get(0).getType() != AppendTypeEnum.AREA) {
-            return Collections.emptyList();
-        }
-        SyntaxAppender syntaxAppender = jpaStringList.peek();
-
-        final List<TxParameter> results = new ArrayList<>();
-        for (final AreaOperateManager typeManager : this.typeManagers) {
-            if (typeManager.support(syntaxAppender.getText())) {
-                results.addAll(typeManager.getParameters(entityClass, jpaStringList));
-            }
-        }
-        return results;
+  @Override
+  public TypeDescriptor getReturnWrapper(String text, PsiClass entityClass, @NotNull LinkedList<SyntaxAppender> linkedList) {
+    if (linkedList.isEmpty() || linkedList.get(0).getType() != AppendTypeEnum.AREA) {
+      return null;
     }
+    SyntaxAppender syntaxAppender = linkedList.peek();
 
-    @Override
-    public TypeDescriptor getReturnWrapper(String text, PsiClass entityClass, @NotNull LinkedList<SyntaxAppender> linkedList) {
-        if (linkedList.isEmpty() || linkedList.get(0).getType() != AppendTypeEnum.AREA) {
-            return null;
-        }
-        SyntaxAppender syntaxAppender = linkedList.peek();
-
-        for (AreaOperateManager typeManager : this.typeManagers) {
-            if (typeManager.support(syntaxAppender.getText())) {
-                return typeManager.getReturnWrapper(syntaxAppender.getText(), entityClass, linkedList);
-            }
-        }
-        return null;
+    for (AreaOperateManager typeManager : this.typeManagers) {
+      if (typeManager.support(syntaxAppender.getText())) {
+        return typeManager.getReturnWrapper(syntaxAppender.getText(), entityClass, linkedList);
+      }
     }
+    return null;
+  }
 
-    @Override
-    public boolean support(String operatorText) {
-        return true;
+  @Override
+  public boolean support(String operatorText) {
+    return true;
+  }
+
+  @Override
+  public void generateMapperXml(String id,
+                                LinkedList<SyntaxAppender> jpaList,
+                                PsiClass entityClass,
+                                PsiMethod psiMethod,
+                                String tableNameByEntityName,
+                                Generator mybatisXmlGenerator,
+                                ConditionFieldWrapper conditionFieldWrapper,
+                                List<TxField> resultFields) {
+    if (jpaList.isEmpty() || jpaList.get(0).getType() != AppendTypeEnum.AREA) {
+      return;
     }
+    SyntaxAppender syntaxAppender = jpaList.peek();
 
-    @Override
-    public void generateMapperXml(String id,
-                                  LinkedList<SyntaxAppender> jpaList,
-                                  PsiClass entityClass,
-                                  PsiMethod psiMethod,
-                                  String tableNameByEntityName,
-                                  Generator mybatisXmlGenerator,
-                                  ConditionFieldWrapper conditionFieldWrapper,
-                                  List<TxField> resultFields) {
-        if (jpaList.isEmpty() || jpaList.get(0).getType() != AppendTypeEnum.AREA) {
-            return;
-        }
-        SyntaxAppender syntaxAppender = jpaList.peek();
-
-        for (AreaOperateManager typeManager : this.typeManagers) {
-            if (typeManager.support(syntaxAppender.getText())) {
-                typeManager.generateMapperXml(id,
-                    jpaList,
-                    entityClass,
-                    psiMethod,
-                    tableNameByEntityName,
-                    mybatisXmlGenerator,
-                    conditionFieldWrapper,
-                    resultFields);
-                break;
-            }
-        }
+    for (AreaOperateManager typeManager : this.typeManagers) {
+      if (typeManager.support(syntaxAppender.getText())) {
+        typeManager.generateMapperXml(id,
+          jpaList,
+          entityClass,
+          psiMethod,
+          tableNameByEntityName,
+          mybatisXmlGenerator,
+          conditionFieldWrapper,
+          resultFields);
+        break;
+      }
     }
+  }
 
 
 }

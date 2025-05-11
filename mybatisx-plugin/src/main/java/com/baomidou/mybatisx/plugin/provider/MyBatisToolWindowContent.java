@@ -5,8 +5,8 @@ import com.intellij.spring.toolWindow.SpringToolWindowContentProvider;
 import org.jetbrains.annotations.Nullable;
 
 public class MyBatisToolWindowContent extends BaseKeyedLazyInstance<SpringToolWindowContentProvider> {
-    @Override
-    protected @Nullable String getImplementationClassName() {
-        return null;
-    }
+  @Override
+  protected @Nullable String getImplementationClassName() {
+    return null;
+  }
 }

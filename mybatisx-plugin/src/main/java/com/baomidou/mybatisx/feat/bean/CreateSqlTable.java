@@ -13,9 +13,9 @@ import java.util.Map;
 @Setter
 public class CreateSqlTable extends SqlTable {
 
-    private String name;
-    private String comment;
-    private List<CreateSqlColumn> columns;
-    private List<IndexInfo> indexes;
-    private List<Map.Entry<String, String>> options;
+  private String name;
+  private String comment;
+  private List<CreateSqlColumn> columns;
+  private List<IndexInfo> indexes;
+  private List<Map.Entry<String, String>> options;
 }

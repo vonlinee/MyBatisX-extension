@@ -12,11 +12,11 @@ import org.jetbrains.annotations.NotNull;
  */
 public class HashMarkTipInsertHandler implements InsertHandler<LookupElement> {
 
-    @Override
-    public void handleInsert(@NotNull InsertionContext context, @NotNull LookupElement item) {
-        context.setLaterRunnable(() -> {
-            CodeCompletionHandlerBase handler = CodeCompletionHandlerBase.createHandler(CompletionType.BASIC);
-            handler.invokeCompletion(context.getProject(), context.getEditor(), 1, true);
-        });
-    }
+  @Override
+  public void handleInsert(@NotNull InsertionContext context, @NotNull LookupElement item) {
+    context.setLaterRunnable(() -> {
+      CodeCompletionHandlerBase handler = CodeCompletionHandlerBase.createHandler(CompletionType.BASIC);
+      handler.invokeCompletion(context.getProject(), context.getEditor(), 1, true);
+    });
+  }
 }

@@ -10,15 +10,15 @@ import javax.swing.*;
 @Getter
 @Setter
 public class MyBatisGeneratorSettingPanel {
-    private JPanel rootPanel;
-    private JTextField tableText;
-    private JTextField idText;
-    private JTextField commendText;
-    private JTextField tablePropertyText;
+  private JPanel rootPanel;
+  private JTextField tableText;
+  private JTextField idText;
+  private JTextField commendText;
+  private JTextField tablePropertyText;
 
-    private OtherSetting.State properties;
+  private OtherSetting.State properties;
 
-    public MyBatisGeneratorSettingPanel() {
-        this.properties = IntellijSDK.getService(OtherSetting.class).getProperties();
-    }
+  public MyBatisGeneratorSettingPanel() {
+    this.properties = IntellijSDK.getService(OtherSetting.class).getProperties();
+  }
 }

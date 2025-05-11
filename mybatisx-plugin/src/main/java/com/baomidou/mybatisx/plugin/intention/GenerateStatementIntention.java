@@ -17,23 +17,23 @@ import org.jetbrains.annotations.NotNull;
  */
 public class GenerateStatementIntention extends GenericIntention {
 
-    /**
-     * Instantiates a new Generate statement intention.
-     */
-    public GenerateStatementIntention() {
-        super(GenerateStatementChooserAbstract.INSTANCE);
-    }
+  /**
+   * Instantiates a new Generate statement intention.
+   */
+  public GenerateStatementIntention() {
+    super(GenerateStatementChooserAbstract.INSTANCE);
+  }
 
-    @NotNull
-    @Override
-    public String getText() {
-        return "[MybatisX] Generate new statement";
-    }
+  @NotNull
+  @Override
+  public String getText() {
+    return "[MybatisX] Generate new statement";
+  }
 
-    @Override
-    public void invoke(@NotNull final Project project, Editor editor, PsiFile file) throws IncorrectOperationException {
-        PsiElement element = file.findElementAt(editor.getCaretModel().getOffset());
-        AbstractStatementGenerator.applyGenerate(PsiTreeUtil.getParentOfType(element, PsiMethod.class), project);
-    }
+  @Override
+  public void invoke(@NotNull final Project project, Editor editor, PsiFile file) throws IncorrectOperationException {
+    PsiElement element = file.findElementAt(editor.getCaretModel().getOffset());
+    AbstractStatementGenerator.applyGenerate(PsiTreeUtil.getParentOfType(element, PsiMethod.class), project);
+  }
 
 }

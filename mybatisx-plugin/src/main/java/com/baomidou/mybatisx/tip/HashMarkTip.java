@@ -4,7 +4,7 @@ import com.baomidou.mybatisx.dom.model.Mapper;
 import com.intellij.codeInsight.completion.CompletionResultSet;
 
 public interface HashMarkTip {
-    String getName();
+  String getName();
 
-    void tipValue(CompletionResultSet completionResultSet, Mapper mapper);
+  void tipValue(CompletionResultSet completionResultSet, Mapper mapper);
 }

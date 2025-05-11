@@ -6,11 +6,11 @@ import javax.swing.*;
 
 public interface BeanToolHandler {
 
-    JComponent getRoot();
+  JComponent getRoot();
 
-    String getId();
+  String getId();
 
-    String getText();
+  String getText();
 
-    void accept(BeanInfo bean);
+  void accept(BeanInfo bean);
 }

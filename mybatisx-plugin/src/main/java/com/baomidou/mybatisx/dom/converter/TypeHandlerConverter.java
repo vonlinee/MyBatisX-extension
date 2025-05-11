@@ -19,45 +19,45 @@ import java.util.Optional;
  * @author ls9527
  */
 public class TypeHandlerConverter extends ConverterAdaptor<PsiClass>
-        implements CustomReferenceConverter<PsiClass> {
+  implements CustomReferenceConverter<PsiClass> {
 
-    private static final String ORG_APACHE_IBATIS_TYPE_TYPE_HANDLER = "org.apache.ibatis.type.TypeHandler";
+  private static final String ORG_APACHE_IBATIS_TYPE_TYPE_HANDLER = "org.apache.ibatis.type.TypeHandler";
 
-    final PsiClassConverter psiClassConverter = new PsiClassConverter();
+  final PsiClassConverter psiClassConverter = new PsiClassConverter();
 
-    @Override
-    public String getErrorMessage(@Nullable String classStr, ConvertContext context) {
-        final PsiClass psiClass = psiClassConverter.fromString(classStr, context);
-        if (psiClass != null && checkIsTypeHandler(psiClass)) {
-            return "the class is not a TypeHandler, class: " + classStr + " ";
-        }
-        return super.getErrorMessage(classStr, context);
+  @Override
+  public String getErrorMessage(@Nullable String classStr, ConvertContext context) {
+    final PsiClass psiClass = psiClassConverter.fromString(classStr, context);
+    if (psiClass != null && checkIsTypeHandler(psiClass)) {
+      return "the class is not a TypeHandler, class: " + classStr + " ";
     }
+    return super.getErrorMessage(classStr, context);
+  }
 
-    @Nullable
-    @Override
-    public PsiClass fromString(@Nullable String classStr, ConvertContext context) {
-        final PsiClass psiClass = psiClassConverter.fromString(classStr, context);
-        if (psiClass != null && checkIsTypeHandler(psiClass)) {
-            return null;
-        }
-        return psiClassConverter.fromString(classStr, context);
+  @Nullable
+  @Override
+  public PsiClass fromString(@Nullable String classStr, ConvertContext context) {
+    final PsiClass psiClass = psiClassConverter.fromString(classStr, context);
+    if (psiClass != null && checkIsTypeHandler(psiClass)) {
+      return null;
     }
+    return psiClassConverter.fromString(classStr, context);
+  }
 
-    @NotNull
-    @Override
-    public PsiReference @NotNull [] createReferences(GenericDomValue<PsiClass> value, PsiElement element, ConvertContext context) {
-        return psiClassConverter.createReferences(value, element, context);
-    }
+  @NotNull
+  @Override
+  public PsiReference @NotNull [] createReferences(GenericDomValue<PsiClass> value, PsiElement element, ConvertContext context) {
+    return psiClassConverter.createReferences(value, element, context);
+  }
 
-    private boolean checkIsTypeHandler(PsiClass psiClass) {
-        Optional<PsiClass> typeHandlerClassOptional = JavaUtils.findClass(psiClass.getProject(),
-                ORG_APACHE_IBATIS_TYPE_TYPE_HANDLER);
-        if (typeHandlerClassOptional.isEmpty()) {
-            return true;
-        }
-        PsiClass typeHandlerCla = typeHandlerClassOptional.get();
-        return !psiClass.isInheritor(typeHandlerCla, true);
+  private boolean checkIsTypeHandler(PsiClass psiClass) {
+    Optional<PsiClass> typeHandlerClassOptional = JavaUtils.findClass(psiClass.getProject(),
+      ORG_APACHE_IBATIS_TYPE_TYPE_HANDLER);
+    if (typeHandlerClassOptional.isEmpty()) {
+      return true;
     }
+    PsiClass typeHandlerCla = typeHandlerClassOptional.get();
+    return !psiClass.isInheritor(typeHandlerCla, true);
+  }
 
 }

@@ -9,15 +9,15 @@ import java.util.List;
 @Getter
 public class BeanInfo {
 
-    private String name;
+  private String name;
 
-    private List<Field> fields;
+  private List<Field> fields;
 
-    public BeanInfo() {
-    }
+  public BeanInfo() {
+  }
 
-    public BeanInfo(String name, List<Field> fields) {
-        this.name = name;
-        this.fields = fields;
-    }
+  public BeanInfo(String name, List<Field> fields) {
+    this.name = name;
+    this.fields = fields;
+  }
 }

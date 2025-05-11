@@ -26,63 +26,63 @@ import java.util.Map;
  */
 public class FreeMakerFormatter implements JavaFormatter {
 
-    public static final String TEMPLATE = "template";
-    private static final String USER_NAME = "user.name";
-    private static final Logger logger = LoggerFactory.getLogger(FreeMakerFormatter.class);
-    private final ClassInfo classInfo;
-    protected Context context;
-    private CustomTemplateRoot rootObject;
+  public static final String TEMPLATE = "template";
+  private static final String USER_NAME = "user.name";
+  private static final Logger logger = LoggerFactory.getLogger(FreeMakerFormatter.class);
+  private final ClassInfo classInfo;
+  protected Context context;
+  private CustomTemplateRoot rootObject;
 
-    public FreeMakerFormatter(CustomTemplateRoot rootObject, ClassInfo classInfo) {
-        this.rootObject = rootObject;
-        this.classInfo = classInfo;
+  public FreeMakerFormatter(CustomTemplateRoot rootObject, ClassInfo classInfo) {
+    this.rootObject = rootObject;
+    this.classInfo = classInfo;
+  }
+
+  @Override
+  public void setContext(Context context) {
+    this.context = context;
+  }
+
+  /**
+   * free marker 生成的代码, 不关心这里设置的任何属性
+   *
+   * @param compilationUnit
+   * @return
+   */
+  @Override
+  public String getFormattedContent(CompilationUnit compilationUnit) {
+    try {
+      ModuleInfoGo templateSettingDTO = rootObject.getModuleUIInfo();
+      String modulePath = rootObject.getModuleUIInfo().getModulePath() + "/" + templateSettingDTO.getBasePath();
+      Configuration cfg = new Configuration(Configuration.VERSION_2_3_22);
+      cfg.setDirectoryForTemplateLoading(new File(modulePath));
+      // 设置模板加载器
+      StringTemplateLoader templateLoader = new StringTemplateLoader();
+      templateLoader.putTemplate(TEMPLATE, rootObject.getTemplateText());
+      cfg.setTemplateLoader(templateLoader);
+
+      cfg.setDefaultEncoding(templateSettingDTO.getEncoding());
+      cfg.setTemplateExceptionHandler(TemplateExceptionHandler.RETHROW_HANDLER);
+
+      Template templateName = cfg.getTemplate(TEMPLATE);
+      Writer writer = new StringWriter();
+      Map<String, Object> map = new HashMap<>();
+
+      map.put("baseInfo", templateSettingDTO);
+      map.put("tableClass", classInfo);
+      map.put("author", System.getProperty(USER_NAME, "mybatisX"));
+      map.putAll(rootObject.toMap());
+      templateName.process(map, writer);
+      final String templateContent = writer.toString();
+      logger.info("模板内容生成成功, pathname: {}", modulePath);
+      return templateContent;
+    } catch (IOException | TemplateException e) {
+      StringWriter out = new StringWriter();
+      try (PrintWriter stringWriter = new PrintWriter(out)) {
+        e.printStackTrace(stringWriter);
+      }
+      logger.error("模板内容生成失败", e);
+      return "填充模板出错," + out;
     }
-
-    @Override
-    public void setContext(Context context) {
-        this.context = context;
-    }
-
-    /**
-     * free marker 生成的代码, 不关心这里设置的任何属性
-     *
-     * @param compilationUnit
-     * @return
-     */
-    @Override
-    public String getFormattedContent(CompilationUnit compilationUnit) {
-        try {
-            ModuleInfoGo templateSettingDTO = rootObject.getModuleUIInfo();
-            String modulePath = rootObject.getModuleUIInfo().getModulePath() + "/" + templateSettingDTO.getBasePath();
-            Configuration cfg = new Configuration(Configuration.VERSION_2_3_22);
-            cfg.setDirectoryForTemplateLoading(new File(modulePath));
-            // 设置模板加载器
-            StringTemplateLoader templateLoader = new StringTemplateLoader();
-            templateLoader.putTemplate(TEMPLATE, rootObject.getTemplateText());
-            cfg.setTemplateLoader(templateLoader);
-
-            cfg.setDefaultEncoding(templateSettingDTO.getEncoding());
-            cfg.setTemplateExceptionHandler(TemplateExceptionHandler.RETHROW_HANDLER);
-
-            Template templateName = cfg.getTemplate(TEMPLATE);
-            Writer writer = new StringWriter();
-            Map<String, Object> map = new HashMap<>();
-
-            map.put("baseInfo", templateSettingDTO);
-            map.put("tableClass", classInfo);
-            map.put("author", System.getProperty(USER_NAME, "mybatisX"));
-            map.putAll(rootObject.toMap());
-            templateName.process(map, writer);
-            final String templateContent = writer.toString();
-            logger.info("模板内容生成成功, pathname: {}", modulePath);
-            return templateContent;
-        } catch (IOException | TemplateException e) {
-            StringWriter out = new StringWriter();
-            try (PrintWriter stringWriter = new PrintWriter(out)) {
-                e.printStackTrace(stringWriter);
-            }
-            logger.error("模板内容生成失败", e);
-            return "填充模板出错," + out;
-        }
-    }
+  }
 }

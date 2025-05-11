@@ -19,36 +19,36 @@ import java.util.Map;
  */
 public class DomainPlaceHolder {
 
-    private static final Logger logger = LoggerFactory.getLogger(DomainPlaceHolder.class);
+  private static final Logger logger = LoggerFactory.getLogger(DomainPlaceHolder.class);
 
-    public static String replace(String templateText, DomainInfo domainInfo) {
-        if (templateText == null || templateText.trim().isEmpty()) {
-            return templateText;
-        }
-        if (domainInfo == null) {
-            return templateText;
-        }
-        try {
-            String defaultTemplateName = "default";
-            Configuration cfg = new Configuration(Configuration.VERSION_2_3_22);
-            // 设置模板加载器
-            StringTemplateLoader templateLoader = new StringTemplateLoader();
-            templateLoader.putTemplate(defaultTemplateName, templateText);
-            cfg.setTemplateLoader(templateLoader);
-
-            cfg.setDefaultEncoding(domainInfo.getEncoding());
-            cfg.setTemplateExceptionHandler(TemplateExceptionHandler.RETHROW_HANDLER);
-
-            Template templateName = cfg.getTemplate(defaultTemplateName);
-            Writer writer = new StringWriter();
-            Map<String, Object> map = new HashMap<>();
-
-            map.put("domain", domainInfo);
-            templateName.process(map, writer);
-            return writer.toString();
-        } catch (Exception e) {
-            logger.error("动态参数替换错误", e);
-            return templateText;
-        }
+  public static String replace(String templateText, DomainInfo domainInfo) {
+    if (templateText == null || templateText.trim().isEmpty()) {
+      return templateText;
     }
+    if (domainInfo == null) {
+      return templateText;
+    }
+    try {
+      String defaultTemplateName = "default";
+      Configuration cfg = new Configuration(Configuration.VERSION_2_3_22);
+      // 设置模板加载器
+      StringTemplateLoader templateLoader = new StringTemplateLoader();
+      templateLoader.putTemplate(defaultTemplateName, templateText);
+      cfg.setTemplateLoader(templateLoader);
+
+      cfg.setDefaultEncoding(domainInfo.getEncoding());
+      cfg.setTemplateExceptionHandler(TemplateExceptionHandler.RETHROW_HANDLER);
+
+      Template templateName = cfg.getTemplate(defaultTemplateName);
+      Writer writer = new StringWriter();
+      Map<String, Object> map = new HashMap<>();
+
+      map.put("domain", domainInfo);
+      templateName.process(map, writer);
+      return writer.toString();
+    } catch (Exception e) {
+      logger.error("动态参数替换错误", e);
+      return templateText;
+    }
+  }
 }

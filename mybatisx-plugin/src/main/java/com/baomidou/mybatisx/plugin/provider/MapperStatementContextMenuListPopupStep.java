@@ -6,10 +6,10 @@ import java.util.List;
 
 abstract class MapperStatementContextMenuListPopupStep extends BaseListPopupStep<MapperNavigator> {
 
-    protected MapperStatementItem myItem;
+  protected MapperStatementItem myItem;
 
-    public MapperStatementContextMenuListPopupStep(MapperStatementItem item, List<MapperNavigator> navigators) {
-        super(null, navigators);
-        this.myItem = item;
-    }
+  public MapperStatementContextMenuListPopupStep(MapperStatementItem item, List<MapperNavigator> navigators) {
+    super(null, navigators);
+    this.myItem = item;
+  }
 }

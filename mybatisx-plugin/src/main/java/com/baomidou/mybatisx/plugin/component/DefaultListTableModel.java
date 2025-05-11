@@ -10,21 +10,21 @@ import java.util.List;
 
 public class DefaultListTableModel<E> extends ListTableModel<E> {
 
-    private final List<E> items;
+  private final List<E> items;
 
-    public DefaultListTableModel() {
-        super(ColumnInfo.EMPTY_ARRAY, Collections.emptyList(), 0, SortOrder.ASCENDING);
-        setItems(items = new ArrayList<>());
-    }
+  public DefaultListTableModel() {
+    super(ColumnInfo.EMPTY_ARRAY, Collections.emptyList(), 0, SortOrder.ASCENDING);
+    setItems(items = new ArrayList<>());
+  }
 
-    public DefaultListTableModel(ColumnInfo[] columnInfos) {
-        super(columnInfos, Collections.emptyList(), 0, SortOrder.ASCENDING);
-        setItems(items = new ArrayList<>());
-    }
+  public DefaultListTableModel(ColumnInfo[] columnInfos) {
+    super(columnInfos, Collections.emptyList(), 0, SortOrder.ASCENDING);
+    setItems(items = new ArrayList<>());
+  }
 
-    public final void removeAllRows() {
-        int size = items.size();
-        items.clear();
-        fireTableRowsDeleted(0, size - 1);
-    }
+  public final void removeAllRows() {
+    int size = items.size();
+    items.clear();
+    fireTableRowsDeleted(0, size - 1);
+  }
 }

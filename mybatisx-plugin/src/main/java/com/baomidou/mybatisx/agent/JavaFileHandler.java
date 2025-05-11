@@ -14,42 +14,42 @@ import java.util.Collections;
 
 public class JavaFileHandler implements Handler {
 
-    private final AgentConnector<org.mybatisx.extension.agent.api.JavaClassHotSwapDTO, Object> connector = TargetProxy.getProxy(new AgentConnectorImpl<>());
+  private final AgentConnector<org.mybatisx.extension.agent.api.JavaClassHotSwapDTO, Object> connector = TargetProxy.getProxy(new AgentConnectorImpl<>());
 
-    @Override
-    public boolean supports(Object obj) {
-        if (!(obj instanceof String)) {
-            return false;
-        }
-        return ((String) obj).toLowerCase().endsWith(".java");
+  @Override
+  public boolean supports(Object obj) {
+    if (!(obj instanceof String)) {
+      return false;
     }
+    return ((String) obj).toLowerCase().endsWith(".java");
+  }
 
-    @Override
-    public void execute(Object obj) throws org.mybatisx.extension.agent.api.AgentException {
-        try {
-            AnActionEvent e = (AnActionEvent) obj;
-            VirtualFile file = e.getData(PlatformDataKeys.VIRTUAL_FILE);
-            if (file == null) {
-                return;
-            }
-            // 获取命名空间
-            PsiFile psiFile = e.getData(PlatformDataKeys.PSI_FILE);
-            if (psiFile == null) {
-                return;
-            }
-            Class<?> clazz = psiFile.getClass().getSuperclass();
-            Field packageNameField = clazz.getDeclaredField("myPackageName");
-            String packageName = (String) packageNameField.get(psiFile);
-            org.mybatisx.extension.agent.api.JavaClassHotSwapDTO dto = new org.mybatisx.extension.agent.api.JavaClassHotSwapDTO(file.getPath());
-            org.mybatisx.extension.agent.api.AgentRequest<org.mybatisx.extension.agent.api.JavaClassHotSwapDTO> command = new org.mybatisx.extension.agent.api.AgentRequest<>(org.mybatisx.extension.agent.api.AgentCommandEnum.JAVA_CLASS_HOTSWAP, dto);
+  @Override
+  public void execute(Object obj) throws org.mybatisx.extension.agent.api.AgentException {
+    try {
+      AnActionEvent e = (AnActionEvent) obj;
+      VirtualFile file = e.getData(PlatformDataKeys.VIRTUAL_FILE);
+      if (file == null) {
+        return;
+      }
+      // 获取命名空间
+      PsiFile psiFile = e.getData(PlatformDataKeys.PSI_FILE);
+      if (psiFile == null) {
+        return;
+      }
+      Class<?> clazz = psiFile.getClass().getSuperclass();
+      Field packageNameField = clazz.getDeclaredField("myPackageName");
+      String packageName = (String) packageNameField.get(psiFile);
+      org.mybatisx.extension.agent.api.JavaClassHotSwapDTO dto = new org.mybatisx.extension.agent.api.JavaClassHotSwapDTO(file.getPath());
+      org.mybatisx.extension.agent.api.AgentRequest<org.mybatisx.extension.agent.api.JavaClassHotSwapDTO> command = new org.mybatisx.extension.agent.api.AgentRequest<>(org.mybatisx.extension.agent.api.AgentCommandEnum.JAVA_CLASS_HOTSWAP, dto);
 
-            final String processName = e.getPresentation().getText();
-            connector.sendRequest(Collections.singletonList(VMContext.get(processName)), vm -> {
-                org.mybatisx.extension.agent.api.AgentResponse<Object> agentResponse = connector.execute(command);
-                Notifications.notify("[" + vm.getProcessName() + "]:" + agentResponse.getMsg(), agentResponse.isOk() ? NotificationType.INFORMATION : NotificationType.ERROR);
-            });
-        } catch (Exception exception) {
-            throw new AgentException(exception.getMessage(), exception);
-        }
+      final String processName = e.getPresentation().getText();
+      connector.sendRequest(Collections.singletonList(VMContext.get(processName)), vm -> {
+        org.mybatisx.extension.agent.api.AgentResponse<Object> agentResponse = connector.execute(command);
+        Notifications.notify("[" + vm.getProcessName() + "]:" + agentResponse.getMsg(), agentResponse.isOk() ? NotificationType.INFORMATION : NotificationType.ERROR);
+      });
+    } catch (Exception exception) {
+      throw new AgentException(exception.getMessage(), exception);
     }
+  }
 }

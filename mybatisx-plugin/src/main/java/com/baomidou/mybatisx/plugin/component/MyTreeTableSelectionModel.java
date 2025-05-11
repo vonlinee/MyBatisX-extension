@@ -6,17 +6,17 @@ import javax.swing.event.ListSelectionListener;
 import javax.swing.tree.DefaultTreeSelectionModel;
 
 public class MyTreeTableSelectionModel extends DefaultTreeSelectionModel {
-    public MyTreeTableSelectionModel() {
-        super();
-        getListSelectionModel().addListSelectionListener(new ListSelectionListener() {
-            @Override
-            public void valueChanged(ListSelectionEvent e) {
+  public MyTreeTableSelectionModel() {
+    super();
+    getListSelectionModel().addListSelectionListener(new ListSelectionListener() {
+      @Override
+      public void valueChanged(ListSelectionEvent e) {
 
-            }
-        });
-    }
+      }
+    });
+  }
 
-    ListSelectionModel getListSelectionModel() {
-        return listSelectionModel;
-    }
+  ListSelectionModel getListSelectionModel() {
+    return listSelectionModel;
+  }
 }

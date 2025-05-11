@@ -13,9 +13,9 @@ import com.intellij.util.xml.GenericAttributeValue;
  */
 public interface Id extends PropertyGroup {
 
-    @Override
-    @Attribute("property")
-    @Convert(PropertyConverter.class)
-    GenericAttributeValue<XmlAttributeValue> getProperty();
+  @Override
+  @Attribute("property")
+  @Convert(PropertyConverter.class)
+  GenericAttributeValue<XmlAttributeValue> getProperty();
 
 }

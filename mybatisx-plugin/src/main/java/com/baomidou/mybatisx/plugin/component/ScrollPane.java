@@ -6,14 +6,14 @@ import java.awt.*;
 
 public class ScrollPane extends JBScrollPane {
 
-    public ScrollPane() {
-    }
+  public ScrollPane() {
+  }
 
-    public ScrollPane(Component view) {
-        super(view);
-    }
+  public ScrollPane(Component view) {
+    super(view);
+  }
 
-    public void setContent(Component component) {
-        this.getViewport().setView(component);
-    }
+  public void setContent(Component component) {
+    this.getViewport().setView(component);
+  }
 }

@@ -16,35 +16,35 @@ import java.util.stream.Collectors;
  */
 public class AllTxFields extends TxField {
 
-    private List<TxField> mappingField;
-    private PsiClass entityClass;
+  private List<TxField> mappingField;
+  private PsiClass entityClass;
 
-    public AllTxFields(List<TxField> mappingField, PsiClass entityClass) {
-        super();
-        this.mappingField = mappingField;
-        this.entityClass = entityClass;
-    }
+  public AllTxFields(List<TxField> mappingField, PsiClass entityClass) {
+    super();
+    this.mappingField = mappingField;
+    this.entityClass = entityClass;
+  }
 
-    @Override
-    public String getTipName() {
-        return "ALLFields";
-    }
+  @Override
+  public String getTipName() {
+    return "ALLFields";
+  }
 
-    @Override
-    public String getFieldName() {
-        return mappingField.stream().map(TxField::getFieldName).collect(Collectors.joining(","));
-    }
+  @Override
+  public String getFieldName() {
+    return mappingField.stream().map(TxField::getFieldName).collect(Collectors.joining(","));
+  }
 
-    @Override
-    public @NotNull
-    String getColumnName() {
-        return mappingField.stream().map(TxField::getColumnName).collect(Collectors.joining(","));
-    }
+  @Override
+  public @NotNull
+  String getColumnName() {
+    return mappingField.stream().map(TxField::getColumnName).collect(Collectors.joining(","));
+  }
 
-    @Override
-    public String getFieldType() {
-        return entityClass.getQualifiedName();
-    }
+  @Override
+  public String getFieldType() {
+    return entityClass.getQualifiedName();
+  }
 
 
 }

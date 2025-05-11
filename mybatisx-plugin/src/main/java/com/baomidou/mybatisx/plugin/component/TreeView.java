@@ -17,109 +17,109 @@ import java.awt.*;
  */
 public class TreeView<T> extends Tree {
 
-    private final DefaultMutableTreeNode root;
+  private final DefaultMutableTreeNode root;
 
-    public TreeView() {
-        root = new DefaultMutableTreeNode();
+  public TreeView() {
+    root = new DefaultMutableTreeNode();
+  }
+
+  @SuppressWarnings("unchecked")
+  public static <T> TreeView<T> getTreeView(TreeSelectionEvent event) {
+    Object source = event.getSource();
+    if (source instanceof TreeView) {
+      return (TreeView<T>) source;
     }
+    throw new UnsupportedOperationException("event source is not a TreeView.");
+  }
 
-    public final void addChild(DefaultMutableTreeNode newChild) {
-        root.add(newChild);
+  public final void addChild(DefaultMutableTreeNode newChild) {
+    root.add(newChild);
+  }
+
+  public final void addChild(T item) {
+    this.getTreeModel().addChild(item);
+  }
+
+  @Override
+  public void setRootVisible(boolean rootVisible) {
+    if (rootVisible) {
+      super.setRootVisible(true);
+    } else {
+      if (getRootNode().getChildCount() > 0) {
+        super.setRootVisible(true);
+        // 设置根节点展开, 需要有子节点才有效果
+        expandRow(0);
+        // 隐藏根节点
+        super.setRootVisible(false);
+      }
     }
+  }
 
-    public final void addChild(T item) {
-        this.getTreeModel().addChild(item);
+  @SuppressWarnings("unchecked")
+  public final TreeModel<T> getTreeModel() {
+    return (TreeModel<T>) super.getModel();
+  }
+
+  /**
+   * 要等到根节点下面有节点后才能设置setRootVisible(false)
+   */
+  public final void expandRoot() {
+    expandRow(0); // 展开根节点，因为根节点已设置为不显示
+  }
+
+  public final void expandAll() {
+    setRootVisible(true);
+    expandRoot();
+    setRootVisible(false);
+    int rowCount = this.getRowCount();
+    for (int i = 0; i < rowCount; i++) {
+      this.expandRow(i);
     }
+  }
 
-    @Override
-    public void setRootVisible(boolean rootVisible) {
-        if (rootVisible) {
-            super.setRootVisible(true);
-        } else {
-            if (getRootNode().getChildCount() > 0) {
-                super.setRootVisible(true);
-                // 设置根节点展开, 需要有子节点才有效果
-                expandRow(0);
-                // 隐藏根节点
-                super.setRootVisible(false);
-            }
-        }
-    }
+  public final DefaultMutableTreeNode getRootNode() {
+    return root;
+  }
 
-    @SuppressWarnings("unchecked")
-    public final TreeModel<T> getTreeModel() {
-        return (TreeModel<T>) super.getModel();
-    }
+  protected AnActionButtonRunnable getAddAction() {
+    return null;
+  }
 
-    /**
-     * 要等到根节点下面有节点后才能设置setRootVisible(false)
-     */
-    public final void expandRoot() {
-        expandRow(0); // 展开根节点，因为根节点已设置为不显示
-    }
+  protected AnActionButtonRunnable getRemoveAction() {
+    return null;
+  }
 
-    public final void expandAll() {
-        setRootVisible(true);
-        expandRoot();
-        setRootVisible(false);
-        int rowCount = this.getRowCount();
-        for (int i = 0; i < rowCount; i++) {
-            this.expandRow(i);
-        }
-    }
+  protected void initToolbarDecoratorExtra(ToolbarDecorator decorator) {
+  }
 
-    public final DefaultMutableTreeNode getRootNode() {
-        return root;
-    }
+  protected void addActionPanelExtra(@NotNull JPanel actionsPanel) {
+  }
 
-    protected AnActionButtonRunnable getAddAction() {
-        return null;
-    }
+  /**
+   * 返回的Panel的布局方式是BorderLayout
+   *
+   * @return 容器
+   */
+  public final JPanel createPanel() {
+    ToolbarDecorator decorator = ToolbarDecorator.createDecorator(this)
+      .setPreferredSize(new Dimension(-1, -1))
+      .setAddAction(getAddAction())
+      .setRemoveAction(getRemoveAction());
+    initToolbarDecoratorExtra(decorator);
+    JPanel panel = decorator.createPanel();
+    addActionPanelExtra(decorator.getActionsPanel());
+    return panel;
+  }
 
-    protected AnActionButtonRunnable getRemoveAction() {
-        return null;
-    }
+  public DefaultMutableTreeNode getLastSelectedNode() {
+    return (DefaultMutableTreeNode) getLastSelectedPathComponent();
+  }
 
-    protected void initToolbarDecoratorExtra(ToolbarDecorator decorator) {
-    }
+  // ===================================== Static Utility Methods ====================================
 
-    protected void addActionPanelExtra(@NotNull JPanel actionsPanel) {
-    }
-
-    /**
-     * 返回的Panel的布局方式是BorderLayout
-     *
-     * @return 容器
-     */
-    public final JPanel createPanel() {
-        ToolbarDecorator decorator = ToolbarDecorator.createDecorator(this)
-            .setPreferredSize(new Dimension(-1, -1))
-            .setAddAction(getAddAction())
-            .setRemoveAction(getRemoveAction());
-        initToolbarDecoratorExtra(decorator);
-        JPanel panel = decorator.createPanel();
-        addActionPanelExtra(decorator.getActionsPanel());
-        return panel;
-    }
-
-    public DefaultMutableTreeNode getLastSelectedNode() {
-        return (DefaultMutableTreeNode) getLastSelectedPathComponent();
-    }
-
-    @SuppressWarnings("unchecked")
-    public T getSelectedItem() {
-        DefaultMutableTreeNode node = getLastSelectedNode();
-        return (T) node.getUserObject();
-    }
-
-    // ===================================== Static Utility Methods ====================================
-
-    @SuppressWarnings("unchecked")
-    public static <T> TreeView<T> getTreeView(TreeSelectionEvent event) {
-        Object source = event.getSource();
-        if (source instanceof TreeView) {
-            return (TreeView<T>) source;
-        }
-        throw new UnsupportedOperationException("event source is not a TreeView.");
-    }
+  @SuppressWarnings("unchecked")
+  public T getSelectedItem() {
+    DefaultMutableTreeNode node = getLastSelectedNode();
+    return (T) node.getUserObject();
+  }
 }

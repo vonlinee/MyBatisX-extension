@@ -7,5 +7,5 @@ import java.util.Map;
 
 public interface MappedStatementParamGetter {
 
-    void getParams(PsiElement element, Map<String, ParamDataType> paramMap);
+  void getParams(PsiElement element, Map<String, ParamDataType> paramMap);
 }

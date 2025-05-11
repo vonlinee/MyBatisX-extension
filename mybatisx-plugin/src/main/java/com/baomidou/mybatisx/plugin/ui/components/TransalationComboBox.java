@@ -12,13 +12,13 @@ import javax.swing.*;
  */
 public class TransalationComboBox extends ComboBox<TranslationAppComboBoxItem> {
 
-    public TransalationComboBox() {
-        this.setRenderer(new SimpleListCellRenderer<>() {
-            @Override
-            public void customize(@NotNull JList<? extends TranslationAppComboBoxItem> list, TranslationAppComboBoxItem value, int index, boolean selected, boolean hasFocus) {
-                // 设置选项显示的文本
-                setText(value.getName());
-            }
-        });
-    }
+  public TransalationComboBox() {
+    this.setRenderer(new SimpleListCellRenderer<>() {
+      @Override
+      public void customize(@NotNull JList<? extends TranslationAppComboBoxItem> list, TranslationAppComboBoxItem value, int index, boolean selected, boolean hasFocus) {
+        // 设置选项显示的文本
+        setText(value.getName());
+      }
+    });
+  }
 }

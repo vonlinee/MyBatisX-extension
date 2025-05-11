@@ -25,45 +25,45 @@ import java.util.Optional;
  */
 public class ColumnConverter extends ConverterAdaptor<XmlAttributeValue> implements CustomReferenceConverter<XmlAttributeValue> {
 
-    public static final String NAMESPACE = "namespace";
+  public static final String NAMESPACE = "namespace";
 
-    @NotNull
-    @Override
-    public PsiReference @NotNull [] createReferences(GenericDomValue<XmlAttributeValue> value, PsiElement element, ConvertContext context) {
-        String stringValue = value.getStringValue();
-        if (stringValue == null) {
-            return PsiReference.EMPTY_ARRAY;
-        }
-        // 社区版就不需要跳转到数据库的列了
-        if (!PluginUtils.existsDbTools()) {
-            return PsiReference.EMPTY_ARRAY;
-        }
-        int offsetInElement = ElementManipulators.getOffsetInElement(element);
-
-        Optional<PsiClass> mapperClassOptional = findMapperClass(context);
-        PsiClass mapperClass = mapperClassOptional.orElse(null);
-        return new ResultColumnReferenceSet(stringValue, element, offsetInElement, mapperClass).getPsiReferences();
+  @NotNull
+  @Override
+  public PsiReference @NotNull [] createReferences(GenericDomValue<XmlAttributeValue> value, PsiElement element, ConvertContext context) {
+    String stringValue = value.getStringValue();
+    if (stringValue == null) {
+      return PsiReference.EMPTY_ARRAY;
     }
+    // 社区版就不需要跳转到数据库的列了
+    if (!PluginUtils.existsDbTools()) {
+      return PsiReference.EMPTY_ARRAY;
+    }
+    int offsetInElement = ElementManipulators.getOffsetInElement(element);
 
-    private Optional<PsiClass> findMapperClass(ConvertContext context) {
-        XmlTag rootTag = context.getFile().getRootTag();
-        if (rootTag != null) {
-            XmlAttribute namespace = rootTag.getAttribute(NAMESPACE);
-            if (namespace != null) {
-                String value = namespace.getValue();
-                if (!StringUtils.isEmpty(value)) {
-                    return JavaUtils.findClass(context.getProject(), value);
-                }
-            }
+    Optional<PsiClass> mapperClassOptional = findMapperClass(context);
+    PsiClass mapperClass = mapperClassOptional.orElse(null);
+    return new ResultColumnReferenceSet(stringValue, element, offsetInElement, mapperClass).getPsiReferences();
+  }
+
+  private Optional<PsiClass> findMapperClass(ConvertContext context) {
+    XmlTag rootTag = context.getFile().getRootTag();
+    if (rootTag != null) {
+      XmlAttribute namespace = rootTag.getAttribute(NAMESPACE);
+      if (namespace != null) {
+        String value = namespace.getValue();
+        if (!StringUtils.isEmpty(value)) {
+          return JavaUtils.findClass(context.getProject(), value);
         }
-        return Optional.empty();
+      }
     }
+    return Optional.empty();
+  }
 
-    @Nullable
-    @Override
-    public XmlAttributeValue fromString(@Nullable @NonNls String s, ConvertContext context) {
-        DomElement ctxElement = context.getInvocationElement();
-        return ctxElement instanceof GenericAttributeValue ? ((GenericAttributeValue<?>) ctxElement).getXmlAttributeValue() : null;
-    }
+  @Nullable
+  @Override
+  public XmlAttributeValue fromString(@Nullable @NonNls String s, ConvertContext context) {
+    DomElement ctxElement = context.getInvocationElement();
+    return ctxElement instanceof GenericAttributeValue ? ((GenericAttributeValue<?>) ctxElement).getXmlAttributeValue() : null;
+  }
 
 }

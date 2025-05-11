@@ -24,47 +24,47 @@ import org.jetbrains.annotations.Nullable;
  */
 public class ContextHashMarkReferenceContributor extends PsiReferenceContributor {
 
-    private static final String SIMPLE_PREFIX_STR = "#{";
-    public static final PsiElementPattern.Capture<PsiElement> EL_VAR_COMMENT = PlatformPatterns
-            .psiElement(PsiElement.class).withText(StandardPatterns.string().startsWith(SIMPLE_PREFIX_STR).contains("}"));
+  private static final String SIMPLE_PREFIX_STR = "#{";
+  public static final PsiElementPattern.Capture<PsiElement> EL_VAR_COMMENT = PlatformPatterns
+    .psiElement(PsiElement.class).withText(StandardPatterns.string().startsWith(SIMPLE_PREFIX_STR).contains("}"));
+
+  @Override
+  public void registerReferenceProviders(@NotNull PsiReferenceRegistrar registrar) {
+    registrar.registerReferenceProvider(EL_VAR_COMMENT, new PsiReferenceProvider() {
+      @Override
+      public @NotNull PsiReference @NotNull [] getReferencesByElement(@NotNull PsiElement element, @NotNull ProcessingContext context) {
+        if (!(element instanceof XmlToken)) {
+          return PsiReference.EMPTY_ARRAY;
+        }
+        XmlToken literalExpression = (XmlToken) element;
+        String value = literalExpression.getText();
+
+        if ((value != null && value.startsWith(SIMPLE_PREFIX_STR))) {
+          int valueLength = value.length();
+          int prefixLength = SIMPLE_PREFIX_STR.length();
+          if (valueLength > prefixLength) {
+            TextRange property = new TextRange(prefixLength, valueLength);
+            return new PsiReference[]{new HashMarkReference(element, property)};
+          }
+        }
+        return PsiReference.EMPTY_ARRAY;
+      }
+    });
+  }
+
+  private static class HashMarkReference extends PsiReferenceBase<PsiElement> {
+
+    private final CompositeHashMarkTip compositeHashMarkTip;
+
+    public HashMarkReference(@NotNull PsiElement element, TextRange rangeInElement) {
+      super(element, rangeInElement);
+      compositeHashMarkTip = new CompositeHashMarkTip(element.getProject());
+    }
 
     @Override
-    public void registerReferenceProviders(@NotNull PsiReferenceRegistrar registrar) {
-        registrar.registerReferenceProvider(EL_VAR_COMMENT, new PsiReferenceProvider() {
-            @Override
-            public @NotNull PsiReference @NotNull [] getReferencesByElement(@NotNull PsiElement element, @NotNull ProcessingContext context) {
-                if (!(element instanceof XmlToken)) {
-                    return PsiReference.EMPTY_ARRAY;
-                }
-                XmlToken literalExpression = (XmlToken) element;
-                String value = literalExpression.getText();
-
-                if ((value != null && value.startsWith(SIMPLE_PREFIX_STR))) {
-                    int valueLength = value.length();
-                    int prefixLength = SIMPLE_PREFIX_STR.length();
-                    if (valueLength > prefixLength) {
-                        TextRange property = new TextRange(prefixLength, valueLength);
-                        return new PsiReference[]{new HashMarkReference(element, property)};
-                    }
-                }
-                return PsiReference.EMPTY_ARRAY;
-            }
-        });
+    public @Nullable PsiElement resolve() {
+      return compositeHashMarkTip.findReference(this.myElement);
     }
-
-    private static class HashMarkReference extends PsiReferenceBase<PsiElement> {
-
-        private final CompositeHashMarkTip compositeHashMarkTip;
-
-        public HashMarkReference(@NotNull PsiElement element, TextRange rangeInElement) {
-            super(element, rangeInElement);
-            compositeHashMarkTip = new CompositeHashMarkTip(element.getProject());
-        }
-
-        @Override
-        public @Nullable PsiElement resolve() {
-            return compositeHashMarkTip.findReference(this.myElement);
-        }
-    }
+  }
 
 }

@@ -16,13 +16,13 @@ import java.util.Collections;
  */
 public class SqlConverter extends IdBasedTagConverter {
 
-    @NotNull
-    @Override
-    public Collection<? extends IdDomElement> getComparisons(@Nullable Mapper mapper, ConvertContext context) {
-        if (mapper == null) {
-            return Collections.emptyList();
-        }
-        return mapper.getSqlFragments();
+  @NotNull
+  @Override
+  public Collection<? extends IdDomElement> getComparisons(@Nullable Mapper mapper, ConvertContext context) {
+    if (mapper == null) {
+      return Collections.emptyList();
     }
+    return mapper.getSqlFragments();
+  }
 
 }

@@ -15,42 +15,42 @@ import java.awt.event.ActionEvent;
 
 public class SqlPreviewPanel extends JBSplitter {
 
-    SplitPane splitPane;
-    MapperStatementParamTablePane paramTablePane;
-    MapperStatementEditor editor;
-    ParamImportPane paramImportPane;
-    BorderPane borderPane;
+  SplitPane splitPane;
+  MapperStatementParamTablePane paramTablePane;
+  MapperStatementEditor editor;
+  ParamImportPane paramImportPane;
+  BorderPane borderPane;
 
-    public SqlPreviewPanel(Project project) {
+  public SqlPreviewPanel(Project project) {
 
-        splitPane = new SplitPane(true);
-        paramTablePane = new MapperStatementParamTablePane();
-        editor = new MapperStatementEditor();
+    splitPane = new SplitPane(true);
+    paramTablePane = new MapperStatementParamTablePane();
+    editor = new MapperStatementEditor();
 
-        paramImportPane = new ParamImportPane(project, paramTablePane);
-        splitPane.setFirstComponent(paramTablePane);
-        splitPane.setRightComponent(paramImportPane);
+    paramImportPane = new ParamImportPane(project, paramTablePane);
+    splitPane.setFirstComponent(paramTablePane);
+    splitPane.setRightComponent(paramImportPane);
 
-        setFirstComponent(splitPane);
+    setFirstComponent(splitPane);
 
-        borderPane = new BorderPane();
+    borderPane = new BorderPane();
 
-        HBox hBox = new HBox();
+    HBox hBox = new HBox();
 
-        Button button = new Button("Generate");
+    Button button = new Button("Generate");
 
-        button.setAction(new AbstractAction() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
+    button.setAction(new AbstractAction() {
+      @Override
+      public void actionPerformed(ActionEvent e) {
 
-                System.out.println(e);
-            }
-        });
+        System.out.println(e);
+      }
+    });
 
-        hBox.add(button);
-        borderPane.addToTop(hBox);
+    hBox.add(button);
+    borderPane.addToTop(hBox);
 
-        borderPane.addToCenter(editor);
-        setSecondComponent(borderPane);
-    }
+    borderPane.addToCenter(editor);
+    setSecondComponent(borderPane);
+  }
 }

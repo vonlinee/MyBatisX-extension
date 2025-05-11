@@ -14,46 +14,46 @@ import java.awt.event.ActionEvent;
 
 public class DataTypeAddDialog extends DialogBase {
 
-    JTextField typeIdTextField;
-    TypeGroupComboBox comboBox;
-    Callback<DataType> callback;
+  JTextField typeIdTextField;
+  TypeGroupComboBox comboBox;
+  Callback<DataType> callback;
 
-    public DataTypeAddDialog() {
-        super(null);
-        setResizable(false);
-        setModal(false);
-        setSize(400, 150);
-    }
+  public DataTypeAddDialog() {
+    super(null);
+    setResizable(false);
+    setModal(false);
+    setSize(400, 150);
+  }
 
-    @Override
-    protected @Nullable JComponent createCenterPanel() {
-        JPanel panel = new JPanel(new GridLayout(2, 2));
-        typeIdTextField = new JTextField();
-        comboBox = new TypeGroupComboBox();
-        panel.add(new Label("Type Group"));
-        panel.add(comboBox);
-        panel.add(new Label("Type ID"));
-        panel.add(typeIdTextField);
-        return panel;
-    }
+  @Override
+  protected @Nullable JComponent createCenterPanel() {
+    JPanel panel = new JPanel(new GridLayout(2, 2));
+    typeIdTextField = new JTextField();
+    comboBox = new TypeGroupComboBox();
+    panel.add(new Label("Type Group"));
+    panel.add(comboBox);
+    panel.add(new Label("Type ID"));
+    panel.add(typeIdTextField);
+    return panel;
+  }
 
-    @Override
-    protected @NotNull Action getOKAction() {
-        return new DialogWrapperAction("OK") {
-            @Override
-            protected void doAction(ActionEvent e) {
-                String typeGroup = comboBox.getValue();
-                String typeId = typeIdTextField.getText();
-                if (StringUtils.isEmpty(typeGroup)
-                    || StringUtils.isEmpty(typeId)) {
-                    return;
-                }
-                callback.call(new DataTypeItem(typeGroup, typeId));
-            }
-        };
-    }
+  @Override
+  protected @NotNull Action getOKAction() {
+    return new DialogWrapperAction("OK") {
+      @Override
+      protected void doAction(ActionEvent e) {
+        String typeGroup = comboBox.getValue();
+        String typeId = typeIdTextField.getText();
+        if (StringUtils.isEmpty(typeGroup)
+            || StringUtils.isEmpty(typeId)) {
+          return;
+        }
+        callback.call(new DataTypeItem(typeGroup, typeId));
+      }
+    };
+  }
 
-    public void setOnSubmit(Callback<DataType> callback) {
-        this.callback = callback;
-    }
+  public void setOnSubmit(Callback<DataType> callback) {
+    this.callback = callback;
+  }
 }

@@ -36,77 +36,77 @@ import org.jetbrains.annotations.Nullable;
  */
 public class MapperStatementEditor extends LanguageTextField {
 
-    private XmlDocument mapperFileDocument;
-    private boolean myModified = false;
+  private XmlDocument mapperFileDocument;
+  private boolean myModified = false;
 
-    private XmlFile mapperFile;
-    private XmlElement element;
+  private XmlFile mapperFile;
+  private XmlElement element;
 
-    public MapperStatementEditor(Project project) {
-        super(XMLLanguage.INSTANCE, project, "");
+  public MapperStatementEditor(Project project) {
+    super(XMLLanguage.INSTANCE, project, "");
+  }
+
+  public MapperStatementEditor() {
+    super(XMLLanguage.INSTANCE, null, "");
+  }
+
+  @Override
+  protected @NotNull EditorEx createEditor() {
+    EditorEx editor = super.createEditor();
+    // 水平滚动条
+    HorizontalScrollBarEditorCustomization.ENABLED.customize(editor);
+    // 垂直滚动条
+    editor.setVerticalScrollbarVisible(true);
+
+    EditorSettings editorSettings = editor.getSettings();
+    editorSettings.setVirtualSpace(false);
+    editorSettings.setLineMarkerAreaShown(false);
+    editorSettings.setIndentGuidesShown(false);
+    editorSettings.setLineNumbersShown(false);
+    editorSettings.setFoldingOutlineShown(false);
+    editorSettings.setAdditionalColumnsCount(3);
+    editorSettings.setAdditionalLinesCount(3);
+    editorSettings.setCaretRowShown(false);
+
+    editor.getDocument().addDocumentListener(new DocumentListener() {
+      @Override
+      public void documentChanged(@NotNull DocumentEvent e) {
+        onTextChanged();
+      }
+    }, ((EditorImpl) editor).getDisposable());
+
+    editor.setHighlighter(createHighlighter());
+
+    return editor;
+  }
+
+  private EditorHighlighter createHighlighter() {
+    SyntaxHighlighter originalHighlighter = SyntaxHighlighterFactory.getSyntaxHighlighter(XmlFileType.INSTANCE, null, null);
+    if (originalHighlighter == null) {
+      originalHighlighter = new PlainSyntaxHighlighter();
     }
 
-    public MapperStatementEditor() {
-        super(XMLLanguage.INSTANCE, null, "");
-    }
+    final EditorColorsScheme scheme = EditorColorsManager.getInstance().getGlobalScheme();
+    LayeredLexerEditorHighlighter highlighter = new LayeredLexerEditorHighlighter(new FileTemplateHighlighter(), scheme);
+    highlighter.registerLayer(new IElementType("TEXT", Language.ANY), new LayerDescriptor(originalHighlighter, ""));
+    return highlighter;
+  }
 
-    @Override
-    protected @NotNull EditorEx createEditor() {
-        EditorEx editor = super.createEditor();
-        // 水平滚动条
-        HorizontalScrollBarEditorCustomization.ENABLED.customize(editor);
-        // 垂直滚动条
-        editor.setVerticalScrollbarVisible(true);
+  @NotNull
+  private Document createDocument(@Nullable PsiFile file) {
+    Document document = file != null ? PsiDocumentManager.getInstance(file.getProject()).getDocument(file) : null;
+    return document != null ? document : EditorFactory.getInstance().createDocument("");
+  }
 
-        EditorSettings editorSettings = editor.getSettings();
-        editorSettings.setVirtualSpace(false);
-        editorSettings.setLineMarkerAreaShown(false);
-        editorSettings.setIndentGuidesShown(false);
-        editorSettings.setLineNumbersShown(false);
-        editorSettings.setFoldingOutlineShown(false);
-        editorSettings.setAdditionalColumnsCount(3);
-        editorSettings.setAdditionalLinesCount(3);
-        editorSettings.setCaretRowShown(false);
+  private void onTextChanged() {
+    myModified = true;
+  }
 
-        editor.getDocument().addDocumentListener(new DocumentListener() {
-            @Override
-            public void documentChanged(@NotNull DocumentEvent e) {
-                onTextChanged();
-            }
-        }, ((EditorImpl) editor).getDisposable());
+  public void updateStatement(@NotNull XmlElement statement) {
+    this.mapperFile = (XmlFile) statement.getContainingFile();
+    this.element = statement;
+    this.mapperFileDocument = mapperFile.getDocument();
 
-        editor.setHighlighter(createHighlighter());
-
-        return editor;
-    }
-
-    private EditorHighlighter createHighlighter() {
-        SyntaxHighlighter originalHighlighter = SyntaxHighlighterFactory.getSyntaxHighlighter(XmlFileType.INSTANCE, null, null);
-        if (originalHighlighter == null) {
-            originalHighlighter = new PlainSyntaxHighlighter();
-        }
-
-        final EditorColorsScheme scheme = EditorColorsManager.getInstance().getGlobalScheme();
-        LayeredLexerEditorHighlighter highlighter = new LayeredLexerEditorHighlighter(new FileTemplateHighlighter(), scheme);
-        highlighter.registerLayer(new IElementType("TEXT", Language.ANY), new LayerDescriptor(originalHighlighter, ""));
-        return highlighter;
-    }
-
-    @NotNull
-    private Document createDocument(@Nullable PsiFile file) {
-        Document document = file != null ? PsiDocumentManager.getInstance(file.getProject()).getDocument(file) : null;
-        return document != null ? document : EditorFactory.getInstance().createDocument("");
-    }
-
-    private void onTextChanged() {
-        myModified = true;
-    }
-
-    public void updateStatement(@NotNull XmlElement statement) {
-        this.mapperFile = (XmlFile) statement.getContainingFile();
-        this.element = statement;
-        this.mapperFileDocument = mapperFile.getDocument();
-
-        setText(statement.getText());
-    }
+    setText(statement.getText());
+  }
 }

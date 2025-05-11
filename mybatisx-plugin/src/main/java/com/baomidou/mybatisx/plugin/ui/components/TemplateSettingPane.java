@@ -24,46 +24,46 @@ import java.awt.*;
  */
 public class TemplateSettingPane extends TabPane {
 
-    TemplateTreeView ttv = new TemplateTreeView();
-    CodeArea currentTemplateContentText = new CodeArea();
+  TemplateTreeView ttv = new TemplateTreeView();
+  CodeArea currentTemplateContentText = new CodeArea();
 
-    public TemplateSettingPane() {
-        SplitPane splitPane = new SplitPane(false, 0.4f);
+  public TemplateSettingPane() {
+    SplitPane splitPane = new SplitPane(false, 0.4f);
 
-        splitPane.setFirstComponent(ttv.createPanel());
-        ttv.setMinimumSize(new Dimension(400, ttv.getHeight()));
+    splitPane.setFirstComponent(ttv.createPanel());
+    ttv.setMinimumSize(new Dimension(400, ttv.getHeight()));
 
-        VBox vBox = new VBox();
-        splitPane.setSecondComponent(vBox);
+    VBox vBox = new VBox();
+    splitPane.setSecondComponent(vBox);
 
-        currentTemplateContentText.setPreferredHeight(400);
-        vBox.add(currentTemplateContentText);
+    currentTemplateContentText.setPreferredHeight(400);
+    vBox.add(currentTemplateContentText);
 
-        addTab("代码生成", splitPane);
+    addTab("代码生成", splitPane);
 
-        ttv.addTreeSelectionListener(new TreeSelectionListener() {
-            @Override
-            public void valueChanged(TreeSelectionEvent e) {
-                TreeView<TemplateInfo> treeView = TreeView.getTreeView(e);
-                TemplateInfo templateInfo = treeView.getSelectedItem();
-                currentTemplateContentText.setText(FileUtils.readStringUTF8(templateInfo.getPath()));
-            }
-        });
+    ttv.addTreeSelectionListener(new TreeSelectionListener() {
+      @Override
+      public void valueChanged(TreeSelectionEvent e) {
+        TreeView<TemplateInfo> treeView = TreeView.getTreeView(e);
+        TemplateInfo templateInfo = treeView.getSelectedItem();
+        currentTemplateContentText.setText(FileUtils.readStringUTF8(templateInfo.getPath()));
+      }
+    });
 
-        TemplatesSettings templatesSettings = TemplatesSettings.getInstance();
-        TreeModel<TemplateInfo> treeModel = ttv.getTreeModel();
-        for (TemplateInfo template : templatesSettings.getTemplates()) {
-            treeModel.addChild(template);
-        }
-        ttv.setRootVisible(false);
+    TemplatesSettings templatesSettings = TemplatesSettings.getInstance();
+    TreeModel<TemplateInfo> treeModel = ttv.getTreeModel();
+    for (TemplateInfo template : templatesSettings.getTemplates()) {
+      treeModel.addChild(template);
     }
+    ttv.setRootVisible(false);
+  }
 
-    /**
-     * 配置是否修改过
-     *
-     * @return
-     */
-    public boolean hasChanged() {
-        return currentTemplateContentText.isTextLengthChanged();
-    }
+  /**
+   * 配置是否修改过
+   *
+   * @return
+   */
+  public boolean hasChanged() {
+    return currentTemplateContentText.isTextLengthChanged();
+  }
 }

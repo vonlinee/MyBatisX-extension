@@ -22,7 +22,6 @@ Fill your params, and then you can get an executable sql without running you app
 
 ![mybatis-statement-debugger](/assets/mybatis-statement-debugger.png)
 
-
 ## MyBatis Mapper XML Fragments
 
 generate som common-used MyBatis Mapper XML Fragments sql template content like belows:

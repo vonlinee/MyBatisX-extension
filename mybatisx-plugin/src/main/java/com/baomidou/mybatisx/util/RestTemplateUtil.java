@@ -18,44 +18,44 @@ import java.util.Map;
  */
 public class RestTemplateUtil {
 
-    private final RestTemplate restTemplate;
+  private final RestTemplate restTemplate;
 
-    public RestTemplateUtil() {
-        HttpComponentsClientHttpRequestFactory clientHttpRequestFactory = new HttpComponentsClientHttpRequestFactory();
-        clientHttpRequestFactory.setConnectTimeout(2000);
-        clientHttpRequestFactory.setReadTimeout(2000);
+  public RestTemplateUtil() {
+    HttpComponentsClientHttpRequestFactory clientHttpRequestFactory = new HttpComponentsClientHttpRequestFactory();
+    clientHttpRequestFactory.setConnectTimeout(2000);
+    clientHttpRequestFactory.setReadTimeout(2000);
 
-        // 因为restTemplate默认只接受200状态码，这里设置非200状态码 也不会抛出异常
-        ResponseErrorHandler responseErrorHandler = new ResponseErrorHandler() {
-            @Override
-            public boolean hasError(@NotNull ClientHttpResponse response) {
-                return true;
-            }
+    // 因为restTemplate默认只接受200状态码，这里设置非200状态码 也不会抛出异常
+    ResponseErrorHandler responseErrorHandler = new ResponseErrorHandler() {
+      @Override
+      public boolean hasError(@NotNull ClientHttpResponse response) {
+        return true;
+      }
 
-            @Override
-            public void handleError(@NotNull ClientHttpResponse response) {
-            }
-        };
+      @Override
+      public void handleError(@NotNull ClientHttpResponse response) {
+      }
+    };
 
-        RestTemplate restTemplate = new RestTemplate();
-        restTemplate.setRequestFactory(clientHttpRequestFactory);
-        restTemplate.setErrorHandler(responseErrorHandler);
-        this.restTemplate = restTemplate;
+    RestTemplate restTemplate = new RestTemplate();
+    restTemplate.setRequestFactory(clientHttpRequestFactory);
+    restTemplate.setErrorHandler(responseErrorHandler);
+    this.restTemplate = restTemplate;
+  }
+
+  public String post(String url, Map<String, String> headerParam, Object params, MediaType mediaType) {
+    try {
+      HttpHeaders headers = new HttpHeaders();
+      headers.setContentType(mediaType);
+      for (Map.Entry<String, String> entry : headerParam.entrySet()) {
+        headers.add(entry.getKey(), entry.getKey());
+      }
+      HttpEntity<Object> request = new HttpEntity<>(params, headers);
+      ResponseEntity<String> responseEntity = restTemplate.exchange(url, HttpMethod.POST, request, String.class);
+      return responseEntity.getBody();
+    } catch (Exception e) {
+      e.printStackTrace();
     }
-
-    public String post(String url, Map<String, String> headerParam, Object params, MediaType mediaType) {
-        try {
-            HttpHeaders headers = new HttpHeaders();
-            headers.setContentType(mediaType);
-            for (Map.Entry<String, String> entry : headerParam.entrySet()) {
-                headers.add(entry.getKey(), entry.getKey());
-            }
-            HttpEntity<Object> request = new HttpEntity<>(params, headers);
-            ResponseEntity<String> responseEntity = restTemplate.exchange(url, HttpMethod.POST, request, String.class);
-            return responseEntity.getBody();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return "";
-    }
+    return "";
+  }
 }

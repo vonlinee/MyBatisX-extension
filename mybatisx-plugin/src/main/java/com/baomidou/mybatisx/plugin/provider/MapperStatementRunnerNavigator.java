@@ -12,25 +12,25 @@ import javax.swing.*;
  */
 public class MapperStatementRunnerNavigator implements MapperNavigator {
 
-    @Override
-    public Icon getIcon() {
-        return Icons.GUTTER_RUN_ICON;
-    }
+  @Override
+  public Icon getIcon() {
+    return Icons.GUTTER_RUN_ICON;
+  }
 
-    @Override
-    public String getDisplayText() {
-        return "Run";
-    }
+  @Override
+  public String getDisplayText() {
+    return "Run";
+  }
 
-    @Override
-    public void navigate(Project project, MapperStatementItem item) {
-        MyBatisSqlPreviewDialog dialog = new MyBatisSqlPreviewDialog(project, item.getNamespace(), (XmlTag) item.getElement().getParent());
-        dialog.show();
-        dialog.initUI();
-    }
+  @Override
+  public void navigate(Project project, MapperStatementItem item) {
+    MyBatisSqlPreviewDialog dialog = new MyBatisSqlPreviewDialog(project, item.getNamespace(), (XmlTag) item.getElement().getParent());
+    dialog.show();
+    dialog.initUI();
+  }
 
-    @Override
-    public String getNavigationGroupName() {
-        return null;
-    }
+  @Override
+  public String getNavigationGroupName() {
+    return null;
+  }
 }

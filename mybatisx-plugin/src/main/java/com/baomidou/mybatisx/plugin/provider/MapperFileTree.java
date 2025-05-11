@@ -23,74 +23,74 @@ import java.util.Collection;
 
 class MapperFileTree extends ScrollPane {
 
-    TreeView<MapperFile> treeView;
-    MultiMap<String, PsiElement> statementMap;
+  TreeView<MapperFile> treeView;
+  MultiMap<String, PsiElement> statementMap;
 
-    public MapperFileTree() {
-        this.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-        this.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
-        this.treeView = new TreeView<>() {
-            @Override
-            protected AnActionButtonRunnable getAddAction() {
-                return new AnActionButtonRunnable() {
-                    @Override
-                    public void run(AnActionButton anActionButton) {
+  public MapperFileTree() {
+    this.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+    this.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+    this.treeView = new TreeView<>() {
+      @Override
+      protected AnActionButtonRunnable getAddAction() {
+        return new AnActionButtonRunnable() {
+          @Override
+          public void run(AnActionButton anActionButton) {
 
-                    }
-                };
-            }
+          }
         };
+      }
+    };
 
-        this.treeView.setRootVisible(false);
-        this.treeView.setCellRenderer(new MapperStatementCellRender());
-        this.treeView.setModel(new MapperTreeModel(this.treeView));
+    this.treeView.setRootVisible(false);
+    this.treeView.setCellRenderer(new MapperStatementCellRender());
+    this.treeView.setModel(new MapperTreeModel(this.treeView));
 
-        this.statementMap = new MultiMap<>() {
-            @Override
-            protected @NotNull Collection<PsiElement> createEmptyCollection() {
-                return new ArrayListSet<>();
-            }
-        };
+    this.statementMap = new MultiMap<>() {
+      @Override
+      protected @NotNull Collection<PsiElement> createEmptyCollection() {
+        return new ArrayListSet<>();
+      }
+    };
 
-        this.setContent(this.treeView);
+    this.setContent(this.treeView);
+  }
+
+  public void addStatement(PsiElement psiElement) {
+    String name = psiElement.getContainingFile().getName();
+    Collection<PsiElement> psiElements = statementMap.get(name);
+    if (psiElements.contains(psiElement)) {
+      return;
     }
+    psiElements.add(psiElement);
 
-    public void addStatement(PsiElement psiElement) {
-        String name = psiElement.getContainingFile().getName();
-        Collection<PsiElement> psiElements = statementMap.get(name);
-        if (psiElements.contains(psiElement)) {
-            return;
-        }
-        psiElements.add(psiElement);
+    MapperFile mapperFile = new MapperFile();
+    mapperFile.filename = psiElement.getContainingFile().getName();
+    mapperFile.element = psiElement;
 
-        MapperFile mapperFile = new MapperFile();
-        mapperFile.filename = psiElement.getContainingFile().getName();
-        mapperFile.element = psiElement;
+    this.treeView.addChild(mapperFile);
+  }
 
-        this.treeView.addChild(mapperFile);
+  static class MapperStatementCellRender extends LabelBasedRenderer implements TreeCellRenderer {
+
+    @Override
+    public Component getTreeCellRendererComponent(JTree tree, Object value, boolean selected, boolean expanded, boolean leaf, int row, boolean hasFocus) {
+
+      return new Label(ObjectUtils.toString(value));
     }
+  }
 
-    static class MapperStatementCellRender extends LabelBasedRenderer implements TreeCellRenderer {
+  /**
+   * @see FileTreeModel
+   */
+  static class MapperTreeModel extends TreeModel<MapperFile> {
 
-        @Override
-        public Component getTreeCellRendererComponent(JTree tree, Object value, boolean selected, boolean expanded, boolean leaf, int row, boolean hasFocus) {
-
-            return new Label(ObjectUtils.toString(value));
-        }
+    public MapperTreeModel(TreeView<MapperFile> treeView) {
+      super(treeView);
     }
+  }
 
-    /**
-     * @see FileTreeModel
-     */
-    static class MapperTreeModel extends TreeModel<MapperFile> {
+  static class StatementNode {
 
-        public MapperTreeModel(TreeView<MapperFile> treeView) {
-            super(treeView);
-        }
-    }
-
-    static class StatementNode {
-
-        SqlCommandType sqlCommandType;
-    }
+    SqlCommandType sqlCommandType;
+  }
 }

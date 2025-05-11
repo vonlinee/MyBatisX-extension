@@ -14,37 +14,37 @@ import javax.swing.*;
  */
 public final class DataTypeSettingConfigurable implements SearchableConfigurable {
 
-    DataTypeSettingPanel dataTypeSettingPanel;
+  DataTypeSettingPanel dataTypeSettingPanel;
 
-    public DataTypeSettingConfigurable() {
-        dataTypeSettingPanel = new DataTypeSettingPanel();
-    }
+  public DataTypeSettingConfigurable() {
+    dataTypeSettingPanel = new DataTypeSettingPanel();
+  }
 
-    @NotNull
-    @Override
-    public String getId() {
-        return getClass().getName();
-    }
+  @NotNull
+  @Override
+  public String getId() {
+    return getClass().getName();
+  }
 
-    @Nls(capitalization = Nls.Capitalization.Title)
-    @Override
-    public String getDisplayName() {
-        return "DataType";
-    }
+  @Nls(capitalization = Nls.Capitalization.Title)
+  @Override
+  public String getDisplayName() {
+    return "DataType";
+  }
 
-    @Nullable
-    @Override
-    public JComponent createComponent() {
-        return dataTypeSettingPanel;
-    }
+  @Nullable
+  @Override
+  public JComponent createComponent() {
+    return dataTypeSettingPanel;
+  }
 
-    @Override
-    public boolean isModified() {
-        return dataTypeSettingPanel.isModified();
-    }
+  @Override
+  public boolean isModified() {
+    return dataTypeSettingPanel.isModified();
+  }
 
-    @Override
-    public void apply() throws ConfigurationException {
-        // 界面操作直接修改，因此不需要通过apply使修改生效
-    }
+  @Override
+  public void apply() throws ConfigurationException {
+    // 界面操作直接修改，因此不需要通过apply使修改生效
+  }
 }

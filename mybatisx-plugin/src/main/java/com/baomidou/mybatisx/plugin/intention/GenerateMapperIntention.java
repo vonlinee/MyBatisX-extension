@@ -43,120 +43,120 @@ import java.util.Properties;
  */
 public class GenerateMapperIntention extends GenericIntention {
 
-    /**
-     * Instantiates a new Generate mapper intention.
-     */
-    public GenerateMapperIntention() {
-        super(GenerateMapperChooserAbstract.INSTANCE);
+  /**
+   * Instantiates a new Generate mapper intention.
+   */
+  public GenerateMapperIntention() {
+    super(GenerateMapperChooserAbstract.INSTANCE);
+  }
+
+  @NotNull
+  @Override
+  public String getText() {
+    return "[MybatisX] Generate mapper of xml";
+  }
+
+  @Override
+  public boolean startInWriteAction() {
+    return false;
+  }
+
+  @Override
+  public void invoke(@NotNull final Project project, final Editor editor, PsiFile file) throws IncorrectOperationException {
+    PsiElement element = file.findElementAt(editor.getCaretModel().getOffset());
+    PsiClass clazz = PsiTreeUtil.getParentOfType(element, PsiClass.class);
+
+    Collection<PsiDirectory> directories = MapperUtils.findMapperDirectories(project);
+    if (CollectionUtils.isEmpty(directories)) {
+      handleChooseNewFolder(project, editor, clazz);
+    } else {
+      handleMultiDirectories(project, editor, clazz, directories);
     }
+  }
 
-    @NotNull
-    @Override
-    public String getText() {
-        return "[MybatisX] Generate mapper of xml";
+  private void handleMultiDirectories(Project project,
+                                      final Editor editor,
+                                      final PsiClass clazz,
+                                      Collection<PsiDirectory> directories) {
+    final Map<String, PsiDirectory> pathMap = getPathMap(directories);
+    final ArrayList<String> keys = Lists.newArrayList(pathMap.keySet());
+    ListSelectionListener popupListener = new ListSelectionListener() {
+      @Override
+      public void selected(int index) {
+        processGenerate(project, editor, clazz, pathMap.get(keys.get(index)));
+      }
+
+      @Override
+      public boolean isWriteAction() {
+        return true;
+      }
+    };
+    UiComponentFacade uiComponentFacade = UiComponentFacade.getInstance(project);
+    uiComponentFacade.showListPopupWithSingleClickable("Choose folder",
+      popupListener,
+      "Choose another",
+      getChooseFolderListener(editor, clazz),
+      getPathTextForShown(project, keys, pathMap));
+  }
+
+  private ClickableListener getChooseFolderListener(final Editor editor, final PsiClass clazz) {
+    final Project project = clazz.getProject();
+    return () -> handleChooseNewFolder(project, editor, clazz);
+  }
+
+  private void handleChooseNewFolder(Project project, Editor editor, PsiClass clazz) {
+    UiComponentFacade uiComponentFacade = UiComponentFacade.getInstance(project);
+    VirtualFile baseDir = ProjectUtil.guessProjectDir(project);
+    VirtualFile vf = uiComponentFacade.showSingleFolderSelectionDialog("Select target folder", baseDir, baseDir);
+    if (null != vf) {
+      processGenerate(project, editor, clazz, PsiManager.getInstance(project).findDirectory(vf));
     }
+  }
 
-    @Override
-    public boolean startInWriteAction() {
-        return false;
+  private String[] getPathTextForShown(Project project, List<String> paths, final Map<String, PsiDirectory> pathMap) {
+    Collections.sort(paths);
+    final String projectBasePath = project.getBasePath();
+    if (projectBasePath == null) {
+      return StringUtils.EMPTY_STRING_ARRAY;
     }
+    return paths.stream().map(input -> {
+      String relativePath = FileUtil.getRelativePath(projectBasePath, input, File.separatorChar);
+      Module module = ModuleUtil.findModuleForPsiElement(pathMap.get(input));
+      return null == module ? relativePath : ("[" + module.getName() + "] " + relativePath);
+    }).toArray(String[]::new);
+  }
 
-    @Override
-    public void invoke(@NotNull final Project project, final Editor editor, PsiFile file) throws IncorrectOperationException {
-        PsiElement element = file.findElementAt(editor.getCaretModel().getOffset());
-        PsiClass clazz = PsiTreeUtil.getParentOfType(element, PsiClass.class);
-
-        Collection<PsiDirectory> directories = MapperUtils.findMapperDirectories(project);
-        if (CollectionUtils.isEmpty(directories)) {
-            handleChooseNewFolder(project, editor, clazz);
-        } else {
-            handleMultiDirectories(project, editor, clazz, directories);
-        }
+  private Map<String, PsiDirectory> getPathMap(Collection<PsiDirectory> directories) {
+    Map<String, PsiDirectory> result = Maps.newHashMap();
+    for (PsiDirectory directory : directories) {
+      String presentableUrl = directory.getVirtualFile().getPresentableUrl();
+      result.put(presentableUrl, directory);
     }
+    return result;
+  }
 
-    private void handleMultiDirectories(Project project,
-                                        final Editor editor,
-                                        final PsiClass clazz,
-                                        Collection<PsiDirectory> directories) {
-        final Map<String, PsiDirectory> pathMap = getPathMap(directories);
-        final ArrayList<String> keys = Lists.newArrayList(pathMap.keySet());
-        ListSelectionListener popupListener = new ListSelectionListener() {
-            @Override
-            public void selected(int index) {
-                processGenerate(project, editor, clazz, pathMap.get(keys.get(index)));
-            }
-
-            @Override
-            public boolean isWriteAction() {
-                return true;
-            }
-        };
-        UiComponentFacade uiComponentFacade = UiComponentFacade.getInstance(project);
-        uiComponentFacade.showListPopupWithSingleClickable("Choose folder",
-                popupListener,
-                "Choose another",
-                getChooseFolderListener(editor, clazz),
-                getPathTextForShown(project, keys, pathMap));
+  private void processGenerate(Project project, Editor editor, PsiClass mapperClass, PsiDirectory directory) {
+    if (null == directory) {
+      return;
     }
-
-    private ClickableListener getChooseFolderListener(final Editor editor, final PsiClass clazz) {
-        final Project project = clazz.getProject();
-        return () -> handleChooseNewFolder(project, editor, clazz);
+    if (!directory.isWritable()) {
+      HintManager.getInstance().showErrorHint(editor, "Target directory is not writable");
+      return;
     }
-
-    private void handleChooseNewFolder(Project project, Editor editor, PsiClass clazz) {
-        UiComponentFacade uiComponentFacade = UiComponentFacade.getInstance(project);
-        VirtualFile baseDir = ProjectUtil.guessProjectDir(project);
-        VirtualFile vf = uiComponentFacade.showSingleFolderSelectionDialog("Select target folder", baseDir, baseDir);
-        if (null != vf) {
-            processGenerate(project, editor, clazz, PsiManager.getInstance(project).findDirectory(vf));
-        }
+    try {
+      Properties properties = new Properties();
+      properties.setProperty("NAMESPACE", mapperClass.getQualifiedName());
+      PsiElement psiFile = MapperUtils.createMapperFromFileTemplate(
+        MyBatisFileTemplateDescriptorFactory.MYBATIS_MAPPER_XML_TEMPLATE,
+        Objects.requireNonNull(mapperClass.getName()),
+        directory,
+        properties,
+        project);
+      if (psiFile != null) {
+        EditorService.getInstance(mapperClass.getProject()).scrollTo(psiFile, 0);
+      }
+    } catch (Exception e) {
+      HintManager.getInstance().showErrorHint(editor, "Failed: " + e.getCause());
     }
-
-    private String[] getPathTextForShown(Project project, List<String> paths, final Map<String, PsiDirectory> pathMap) {
-        Collections.sort(paths);
-        final String projectBasePath = project.getBasePath();
-        if (projectBasePath == null) {
-            return StringUtils.EMPTY_STRING_ARRAY;
-        }
-        return paths.stream().map(input -> {
-            String relativePath = FileUtil.getRelativePath(projectBasePath, input, File.separatorChar);
-            Module module = ModuleUtil.findModuleForPsiElement(pathMap.get(input));
-            return null == module ? relativePath : ("[" + module.getName() + "] " + relativePath);
-        }).toArray(String[]::new);
-    }
-
-    private Map<String, PsiDirectory> getPathMap(Collection<PsiDirectory> directories) {
-        Map<String, PsiDirectory> result = Maps.newHashMap();
-        for (PsiDirectory directory : directories) {
-            String presentableUrl = directory.getVirtualFile().getPresentableUrl();
-            result.put(presentableUrl, directory);
-        }
-        return result;
-    }
-
-    private void processGenerate(Project project, Editor editor, PsiClass mapperClass, PsiDirectory directory) {
-        if (null == directory) {
-            return;
-        }
-        if (!directory.isWritable()) {
-            HintManager.getInstance().showErrorHint(editor, "Target directory is not writable");
-            return;
-        }
-        try {
-            Properties properties = new Properties();
-            properties.setProperty("NAMESPACE", mapperClass.getQualifiedName());
-            PsiElement psiFile = MapperUtils.createMapperFromFileTemplate(
-                    MyBatisFileTemplateDescriptorFactory.MYBATIS_MAPPER_XML_TEMPLATE,
-                    Objects.requireNonNull(mapperClass.getName()),
-                    directory,
-                    properties,
-                    project);
-            if (psiFile != null) {
-                EditorService.getInstance(mapperClass.getProject()).scrollTo(psiFile, 0);
-            }
-        } catch (Exception e) {
-            HintManager.getInstance().showErrorHint(editor, "Failed: " + e.getCause());
-        }
-    }
+  }
 }

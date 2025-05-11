@@ -21,47 +21,47 @@ import java.util.List;
  */
 public class MySQLForUpdatePlugin extends PluginAdapter {
 
-    @Override
-    public boolean validate(List<String> warnings) {
-        return true;
-    }
+  @Override
+  public boolean validate(List<String> warnings) {
+    return true;
+  }
 
-    @Override
-    public boolean modelExampleClassGenerated(TopLevelClass topLevelClass, IntrospectedTable introspectedTable) {
-        PrimitiveTypeWrapper booleanWrapper = FullyQualifiedJavaType.getBooleanPrimitiveInstance()
-                .getPrimitiveTypeWrapper();
-        Field forUpdate = new Field("forUpdate", booleanWrapper);
-        forUpdate.setVisibility(JavaVisibility.PRIVATE);
-        topLevelClass.addField(forUpdate);
-        Method setForUpdate = new Method("setForUpdate");
-        setForUpdate.setVisibility(JavaVisibility.PUBLIC);
-        setForUpdate.addParameter(new Parameter(booleanWrapper, "forUpdate"));
-        setForUpdate.addBodyLine("this.forUpdate = forUpdate;");
-        topLevelClass.addMethod(setForUpdate);
-        Method getForUpdate = new Method("getForUpdate");
-        getForUpdate.setVisibility(JavaVisibility.PUBLIC);
-        getForUpdate.setReturnType(booleanWrapper);
-        getForUpdate.addBodyLine("return forUpdate;");
-        topLevelClass.addMethod(getForUpdate);
-        return true;
-    }
+  @Override
+  public boolean modelExampleClassGenerated(TopLevelClass topLevelClass, IntrospectedTable introspectedTable) {
+    PrimitiveTypeWrapper booleanWrapper = FullyQualifiedJavaType.getBooleanPrimitiveInstance()
+      .getPrimitiveTypeWrapper();
+    Field forUpdate = new Field("forUpdate", booleanWrapper);
+    forUpdate.setVisibility(JavaVisibility.PRIVATE);
+    topLevelClass.addField(forUpdate);
+    Method setForUpdate = new Method("setForUpdate");
+    setForUpdate.setVisibility(JavaVisibility.PUBLIC);
+    setForUpdate.addParameter(new Parameter(booleanWrapper, "forUpdate"));
+    setForUpdate.addBodyLine("this.forUpdate = forUpdate;");
+    topLevelClass.addMethod(setForUpdate);
+    Method getForUpdate = new Method("getForUpdate");
+    getForUpdate.setVisibility(JavaVisibility.PUBLIC);
+    getForUpdate.setReturnType(booleanWrapper);
+    getForUpdate.addBodyLine("return forUpdate;");
+    topLevelClass.addMethod(getForUpdate);
+    return true;
+  }
 
-    private void appendForUpdate(XmlElement element, IntrospectedTable introspectedTable) {
-        XmlElement forUpdateElement = new XmlElement("if");
-        forUpdateElement.addAttribute(new Attribute("test", "forUpdate != null and forUpdate == true"));
-        forUpdateElement.addElement(new TextElement("for update"));
-        element.addElement(forUpdateElement);
-    }
+  private void appendForUpdate(XmlElement element, IntrospectedTable introspectedTable) {
+    XmlElement forUpdateElement = new XmlElement("if");
+    forUpdateElement.addAttribute(new Attribute("test", "forUpdate != null and forUpdate == true"));
+    forUpdateElement.addElement(new TextElement("for update"));
+    element.addElement(forUpdateElement);
+  }
 
-    @Override
-    public boolean sqlMapSelectByExampleWithoutBLOBsElementGenerated(XmlElement element, IntrospectedTable introspectedTable) {
-        this.appendForUpdate(element, introspectedTable);
-        return true;
-    }
+  @Override
+  public boolean sqlMapSelectByExampleWithoutBLOBsElementGenerated(XmlElement element, IntrospectedTable introspectedTable) {
+    this.appendForUpdate(element, introspectedTable);
+    return true;
+  }
 
-    @Override
-    public boolean sqlMapSelectByExampleWithBLOBsElementGenerated(XmlElement element, IntrospectedTable introspectedTable) {
-        this.appendForUpdate(element, introspectedTable);
-        return true;
-    }
+  @Override
+  public boolean sqlMapSelectByExampleWithBLOBsElementGenerated(XmlElement element, IntrospectedTable introspectedTable) {
+    this.appendForUpdate(element, introspectedTable);
+    return true;
+  }
 }

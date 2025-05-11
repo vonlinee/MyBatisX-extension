@@ -9,7 +9,7 @@ import javax.swing.*;
  */
 public class VBox extends JPanel {
 
-    public VBox() {
-        super(new VerticalLayout());
-    }
+  public VBox() {
+    super(new VerticalLayout());
+  }
 }

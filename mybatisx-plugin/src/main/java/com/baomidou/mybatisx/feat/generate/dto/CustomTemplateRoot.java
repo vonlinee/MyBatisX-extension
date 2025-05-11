@@ -13,14 +13,14 @@ import java.util.stream.Collectors;
 @Getter
 public class CustomTemplateRoot implements Serializable {
 
-    private ModuleInfoGo moduleUIInfo;
+  private ModuleInfoGo moduleUIInfo;
 
-    private DomainInfo domainInfo;
+  private DomainInfo domainInfo;
 
-    private String templateText;
-    private List<ModuleInfoGo> moduleInfoList = new ArrayList<>();
+  private String templateText;
+  private List<ModuleInfoGo> moduleInfoList = new ArrayList<>();
 
-    public Map<? extends String, ?> toMap() {
-        return moduleInfoList.stream().collect(Collectors.toMap(ModuleInfoGo::getConfigName, v -> v, (a, b) -> a));
-    }
+  public Map<? extends String, ?> toMap() {
+    return moduleInfoList.stream().collect(Collectors.toMap(ModuleInfoGo::getConfigName, v -> v, (a, b) -> a));
+  }
 }

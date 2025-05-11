@@ -17,46 +17,46 @@ import java.util.List;
 public class MysqlManager extends BaseDialectManager {
 
 
-    /**
-     * Instantiates a new Mysql manager.
-     *
-     * @param mappingField the mapping field
-     * @param entityClass  the entity class
-     */
-    public MysqlManager(List<TxField> mappingField, PsiClass entityClass) {
-        super();
-        init(mappingField, entityClass);
-    }
+  /**
+   * Instantiates a new Mysql manager.
+   *
+   * @param mappingField the mapping field
+   * @param entityClass  the entity class
+   */
+  public MysqlManager(List<TxField> mappingField, PsiClass entityClass) {
+    super();
+    init(mappingField, entityClass);
+  }
 
-    @Override
-    protected void init(List<TxField> mappingField, PsiClass entityClass) {
-        this.registerManagers(new SelectOperator(mappingField, entityClass));
-        this.registerManagers(new CountOperator(mappingField, entityClass));
+  @Override
+  protected void init(List<TxField> mappingField, PsiClass entityClass) {
+    this.registerManagers(new SelectOperator(mappingField, entityClass));
+    this.registerManagers(new CountOperator(mappingField, entityClass));
 
-        // 批量插入
-        this.registerManagers(new InsertOperator(mappingField) {
-            @Override
-            protected void initCustomArea(String areaName, List<TxField> mappingField) {
-                super.initCustomArea(areaName, mappingField);
-                MysqlInsertBatch customStatement = new MysqlInsertBatch();
-                customStatement.initInsertBatch(areaName, mappingField);
-                this.registerStatementBlock(customStatement.getStatementBlock());
-                this.addOperatorName(customStatement.operatorName());
-            }
+    // 批量插入
+    this.registerManagers(new InsertOperator(mappingField) {
+      @Override
+      protected void initCustomArea(String areaName, List<TxField> mappingField) {
+        super.initCustomArea(areaName, mappingField);
+        MysqlInsertBatch customStatement = new MysqlInsertBatch();
+        customStatement.initInsertBatch(areaName, mappingField);
+        this.registerStatementBlock(customStatement.getStatementBlock());
+        this.addOperatorName(customStatement.operatorName());
+      }
 
-        });
+    });
 
-        this.registerManagers(new UpdateOperator(mappingField, entityClass) {
-            @Override
-            protected void initCustomArea(String areaName, List<TxField> mappingField) {
-                super.initCustomArea(areaName, mappingField);
-                MysqlUpdateSelective customStatement = new MysqlUpdateSelective();
-                customStatement.initUpdateSelective(areaName, mappingField);
-                this.registerStatementBlock(customStatement.getStatementBlock());
-                this.addOperatorName(customStatement.operatorName());
-            }
+    this.registerManagers(new UpdateOperator(mappingField, entityClass) {
+      @Override
+      protected void initCustomArea(String areaName, List<TxField> mappingField) {
+        super.initCustomArea(areaName, mappingField);
+        MysqlUpdateSelective customStatement = new MysqlUpdateSelective();
+        customStatement.initUpdateSelective(areaName, mappingField);
+        this.registerStatementBlock(customStatement.getStatementBlock());
+        this.addOperatorName(customStatement.operatorName());
+      }
 
-        });
-        this.registerManagers(new DeleteOperator(mappingField));
-    }
+    });
+    this.registerManagers(new DeleteOperator(mappingField));
+  }
 }

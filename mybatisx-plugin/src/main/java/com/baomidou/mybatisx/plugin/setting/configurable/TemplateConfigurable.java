@@ -13,38 +13,38 @@ import javax.swing.*;
  */
 public class TemplateConfigurable implements SearchableConfigurable {
 
-    TemplateSettingPane rootPanel;
+  TemplateSettingPane rootPanel;
 
-    public TemplateConfigurable() {
-        rootPanel = new TemplateSettingPane();
-    }
+  public TemplateConfigurable() {
+    rootPanel = new TemplateSettingPane();
+  }
 
-    @Override
-    public @NotNull String getId() {
-        return getClass().getName();
-    }
+  @Override
+  public @NotNull String getId() {
+    return getClass().getName();
+  }
 
-    @Override
-    public String getDisplayName() {
-        return getId();
-    }
+  @Override
+  public String getDisplayName() {
+    return getId();
+  }
 
-    @Override
-    public @Nullable JComponent createComponent() {
-        return this.rootPanel;
-    }
+  @Override
+  public @Nullable JComponent createComponent() {
+    return this.rootPanel;
+  }
 
-    @Override
-    public boolean isModified() {
+  @Override
+  public boolean isModified() {
 
-        boolean b = rootPanel.hasChanged();
+    boolean b = rootPanel.hasChanged();
 
-        System.out.println(b);
-        return b;
-    }
+    System.out.println(b);
+    return b;
+  }
 
-    @Override
-    public void apply() throws ConfigurationException {
+  @Override
+  public void apply() throws ConfigurationException {
 
-    }
+  }
 }

@@ -7,20 +7,20 @@ import java.awt.*;
 
 public class Label extends JBLabel {
 
-    /**
-     * @param text
-     * @param horizontalAlignment
-     * @see SwingConstants#CENTER
-     */
-    public Label(String text, int horizontalAlignment) {
-        super(text, horizontalAlignment);
-    }
+  /**
+   * @param text
+   * @param horizontalAlignment
+   * @see SwingConstants#CENTER
+   */
+  public Label(String text, int horizontalAlignment) {
+    super(text, horizontalAlignment);
+  }
 
-    public Label(String text) {
-        super(text);
-    }
+  public Label(String text) {
+    super(text);
+  }
 
-    public void setPreferredSize(int w, int h) {
-        setPreferredSize(new Dimension(w, h));
-    }
+  public void setPreferredSize(int w, int h) {
+    setPreferredSize(new Dimension(w, h));
+  }
 }
