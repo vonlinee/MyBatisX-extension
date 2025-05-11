@@ -144,11 +144,11 @@
                                         implementationClass="com.baomidou.mybatisx.plugin.provider.MapperLineMarkerProvider"/>
         <!-- xml 跳转到 java -->
         <codeInsight.lineMarkerProvider id="baomidou.StatementLineMarkerProvider" language="XML"
-                                        implementationClass="com.baomidou.mybatisx.plugin.provider.MyBatisMapperStatementLineMarkerProvider"/>
+                                        implementationClass="com.baomidou.mybatisx.plugin.provider.StatementLineMarkerProvider"/>
         <!-- 在service层注入了mapper对象, 在这个对象进行跳转到 mapper 类-->
         <codeInsight.lineMarkerProvider id="baomidou.InjectionLineMarkerProvider" language="JAVA"
                                         implementationClass="com.baomidou.mybatisx.plugin.provider.InjectionLineMarkerProvider"/>
-
+        <codeInsight.lineMarkerProvider language="XML" implementationClass="com.baomidou.mybatisx.plugin.provider.MapperRunLineMarker"/>
         <!-- xml 标签提示 -->
         <!-- 在mapper.xml内部, 进行智能提示, 例如: #{提示位置} -->
         <completion.contributor id="baomidou.SqlParamCompletionContributor" language="SQL"
@@ -223,6 +223,14 @@
         </intentionAction>
         <!--提示动作 end-->
 
+        <runLineMarkerContributor language="XML"
+                                  id="com.baomidou.mybatisx.plugin.provider.MapperXmlSqlRunLineMarkerContributor"
+                                  implementationClass="com.baomidou.mybatisx.plugin.provider.MapperXmlSqlRunLineMarkerContributor"/>
+
+<!--        <toolWindow factoryClass="com.baomidou.mybatisx.plugin.provider.MyBatisToolWindowFactory"-->
+<!--                    anchor="right"-->
+<!--                    id="MyBatis"/>-->
+
         <!-- mybatis的xml和mapper类 文件图标都改成一只鸟-->
         <iconProvider id="baomidou.XmlAndMapperIconProvider"
                       implementation="com.baomidou.mybatisx.plugin.provider.XmlAndMapperIconProvider"/>
@@ -235,6 +243,9 @@
         <!-- 应用服务, 必须放在主文件,否则 XmlAndMapperIconProvider 会加载不到-->
         <applicationService id="baomidou.MybatisSetting"
                             serviceImplementation="com.baomidou.mybatisx.plugin.setting.MyBatisXSettings"/>
+
+        <projectService serviceImplementation="com.baomidou.mybatisx.plugin.provider.MyBatisToolWindowView"
+                            id="MyBatisToolWindowView"/>
 
         <applicationService id="com.baomidou.mybatisx.plugin.setting.MyBatisGeneratorSettings"
                             serviceImplementation="com.baomidou.mybatisx.plugin.setting.MyBatisGeneratorSettings"/>

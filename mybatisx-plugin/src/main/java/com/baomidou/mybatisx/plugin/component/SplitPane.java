@@ -14,6 +14,10 @@ public class SplitPane extends JBSplitter {
         this(false, 0.4f);
     }
 
+    public SplitPane(boolean vertical) {
+        this(vertical, 0.4f);
+    }
+
     public SplitPane(int proportion) {
         this(false, (float) proportion / 100);
     }

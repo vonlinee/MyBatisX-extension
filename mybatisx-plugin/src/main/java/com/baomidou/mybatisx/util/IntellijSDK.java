@@ -3,6 +3,8 @@ package com.baomidou.mybatisx.util;
 import com.intellij.debugger.JavaDebuggerBundle;
 import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.extensions.PluginId;
+import com.intellij.openapi.fileTypes.FileType;
+import com.intellij.openapi.fileTypes.FileTypeManager;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.project.ProjectManager;
 import org.jetbrains.annotations.NotNull;
@@ -57,5 +59,9 @@ public abstract class IntellijSDK {
 
     public static PluginId findPluginId(String pluginId) {
         return PluginId.findId(pluginId);
+    }
+
+    public static FileType getFileType(String extension) {
+        return FileTypeManager.getInstance().getFileTypeByExtension(extension);
     }
 }

@@ -68,6 +68,10 @@ dependencies {
 intellij {
     version = "2021.3.3"
     type = "IU"
+
+    // sandboxDir = "${rootDir}/idea-sandbox-${version}"
+    updateSinceUntilBuild = false
+
     // Bundled plugin dependencies
     plugins = listOf(
         "com.intellij.spring.boot",

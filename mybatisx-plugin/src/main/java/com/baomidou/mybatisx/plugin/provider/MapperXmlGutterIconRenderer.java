@@ -69,7 +69,6 @@ public class MapperXmlGutterIconRenderer extends LineMarkerInfo.LineMarkerGutter
                         HotSwapNavigator hotSwapNavigator = new HotSwapNavigator();
                         MapperStatementRunnerNavigator msRunnerNavigator = new MapperStatementRunnerNavigator();
                         MapperNavigatorPopupStep navigatorsStep = new MapperNavigatorPopupStep(item, Arrays.asList(msRunnerNavigator, hotSwapNavigator));
-                        // 展示菜单
                         ListPopup listPopup = JBPopupFactory.getInstance().createListPopup(navigatorsStep);
                         NavigationUtil.hidePopupIfDumbModeStarts(listPopup, info.getElement().getProject());
                         listPopup.show(relativePoint);

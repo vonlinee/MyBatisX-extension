@@ -25,7 +25,6 @@ public class MissingCompatiableStatementBuilder extends XMLStatementBuilder {
     private MappedStatement lastMappedStatement;
 
     public MissingCompatiableStatementBuilder(Configuration configuration, XNode context, MapperBuilderAssistant builderAssistant) {
-        // mapper文件路径
         this(configuration, builderAssistant, context, null);
         this.context = context;
         this.builderAssistant = (MyMapperBuilderAssistant) builderAssistant;

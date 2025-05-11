@@ -1,21 +1,26 @@
 package com.baomidou.mybatisx.plugin.intention;
 
-import com.baomidou.mybatisx.model.ParamDataType;
 import com.baomidou.mybatisx.feat.mybatis.DefaultMappedStatementSqlBuilder;
 import com.baomidou.mybatisx.feat.mybatis.MappedStatementSqlBuilder;
+import com.baomidou.mybatisx.model.ParamDataType;
 import com.baomidou.mybatisx.util.DomUtils;
 import com.baomidou.mybatisx.util.IntellijSDK;
 import com.baomidou.mybatisx.util.SqlUtils;
 import com.baomidou.mybatisx.util.StringUtils;
 import com.baomidou.mybatisx.util.SwingUtils;
+import com.intellij.openapi.project.DumbAware;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.ui.DialogWrapper;
 import com.intellij.psi.PsiElement;
+import com.intellij.psi.PsiFile;
+import com.intellij.psi.xml.XmlDocument;
+import com.intellij.psi.xml.XmlFile;
 import com.intellij.psi.xml.XmlTag;
 import com.intellij.ui.JBSplitter;
 import com.intellij.util.ui.JBUI;
 import org.apache.ibatis.mapping.MappedStatement;
 import org.apache.ibatis.session.Configuration;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.mybatisx.extension.agent.mybatis.DynamicMyBatisConfiguration;
 import org.mybatisx.extension.agent.mybatis.MapperStatementParser;
@@ -32,10 +37,11 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
-public class MappedStatementDebuggerDialog extends DialogWrapper {
+public class MyBatisSqlPreviewDialog extends DialogWrapper implements DumbAware {
 
-    private final XmlTag mapperStatementXmlTag;
+    private XmlTag mapperStatementXmlTag;
     MapperStatementEditor textField;
     ResultSqlEditor resultSqlEditor;
     MapperStatementParamTablePane table;
@@ -50,13 +56,18 @@ public class MappedStatementDebuggerDialog extends DialogWrapper {
     private JPanel mainPanel;
     private String namespace;
 
-    public MappedStatementDebuggerDialog(@Nullable Project project, String namespace, XmlTag mapperStatementXmlTag) {
+    public MyBatisSqlPreviewDialog(@Nullable Project project, String namespace, XmlTag mapperStatementXmlTag) {
         super(project);
         this.project = project;
         this.mapperStatementXmlTag = mapperStatementXmlTag;
         setModal(false);
+        setAutoAdjustable(true);
+        setCrossClosesWindow(true);
         this.initPanel(project, namespace);
-        textField.setText(mapperStatementXmlTag.getText());
+        this.namespace = namespace;
+
+        // handle sql include
+        textField.setText(getText(mapperStatementXmlTag));
         this.configuration = new DynamicMyBatisConfiguration(new Configuration());
         this.assistant = new MyMapperBuilderAssistant(this.configuration, null);
     }
@@ -114,7 +125,7 @@ public class MappedStatementDebuggerDialog extends DialogWrapper {
     }
 
     private void initPanel(Project project, String namespace) {
-        this.setTitle("Mapped Statement Sql Debugger");
+        this.setTitle("Mapped Statement Sql Preview");
         setOKButtonText("Next");
         setCancelButtonText("Cancel");
         this.mainPanel = new JPanel(new BorderLayout());
@@ -160,7 +171,7 @@ public class MappedStatementDebuggerDialog extends DialogWrapper {
         init();
         // 弹窗根容器的宽度和高度
         // 使用 setSize 设置无效
-        this.mainPanel.setPreferredSize(SwingUtils.getScreenBasedDimension(0.5));
+        this.mainPanel.setPreferredSize(SwingUtils.getScreenBasedDimension(0.7));
     }
 
     /**
@@ -222,5 +233,94 @@ public class MappedStatementDebuggerDialog extends DialogWrapper {
     public void fillParams(PsiElement element, Map<String, ParamDataType> paramNodeMap) {
         MappedStatementParamGetter getter = new DefaultMappedStatementParamGetter();
         getter.getParams(element, paramNodeMap);
+    }
+
+    /**
+     * handle <include ref='xxx'></include>
+     *
+     * @param mapperStatementXmlTag mapper statement xml psi element
+     * @return string
+     */
+    public String getText(@NotNull XmlTag mapperStatementXmlTag) {
+        XmlTag copy = (XmlTag) mapperStatementXmlTag.copy();
+        this.mapperStatementXmlTag = copy;
+        PsiFile containingFile = mapperStatementXmlTag.getContainingFile();
+        if (containingFile instanceof XmlFile) {
+            XmlDocument document = ((XmlFile) containingFile).getDocument();
+            recursiveReplace(copy, document);
+        }
+
+        final String text = copy.getText();
+        // remove <sql>
+
+        int fromIndex = 0;
+        StringBuilder sb = new StringBuilder();
+        while (fromIndex < text.length()) {
+            int start = text.indexOf("<sql", fromIndex);
+            if (start > 0) {
+                sb.append(text, fromIndex, start);
+                for (int i = start; i < text.length(); i++) {
+                    if (text.charAt(i) == '>') {
+                        fromIndex = i + 1;
+                        break;
+                    }
+                }
+
+                // '</sql >' has no errors in xml validation, but '</ sql' is not allowed,  so we search '</sql'
+                int i = text.indexOf("</sql", fromIndex);
+                if (i > 0) { // should be true
+                    sb.append(text, fromIndex, i);
+                    fromIndex = i + 5;
+                    for (int j = fromIndex; j < text.length(); j++) {
+                        if (text.charAt(j) == '>') {
+                            fromIndex = j + 1;
+                            break;
+                        }
+                    }
+                }
+            } else {
+                break;
+            }
+        }
+
+        if (fromIndex < text.length()) {
+            sb.append(text, fromIndex, text.length());
+        }
+
+        return sb.toString();
+    }
+
+    private void recursiveReplace(PsiElement element, XmlDocument document) {
+        if (!(element instanceof XmlTag)) {
+            return;
+        }
+        XmlTag xmlTag = (XmlTag) element;
+        if ("include".equals(xmlTag.getName())) {
+            String refid = xmlTag.getAttributeValue("refid");
+            XmlTag rootTag = document.getRootTag();
+            if (rootTag == null) {
+                return;
+            }
+            XmlTag[] sqlTags = rootTag.findSubTags("sql");
+            XmlTag sqlElement = null;
+            for (XmlTag sqlTag : sqlTags) {
+                if (Objects.equals(sqlTag.getAttributeValue("id"), refid)) {
+                    sqlElement = sqlTag;
+                }
+            }
+            if (sqlElement != null) {
+                // replace <include/> with <sql/>
+
+                // note: there will be some text of the tag <sql id='xxx'/> in the final text
+                xmlTag.replace(sqlElement);
+            }
+            return;
+        }
+        if (xmlTag.isEmpty()) {
+            return;
+        }
+        for (PsiElement child : xmlTag.getChildren()) {
+            recursiveReplace(child, document);
+        }
     }
 }

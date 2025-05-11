@@ -9,64 +9,55 @@ import com.baomidou.mybatisx.dom.model.Update;
 import com.baomidou.mybatisx.util.Icons;
 import com.baomidou.mybatisx.util.JavaUtils;
 import com.baomidou.mybatisx.util.MapperUtils;
-import com.baomidou.mybatisx.util.StringUtils;
-import com.intellij.codeInsight.daemon.LineMarkerInfo;
-import com.intellij.codeInsight.daemon.LineMarkerProviderDescriptor;
+import com.google.common.collect.ImmutableSet;
+import com.intellij.psi.PsiClass;
 import com.intellij.psi.PsiElement;
+import com.intellij.psi.PsiMethod;
 import com.intellij.psi.PsiWhiteSpace;
 import com.intellij.psi.xml.XmlTag;
 import com.intellij.psi.xml.XmlToken;
 import com.intellij.util.xml.DomElement;
 import com.intellij.util.xml.DomUtil;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+import org.springframework.util.StringUtils;
 
 import javax.swing.*;
-import java.util.Set;
-import java.util.*;
+import java.util.Optional;
 
 /**
- * Xml Mapper 文件中增删改查标记
+ * The type Statement line marker provider.
+ *
+ * @author yanglin
  */
-public class MyBatisMapperStatementLineMarkerProvider extends LineMarkerProviderDescriptor {
+public class StatementLineMarkerProvider extends SimpleLineMarkerProvider<XmlToken, PsiElement> {
 
     private static final String MAPPER_CLASS = Mapper.class.getSimpleName().toLowerCase();
-    private static final Set<String> TARGET_TYPES = Set.of(Select.class.getSimpleName().toLowerCase(), Insert.class.getSimpleName().toLowerCase(), Update.class.getSimpleName().toLowerCase(), Delete.class.getSimpleName().toLowerCase());
+    private static final ImmutableSet<String> TARGET_TYPES = ImmutableSet.of(
+        Select.class.getSimpleName().toLowerCase(),
+        Insert.class.getSimpleName().toLowerCase(),
+        Update.class.getSimpleName().toLowerCase(),
+        Delete.class.getSimpleName().toLowerCase()
+    );
 
-    /**
-     * @param psiElement XmlToken
-     * @return LineMarkerInfo
-     */
     @Override
-    public LineMarkerInfo<?> getLineMarkerInfo(@NotNull PsiElement psiElement) {
-        if (!isTheElement(psiElement)) {
-            return null;
-        }
-        Optional<? extends PsiElement[]> processResult = getTargets(psiElement);
-        if (!processResult.isPresent()) {
-            return null;
-        }
-        return processResult.map(psiElements -> new MapperLineMarkerInfo(psiElement, getIcon(), psiElements)).orElse(null);
+    public boolean isTheElement(@NotNull PsiElement element) {
+        return element instanceof XmlToken
+               && isTargetType((XmlToken) element)
+               && MapperUtils.isElementWithinMybatisFile(element);
     }
 
     @Override
-    public String getName() {
-        return getClass().getName();
-    }
-
-    @NotNull
-    @Override
-    public Icon getIcon() {
-        return Icons.STATEMENT_LINE_MARKER_ICON;
-    }
-
-    public Optional<? extends PsiElement[]> getTargets(@NotNull PsiElement from) {
+    public Optional<? extends PsiElement[]> apply(@NotNull XmlToken from) {
         DomElement domElement = DomUtil.getDomElement(from);
         if (null == domElement) {
             return Optional.empty();
-        } else if (domElement instanceof IdDomElement) { // 方法
+        }
+        // 方法
+        else if (domElement instanceof IdDomElement) {
             return JavaUtils.findMethods(from.getProject(),
-                    MapperUtils.getNamespace(domElement),
-                    MapperUtils.getId((IdDomElement) domElement));
+                MapperUtils.getNamespace(domElement),
+                MapperUtils.getId((IdDomElement) domElement));
         } else {
             XmlTag xmlTag = domElement.getXmlTag();
             if (xmlTag == null) {
@@ -80,14 +71,8 @@ public class MyBatisMapperStatementLineMarkerProvider extends LineMarkerProvider
         }
     }
 
-    public boolean isTheElement(@NotNull PsiElement element) {
-        return element instanceof XmlToken
-               && isTargetType((XmlToken) element)
-               && MapperUtils.isElementWithinMybatisFile(element);
-    }
-
     private boolean isTargetType(@NotNull XmlToken token) {
-        boolean targetType = false;
+        Boolean targetType = null;
         if (MAPPER_CLASS.equals(token.getText())) {
             // 判断当前元素是开始节点
             PsiElement nextSibling = token.getNextSibling();
@@ -95,7 +80,7 @@ public class MyBatisMapperStatementLineMarkerProvider extends LineMarkerProvider
                 targetType = true;
             }
         }
-        if (!targetType) {
+        if (targetType == null) {
             if (TARGET_TYPES.contains(token.getText())) {
                 PsiElement parent = token.getParent();
                 // 判断当前节点是标签
@@ -108,6 +93,46 @@ public class MyBatisMapperStatementLineMarkerProvider extends LineMarkerProvider
                 }
             }
         }
+        if (targetType == null) {
+            targetType = false;
+        }
         return targetType;
+
     }
+
+
+    @Override
+    public @Nullable("null means disabled")
+    String getName() {
+        return "Statement line marker";
+    }
+
+    @NotNull
+    @Override
+    public Icon getIcon() {
+        return Icons.MAPPER_LINE_MARKER_ICON;
+    }
+
+
+    @Override
+    @NotNull
+    public String getTooltip(PsiElement element, @NotNull PsiElement target) {
+        String text = null;
+        if (element instanceof PsiMethod) {
+            PsiMethod psiMethod = (PsiMethod) element;
+            PsiClass containingClass = psiMethod.getContainingClass();
+            if (containingClass != null) {
+                text = containingClass.getName() + "#" + psiMethod.getName();
+            }
+        }
+        if (text == null && element instanceof PsiClass) {
+            PsiClass psiClass = (PsiClass) element;
+            text = psiClass.getQualifiedName();
+        }
+        if (text == null) {
+            text = target.getContainingFile().getText();
+        }
+        return "Data access object found - " + text;
+    }
+
 }

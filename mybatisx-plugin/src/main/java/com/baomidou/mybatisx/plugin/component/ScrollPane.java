@@ -12,4 +12,8 @@ public class ScrollPane extends JBScrollPane {
     public ScrollPane(Component view) {
         super(view);
     }
+
+    public void setContent(Component component) {
+        this.getViewport().setView(component);
+    }
 }

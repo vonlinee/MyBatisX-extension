@@ -50,6 +50,7 @@ public interface Icons {
 
     Icon PLUGIN_ICON = IconLoader.getIcon("/icon/pluginIcon.svg", Icons.class);
     Icon GUTTER_RUN_ICON = IconLoader.getIcon("/icons/run.svg", Icons.class);
+    Icon GUTTER_RUN_ICON_OLD = IconLoader.getIcon("/icons/run_old.svg", Icons.class);
     Icon GUTTER_HOT_SWAP_ICON = IconLoader.getIcon("/icons/swap.svg", Icons.class);
     Icon ICON_COPY = IconLoader.getIcon("/icons/copy.svg", Icons.class);
 }

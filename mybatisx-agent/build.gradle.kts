@@ -6,6 +6,8 @@ repositories {
     mavenCentral()
 }
 
+val mybatisVersion = "3.6.0-SNAPSHOT"
+
 dependencies {
 
     compileOnly("org.mybatis.spring.boot:mybatis-spring-boot-starter:2.3.0")
@@ -15,6 +17,9 @@ dependencies {
     compileOnly("org.mybatis:mybatis:3.5.16")
     // https://mvnrepository.com/artifact/org.jetbrains/annotations
     compileOnly("org.jetbrains:annotations:24.1.0")
+
+    // local pack for this plugin
+    // implementation("org.mybatis:mybatis3-embed-plugin-support:${mybatisVersion}")
 
     testImplementation("org.mybatis.spring.boot:mybatis-spring-boot-starter:2.3.0")
 

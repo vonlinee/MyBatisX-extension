@@ -27,6 +27,10 @@ public class TreeView<T> extends Tree {
         root.add(newChild);
     }
 
+    public final void addChild(T item) {
+        this.getTreeModel().addChild(item);
+    }
+
     @Override
     public void setRootVisible(boolean rootVisible) {
         if (rootVisible) {

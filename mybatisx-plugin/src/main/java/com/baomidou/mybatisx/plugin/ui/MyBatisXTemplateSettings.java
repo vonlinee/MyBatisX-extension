@@ -10,6 +10,7 @@ import com.intellij.ui.AnActionButtonRunnable;
 import com.intellij.ui.ToolbarDecorator;
 import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.util.PlatformIcons;
+import lombok.Getter;
 import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -30,6 +31,7 @@ public class MyBatisXTemplateSettings {
     private static final Logger logger = LoggerFactory.getLogger(MyBatisXTemplateSettings.class);
     private JTextField packageNameTextField;
     private JTextField fieldNameTextField;
+    @Getter
     private JPanel rootPanel;
     private JPanel configPanel;
     private JTextField suffixTextField;
@@ -63,10 +65,6 @@ public class MyBatisXTemplateSettings {
         tree.expandPath(path);
     }
 
-    public JPanel getRootPanel() {
-        return rootPanel;
-    }
-
     public void loadBySettings(TemplatesSettings templatesSettings) {
         TemplateContext templateContext = templatesSettings.getTemplateContext();
         // 第一个版本只有一个不可更改的配置, 这里直接取默认就可以了
@@ -92,16 +90,10 @@ public class MyBatisXTemplateSettings {
         GridConstraints gridConstraints = new GridConstraints();
         gridConstraints.setFill(GridConstraints.FILL_VERTICAL | GridConstraints.ALIGN_LEFT);
         gridConstraints.setHSizePolicy(GridConstraints.SIZEPOLICY_FIXED);
-        rootPanel.add(ToolbarDecorator.createDecorator(configTree).setAddAction(new AnActionButtonRunnable() {
-                    @Override
-                    public void run(AnActionButton anActionButton) {
+        rootPanel.add(ToolbarDecorator.createDecorator(configTree).setAddAction(anActionButton -> {
 
-                    }
-                }).setRemoveAction(new AnActionButtonRunnable() {
-                    @Override
-                    public void run(AnActionButton anActionButton) {
+        }).setRemoveAction(anActionButton -> {
 
-                    }
                 }).addExtraAction(new CopyAction())
                 .setPreferredSize(new Dimension(220, -1))
                 .createPanel(),

@@ -127,7 +127,6 @@ public class DefaultMappedStatementParamGetter implements MappedStatementParamGe
             XmlAttribute attribute = (XmlAttribute) element;
             if (attribute.getValue() != null) {
                 String attributeName = attribute.getName();
-                // 条件表达式
                 if ("test".equals(attributeName) || "when".equals(attributeName)) {
                     parseVariableNameFromAttributeValue(attribute.getValue(), paramMap, false);
                 }

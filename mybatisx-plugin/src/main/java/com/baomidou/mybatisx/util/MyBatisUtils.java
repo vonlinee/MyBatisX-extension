@@ -13,6 +13,8 @@ import com.intellij.psi.xml.XmlTag;
  */
 public final class MyBatisUtils {
 
+    public static final String NAMESPACE = "namespace";
+
     /**
      * The constant DOT_SEPARATOR.
      */
@@ -26,8 +28,8 @@ public final class MyBatisUtils {
         throw new UnsupportedOperationException();
     }
 
-    public static boolean isCrudXmlTag(String text) {
-        return "select".equals(text) || "insert".equals(text) || "update".equals(text) || "delete".equals(text);
+    public static boolean isCrudXmlTag(String tagName) {
+        return "select".equals(tagName) || "insert".equals(tagName) || "update".equals(tagName) || "delete".equals(tagName);
     }
 
     public static String getNamespace(XmlElement xmlElement) {
