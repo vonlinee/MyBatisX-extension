@@ -10,19 +10,13 @@ import com.intellij.psi.xml.XmlText;
 import com.intellij.psi.xml.XmlToken;
 import org.apache.xmlbeans.xml.stream.XMLName;
 
+import java.util.List;
 import java.util.Map;
-import java.util.Objects;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /**
  * 根据XML标签的内容进行参数提取
  */
 public class DefaultMappedStatementParamGetter implements MappedStatementParamGetter {
-  /**
-   * 正则表达式匹配 ${...} 或 #{...} 中的内容
-   */
-  private static final Pattern pattern = Pattern.compile("\\$\\{(.*?)}|#\\{(.*?)}");
 
   /**
    * 从属性中解析变量，普通字符串，不使用
@@ -133,38 +127,12 @@ public class DefaultMappedStatementParamGetter implements MappedStatementParamGe
       }
     } else if (element instanceof XmlText) {
       XmlText text = (XmlText) element;
-      parseVariableReference(text.getText(), paramMap, parent);
-    }
-  }
 
-  // TODO 类型推断
-  public void parseVariableReference(String text, Map<String, ParamDataType> paramMap, XmlElement parent) {
+      ParameterCollector handler = new ParameterCollector();
+      List<Parameter> parameters = handler.collect(text.getText());
 
-    String itemName = null;
-    if (parent instanceof XmlTag) {
-      XmlTag tag = (XmlTag) parent;
-      if ("foreach".equals(tag.getName())) {
-        // item 属性不作为变量名
-        itemName = DomUtils.getAttributeValue(tag, "item");
-      }
-    }
-
-    Matcher matcher = pattern.matcher(text);
-    while (matcher.find()) {
-      // matcher.group(1) 会返回第一个括号内的内容，即变量名
-      for (int i = 0; i < matcher.groupCount(); i++) {
-        String variable = matcher.group(i);
-        if (variable == null) {
-          continue;
-        }
-        // 去掉一个字符串前后的除数字和字母外的字符
-        variable = variable.replaceAll("^[^a-zA-Z0-9]+|[^a-zA-Z0-9]+$", "");
-
-        if (itemName != null && Objects.equals(variable, itemName)) {
-          continue;
-        }
-
-        paramMap.put(variable, ParamDataType.STRING);
+      for (Parameter parameter : parameters) {
+        paramMap.put(parameter.getProperty(), ParamDataType.STRING);
       }
     }
   }

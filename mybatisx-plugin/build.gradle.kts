@@ -1,4 +1,5 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+import java.nio.charset.StandardCharsets
 
 buildscript {
   repositories {
@@ -103,5 +104,5 @@ tasks.withType<KotlinCompile> {
 }
 
 tasks.withType<JavaCompile> {
-  options.encoding = "UTF-8"
+  options.encoding = StandardCharsets.UTF_8.name()
 }

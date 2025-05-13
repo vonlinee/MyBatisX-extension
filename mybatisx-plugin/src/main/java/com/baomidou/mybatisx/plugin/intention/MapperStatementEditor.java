@@ -75,7 +75,7 @@ public class MapperStatementEditor extends LanguageTextField {
       }
     }, ((EditorImpl) editor).getDisposable());
 
-    editor.setHighlighter(createHighlighter());
+    // editor.setHighlighter(createHighlighter());
 
     return editor;
   }
