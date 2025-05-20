@@ -10,6 +10,8 @@ import org.jetbrains.annotations.NotNull;
 public class ResultSqlEditor extends EditorTextField {
   public ResultSqlEditor(Project project) {
     super(project, SqlFileType.INSTANCE);
+    this.setOneLineMode(false);
+    this.setEnabled(true);
   }
 
   @Override

@@ -6,3 +6,5 @@ idea-sandbox
 .gradle/
 .idea
 *.iml
+
+mybatis-plugin-support-3.5.20-SNAPSHOT.jar

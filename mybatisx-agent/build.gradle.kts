@@ -1,20 +1,18 @@
+import javax.xml.parsers.DocumentBuilderFactory
+
 plugins {
   `java-library`
 }
 
 repositories {
   mavenCentral()
+  mavenLocal()
 }
 
 val mybatisVersion = "3.6.0-SNAPSHOT"
 
 dependencies {
 
-  compileOnly("org.mybatis.spring.boot:mybatis-spring-boot-starter:2.3.0")
-
-  // https://mvnrepository.com/artifact/org.mybatis/mybatis
-  // mybatis 内部提供了 javassist 库
-  compileOnly("org.mybatis:mybatis:3.5.16")
   // https://mvnrepository.com/artifact/org.jetbrains/annotations
   compileOnly("org.jetbrains:annotations:24.1.0")
 
@@ -25,6 +23,8 @@ dependencies {
 
   // https://mvnrepository.com/artifact/org.javassist/javassist
   implementation(project(":agent-api"))
+
+  implementation(files("${rootDir}/libs/mybatis-plugin-support-3.5.20-SNAPSHOT.jar"))
 }
 
 // 设置兼容性版本

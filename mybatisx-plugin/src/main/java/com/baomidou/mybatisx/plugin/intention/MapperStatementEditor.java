@@ -2,6 +2,7 @@ package com.baomidou.mybatisx.plugin.intention;
 
 import com.intellij.ide.fileTemplates.impl.FileTemplateHighlighter;
 import com.intellij.ide.highlighter.XmlFileType;
+import com.intellij.lang.ASTNode;
 import com.intellij.lang.Language;
 import com.intellij.lang.xml.XMLLanguage;
 import com.intellij.openapi.editor.Document;
@@ -21,15 +22,23 @@ import com.intellij.openapi.fileTypes.SyntaxHighlighter;
 import com.intellij.openapi.fileTypes.SyntaxHighlighterFactory;
 import com.intellij.openapi.project.Project;
 import com.intellij.psi.PsiDocumentManager;
+import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiFile;
+import com.intellij.psi.impl.source.tree.AstBufferUtil;
+import com.intellij.psi.impl.source.tree.CompositeElement;
+import com.intellij.psi.impl.source.tree.LeafElement;
+import com.intellij.psi.impl.source.tree.TreeElement;
 import com.intellij.psi.tree.IElementType;
 import com.intellij.psi.xml.XmlDocument;
 import com.intellij.psi.xml.XmlElement;
 import com.intellij.psi.xml.XmlFile;
+import com.intellij.psi.xml.XmlTag;
 import com.intellij.ui.HorizontalScrollBarEditorCustomization;
 import com.intellij.ui.LanguageTextField;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+
+import java.util.Objects;
 
 /**
  * @see com.intellij.ui.LanguageTextField
@@ -44,10 +53,8 @@ public class MapperStatementEditor extends LanguageTextField {
 
   public MapperStatementEditor(Project project) {
     super(XMLLanguage.INSTANCE, project, "");
-  }
-
-  public MapperStatementEditor() {
-    super(XMLLanguage.INSTANCE, null, "");
+    this.setOneLineMode(false);
+    this.setEnabled(true);
   }
 
   @Override
@@ -102,11 +109,98 @@ public class MapperStatementEditor extends LanguageTextField {
     myModified = true;
   }
 
-  public void updateStatement(@NotNull XmlElement statement) {
+  public void updateStatement(@NotNull XmlTag statement) {
     this.mapperFile = (XmlFile) statement.getContainingFile();
     this.element = statement;
     this.mapperFileDocument = mapperFile.getDocument();
 
-    setText(statement.getText());
+    setText(getText(statement));
+  }
+
+  /**
+   * handle <include ref='xxx'></include>
+   *
+   * @param copy mapper statement xml psi element
+   * @return string
+   */
+  private String getText(@NotNull XmlTag copy) {
+    PsiFile containingFile = copy.getContainingFile();
+    if (containingFile instanceof XmlFile) {
+      XmlDocument document = ((XmlFile) containingFile).getDocument();
+      recursiveReplace(copy, document);
+    }
+
+    final String text = copy.getText();
+    // remove <sql>
+
+    int fromIndex = 0;
+    StringBuilder sb = new StringBuilder();
+    while (fromIndex < text.length()) {
+      int start = text.indexOf("<sql", fromIndex);
+      if (start > 0) {
+        sb.append(text, fromIndex, start);
+        for (int i = start; i < text.length(); i++) {
+          if (text.charAt(i) == '>') {
+            fromIndex = i + 1;
+            break;
+          }
+        }
+
+        // '</sql >' has no errors in xml validation, but '</ sql' is not allowed,  so we search '</sql'
+        int i = text.indexOf("</sql", fromIndex);
+        if (i > 0) { // should be true
+          sb.append(text, fromIndex, i);
+          fromIndex = i + 5;
+          for (int j = fromIndex; j < text.length(); j++) {
+            if (text.charAt(j) == '>') {
+              fromIndex = j + 1;
+              break;
+            }
+          }
+        }
+      } else {
+        break;
+      }
+    }
+
+    if (fromIndex < text.length()) {
+      sb.append(text, fromIndex, text.length());
+    }
+
+    return sb.toString();
+  }
+
+  private void recursiveReplace(PsiElement element, XmlDocument document) {
+    if (!(element instanceof XmlTag)) {
+      return;
+    }
+    XmlTag xmlTag = (XmlTag) element;
+    if ("include".equals(xmlTag.getName())) {
+      String refid = xmlTag.getAttributeValue("refid");
+      XmlTag rootTag = document.getRootTag();
+      if (rootTag == null) {
+        return;
+      }
+      XmlTag[] sqlTags = rootTag.findSubTags("sql");
+      XmlTag sqlElement = null;
+      for (XmlTag sqlTag : sqlTags) {
+        if (Objects.equals(sqlTag.getAttributeValue("id"), refid)) {
+          sqlElement = sqlTag;
+        }
+      }
+      if (sqlElement != null) {
+        // replace <include/> with <sql/>
+
+        // note: there will be some text of the tag <sql id='xxx'/> in the final text
+        xmlTag.replace(sqlElement);
+      }
+      return;
+    }
+    if (xmlTag.isEmpty()) {
+      return;
+    }
+    for (PsiElement child : xmlTag.getChildren()) {
+      recursiveReplace(child, document);
+    }
   }
 }

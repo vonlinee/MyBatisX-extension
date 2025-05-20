@@ -141,7 +141,7 @@ public class MissingCompatiableStatementBuilder extends XMLStatementBuilder {
     return ms;
   }
 
-  private void processSelectKeyNodes(String id, Class<?> parameterTypeClass, LanguageDriver langDriver) {
+  protected void processSelectKeyNodes(String id, Class<?> parameterTypeClass, LanguageDriver langDriver) {
     List<XNode> selectKeyNodes = context.evalNodes("selectKey");
     if (configuration.getDatabaseId() != null) {
       parseSelectKeyNodes(id, selectKeyNodes, parameterTypeClass, langDriver, configuration.getDatabaseId());
@@ -150,7 +150,7 @@ public class MissingCompatiableStatementBuilder extends XMLStatementBuilder {
     removeSelectKeyNodes(selectKeyNodes);
   }
 
-  private void parseSelectKeyNodes(String parentId, List<XNode> list, Class<?> parameterTypeClass,
+  protected void parseSelectKeyNodes(String parentId, List<XNode> list, Class<?> parameterTypeClass,
                                    LanguageDriver langDriver, String skRequiredDatabaseId) {
     for (XNode nodeToHandle : list) {
       String id = parentId + SelectKeyGenerator.SELECT_KEY_SUFFIX;
@@ -161,7 +161,7 @@ public class MissingCompatiableStatementBuilder extends XMLStatementBuilder {
     }
   }
 
-  private void parseSelectKeyNode(String id, XNode nodeToHandle, Class<?> parameterTypeClass, LanguageDriver langDriver,
+  protected void parseSelectKeyNode(String id, XNode nodeToHandle, Class<?> parameterTypeClass, LanguageDriver langDriver,
                                   String databaseId) {
     String resultType = nodeToHandle.getStringAttribute("resultType");
     Class<?> resultTypeClass = resolveClass(resultType);
@@ -195,7 +195,7 @@ public class MissingCompatiableStatementBuilder extends XMLStatementBuilder {
     configuration.addKeyGenerator(id, new SelectKeyGenerator(keyStatement, executeBefore));
   }
 
-  private boolean databaseIdMatchesCurrent(String id, String databaseId, String requiredDatabaseId) {
+  protected boolean databaseIdMatchesCurrent(String id, String databaseId, String requiredDatabaseId) {
     if (requiredDatabaseId != null) {
       return requiredDatabaseId.equals(databaseId);
     }
@@ -212,7 +212,7 @@ public class MissingCompatiableStatementBuilder extends XMLStatementBuilder {
   }
 
 
-  private void removeSelectKeyNodes(List<XNode> selectKeyNodes) {
+  protected void removeSelectKeyNodes(List<XNode> selectKeyNodes) {
     for (XNode nodeToHandle : selectKeyNodes) {
       nodeToHandle.getParent().getNode().removeChild(nodeToHandle.getNode());
     }
@@ -222,7 +222,7 @@ public class MissingCompatiableStatementBuilder extends XMLStatementBuilder {
     return lastMappedStatement;
   }
 
-  private LanguageDriver getLanguageDriver(String lang) {
+  protected LanguageDriver getLanguageDriver(String lang) {
     Class<? extends LanguageDriver> langClass = null;
     if (lang != null) {
       langClass = resolveClass(lang);

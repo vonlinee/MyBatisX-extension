@@ -40,7 +40,6 @@ dependencies {
   implementation("com.softwareloop:mybatis-generator-lombok-plugin:1.0")
   implementation("uk.com.robust-it:cloning:1.9.2")
   implementation("org.mybatis.generator:mybatis-generator-core:1.4.0")
-  implementation("org.mybatis:mybatis:3.5.16")
   implementation("org.freemarker:freemarker:2.3.30")
   implementation("com.itranswarp:compiler:1.0")
   testImplementation("junit:junit:4.13.1")
@@ -50,9 +49,7 @@ dependencies {
   testImplementation("org.junit.jupiter:junit-jupiter-api:5.6.0")
   testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine")
 
-  implementation("org.apache.commons:commons-lang3:3.11")
   implementation("com.google.guava:guava:33.2.1-jre")
-  implementation("org.springframework:spring-web:5.2.12.RELEASE")
   implementation("org.apache.httpcomponents:httpclient:4.5.7")
   implementation("com.tencentcloudapi:tencentcloud-sdk-java:3.1.210")
 
@@ -63,6 +60,7 @@ dependencies {
   implementation(project(":agent-api"))
   implementation(project(":mybatisx-agent"))
   implementation(files("${rootDir}/tools.jar"))
+  implementation(files("${rootDir}/libs/mybatis-plugin-support-3.5.20-SNAPSHOT.jar"))
 }
 
 // See https://github.com/JetBrains/gradle-intellij-plugin/

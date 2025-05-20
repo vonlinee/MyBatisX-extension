@@ -9,6 +9,7 @@ import com.baomidou.mybatisx.dom.model.Update;
 import com.baomidou.mybatisx.util.Icons;
 import com.baomidou.mybatisx.util.JavaUtils;
 import com.baomidou.mybatisx.util.MapperUtils;
+import com.baomidou.mybatisx.util.StringUtils;
 import com.google.common.collect.ImmutableSet;
 import com.intellij.psi.PsiClass;
 import com.intellij.psi.PsiElement;
@@ -20,7 +21,6 @@ import com.intellij.util.xml.DomElement;
 import com.intellij.util.xml.DomUtil;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import org.springframework.util.StringUtils;
 
 import javax.swing.*;
 import java.util.Optional;

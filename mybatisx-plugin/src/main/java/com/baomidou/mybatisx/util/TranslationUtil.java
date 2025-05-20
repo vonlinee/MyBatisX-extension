@@ -6,7 +6,6 @@ import com.baomidou.mybatisx.service.BaiduTranslationService;
 import com.baomidou.mybatisx.service.TencentTranslationService;
 import com.baomidou.mybatisx.service.Translation;
 import com.baomidou.mybatisx.plugin.setting.OtherSetting;
-import org.springframework.util.CollectionUtils;
 
 import java.util.ArrayList;
 import java.util.HashMap;
