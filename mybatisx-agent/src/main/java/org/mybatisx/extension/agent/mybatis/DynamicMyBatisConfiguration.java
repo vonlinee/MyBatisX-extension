@@ -3,14 +3,13 @@ package org.mybatisx.extension.agent.mybatis;
 import org.apache.ibatis.builder.CacheRefResolver;
 import org.apache.ibatis.builder.ResultMapResolver;
 import org.apache.ibatis.builder.annotation.MethodResolver;
-import org.apache.ibatis.builder.xml.XMLStatementBuilder;
 import org.apache.ibatis.cache.Cache;
 import org.apache.ibatis.executor.keygen.KeyGenerator;
 import org.apache.ibatis.mapping.MappedStatement;
 import org.apache.ibatis.mapping.ParameterMap;
 import org.apache.ibatis.mapping.ResultMap;
 import org.apache.ibatis.plugin.Interceptor;
-import org.apache.ibatis.session.Configuration;
+import org.apache.ibatis.builder.Configuration;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -68,11 +67,6 @@ public class DynamicMyBatisConfiguration extends Configuration {
   @Override
   public synchronized void addCacheRef(String namespace, String referencedNamespace) {
     super.addCacheRef(namespace, referencedNamespace);
-  }
-
-  @Override
-  public synchronized void addIncompleteStatement(XMLStatementBuilder incompleteStatement) {
-    super.addIncompleteStatement(incompleteStatement);
   }
 
   @Override

@@ -14,6 +14,8 @@ import javax.swing.*;
 
 /**
  * 消息通知
+ *
+ * @see com.baomidou.mybatisx.util.Notifications
  */
 public abstract class MessageNotification {
 

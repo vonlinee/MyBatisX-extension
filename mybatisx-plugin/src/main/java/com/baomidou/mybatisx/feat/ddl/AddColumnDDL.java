@@ -8,6 +8,7 @@ import com.intellij.openapi.editor.Editor;
 import com.intellij.psi.PsiClass;
 import com.intellij.psi.PsiField;
 import com.intellij.psi.PsiFile;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -110,7 +111,7 @@ public class AddColumnDDL extends CreatorSupport {
    * @param e
    */
   @Override
-  public void update(AnActionEvent e) {
+  public void update(@NotNull AnActionEvent e) {
     super.update(e);
     // 获取当前编辑的文件, 通过PsiFile可获得PsiClass, PsiField等对象
     PsiFile psiFile = e.getData(LangDataKeys.PSI_FILE);

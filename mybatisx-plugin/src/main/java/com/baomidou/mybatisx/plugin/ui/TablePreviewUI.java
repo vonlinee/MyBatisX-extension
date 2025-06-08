@@ -5,7 +5,7 @@ import com.baomidou.mybatisx.feat.generate.NamingStrategy;
 import com.baomidou.mybatisx.feat.generate.dto.DomainInfo;
 import com.baomidou.mybatisx.feat.generate.dto.GenerateConfig;
 import com.baomidou.mybatisx.feat.generate.dto.TableUIInfo;
-import com.baomidou.mybatisx.util.IdeSDK;
+import com.baomidou.mybatisx.util.IdeUtils;
 import com.baomidou.mybatisx.util.StringUtils;
 import com.intellij.database.psi.DbTable;
 import com.intellij.openapi.module.Module;
@@ -205,7 +205,7 @@ public class TablePreviewUI {
    * Project Structure > Module Settings
    */
   private void chooseModule(Project project) {
-    IdeSDK.chooseSingleModule(project).ifPresent(module -> {
+    IdeUtils.chooseSingleModule(project).ifPresent(module -> {
       chooseModulePath(module);
       moduleName = module.getName();
     });

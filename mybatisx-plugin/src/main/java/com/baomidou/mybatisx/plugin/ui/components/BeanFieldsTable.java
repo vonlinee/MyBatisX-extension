@@ -1,6 +1,7 @@
 package com.baomidou.mybatisx.plugin.ui.components;
 
 import com.baomidou.mybatisx.feat.bean.Field;
+import com.baomidou.mybatisx.plugin.ui.UIHelper;
 import com.baomidou.mybatisx.util.SwingUtils;
 import com.intellij.psi.PsiClass;
 import com.intellij.psi.PsiExpression;
@@ -120,7 +121,7 @@ public class BeanFieldsTable extends JScrollPane {
     }
 
     private void initButton() {
-      this.btnDelete = SwingUtils.newIconButton("delete.svg");
+      this.btnDelete = UIHelper.newIconButton("delete.svg");
       // 将边框外的上下左右空间设置为0
       this.btnDelete.setMargin(JBUI.emptyInsets());
       // 将标签中显示的文本和图标之间的间隔量设置为0
@@ -143,15 +144,16 @@ public class BeanFieldsTable extends JScrollPane {
           model.removeRow(selectedRow);
         }
       });
-      btnDelete.setPreferredSize(new Dimension(20, btnDelete.getPreferredSize().height)); // 设置按钮宽度为25
       // 设置按钮的边框为空
-      btnDelete.setBorder(BorderFactory.createEmptyBorder());
+      SwingUtils.setPreferredWidth(btnDelete, 20);
+      UIHelper.setEmptyBorder(btnDelete);
+
 
       btnDelete.setOpaque(true);
       btnDelete.setAlignmentX(JButton.CENTER_ALIGNMENT);
       btnDelete.setAlignmentY(JButton.CENTER_ALIGNMENT);
 
-      btnAdd = SwingUtils.newIconButton("copy.svg");
+      btnAdd = UIHelper.newIconButton("copy.svg");
       btnAdd.setIconTextGap(0);
       // 将边框外的上下左右空间设置为0
       btnAdd.setMargin(JBUI.emptyInsets());
@@ -163,8 +165,8 @@ public class BeanFieldsTable extends JScrollPane {
       // 除去边框
       btnAdd.setBorder(null);
       btnAdd.setOpaque(true);
-      btnAdd.setFocusPainted(false);//除去焦点的框
-      btnAdd.setContentAreaFilled(false);//除去默认的背景填充
+      btnAdd.setFocusPainted(false); // 除去焦点的框
+      btnAdd.setContentAreaFilled(false); // 除去默认的背景填充
       btnAdd.addActionListener(e -> {
         String[] rowValues = {null, null, null};
         DefaultTableModel model = (DefaultTableModel) fieldsTable.getModel();

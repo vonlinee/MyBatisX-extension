@@ -1,10 +1,9 @@
 <!-- Plugin Configuration File. Read more: https://plugins.jetbrains.com/docs/intellij/plugin-configuration-file.html -->
 <idea-plugin>
-  <!--插件id-->
   <id>com.baomidou.plugin.idea.mybatisx.extension</id>
   <name>MyBatisX-extension</name>
   <version>1.6.4</version>
-  <vendor email="jobob@qq.com" url="https://gitee.com/baomidou/MybatisX">MybatisX</vendor>
+  <vendor url="https://github.com/vonlinee/MyBatisX-extension">MyBatisX-extension</vendor>
 
   <description>It aims to realize the most convenient IDEA hot update plug-in, reduce user operation steps, and
     provide zero-configuration visual operation updates. Currently, hot updates of MapperXML and Java files are
@@ -19,7 +18,7 @@
   <resource-bundle>messages.messages</resource-bundle>
 
   <description><![CDATA[
-          MybatisX plugin
+          MyBatisX-extension plugin
           Features:
        <ul>
           <li>mapper and xml can jump back and forth</li>
@@ -27,8 +26,6 @@
           <li>mapper and xml support auto prompt like jpa (reference  MybatisCodeHelperPro)</li>
           <li>integrate mybatis generator Gui (copy from free mybatis plugin)</li>
       </ul>
-
-      QQ群号: 829161197
       ]]>
   </description>
 
@@ -42,7 +39,7 @@
       <ul>
           <li>fixed some bugs</li>
           <li>fixed advance tip for jpa</li>
-          <li>fixed xml generate for multi module</li>
+          <li>fixed xml generate for multiple module</li>
           <li>fixed alias scan for springboot</li>
       </ul>
       ]]>
@@ -190,36 +187,29 @@
     <!--提示动作 start-->
     <!-- 生成参数注解 @Param -->
     <intentionAction id="baomidou.GenerateParamAnnotationIntention">
-      <language>JAVA</language>
       <className>com.baomidou.mybatisx.plugin.intention.GenerateParamAnnotationIntention</className>
     </intentionAction>
     <!-- 通过方法名生成对应的 查询语句 -->
     <intentionAction id="baomidou.GenerateStatementIntention">
-      <language>JAVA</language>
       <className>com.baomidou.mybatisx.plugin.intention.GenerateStatementIntention</className>
     </intentionAction>
     <!-- 生成mybatis mapper.xml文件 -->
     <intentionAction order="first" id="baomidou.GenerateMapperIntention">
-      <language>JAVA</language>
       <className>com.baomidou.mybatisx.plugin.intention.GenerateMapperIntention</className>
     </intentionAction>
     <!-- mybatis mapper.xml 文件 提示 if test -->
     <intentionAction id="baomidou.MapperXmlIfTestHintIntention">
-      <language>XML</language>
       <className>com.baomidou.mybatisx.plugin.intention.MapperXmlIfTestHintIntention</className>
     </intentionAction>
     <!-- mybatis mapper.xml 文件 提示 foreach -->
     <intentionAction id="baomidou.MapperXmlForeachHintIntention">
-      <language>XML</language>
       <className>com.baomidou.mybatisx.plugin.intention.MapperXmlForeachHintIntention</className>
     </intentionAction>
     <!-- 根据jpa名字生成方法和xml文件内容 -->
     <intentionAction id="baomidou.GenerateMapperMethodSmartJpaAction">
-      <language>JAVA</language>
       <className>com.baomidou.mybatisx.feat.jpa.GenerateSmartJpaAction</className>
     </intentionAction>
     <intentionAction id="baomidou.GenerateMapperMethodSmartAdvanceJpaAction">
-      <language>JAVA</language>
       <className>com.baomidou.mybatisx.feat.jpa.GenerateSmartJpaAdvanceAction</className>
     </intentionAction>
     <!--提示动作 end-->
@@ -228,9 +218,9 @@
                               id="com.baomidou.mybatisx.plugin.provider.MapperXmlSqlRunLineMarkerContributor"
                               implementationClass="com.baomidou.mybatisx.plugin.provider.MapperXmlSqlRunLineMarkerContributor"/>
 
-    <!--        <toolWindow factoryClass="com.baomidou.mybatisx.plugin.provider.MyBatisToolWindowFactory"-->
-    <!--                    anchor="right"-->
-    <!--                    id="MyBatis"/>-->
+    <toolWindow factoryClass="com.baomidou.mybatisx.plugin.provider.MyBatisToolWindowFactory"
+                anchor="bottom"
+                id="MyBatis.ToolWindow"/>
 
     <!-- mybatis的xml和mapper类 文件图标都改成一只鸟-->
     <iconProvider id="baomidou.XmlAndMapperIconProvider"

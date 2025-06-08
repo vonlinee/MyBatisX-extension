@@ -1,7 +1,7 @@
 package org.mybatisx.extension.agent.service;
 
+import org.apache.ibatis.builder.Configuration;
 import org.apache.ibatis.mapping.MappedStatement;
-import org.apache.ibatis.session.Configuration;
 import org.mybatisx.extension.agent.api.Log;
 
 import java.lang.reflect.Field;

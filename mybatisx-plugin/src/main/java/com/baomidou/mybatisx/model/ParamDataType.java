@@ -1,5 +1,6 @@
 package com.baomidou.mybatisx.model;
 
+import com.baomidou.mybatisx.plugin.component.ComboBoxItem;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -13,7 +14,7 @@ import java.util.Map;
 /**
  * 参数数据类型定义
  */
-public enum ParamDataType {
+public enum ParamDataType implements ComboBoxItem {
 
   /**
    * 数值类型
@@ -240,11 +241,6 @@ public enum ParamDataType {
     return null;
   }
 
-  @NotNull
-  public String getLabel() {
-    return name();
-  }
-
   /**
    * 该类型是否是数据类型
    *
@@ -284,5 +280,20 @@ public enum ParamDataType {
    */
   public String decorate(String value) {
     return value;
+  }
+
+  @Override
+  public String getLabel() {
+    return name();
+  }
+
+  @Override
+  public Object getValue() {
+    return name();
+  }
+
+  @Override
+  public Class<?> getValueType() {
+    return String.class;
   }
 }

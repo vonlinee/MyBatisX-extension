@@ -1,10 +1,18 @@
 package com.baomidou.mybatisx.plugin.intention;
 
 import com.baomidou.mybatisx.model.ParamDataType;
+import lombok.Getter;
+import lombok.Setter;
+import org.apache.ibatis.mapping.ParameterMapping;
+import org.jetbrains.annotations.Nullable;
 
+import javax.swing.tree.DefaultMutableTreeNode;
+import java.util.ArrayList;
 import java.util.List;
 
-public class ParamNode {
+@Setter
+@Getter
+public class ParamNode extends DefaultMutableTreeNode {
 
   /**
    * 参数Key，嵌套形式，比如 user.name
@@ -17,11 +25,26 @@ public class ParamNode {
   private String value;
 
   /**
+   * jdbcType
+   */
+  private String jdbcType;
+
+  /**
    * 数据类型
    */
   private ParamDataType dataType;
 
+  /**
+   * 参数元数据
+   */
+  @Nullable
+  private ParameterMapping parameterMapping;
+
   private List<ParamNode> children;
+
+  public ParamNode() {
+    this(null, null, ParamDataType.UNKNOWN);
+  }
 
   public ParamNode(String key, String value, ParamDataType dataType) {
     this.key = key;
@@ -29,44 +52,26 @@ public class ParamNode {
     this.dataType = dataType;
   }
 
+  public boolean hasChildren() {
+    return children != null && !children.isEmpty();
+  }
+
+  public void addChild(ParamNode child) {
+    if (children == null) {
+      children = new ArrayList<>();
+    }
+    children.add(child);
+
+    add(child);
+  }
+
   @Override
   public String toString() {
     return key;
-  }
-
-  public String getKey() {
-    return key;
-  }
-
-  public void setKey(String key) {
-    this.key = key;
-  }
-
-  public String getValue() {
-    return value;
-  }
-
-  public void setValue(String value) {
-    this.value = value;
-  }
-
-  public ParamDataType getDataType() {
-    return dataType;
   }
 
   public void setDataType(String dataType) {
     this.dataType = ParamDataType.valueOf(dataType);
   }
 
-  public void setDataType(ParamDataType dataType) {
-    this.dataType = dataType;
-  }
-
-  public List<ParamNode> getChildren() {
-    return children;
-  }
-
-  public void setChildren(List<ParamNode> children) {
-    this.children = children;
-  }
 }

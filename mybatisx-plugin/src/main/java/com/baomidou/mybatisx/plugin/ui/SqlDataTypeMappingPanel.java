@@ -2,7 +2,7 @@ package com.baomidou.mybatisx.plugin.ui;
 
 import com.baomidou.mybatisx.feat.bean.SqlTypeComboBoxItem;
 import com.baomidou.mybatisx.feat.ddl.SqlTypeEnum;
-import com.baomidou.mybatisx.model.ComboBoxItem;
+import com.baomidou.mybatisx.plugin.component.ComboBoxItem;
 import com.baomidou.mybatisx.plugin.setting.OtherSetting;
 import com.baomidou.mybatisx.service.BaseTypeItemListener;
 import com.baomidou.mybatisx.util.IntellijSDK;
@@ -111,7 +111,7 @@ public class SqlDataTypeMappingPanel {
       @Override
       public void customize(@NotNull JList<? extends ComboBoxItem> list, ComboBoxItem value, int index, boolean selected, boolean hasFocus) {
         // 设置选项显示的文本
-        setText(value.getName());
+        setText(value.getLabel());
       }
     });
     for (SqlTypeEnum typeEnum : SqlTypeEnum.values()) {

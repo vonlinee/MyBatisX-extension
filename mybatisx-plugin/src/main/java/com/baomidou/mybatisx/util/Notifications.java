@@ -6,17 +6,19 @@ import com.intellij.notification.NotificationGroupManager;
 import com.intellij.notification.NotificationType;
 
 /**
- * 消息通知工具类
+ * 消息通知工具类: 在右下角提示
  */
 public final class Notifications {
 
   private Notifications() {
+
+
   }
 
   public static void notify(String content, NotificationType type) {
     NotificationGroupManager groupManager = NotificationGroupManager.getInstance();
     NotificationGroup notificationGroup = groupManager.getNotificationGroup("notifyAction");
-    Notification notification = notificationGroup.createNotification("[MyBatisX] " + content, type);
+    Notification notification = notificationGroup.createNotification("[" + PluginUtils.PLUGIN_NAME + "] " + content, type);
     com.intellij.notification.Notifications.Bus.notify(notification);
   }
 

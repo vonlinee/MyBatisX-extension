@@ -21,6 +21,7 @@ import com.intellij.psi.PsiJavaFile;
 import com.intellij.psi.PsiMethod;
 import com.intellij.psi.PsiModifier;
 import com.intellij.psi.search.GlobalSearchScope;
+import org.jetbrains.annotations.NotNull;
 
 import java.awt.*;
 import java.util.Objects;
@@ -69,7 +70,6 @@ public abstract class CreatorSupport extends AnAction {
     dialog.pack();
     dialog.setLocation((int) (screenSize.width * 0.5) - (int) (w * 0.5), (int) (screenSize.height * 0.5) - (int) (h * 0.5));
     dialog.setVisible(true);
-
   }
 
   /**
@@ -103,7 +103,7 @@ public abstract class CreatorSupport extends AnAction {
     String getterName = Convertor.getFieldGetterName(psiField.getName());
 
     //获得Getter方法名称后 通过名称获得方法对象数组  最后有个Boolean参数 我看API的源代码 原来是是否在父类里面找，不能写写注释吗真的是
-    PsiMethod[] getterMethods = psiField.getContainingClass().findMethodsByName(getterName, true);
+    PsiMethod[] getterMethods = Objects.requireNonNull(psiField.getContainingClass()).findMethodsByName(getterName, true);
 
     //如果有Getter方法 先去Getter方法 里面去获得annotation 信息并注入到tableField对象里面去
     if (getterMethods.length > 0) {
@@ -312,7 +312,7 @@ public abstract class CreatorSupport extends AnAction {
   }
 
   @Override
-  public void update(AnActionEvent e) {
+  public void update(@NotNull AnActionEvent e) {
     super.update(e);
     // 获取当前编辑的文件, 通过PsiFile可获得PsiClass, PsiField等对象
     PsiFile psiFile = e.getData(LangDataKeys.PSI_FILE);

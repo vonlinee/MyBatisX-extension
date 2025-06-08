@@ -1,11 +1,14 @@
 package com.baomidou.mybatisx.plugin.inspection;
 
-import com.baomidou.mybatisx.feat.mybatis.Annotation;
 import com.baomidou.mybatisx.dom.model.Select;
+import com.baomidou.mybatisx.feat.mybatis.Annotation;
 import com.baomidou.mybatisx.plugin.locator.MapperLocator;
-import com.baomidou.mybatisx.service.JavaService;
 import com.baomidou.mybatisx.plugin.setting.config.AbstractStatementGenerator;
+import com.baomidou.mybatisx.service.JavaService;
+import com.baomidou.mybatisx.util.IntellijSDK;
 import com.baomidou.mybatisx.util.JavaUtils;
+import com.baomidou.mybatisx.util.PsiUtils;
+import com.baomidou.mybatisx.util.StringUtils;
 import com.google.common.collect.Lists;
 import com.intellij.codeInspection.InspectionManager;
 import com.intellij.codeInspection.LocalQuickFix;
@@ -15,8 +18,6 @@ import com.intellij.psi.PsiAnnotation;
 import com.intellij.psi.PsiClass;
 import com.intellij.psi.PsiIdentifier;
 import com.intellij.psi.PsiMethod;
-import com.intellij.psi.PsiModifier;
-import com.intellij.psi.util.PsiTreeUtil;
 import com.intellij.util.xml.DomElement;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -36,7 +37,7 @@ import java.util.stream.Stream;
  */
 public class MapperMethodInspection extends MapperInspection {
 
-  public static final Set<String> MYBATIS_PLUS_BASE_MAPPER_NAMES = new HashSet<String>() {
+  public static final Set<String> MYBATIS_PLUS_BASE_MAPPER_NAMES = new HashSet<>() {
     {
       // mp3
       add("com.baomidou.mybatisplus.core.mapper.BaseMapper");
@@ -46,7 +47,7 @@ public class MapperMethodInspection extends MapperInspection {
   };
   public static final String MAP_KEY = "org.apache.ibatis.annotations.MapKey";
   public static final String MAP = "java.util.Map";
-  private static final Set<String> STATEMENT_PROVIDER_NAMES = new HashSet<String>() {
+  private static final Set<String> STATEMENT_PROVIDER_NAMES = new HashSet<>() {
     {
       add("org.apache.ibatis.annotations.SelectProvider");
       add("org.apache.ibatis.annotations.UpdateProvider");
@@ -58,7 +59,7 @@ public class MapperMethodInspection extends MapperInspection {
   @Nullable
   @Override
   public ProblemDescriptor[] checkMethod(@NotNull PsiMethod method, @NotNull InspectionManager manager, boolean isOnTheFly) {
-    if (!MapperLocator.getInstance(method.getProject())
+    if (!IntellijSDK.getService(MapperLocator.class, method.getProject())
       .process(method) || JavaUtils.isAnyAnnotationPresent(method, Annotation.STATEMENT_SYMMETRIES)) {
       return EMPTY_ARRAY;
     }
@@ -68,8 +69,7 @@ public class MapperMethodInspection extends MapperInspection {
 
   private List<ProblemDescriptor> createProblemDescriptors(PsiMethod method, InspectionManager manager, boolean isOnTheFly) {
     ArrayList<ProblemDescriptor> res = Lists.newArrayList();
-    Optional<ProblemDescriptor> p1 = checkStatementExists(method, manager, isOnTheFly);
-    p1.ifPresent(res::add);
+    checkStatementExists(method, manager, isOnTheFly).ifPresent(res::add);
     Optional<ProblemDescriptor> p2 = checkResultType(method, manager, isOnTheFly);
     p2.ifPresent(res::add);
     return res;
@@ -80,7 +80,7 @@ public class MapperMethodInspection extends MapperInspection {
 
     boolean found = true;
     ProblemDescriptor descriptor = null;
-    if (!ele.isPresent()) {
+    if (ele.isEmpty()) {
       found = false;
     }
     Select select = null;
@@ -100,7 +100,7 @@ public class MapperMethodInspection extends MapperInspection {
     }
     Optional<PsiClass> target = AbstractStatementGenerator.getSelectResultType(method);
     if (found) {
-      if (!target.isPresent()) {
+      if (target.isEmpty()) {
         found = false;
       }
     }
@@ -112,7 +112,7 @@ public class MapperMethodInspection extends MapperInspection {
         Optional<PsiAnnotation> first = Stream.of(method.getAnnotations())
           .filter(psiAnnotation -> Objects.equals(psiAnnotation.getQualifiedName(), MAP_KEY)).findFirst();
         // 如果找不到MapKey的注解,提示错误信息
-        if (!first.isPresent()) {
+        if (first.isEmpty()) {
           PsiIdentifier ide = method.getNameIdentifier();
           String descriptionTemplate = "@MapKey is required";
           descriptor = manager.createProblemDescriptor(ide, descriptionTemplate, (LocalQuickFix) null, ProblemHighlightType.GENERIC_ERROR, isOnTheFly);
@@ -154,29 +154,44 @@ public class MapperMethodInspection extends MapperInspection {
       }
     }
     JavaService instance = JavaService.getInstance(method.getProject());
-    if (!instance.findStatement(method).isPresent() && null != ide) {
+    if (instance.findStatement(method).isEmpty() && null != ide) {
       if (isMybatisPlusMethod(method)) {
         return Optional.empty();
       }
+
       // issue https://gitee.com/baomidou/MybatisX/issues/I3IT80
-      final boolean isDefaultMethod = method.getModifierList().hasExplicitModifier(PsiModifier.DEFAULT);
-      if (isDefaultMethod) {
+      if (PsiUtils.isDefaultMethod(method)) {
         return Optional.empty();
       }
-      return Optional.of(manager.createProblemDescriptor(ide, "Statement with id=\"#ref\" not defined in mapper xml", new StatementNotExistsQuickFix(method), ProblemHighlightType.GENERIC_ERROR, isOnTheFly));
+
+      // simple interface
+      PsiClass psiClass = PsiUtils.getParentPsiClass(method);
+      if (psiClass.hasAnnotation("org.apache.ibatis.annotations.Mapper")) {
+        // class is a mybatis mapper interface
+        return Optional.of(manager.createProblemDescriptor(ide, "Statement with id=\"#ref\" not defined in mapper xml",
+          new StatementNotExistsQuickFix(method), ProblemHighlightType.GENERIC_ERROR, isOnTheFly));
+      } else {
+        // TODO find a better wary, maybe put the rule into configuration
+        String qualifiedName = psiClass.getQualifiedName();
+        if (StringUtils.hasText(qualifiedName) && qualifiedName.endsWith("Mapper")) {
+          return Optional.of(manager.createProblemDescriptor(ide, "Statement with id=\"#ref\" not defined in mapper xml",
+            new StatementNotExistsQuickFix(method), ProblemHighlightType.GENERIC_ERROR, isOnTheFly));
+        }
+        return Optional.empty();
+      }
     }
     return Optional.empty();
   }
 
   private boolean isMybatisPlusMethod(PsiMethod method) {
-    PsiClass parentOfType = PsiTreeUtil.getParentOfType(method, PsiClass.class);
+    PsiClass parentOfType = PsiUtils.getParentPsiClass(method);
     if (parentOfType == null) {
       return false;
     }
     PsiMethod[] methodsBySignature = parentOfType.findMethodsBySignature(method, true);
     if (methodsBySignature.length > 1) {
       for (int index = methodsBySignature.length; index > 0; index--) {
-        PsiClass mapperClass = PsiTreeUtil.getParentOfType(methodsBySignature[index - 1], PsiClass.class);
+        PsiClass mapperClass = PsiUtils.getParentPsiClass(methodsBySignature[index - 1]);
         if (mapperClass == null) {
           continue;
         }

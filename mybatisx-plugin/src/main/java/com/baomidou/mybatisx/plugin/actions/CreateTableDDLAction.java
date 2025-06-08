@@ -4,6 +4,7 @@ import com.baomidou.mybatisx.feat.ddl.TableField;
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.psi.PsiClass;
 import com.intellij.psi.PsiField;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -85,7 +86,7 @@ public class CreateTableDDLAction extends CreatorSupport {
    * @param e
    */
   @Override
-  public void update(AnActionEvent e) {
+  public void update(@NotNull AnActionEvent e) {
     super.update(e);
   }
 }

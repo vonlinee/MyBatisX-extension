@@ -8,8 +8,8 @@ import java.awt.*;
 public class Label extends JBLabel {
 
   /**
-   * @param text
-   * @param horizontalAlignment
+   * @param text                text
+   * @param horizontalAlignment horizontalAlignment
    * @see SwingConstants#CENTER
    */
   public Label(String text, int horizontalAlignment) {

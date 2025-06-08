@@ -1,113 +1,60 @@
 package com.baomidou.mybatisx.plugin.provider;
 
-import com.baomidou.mybatisx.feat.mybatis.DefaultMappedStatementSqlBuilder;
-import com.baomidou.mybatisx.feat.mybatis.MappedStatementSqlBuilder;
 import com.baomidou.mybatisx.model.ParamDataType;
-import com.baomidou.mybatisx.plugin.intention.DefaultMappedStatementParamGetter;
-import com.baomidou.mybatisx.plugin.intention.MappedStatementParamGetter;
+import com.baomidou.mybatisx.plugin.component.BorderPane;
+import com.baomidou.mybatisx.plugin.component.HBox;
+import com.baomidou.mybatisx.plugin.component.Label;
 import com.baomidou.mybatisx.plugin.intention.MapperStatementEditor;
 import com.baomidou.mybatisx.plugin.intention.MapperStatementParamTablePane;
 import com.baomidou.mybatisx.plugin.intention.ParamImportPane;
 import com.baomidou.mybatisx.plugin.intention.ParamNode;
 import com.baomidou.mybatisx.plugin.intention.ResultSqlEditor;
+import com.baomidou.mybatisx.plugin.ui.UIHelper;
+import com.baomidou.mybatisx.util.CollectionUtils;
+import com.baomidou.mybatisx.util.ObjectUtils;
 import com.baomidou.mybatisx.util.SqlUtils;
-import com.baomidou.mybatisx.util.StringUtils;
 import com.baomidou.mybatisx.util.SwingUtils;
 import com.intellij.openapi.project.Project;
-import com.intellij.psi.PsiElement;
 import com.intellij.psi.xml.XmlTag;
 import com.intellij.ui.JBSplitter;
-import com.intellij.util.ui.JBUI;
-import org.apache.ibatis.mapping.MappedStatement;
-import org.apache.ibatis.scripting.xmltags.IfSqlNode;
-import org.apache.ibatis.session.Configuration;
-import org.mybatisx.extension.agent.mybatis.DynamicMyBatisConfiguration;
-import org.mybatisx.extension.agent.mybatis.MapperStatementParser;
-import org.mybatisx.extension.agent.mybatis.MissingCompatiableStatementBuilder;
-import org.mybatisx.extension.agent.mybatis.MyMapperBuilderAssistant;
+import org.apache.ibatis.mapping.ParameterMapping;
 
-import javax.swing.*;
-import java.awt.*;
-import java.io.PrintWriter;
-import java.io.StringWriter;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
-public class SqlPreviewPanel extends JPanel {
+public class SqlPreviewPanel extends BorderPane {
 
   MapperStatementEditor statementEditor;
   ResultSqlEditor resultSqlEditor;
   MapperStatementParamTablePane table;
   JBSplitter editorContainer;
-  DynamicMyBatisConfiguration configuration;
-  MyMapperBuilderAssistant assistant;
-  MapperStatementParser msParser = new MapperStatementParser();
   JBSplitter center;
   Project project;
   ParamImportPane importPane;
   JBSplitter paramContainer;
-  private XmlTag mapperStatementXmlTag;
   private String namespace;
+  private Label label;
 
   public SqlPreviewPanel(Project project) {
-    super(new BorderLayout());
-    this.setBorder(JBUI.Borders.empty(5, 10, 7, 10));
-
+    UIHelper.setEmptyBorder(this, 5, 10, 7, 10);
     this.project = project;
     this.initPanel(project, namespace);
-
-    this.configuration = new DynamicMyBatisConfiguration(new Configuration());
-    this.assistant = new MyMapperBuilderAssistant(this.configuration, null);
   }
 
   public void setMapperStatement(String namespace, XmlTag element) {
     this.namespace = namespace;
-    this.mapperStatementXmlTag = (XmlTag) element.copy();
     // handle sql include
+    this.label.setText(namespace);
+    statementEditor.setNamespace(namespace);
     statementEditor.updateStatement(element);
-  }
-
-  /**
-   * 将字符串的statement解析为MappedStatement对象
-   *
-   * @param statement xml 包含<select/> <delete/> <update/> <insert/> 等标签
-   * @return MappedStatement实例
-   */
-  public MappedStatement parseMappedStatement(String statement) {
-    MissingCompatiableStatementBuilder statementParser = new MissingCompatiableStatementBuilder(configuration, msParser.getNode(statement), assistant);
-    /**
-     * 解析结果会放到 Configuration里
-     * @see DynamicMyBatisConfiguration#addMappedStatement(MappedStatement)
-     */
-    return statementParser.parseMappedStatement();
-  }
-
-  /**
-   * 结合参数获取实际的sql
-   *
-   * @return 可执行的sql
-   */
-  public String getSql() {
-    String mapperStatement = statementEditor.getText();
-    String sql = null;
-    if (StringUtils.hasText(mapperStatement)) {
-      Map<String, Object> map = table.getParamsAsMap();
-      try {
-        MappedStatement mappedStatement = parseMappedStatement(mapperStatement);
-        MappedStatementSqlBuilder mappedStatementSqlBuilder = new DefaultMappedStatementSqlBuilder();
-        sql = mappedStatementSqlBuilder.build(mappedStatement, map);
-      } catch (Exception exception) {
-        StringWriter writer = new StringWriter();
-        try (PrintWriter pw = new PrintWriter(writer)) {
-          exception.printStackTrace(pw);
-        } finally {
-          sql = writer.toString();
-        }
-      }
-    }
-    return sql;
+    statementEditor.setCaretPosition(0);
   }
 
   public void fillSqlWithParams() {
@@ -118,12 +65,91 @@ public class SqlPreviewPanel extends JPanel {
     if (refreshParams) {
       fillMapperStatementParams();
     }
-    resultSqlEditor.setText(SqlUtils.format(getSql()));
+    Map<String, Object> map = table.getParamsAsMap();
+    map = CollectionUtils.expandKeys(map, "\\.");
+
+    try {
+      String sql = statementEditor.computeSql(map);
+      resultSqlEditor.setText(SqlUtils.format(sql));
+    } catch (Throwable throwable) {
+      resultSqlEditor.setText(ObjectUtils.toString(throwable));
+    }
+  }
+
+  public void fillMapperStatementParams() {
+    List<ParameterMapping> parameterMappings = statementEditor.getParameterMappings(this.namespace);
+    if (parameterMappings.isEmpty()) {
+      return;
+    }
+    // 去重
+    Map<String, ParameterMapping> map = new HashMap<>();
+    for (ParameterMapping parameterMapping : parameterMappings) {
+      map.put(parameterMapping.getProperty(), parameterMapping);
+    }
+    parameterMappings = new ArrayList<>(map.values());
+    ParamNode root = buildTree(parameterMappings);
+    table.setAll(root.getChildren());
+    importPane.generateParamTemplate(table.getParamsAsMap());
+  }
+
+  private static ParamNode buildTree(List<ParameterMapping> mappings) {
+    ParamNode root = new ParamNode("root", null, ParamDataType.UNKNOWN); // 根节点
+    for (ParameterMapping mapping : mappings) {
+      String[] parts = mapping.getProperty().split("\\.");
+      addToTree(root, parts, mapping);
+    }
+    return root;
+  }
+
+  private static void addToTree(ParamNode currentNode, String[] parts, ParameterMapping mapping) {
+    for (String part : parts) {
+      Optional<ParamNode> existingNode = Optional.ofNullable(currentNode.getChildren())
+        .map(List::stream)
+        .flatMap(stream -> stream.filter(child -> child.getKey().equals(part)).findFirst());
+      if (existingNode.isPresent()) {
+        currentNode = existingNode.get(); // 如果节点存在，进入该节点
+      } else {
+        ParamNode newNode = new ParamNode(part, null, getParamDataType(mapping));
+        currentNode.addChild(newNode);
+        currentNode = newNode; // 进入新节点
+      }
+    }
+  }
+
+  private static ParamDataType getParamDataType(ParameterMapping parameterMapping) {
+    Class<?> javaType = parameterMapping.getJavaType();
+    if (javaType == null) {
+      return ParamDataType.STRING;
+    } else if (javaType == Number.class) {
+      return ParamDataType.NUMERIC;
+    } else if (javaType == Date.class) {
+      return ParamDataType.DATE;
+    } else if (javaType == LocalDateTime.class) {
+      return ParamDataType.TIME;
+    } else if (javaType == Timestamp.class) {
+      return ParamDataType.TIMESTAMP;
+    } else if (javaType == Collection.class) {
+      return ParamDataType.ARRAY;
+    }
+    return ParamDataType.STRING;
   }
 
   private void initPanel(Project project, String namespace) {
-    center = new JBSplitter(false, 0.5f);
+    HBox top = new HBox();
+    Label label = new Label("Namespace: ");
+    top.add(label);
+    top.addSpacing(10);
+    Label namespaceLabel = new Label(namespace == null ? "" : namespace);
+    top.add(label);
+    top.addSpacing(10);
+    top.add(namespaceLabel);
+    top.addSpacing(10);
+    this.label = namespaceLabel;
+    // SwingUtils.setPreferredWidth(this.label, 250);
+    UIHelper.setEmptyBorder(top, 5);
+    setTop(top);
 
+    center = new JBSplitter(false, 0.5f);
     editorContainer = new JBSplitter(true, 0.5F);
     // Mapper Statement 编辑器
     statementEditor = new MapperStatementEditor(project);
@@ -136,37 +162,21 @@ public class SqlPreviewPanel extends JPanel {
     resultSqlEditor.setPreferredWidth(500);
 
     editorContainer.setSecondComponent(resultSqlEditor);
-
     center.setFirstComponent(editorContainer);
-
     paramContainer = new JBSplitter(true, 0.5f);
     // 参数表区域
-    table = new MapperStatementParamTablePane();
+    table = new MapperStatementParamTablePane(project);
     paramContainer.setFirstComponent(table);
 
     importPane = new ParamImportPane(project, table);
     paramContainer.setSecondComponent(importPane);
     center.setSecondComponent(paramContainer);
 
-    this.add(center, BorderLayout.CENTER);
+    setCenter(center);
 
     // 弹窗根容器的宽度和高度
     // 使用 setSize 设置无效
+
     this.setPreferredSize(SwingUtils.getScreenBasedDimension(0.7));
-  }
-
-  public void fillMapperStatementParams() {
-    Map<String, ParamDataType> paramMap = new HashMap<>();
-    fillParams(mapperStatementXmlTag, paramMap);
-    List<ParamNode> paramNodeList = new ArrayList<>();
-    for (Map.Entry<String, ParamDataType> entry : paramMap.entrySet()) {
-      paramNodeList.add(new ParamNode(entry.getKey(), null, entry.getValue()));
-    }
-    table.setAll(paramNodeList);
-  }
-
-  public void fillParams(PsiElement element, Map<String, ParamDataType> paramNodeMap) {
-    MappedStatementParamGetter getter = new DefaultMappedStatementParamGetter();
-    getter.getParams(element, paramNodeMap);
   }
 }

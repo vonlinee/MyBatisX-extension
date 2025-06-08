@@ -1,8 +1,12 @@
 package com.baomidou.mybatisx.plugin.intention;
 
+import com.baomidou.mybatisx.feat.mybatis.DefaultMappedStatementSqlBuilder;
+import com.baomidou.mybatisx.feat.mybatis.MappedStatementSqlBuilder;
+import com.baomidou.mybatisx.util.IntellijSDK;
+import com.baomidou.mybatisx.util.PsiUtils;
+import com.baomidou.mybatisx.util.StringUtils;
 import com.intellij.ide.fileTemplates.impl.FileTemplateHighlighter;
 import com.intellij.ide.highlighter.XmlFileType;
-import com.intellij.lang.ASTNode;
 import com.intellij.lang.Language;
 import com.intellij.lang.xml.XMLLanguage;
 import com.intellij.openapi.editor.Document;
@@ -24,20 +28,25 @@ import com.intellij.openapi.project.Project;
 import com.intellij.psi.PsiDocumentManager;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiFile;
-import com.intellij.psi.impl.source.tree.AstBufferUtil;
-import com.intellij.psi.impl.source.tree.CompositeElement;
-import com.intellij.psi.impl.source.tree.LeafElement;
-import com.intellij.psi.impl.source.tree.TreeElement;
 import com.intellij.psi.tree.IElementType;
 import com.intellij.psi.xml.XmlDocument;
-import com.intellij.psi.xml.XmlElement;
 import com.intellij.psi.xml.XmlFile;
 import com.intellij.psi.xml.XmlTag;
 import com.intellij.ui.HorizontalScrollBarEditorCustomization;
 import com.intellij.ui.LanguageTextField;
+import lombok.Setter;
+import org.apache.ibatis.builder.Configuration;
+import org.apache.ibatis.mapping.InlineResultMap;
+import org.apache.ibatis.mapping.MappedStatement;
+import org.apache.ibatis.mapping.ParameterMapping;
+import org.apache.ibatis.mapping.ResultMap;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import org.mybatisx.extension.agent.mybatis.XmlStatementParser;
 
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 /**
@@ -47,9 +56,14 @@ public class MapperStatementEditor extends LanguageTextField {
 
   private XmlDocument mapperFileDocument;
   private boolean myModified = false;
-
   private XmlFile mapperFile;
-  private XmlElement element;
+
+  private XmlTag mapperStatementXmlTag;
+
+  @Setter
+  private String namespace;
+
+  @Nullable MappedStatement mappedStatement;
 
   public MapperStatementEditor(Project project) {
     super(XMLLanguage.INSTANCE, project, "");
@@ -66,19 +80,19 @@ public class MapperStatementEditor extends LanguageTextField {
     editor.setVerticalScrollbarVisible(true);
 
     EditorSettings editorSettings = editor.getSettings();
-//    editorSettings.setVirtualSpace(false);
-//    editorSettings.setLineMarkerAreaShown(false);
-//    editorSettings.setIndentGuidesShown(false);
-//    editorSettings.setLineNumbersShown(false);
-//    editorSettings.setFoldingOutlineShown(false);
-//    editorSettings.setAdditionalColumnsCount(3);
-//    editorSettings.setAdditionalLinesCount(3);
-//    editorSettings.setCaretRowShown(false);
+    editorSettings.setVirtualSpace(false);
+    editorSettings.setLineMarkerAreaShown(false);
+    editorSettings.setIndentGuidesShown(false);
+    editorSettings.setLineNumbersShown(false);
+    editorSettings.setFoldingOutlineShown(false);
+    editorSettings.setAdditionalColumnsCount(3);
+    editorSettings.setAdditionalLinesCount(3);
+    editorSettings.setCaretRowShown(false);
 
     editor.getDocument().addDocumentListener(new DocumentListener() {
       @Override
       public void documentChanged(@NotNull DocumentEvent e) {
-        onTextChanged();
+        myModified = true;
       }
     }, ((EditorImpl) editor).getDisposable());
 
@@ -105,30 +119,32 @@ public class MapperStatementEditor extends LanguageTextField {
     return document != null ? document : EditorFactory.getInstance().createDocument("");
   }
 
-  private void onTextChanged() {
-    myModified = true;
-  }
-
+  /**
+   * TODO 通过PSI提取文本内容
+   *
+   * @param statement SQL标签
+   */
   public void updateStatement(@NotNull XmlTag statement) {
     this.mapperFile = (XmlFile) statement.getContainingFile();
-    this.element = statement;
     this.mapperFileDocument = mapperFile.getDocument();
-
-    setText(getText(statement));
+    String resource = PsiUtils.getPathOfContainingFile(statement);
+    IntellijSDK.invoke(() -> {
+      String text = XmlStatementParser.getString(resource, statement.getAttributeValue("id"));
+      setText(text);
+      this.mappedStatement = parseMappedStatement(namespace, text);
+    });
   }
 
   /**
+   * Note: this will affect the source XmlTag PsiElement in original editor.
    * handle <include ref='xxx'></include>
    *
    * @param copy mapper statement xml psi element
    * @return string
    */
   private String getText(@NotNull XmlTag copy) {
-    PsiFile containingFile = copy.getContainingFile();
-    if (containingFile instanceof XmlFile) {
-      XmlDocument document = ((XmlFile) containingFile).getDocument();
-      recursiveReplace(copy, document);
-    }
+    XmlDocument document = mapperFile.getDocument();
+    recursiveReplace(copy, document);
 
     final String text = copy.getText();
     // remove <sql>
@@ -202,5 +218,57 @@ public class MapperStatementEditor extends LanguageTextField {
     for (PsiElement child : xmlTag.getChildren()) {
       recursiveReplace(child, document);
     }
+  }
+
+  /**
+   * 结合参数获取实际的sql
+   *
+   * @return 可执行的sql
+   */
+  public String computeSql(Map<String, Object> params) {
+    String mapperStatement = this.getText();
+    String sql = null;
+    if (StringUtils.hasText(mapperStatement)) {
+      MappedStatement mappedStatement = parseMappedStatement(this.namespace, mapperStatement);
+      MappedStatementSqlBuilder mappedStatementSqlBuilder = new DefaultMappedStatementSqlBuilder();
+      sql = mappedStatementSqlBuilder.build(mappedStatement, params);
+    }
+    return sql;
+  }
+
+  /**
+   * 将字符串的statement解析为MappedStatement对象
+   *
+   * @param statement xml 包含<select/> <delete/> <update/> <insert/> 等标签
+   * @return MappedStatement实例
+   */
+  private MappedStatement parseMappedStatement(String namespace, String statement) {
+    statement = statement.trim();
+    Configuration configuration = new Configuration() {
+      @Override
+      public ResultMap getResultMap(String id) {
+        if (resultMaps.containsKey(id)) {
+          return super.getResultMap(id);
+        }
+        // resultMap is not necessary
+        // TODO 换种更好的方式
+        return new InlineResultMap("", Object.class);
+      }
+    };
+    configuration.setNullableOnForEach(true);
+    String path = mapperFile.getVirtualFile().getPath();
+    return XmlStatementParser.parse(configuration, path, namespace, statement);
+  }
+
+  public List<ParameterMapping> getParameterMappings(String namespace) {
+    final String text = getText();
+    if (text.isBlank()) {
+      return Collections.emptyList();
+    }
+    MappedStatement mappedStatement = parseMappedStatement(namespace, text);
+    if (mappedStatement == null) {
+      return Collections.emptyList();
+    }
+    return mappedStatement.getLang().collectParameters(mappedStatement.getSqlSource());
   }
 }

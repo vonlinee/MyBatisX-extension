@@ -24,7 +24,7 @@ dependencies {
   // https://mvnrepository.com/artifact/org.javassist/javassist
   implementation(project(":agent-api"))
 
-  implementation(files("${rootDir}/libs/mybatis-plugin-support-3.5.20-SNAPSHOT.jar"))
+  implementation(files("${rootDir}/libs/mybatis-3.6.0-SNAPSHOT.jar"))
 }
 
 // 设置兼容性版本

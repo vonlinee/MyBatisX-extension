@@ -17,11 +17,18 @@ public class ResultSqlEditor extends EditorTextField {
   @Override
   protected @NotNull EditorEx createEditor() {
     EditorEx editor = super.createEditor();
-    // 水平滚动条
     HorizontalScrollBarEditorCustomization.ENABLED.customize(editor);
     editor.setOneLineMode(false);
-    // 垂直滚动条
     editor.setVerticalScrollbarVisible(true);
+
+    editor.getSettings().setUseTabCharacter(true);
+    editor.getSettings().setTabSize(2);
+    editor.getSettings().setShowingSpecialChars(true);
+    editor.getSettings().setWhitespacesShown(true);
+    editor.getSettings().setLineNumbersShown(true);
+    editor.getSettings().setUseSoftWraps(true);
+    editor.getSettings().setUseCustomSoftWrapIndent(true);
+    editor.getSettings().setCustomSoftWrapIndent(2);
     return editor;
   }
 }

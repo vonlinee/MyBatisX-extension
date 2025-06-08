@@ -1,15 +1,20 @@
 package com.baomidou.mybatisx.plugin.component;
 
+import com.baomidou.mybatisx.util.SwingUtils;
 import org.jdesktop.swingx.VerticalLayout;
 
 import javax.swing.*;
 
 /**
- * 依赖于 org.jdesktop.swingx
+ * @see VerticalLayout
  */
 public class VBox extends JPanel {
 
   public VBox() {
     super(new VerticalLayout());
+  }
+
+  public void addSpacing(int spacing) {
+    this.add(SwingUtils.createVerticalGlue(spacing));
   }
 }

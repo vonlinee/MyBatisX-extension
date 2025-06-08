@@ -7,4 +7,4 @@ idea-sandbox
 .idea
 *.iml
 
-mybatis-plugin-support-3.5.20-SNAPSHOT.jar
+mybatisql.jar

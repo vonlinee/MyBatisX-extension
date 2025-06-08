@@ -1,11 +1,9 @@
 package com.baomidou.mybatisx.plugin.component;
 
-import com.intellij.ui.ToolbarDecorator;
 import com.intellij.util.ui.ListTableModel;
 import com.intellij.util.ui.TableViewModel;
 import org.jetbrains.annotations.NotNull;
 
-import javax.swing.*;
 import java.util.Collection;
 
 /**

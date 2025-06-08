@@ -2,9 +2,9 @@ package com.baomidou.mybatisx.plugin.ui;
 
 import com.baomidou.mybatisx.feat.bean.TranslationAppComboBoxItem;
 import com.baomidou.mybatisx.feat.ddl.TranslationAppEnum;
+import com.baomidou.mybatisx.plugin.component.EnumComboBox;
 import com.baomidou.mybatisx.plugin.component.HBox;
 import com.baomidou.mybatisx.plugin.setting.OtherSetting;
-import com.baomidou.mybatisx.plugin.ui.components.TransalationComboBox;
 import com.baomidou.mybatisx.util.IntellijSDK;
 import com.baomidou.mybatisx.util.StringUtils;
 import com.baomidou.mybatisx.util.SwingUtils;
@@ -27,7 +27,7 @@ public class TranslationSettingPanel {
   private JPanel rootPanel;
   private JPanel baiduAccountPanel;
   private JPanel translationBasePanel;
-  private TransalationComboBox translationAppComboBox;
+  private EnumComboBox<TranslationAppEnum> translationAppComboBox;
   private JTextField appIdText;
   private JRadioButton autoTranslationRadio;
   private JTextField secretText;
@@ -51,7 +51,7 @@ public class TranslationSettingPanel {
     autoTranslationRadio = new JRadioButton();
     hBox.add(autoTranslationRadio);
     hBox.add(new Label("翻译组件 :"));
-    hBox.add(translationAppComboBox = new TransalationComboBox(), gb.next());
+    hBox.add(translationAppComboBox = new EnumComboBox<>(), gb.next());
 
     rootPanel.add(hBox, BorderLayout.NORTH);
 

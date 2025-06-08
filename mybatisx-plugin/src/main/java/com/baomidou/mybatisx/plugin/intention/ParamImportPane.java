@@ -1,11 +1,11 @@
 package com.baomidou.mybatisx.plugin.intention;
 
 import com.baomidou.mybatisx.model.ParamDataType;
+import com.baomidou.mybatisx.util.CollectionUtils;
+import com.baomidou.mybatisx.util.JsonUtils;
 import com.baomidou.mybatisx.util.StringUtils;
-import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
 import com.google.gson.JsonPrimitive;
 import com.intellij.json.JsonFileType;
 import com.intellij.openapi.editor.ex.EditorEx;
@@ -26,16 +26,13 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 public class ParamImportPane extends JPanel {
 
-  private static final Gson gson = new Gson();
-
-  Editor jsonTab;
-  Editor urlParamTabEditor;
+  Editor jsonParamEditor;
+  Editor urlParamEditor;
   JBTabs tabbedPane;
   MapperStatementParamTablePane table;
 
@@ -44,17 +41,14 @@ public class ParamImportPane extends JPanel {
     this.table = table;
 
     tabbedPane = new JBTabsImpl(project);
-//        tabbedPane.setTabPlacement(JTabbedPane.TOP);
-//        tabbedPane.setTabLayoutPolicy(JTabbedPane.SCROLL_TAB_LAYOUT);
 
-    jsonTab = new Editor(project, JsonFileType.INSTANCE);
-
-    TabInfo tabInfo = new TabInfo(jsonTab);
+    jsonParamEditor = new Editor(project, JsonFileType.INSTANCE);
+    TabInfo tabInfo = new TabInfo(jsonParamEditor);
     tabInfo.setText("JSON");
     tabbedPane.addTab(tabInfo);
 
-    urlParamTabEditor = new Editor(project, PlainTextFileType.INSTANCE);
-    TabInfo urlParamTab = new TabInfo(urlParamTabEditor);
+    urlParamEditor = new Editor(project, PlainTextFileType.INSTANCE);
+    TabInfo urlParamTab = new TabInfo(urlParamEditor);
     urlParamTab.setText("URL");
     tabbedPane.addTab(urlParamTab);
 
@@ -95,12 +89,16 @@ public class ParamImportPane extends JPanel {
         importParams((ImportModel) comboBox.getSelectedItem());
       }
     });
-    box.add(comboBox);
+    // box.add(comboBox);
     box.add(btnImportParams);
 
     add(box, BorderLayout.SOUTH);
   }
 
+  public void generateParamTemplate(Map<String, Object> paramValues) {
+    paramValues = CollectionUtils.expandKeys(paramValues, "\\.");
+    jsonParamEditor.setText(JsonUtils.toJsonPrettyString(paramValues));
+  }
 
   /**
    * 导入参数
@@ -112,14 +110,10 @@ public class ParamImportPane extends JPanel {
       importModel = ImportModel.MERGE;
     }
     List<ParamNode> params = getParams();
-    if (params == null || params.isEmpty()) {
+    if (CollectionUtils.isEmpty(params)) {
       return;
     }
-    Map<String, ParamNode> paramNodeMap = new HashMap<>();
-    for (ParamNode param : params) {
-      paramNodeMap.put(param.getKey(), param);
-    }
-    fillMapperStatementParams(paramNodeMap, importModel);
+    fillMapperStatementParams(params, importModel);
   }
 
   /**
@@ -128,33 +122,40 @@ public class ParamImportPane extends JPanel {
    * @param params 参数列表，不包含嵌套形式
    * @param mode   操作类型，1-全部覆盖，2-仅追加，3-追加且覆盖，4-合并不覆盖
    */
-  public void fillMapperStatementParams(Map<String, ParamNode> params, ImportModel mode) {
+  public void fillMapperStatementParams(List<ParamNode> params, ImportModel mode) {
     table.addParams(params, mode);
   }
 
-  public void parseJsonParams(String key, JsonElement element, List<ParamNode> paramNodes) {
+  /**
+   * TODO
+   *
+   * @param parent 父节点
+   */
+  public void parseJsonParams(String key, JsonElement element, ParamNode parent) {
     if (element.isJsonObject()) {
       JsonObject jsonObject = element.getAsJsonObject();
       for (Map.Entry<String, JsonElement> entry : jsonObject.entrySet()) {
-        if (key == null) {
-          parseJsonParams(entry.getKey(), entry.getValue(), paramNodes);
+        element = entry.getValue();
+        key = entry.getKey();
+        if (element.isJsonNull()) {
+          parent.addChild(new ParamNode(key, "null", ParamDataType.UNKNOWN));
+        } else if (element.isJsonPrimitive()) {
+          JsonPrimitive primitive = element.getAsJsonPrimitive();
+          if (primitive.isBoolean()) {
+            parent.add(new ParamNode(key, element.getAsString(), ParamDataType.BOOLEAN));
+          } else if (primitive.isNumber()) {
+            parent.add(new ParamNode(key, element.getAsString(), ParamDataType.NUMERIC));
+          } else if (primitive.isString()) {
+            parent.add(new ParamNode(key, element.getAsString(), ParamDataType.STRING));
+          }
+        } else if (element.isJsonArray()) {
+          parent.add(new ParamNode(key, element.getAsString(), ParamDataType.ARRAY));
         } else {
-          parseJsonParams(key + "." + entry.getKey(), entry.getValue(), paramNodes);
+          ParamNode paramNode = new ParamNode(entry.getKey(), null, ParamDataType.UNKNOWN);
+          parent.addChild(paramNode);
+          parseJsonParams(entry.getKey(), entry.getValue(), paramNode);
         }
       }
-    } else if (element.isJsonNull()) {
-      paramNodes.add(new ParamNode(key, "null", ParamDataType.UNKNOWN));
-    } else if (element.isJsonPrimitive()) {
-      JsonPrimitive primitive = element.getAsJsonPrimitive();
-      if (primitive.isBoolean()) {
-        paramNodes.add(new ParamNode(key, element.getAsString(), ParamDataType.BOOLEAN));
-      } else if (primitive.isNumber()) {
-        paramNodes.add(new ParamNode(key, element.getAsString(), ParamDataType.NUMERIC));
-      } else if (primitive.isString()) {
-        paramNodes.add(new ParamNode(key, element.getAsString(), ParamDataType.STRING));
-      }
-    } else if (element.isJsonArray()) {
-      paramNodes.add(new ParamNode(key, element.getAsString(), ParamDataType.ARRAY));
     }
   }
 
@@ -173,14 +174,16 @@ public class ParamImportPane extends JPanel {
     List<ParamNode> paramNodes = new ArrayList<>();
     if ("JSON".equalsIgnoreCase(selectedTabText)) {
       // json
-      String text = jsonTab.getText();
+      String text = jsonParamEditor.getText();
       if (StringUtils.isBlank(text)) {
         return paramNodes;
       }
-      parseJsonParams(null, JsonParser.parseString(text), paramNodes);
+      ParamNode root = new ParamNode();
+      parseJsonParams(null, JsonUtils.parseJsonTree(text), root);
+      paramNodes = root.getChildren();
     } else if ("URL".equalsIgnoreCase(selectedTabText)) {
       // url参数
-      String text = urlParamTabEditor.getText();
+      String text = urlParamEditor.getText();
       if (!StringUtils.isBlank(text)) {
         int i = text.indexOf("?");
         if (i >= 0) {

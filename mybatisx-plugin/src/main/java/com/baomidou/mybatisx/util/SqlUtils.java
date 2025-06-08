@@ -24,6 +24,7 @@ public abstract class SqlUtils {
       return StringUtils.EMPTY;
     }
     sql = FORMATTER.format(sql);
+    sql = StringUtils.trimInvisible(sql);
     return sql.endsWith(SEMICOLON) ? sql : sql + SEMICOLON;
   }
 

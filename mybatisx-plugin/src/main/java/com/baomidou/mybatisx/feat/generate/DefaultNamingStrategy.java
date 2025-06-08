@@ -1,6 +1,5 @@
 package com.baomidou.mybatisx.feat.generate;
 
-import com.baomidou.mybatisx.feat.generate.NamingStrategy;
 import com.baomidou.mybatisx.util.StringUtils;
 
 public enum DefaultNamingStrategy implements NamingStrategy {
@@ -33,10 +32,10 @@ public enum DefaultNamingStrategy implements NamingStrategy {
       return StringUtils.dbStringToCamelStyle(fName);
     }
   },
-  SAME("same as tablename") {
+  SAME("same as table name") {
     @Override
     public String getText() {
-      return "same as tablename";
+      return "same as table name";
     }
 
     @Override

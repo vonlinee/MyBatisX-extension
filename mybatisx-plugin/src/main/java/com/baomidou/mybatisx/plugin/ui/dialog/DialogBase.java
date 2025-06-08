@@ -33,11 +33,11 @@ public abstract class DialogBase extends DialogWrapper {
     if (isDisposed()) {
       return;
     }
-    beforeDisposed();
+    beforeDisposed(this);
     super.dispose(); // this will free the resources associated with the dialog.
   }
 
-  protected void beforeDisposed() {
+  protected void beforeDisposed(DialogBase dialog) {
   }
 
 

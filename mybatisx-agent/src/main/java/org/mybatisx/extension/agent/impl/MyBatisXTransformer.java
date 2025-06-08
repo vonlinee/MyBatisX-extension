@@ -1,12 +1,12 @@
 package org.mybatisx.extension.agent.impl;
 
+import org.apache.ibatis.builder.Configuration;
 import org.apache.ibatis.javassist.CannotCompileException;
 import org.apache.ibatis.javassist.ClassPool;
 import org.apache.ibatis.javassist.CtClass;
 import org.apache.ibatis.javassist.CtConstructor;
 import org.apache.ibatis.javassist.CtMethod;
 import org.apache.ibatis.javassist.NotFoundException;
-import org.apache.ibatis.session.Configuration;
 import org.mybatisx.extension.agent.api.Log;
 import org.mybatisx.extension.agent.mybatis.DynamicMyBatisConfiguration;
 import org.mybatisx.extension.agent.service.MyBatisContext;

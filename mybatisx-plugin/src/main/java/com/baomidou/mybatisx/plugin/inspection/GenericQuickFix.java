@@ -18,5 +18,4 @@ public abstract class GenericQuickFix implements LocalQuickFix {
   public String getFamilyName() {
     return getName();
   }
-
 }

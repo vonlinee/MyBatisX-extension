@@ -18,6 +18,7 @@ package com.baomidou.mybatisx.plugin.intention;
 import org.apache.ibatis.builder.BuilderException;
 import org.apache.ibatis.parsing.GenericTokenParser;
 import org.apache.ibatis.parsing.TokenHandler;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,12 +28,6 @@ public class ParameterCollector implements TokenHandler {
   private static final String PARAMETER_PROPERTIES = "javaType,jdbcType,mode,numericScale,resultMap,typeHandler,jdbcTypeName";
 
   List<Parameter> parameters;
-
-  @Override
-  public String handleToken(String content) {
-    parameters.add(buildParameterMapping(content));
-    return "?";
-  }
 
   public List<Parameter> collect(String text) {
     parameters = new ArrayList<>();
@@ -86,5 +81,11 @@ public class ParameterCollector implements TokenHandler {
       throw new BuilderException("Parsing error was found in mapping #{" + content
                                  + "}.  Check syntax #{property|(expression), var1=value1, var2=value2, ...} ", ex);
     }
+  }
+
+  @Override
+  public @Nullable String handleToken(String text, int startIndex, int endIndex, String token) {
+    parameters.add(buildParameterMapping(token));
+    return "?";
   }
 }

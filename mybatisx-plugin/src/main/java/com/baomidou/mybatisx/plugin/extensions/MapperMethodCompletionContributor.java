@@ -10,7 +10,6 @@ import com.intellij.codeInsight.completion.CompletionParameters;
 import com.intellij.codeInsight.completion.CompletionResultSet;
 import com.intellij.codeInsight.completion.CompletionType;
 import com.intellij.openapi.editor.Editor;
-import com.intellij.openapi.editor.ex.EditorEx;
 import com.intellij.openapi.editor.highlighter.HighlighterIterator;
 import com.intellij.openapi.progress.ProcessCanceledException;
 import com.intellij.openapi.util.Key;
@@ -47,7 +46,7 @@ public class MapperMethodCompletionContributor extends CompletionContributor {
   private static final Logger logger = LoggerFactory.getLogger(MapperMethodCompletionContributor.class);
 
   private static boolean inCommentOrLiteral(CompletionParameters parameters) {
-    HighlighterIterator iterator = ((EditorEx) parameters.getEditor()).getHighlighter()
+    HighlighterIterator iterator = parameters.getEditor().getHighlighter()
       .createIterator(parameters.getOffset());
     if (iterator.atEnd()) {
       return false;

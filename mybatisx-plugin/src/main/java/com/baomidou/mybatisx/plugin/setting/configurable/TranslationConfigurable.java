@@ -2,7 +2,7 @@ package com.baomidou.mybatisx.plugin.setting.configurable;
 
 import com.baomidou.mybatisx.feat.bean.TranslationAppComboBoxItem;
 import com.baomidou.mybatisx.feat.ddl.TranslationAppEnum;
-import com.baomidou.mybatisx.model.ComboBoxItem;
+import com.baomidou.mybatisx.plugin.component.ComboBoxItem;
 import com.baomidou.mybatisx.plugin.setting.OtherSetting;
 import com.baomidou.mybatisx.plugin.ui.TranslationSettingPanel;
 import com.baomidou.mybatisx.util.StringUtils;

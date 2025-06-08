@@ -3,16 +3,20 @@ package com.baomidou.mybatisx.plugin.provider;
 import com.baomidou.mybatisx.plugin.component.SplitPane;
 import com.baomidou.mybatisx.plugin.intention.MyBatisSqlPreviewDialog;
 import com.baomidou.mybatisx.util.Icons;
+import com.baomidou.mybatisx.util.IntellijSDK;
 import com.baomidou.mybatisx.util.MyBatisUtils;
 import com.intellij.execution.lineMarker.RunLineMarkerContributor;
 import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.project.DumbAware;
 import com.intellij.openapi.project.Project;
+import com.intellij.openapi.wm.ToolWindow;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.xml.XmlElement;
 import com.intellij.psi.xml.XmlFile;
 import com.intellij.psi.xml.XmlTag;
+import com.intellij.ui.content.Content;
+import com.intellij.ui.content.ContentManager;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -60,7 +64,7 @@ public class MapperXmlSqlRunLineMarkerContributor extends RunLineMarkerContribut
     return null;
   }
 
-  static class LineMarkIconAction extends AnAction implements DumbAware {
+  private static class LineMarkIconAction extends AnAction implements DumbAware {
 
     private final String statementId;
     private final PsiElement element;
@@ -80,41 +84,41 @@ public class MapperXmlSqlRunLineMarkerContributor extends RunLineMarkerContribut
 
       InputEvent inputEvent = e.getInputEvent();
       if (inputEvent instanceof MouseEvent) {
-        String namespace = MyBatisUtils.getNamespace((XmlElement) element);
+        String namespace = MyBatisUtils.getNamespace(element);
         MyBatisSqlPreviewDialog dialog = new MyBatisSqlPreviewDialog(e.getProject(), namespace, (XmlTag) element);
         dialog.show();
         dialog.initUI();
+        return;
       }
 
+      ToolWindow toolWindow = IntellijSDK.getToolWindow(e.getProject(), MyBatisToolWindowView.NAME);
+      if (toolWindow == null) {
+        return;
+      }
+      ContentManager contentManager = toolWindow.getContentManager();
 
-//            ToolWindow toolWindow = ToolWindowManager.getInstance(e.getProject()).getToolWindow(MyBatisToolWindowView.NAME);
-//            if (toolWindow == null) {
-//                return;
-//            }
-//            ContentManager contentManager = toolWindow.getContentManager();
-//
-//            final int contentCount = contentManager.getContentCount();
-//            if (contentCount == 1) {
-//                // Statement
-//                Content content = contentManager.getFactory().createContent(createContentPanel(element), "Statements", false);
-//                content.setCloseable(false);
-//                contentManager.addContent(content);
-//                contentManager.setSelectedContent(content);
-//            } else {
-//                //
-//                Content content = contentManager.getContent(1);
-//                if (content != null) {
-//                    StatementPanel statementPanel = (StatementPanel) content.getComponent();
-//                    statementPanel.fileTree.addStatement(element);
-//                }
-//            }
-//
-//            if (toolWindow.isVisible()) {
-//                toolWindow.show();
-//            } else {
-//                toolWindow.activate(() -> {
-//                });
-//            }
+      final int contentCount = contentManager.getContentCount();
+      if (contentCount == 1) {
+        // Statement
+        Content content = contentManager.getFactory().createContent(createContentPanel(element), "Statements", false);
+        content.setCloseable(false);
+        contentManager.addContent(content);
+        contentManager.setSelectedContent(content);
+      } else {
+        //
+        Content content = contentManager.getContent(1);
+        if (content != null) {
+          StatementPanel statementPanel = (StatementPanel) content.getComponent();
+          statementPanel.fileTree.addStatement(element);
+        }
+      }
+
+      if (toolWindow.isVisible()) {
+        toolWindow.show();
+      } else {
+        toolWindow.activate(() -> {
+        });
+      }
     }
 
     @Nullable

@@ -7,12 +7,21 @@ import com.intellij.openapi.fileTypes.FileType;
 import com.intellij.openapi.fileTypes.FileTypeManager;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.project.ProjectManager;
+import com.intellij.openapi.wm.ToolWindow;
+import com.intellij.openapi.wm.ToolWindowManager;
+import com.intellij.util.ReflectionUtil;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.function.Supplier;
 
+/**
+ * @see com.intellij.openapi
+ * @see PsiUtils
+ */
 public abstract class IntellijSDK {
 
   public static void invokeLater(@NotNull Runnable runnable) {
@@ -63,5 +72,32 @@ public abstract class IntellijSDK {
 
   public static FileType getFileType(String extension) {
     return FileTypeManager.getInstance().getFileTypeByExtension(extension);
+  }
+
+  public static ToolWindow getToolWindow(Project project, String name) {
+    return ToolWindowManager.getInstance(project).getToolWindow(name);
+  }
+
+  @Nullable
+  public static Class<?> getCallerClass() {
+    return ReflectionUtil.getGrandCallerClass();
+  }
+
+  public static void invoke(Runnable runnable) {
+    try {
+      runnable.run();
+    } catch (Throwable throwable) {
+      Notifications.error(throwable.getMessage());
+    }
+  }
+
+  @Nullable
+  public static <T> T invokeWithResult(Supplier<T> supplier) {
+    try {
+      return supplier.get();
+    } catch (Throwable throwable) {
+      Notifications.error(throwable.getMessage());
+      return null;
+    }
   }
 }

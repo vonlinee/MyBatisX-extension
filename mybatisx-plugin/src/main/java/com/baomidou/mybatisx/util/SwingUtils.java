@@ -1,7 +1,5 @@
 package com.baomidou.mybatisx.util;
 
-import com.intellij.openapi.util.IconLoader;
-import com.intellij.util.ui.JBUI;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -9,16 +7,13 @@ import javax.swing.*;
 import javax.swing.border.EtchedBorder;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.TableColumn;
-import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.tree.TreeNode;
 import java.awt.*;
 import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.StringSelection;
 import java.awt.event.MouseEvent;
 
-public final class SwingUtils {
-
-  private SwingUtils() {
-  }
+public class SwingUtils {
 
   public static JPanel newHBoxLayoutPanel() {
     return newBoxLayoutPanel(false);
@@ -31,8 +26,8 @@ public final class SwingUtils {
   /**
    * 创建一个BoxLayout布局的Panel
    *
-   * @param vertical
-   * @return
+   * @param vertical vertical
+   * @return JPanel
    */
   public static JPanel newBoxLayoutPanel(boolean vertical) {
     JPanel jPanel = new JPanel();
@@ -41,12 +36,7 @@ public final class SwingUtils {
     return jPanel;
   }
 
-  public static Icon getIcon(String name) {
-    name = "/icons/" + name;
-    return IconLoader.getIcon(name);
-  }
-
-  public static void setPreferredWidth(JComponent component, int width) {
+  public static void setPreferredWidth(@NotNull JComponent component, int width) {
     component.setPreferredSize(new Dimension(width, component.getPreferredSize().height));
   }
 
@@ -56,31 +46,6 @@ public final class SwingUtils {
 
   public static void setEmptyBorder(JComponent component) {
     component.setBorder(BorderFactory.createEmptyBorder());
-  }
-
-  /**
-   * 创建一个图标按钮
-   *
-   * @param icon 图标路径
-   * @return 图标按钮
-   */
-  public static JButton newIconButton(String icon) {
-    JButton button = new JButton();
-    Icon iconNode = getIcon(icon);
-    button.setIcon(iconNode);
-    button.setHorizontalTextPosition(JButton.CENTER); // 文本位置设置为居中（如果不需要文本，可以忽略此行代码）
-    button.setVerticalTextPosition(JButton.CENTER); // 文本位置设置为居中（如果不需要文本，可以忽略此行代码）
-    button.setText(""); // 如果不需要文本，确保将文本设置为空字符串
-    // 为了确保图标居中，可以调整按钮的Insets
-    Insets insets = button.getInsets();
-    int iconWidth = iconNode.getIconWidth();
-    int iconHeight = iconNode.getIconHeight();
-    int buttonWidth = button.getWidth();
-    int buttonHeight = button.getHeight();
-    int hGap = (buttonWidth - iconWidth) / 2;
-    int vGap = (buttonHeight - iconHeight) / 2;
-    button.setMargin(JBUI.insets(vGap, hGap, vGap, hGap)); // 设置边距来居中图标
-    return button;
   }
 
   /**
@@ -116,11 +81,12 @@ public final class SwingUtils {
   }
 
   @Nullable
-  public static DefaultMutableTreeNode getSelectedNode(JTree tree) {
+  @SuppressWarnings("unchecked")
+  public static <T extends TreeNode> T getSelectedNode(JTree tree) {
     if (tree == null) {
       return null;
     }
-    return (DefaultMutableTreeNode) tree.getSelectionModel().getSelectionPath().getLastPathComponent();
+    return (T) tree.getSelectionModel().getSelectionPath().getLastPathComponent();
   }
 
   /**
@@ -185,7 +151,7 @@ public final class SwingUtils {
    * @param component 组件
    * @param title     标题文本
    */
-  public static void addTitleBorder(JComponent component, String title) {
+  public static void addTitleBorder(@NotNull JComponent component, String title) {
     component.setBorder(new TitledBorder(new EtchedBorder(), title));
   }
 
@@ -200,6 +166,12 @@ public final class SwingUtils {
   public static void ensureEventDispatchThread() {
     if (!EventQueue.isDispatchThread()) {
       throw new IllegalStateException("The operation can only be used in event dispatch thread. Current thread: " + Thread.currentThread());
+    }
+  }
+
+  public static void expandAll(@NotNull JTree tree) {
+    for (int i = 0; i < tree.getRowCount(); i++) {
+      tree.expandRow(i);
     }
   }
 }

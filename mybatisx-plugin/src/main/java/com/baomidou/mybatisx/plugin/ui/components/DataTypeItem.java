@@ -1,6 +1,6 @@
 package com.baomidou.mybatisx.plugin.ui.components;
 
-import com.baomidou.mybatisx.model.ComboBoxItem;
+import com.baomidou.mybatisx.plugin.component.ComboBoxItem;
 import lombok.Getter;
 import lombok.Setter;
 import org.jetbrains.annotations.NotNull;
@@ -54,7 +54,7 @@ public class DataTypeItem implements MultableDataType, ComboBoxItem {
   }
 
   @Override
-  public @NotNull String getName() {
+  public @NotNull String getLabel() {
     if (this.maxLength != -1 && this.minLength != -1) {
       return this.name + "(" + this.minLength + ", " + this.maxLength + ")";
     }
@@ -72,6 +72,11 @@ public class DataTypeItem implements MultableDataType, ComboBoxItem {
   @Override
   public Object getValue() {
     return groupId;
+  }
+
+  @Override
+  public Class<?> getValueType() {
+    return String.class;
   }
 
   @Override

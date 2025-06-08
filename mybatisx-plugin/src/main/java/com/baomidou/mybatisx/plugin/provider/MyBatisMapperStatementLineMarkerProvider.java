@@ -42,7 +42,7 @@ public class MyBatisMapperStatementLineMarkerProvider extends LineMarkerProvider
       return null;
     }
     Optional<? extends PsiElement[]> processResult = getTargets(psiElement);
-    if (!processResult.isPresent()) {
+    if (processResult.isEmpty()) {
       return null;
     }
     return processResult.map(psiElements -> new MapperLineMarkerInfo(psiElement, getIcon(), psiElements)).orElse(null);

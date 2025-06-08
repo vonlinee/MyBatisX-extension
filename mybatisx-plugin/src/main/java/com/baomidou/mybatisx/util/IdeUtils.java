@@ -19,7 +19,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.function.Consumer;
 
-public abstract class IdeSDK {
+public abstract class IdeUtils {
 
   /**
    * 打开一个类选择器

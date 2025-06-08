@@ -9,6 +9,8 @@ import java.util.stream.Collectors;
 
 /**
  * The type String utils.
+ *
+ * @see org.apache.commons.lang3.StringUtils
  */
 public abstract class StringUtils {
 
@@ -433,5 +435,36 @@ public abstract class StringUtils {
       }
     }
     return false;
+  }
+
+  public static String trimLeft(String str) {
+    return org.apache.commons.lang3.StringUtils.strip(str);
+  }
+
+  /**
+   * remove \n, \r, ' '
+   *
+   * @param str string to trim
+   * @return String
+   * @see String#trim()
+   */
+  public static String trimInvisible(String str) {
+    if (str == null) {
+      return EMPTY;
+    }
+    char[] value = str.toCharArray();
+    int len = value.length;
+    int st = 0;
+    while ((st < len) && (value[st] == '\n' || value[st] == '\r' || ((value[st] & 0xff) <= ' '))) {
+      st++;
+    }
+    while ((st < len) && (value[st] == '\n' || value[st] == '\r' || ((value[len - 1] & 0xff) <= ' '))) {
+      len--;
+    }
+    if (st == 0 && len == value.length) {
+      return str;
+    }
+    return ((st > 0) || (len < value.length)) ?
+      new String(value, st, len - st) : EMPTY;
   }
 }

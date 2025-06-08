@@ -19,7 +19,7 @@ import java.util.List;
 
 /**
  * @author : liushang@zsyjr.com
- * @date : 2021/8/11
+ * @since : 2021/8/11
  */
 public class MapperMethodSafeDeleteProcessor extends SafeDeleteProcessorDelegateBase {
 
@@ -35,7 +35,7 @@ public class MapperMethodSafeDeleteProcessor extends SafeDeleteProcessorDelegate
     if (containingClass == null) {
       return false;
     }
-    return MapperUtils.findMappers(psiMethod.getProject(), containingClass).size() > 0;
+    return !MapperUtils.findMappers(psiMethod.getProject(), containingClass).isEmpty();
   }
 
 
@@ -50,7 +50,7 @@ public class MapperMethodSafeDeleteProcessor extends SafeDeleteProcessorDelegate
 
   @Override
   public @Nullable
-  NonCodeUsageSearchInfo findUsages(@NotNull PsiElement element, @NotNull PsiElement[] allElementsToDelete, @NotNull List<UsageInfo> result) {
+  NonCodeUsageSearchInfo findUsages(@NotNull PsiElement element, @NotNull PsiElement @NotNull [] allElementsToDelete, @NotNull List<UsageInfo> result) {
     return null;
   }
 
@@ -62,7 +62,7 @@ public class MapperMethodSafeDeleteProcessor extends SafeDeleteProcessorDelegate
 
   @Override
   public @Nullable
-  Collection<String> findConflicts(@NotNull PsiElement element, @NotNull PsiElement[] allElementsToDelete) {
+  Collection<String> findConflicts(@NotNull PsiElement element, @NotNull PsiElement @NotNull [] allElementsToDelete) {
     return null;
   }
 

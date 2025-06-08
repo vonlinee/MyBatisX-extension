@@ -5,7 +5,7 @@ import org.apache.ibatis.builder.xml.XMLMapperEntityResolver;
 import org.apache.ibatis.mapping.MappedStatement;
 import org.apache.ibatis.parsing.XNode;
 import org.apache.ibatis.parsing.XPathParser;
-import org.apache.ibatis.session.Configuration;
+import org.apache.ibatis.builder.Configuration;
 import org.mybatisx.extension.agent.api.AgentCommandEnum;
 import org.mybatisx.extension.agent.api.AgentException;
 import org.mybatisx.extension.agent.api.AgentRequest;

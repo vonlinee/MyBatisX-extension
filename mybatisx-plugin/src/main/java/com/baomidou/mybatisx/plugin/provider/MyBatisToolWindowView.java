@@ -11,7 +11,7 @@ import com.intellij.openapi.project.Project;
 )
 public class MyBatisToolWindowView extends MyBatisBaseView implements DumbAware {
 
-  public static final String NAME = "MyBatis";
+  public static final String NAME = "MyBatis.ToolWindow";
 
   public MyBatisToolWindowView(Project myProject) {
     super(myProject);

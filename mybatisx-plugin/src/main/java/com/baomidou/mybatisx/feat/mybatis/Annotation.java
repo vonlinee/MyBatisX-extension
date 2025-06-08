@@ -1,14 +1,12 @@
 package com.baomidou.mybatisx.feat.mybatis;
 
-import com.google.common.collect.ImmutableSet;
-import com.google.common.collect.Iterables;
-import com.google.common.collect.Maps;
+import com.baomidou.mybatisx.util.CollectionUtils;
+import com.baomidou.mybatisx.util.PsiUtils;
 import com.intellij.openapi.project.Project;
-import com.intellij.psi.JavaPsiFacade;
 import com.intellij.psi.PsiClass;
-import com.intellij.psi.search.GlobalSearchScope;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
@@ -66,7 +64,7 @@ public class Annotation implements Cloneable {
   /**
    * The constant STATEMENT_SYMMETRIES.
    */
-  public static final Set<Annotation> STATEMENT_SYMMETRIES = ImmutableSet.of(SELECT, UPDATE, INSERT, DELETE);
+  public static final Set<Annotation> STATEMENT_SYMMETRIES = Set.of(SELECT, UPDATE, INSERT, DELETE);
 
   private final String label;
 
@@ -83,7 +81,7 @@ public class Annotation implements Cloneable {
   public Annotation(@NotNull String label, @NotNull String qualifiedName) {
     this.label = label;
     this.qualifiedName = qualifiedName;
-    attributePairs = Maps.newHashMap();
+    attributePairs = new HashMap<>();
   }
 
   private Annotation addAttribute(String key, AnnotationValue value) {
@@ -100,7 +98,7 @@ public class Annotation implements Cloneable {
    */
   public Annotation withAttribute(@NotNull String key, @NotNull AnnotationValue value) throws CloneNotSupportedException {
     Annotation copy = this.clone();
-    copy.attributePairs = Maps.newHashMap(this.attributePairs);
+    copy.attributePairs = new HashMap<>(this.attributePairs);
     return copy.addAttribute(key, value);
   }
 
@@ -117,7 +115,7 @@ public class Annotation implements Cloneable {
   @Override
   public String toString() {
     StringBuilder builder = new StringBuilder(label);
-    if (!Iterables.isEmpty(attributePairs.entrySet())) {
+    if (!CollectionUtils.isEmpty(attributePairs.entrySet())) {
       builder.append(setupAttributeText());
     }
     return builder.toString();
@@ -149,13 +147,12 @@ public class Annotation implements Cloneable {
    * @return the optional
    */
   public Optional<PsiClass> toPsiClass(@NotNull Project project) {
-    return Optional.ofNullable(JavaPsiFacade.getInstance(project)
-      .findClass(getQualifiedName(), GlobalSearchScope.allScope(project)));
+    return PsiUtils.findPsiClassGlobally(project, getQualifiedName());
   }
 
   private Optional<String> getSingleValue() {
     try {
-      String value = Iterables.getOnlyElement(attributePairs.keySet());
+      String value = CollectionUtils.getOnlyElement(attributePairs.keySet());
       String builder = "(" + attributePairs.get(value).toString() + ")";
       return Optional.of(builder);
     } catch (Exception e) {

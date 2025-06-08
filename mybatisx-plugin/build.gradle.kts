@@ -24,6 +24,7 @@ plugins {
 }
 
 repositories {
+  mavenLocal()
   maven { url = uri("https://maven.aliyun.com/repository/public/") }
   mavenCentral()
 }
@@ -60,7 +61,11 @@ dependencies {
   implementation(project(":agent-api"))
   implementation(project(":mybatisx-agent"))
   implementation(files("${rootDir}/tools.jar"))
-  implementation(files("${rootDir}/libs/mybatis-plugin-support-3.5.20-SNAPSHOT.jar"))
+
+  implementation("com.tencentcloudapi:tencentcloud-sdk-java:3.1.210")
+
+  // this is published locally
+  implementation(files("${rootDir}/libs/mybatis-3.6.0-SNAPSHOT.jar"))
 }
 
 // See https://github.com/JetBrains/gradle-intellij-plugin/
@@ -83,7 +88,7 @@ intellij {
 }
 
 tasks.patchPluginXml {
-  sinceBuild = "203"
+  sinceBuild = "213"
   // 包含未来所有版本分支
   untilBuild = ""
   changeNotes = """

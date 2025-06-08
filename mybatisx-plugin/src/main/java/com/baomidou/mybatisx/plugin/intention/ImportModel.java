@@ -1,5 +1,8 @@
 package com.baomidou.mybatisx.plugin.intention;
 
+import lombok.Getter;
+
+@Getter
 public enum ImportModel {
   OVERRIDE(1, "全部覆盖"),
   APPEND(2, "仅追加"),
@@ -19,11 +22,4 @@ public enum ImportModel {
     return getLabel();
   }
 
-  public int getType() {
-    return this.type;
-  }
-
-  public String getLabel() {
-    return this.label;
-  }
 }

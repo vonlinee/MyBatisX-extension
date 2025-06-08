@@ -74,7 +74,7 @@ public class MapperStatementItem {
           }
         }
       }
-      this.mapperXmlFileLocation = PsiUtils.getPathOfContainingFile(element);
+      this.mapperXmlFileLocation = PsiUtils.getCanonicalPathOfContainingFile(element);
     }
   }
 }

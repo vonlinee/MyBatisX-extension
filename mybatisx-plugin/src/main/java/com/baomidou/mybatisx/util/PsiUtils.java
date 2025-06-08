@@ -4,19 +4,26 @@ import com.intellij.lang.jvm.types.JvmPrimitiveTypeKind;
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.actionSystem.CommonDataKeys;
 import com.intellij.openapi.actionSystem.LangDataKeys;
+import com.intellij.openapi.project.Project;
 import com.intellij.openapi.vfs.VirtualFile;
+import com.intellij.psi.JavaPsiFacade;
 import com.intellij.psi.PsiClass;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiField;
 import com.intellij.psi.PsiFile;
+import com.intellij.psi.PsiMethod;
 import com.intellij.psi.PsiModifier;
+import com.intellij.psi.search.GlobalSearchScope;
+import com.intellij.psi.search.searches.AnnotatedElementsSearch;
 import com.intellij.psi.util.PsiTreeUtil;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.function.BinaryOperator;
 import java.util.stream.Collectors;
 
@@ -32,7 +39,7 @@ public class PsiUtils {
    * @param element PsiElement
    * @return 文件路径
    */
-  public static String getPathOfContainingFile(PsiElement element) {
+  public static String getCanonicalPathOfContainingFile(PsiElement element) {
     PsiFile psiFile = element.getContainingFile();
     // 获取VirtualFile
     VirtualFile virtualFile = psiFile.getVirtualFile();
@@ -75,6 +82,16 @@ public class PsiUtils {
    */
   public static PsiClass getPsiClass(PsiElement element) {
     return PsiTreeUtil.getChildOfType(element, PsiClass.class);
+  }
+
+  /**
+   * 获取父类
+   *
+   * @param element PSI元素
+   * @return 类元素
+   */
+  public static PsiClass getParentPsiClass(PsiElement element) {
+    return PsiTreeUtil.getParentOfType(element, PsiClass.class);
   }
 
   /**
@@ -133,5 +150,29 @@ public class PsiUtils {
       .filter(field -> (!field.hasModifierProperty(PsiModifier.STATIC))
                        && (!field.hasModifierProperty(PsiModifier.TRANSIENT)))
       .collect(Collectors.toList());
+  }
+
+  public static boolean isDefaultMethod(PsiMethod method) {
+    if (method == null) {
+      return false;
+    }
+    return method.getModifierList().hasExplicitModifier(PsiModifier.DEFAULT);
+  }
+
+  public static Optional<PsiClass> findPsiClassGlobally(@NotNull Project project, String qualifiedName) {
+    return Optional.ofNullable(JavaPsiFacade.getInstance(project)
+      .findClass(qualifiedName, GlobalSearchScope.allScope(project)));
+  }
+
+  public static Optional<Collection<PsiClass>> searchAnnotatedPsiClassGlobally(
+    @NotNull Project project,
+    String qualifiedNameOfAnnotation) {
+    return findPsiClassGlobally(project, qualifiedNameOfAnnotation)
+      .map(clazz -> AnnotatedElementsSearch
+        .searchPsiClasses(clazz, GlobalSearchScope.allScope(project)).findAll());
+  }
+
+  public static String getPathOfContainingFile(@NotNull PsiElement element) {
+    return element.getContainingFile().getVirtualFile().getPath();
   }
 }

@@ -91,9 +91,7 @@ public class BasicFormatterImpl implements SqlFormatter {
     }
 
     public String perform() {
-
       result.append(INITIAL);
-
       while (tokens.hasMoreTokens()) {
         token = tokens.nextToken();
         lcToken = token.toLowerCase(Locale.ROOT);

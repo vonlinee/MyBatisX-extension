@@ -9,7 +9,7 @@ import java.util.List;
 
 /**
  * @param <E>
- * @see ComboBox
+ * @see CustomComboBox
  */
 public class SimpleComboBox<E> extends com.intellij.openapi.ui.ComboBox<E> {
 
@@ -35,7 +35,7 @@ public class SimpleComboBox<E> extends com.intellij.openapi.ui.ComboBox<E> {
   }
 
   public final void clearItems() {
-    MutableComboBoxModel<E> model = (MutableComboBoxModel<E>) getModel();
+    MutableComboBoxModel<E> model = getModel();
     model.removeElementAt(0);
   }
 
