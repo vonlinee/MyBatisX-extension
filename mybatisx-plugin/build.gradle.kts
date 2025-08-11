@@ -36,36 +36,33 @@ java {
 }
 
 dependencies {
-  testImplementation("org.junit.jupiter:junit-jupiter-api:5.8.1")
-  testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.8.1")
-  implementation("com.softwareloop:mybatis-generator-lombok-plugin:1.0")
-  implementation("uk.com.robust-it:cloning:1.9.2")
-  implementation("org.mybatis.generator:mybatis-generator-core:1.4.0")
-  implementation("org.freemarker:freemarker:2.3.30")
-  implementation("com.itranswarp:compiler:1.0")
-  testImplementation("junit:junit:4.13.1")
-  testImplementation("commons-io:commons-io:2.8.0")
   compileOnly("org.projectlombok:lombok:1.18.0")
-
-  testImplementation("org.junit.jupiter:junit-jupiter-api:5.6.0")
-  testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine")
-
-  implementation("com.google.guava:guava:33.2.1-jre")
-  implementation("org.apache.httpcomponents:httpclient:4.5.7")
-  implementation("com.tencentcloudapi:tencentcloud-sdk-java:3.1.210")
 
   // 解决 lombok 不生效问题
   // 还需在Build,Execution,Deployment -> Compiler -> Annotation Processor开启注解处理器
   annotationProcessor("org.projectlombok:lombok:1.18.32")
 
-  implementation(project(":agent-api"))
-  implementation(project(":mybatisx-agent"))
-  implementation(files("${rootDir}/tools.jar"))
-
-  implementation("com.tencentcloudapi:tencentcloud-sdk-java:3.1.210")
-
+  implementation("com.softwareloop:mybatis-generator-lombok-plugin:1.0")
+  implementation("uk.com.robust-it:cloning:1.9.2")
+  implementation("org.mybatis.generator:mybatis-generator-core:1.4.0")
+  implementation("org.freemarker:freemarker:2.3.30")
+  implementation("com.itranswarp:compiler:1.0")
+  implementation(files("${rootDir}/libs/tools.jar"))
   // this is published locally
   implementation(files("${rootDir}/libs/mybatis-3.6.0-SNAPSHOT.jar"))
+  implementation("com.google.guava:guava:33.2.1-jre")
+  implementation("org.apache.httpcomponents:httpclient:4.5.7")
+  implementation("com.tencentcloudapi:tencentcloud-sdk-java:3.1.210")
+  implementation(project(":agent-api"))
+  implementation(project(":mybatisx-agent"))
+
+  testImplementation("junit:junit:4.13.1")
+  testImplementation("commons-io:commons-io:2.8.0")
+  testImplementation("org.junit.jupiter:junit-jupiter-api:5.8.1")
+  testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.8.1")
+  testImplementation("org.junit.jupiter:junit-jupiter-api:5.6.0")
+
+  testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine")
 }
 
 // See https://github.com/JetBrains/gradle-intellij-plugin/
