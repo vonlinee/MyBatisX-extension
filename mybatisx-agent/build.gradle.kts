@@ -1,5 +1,3 @@
-import javax.xml.parsers.DocumentBuilderFactory
-
 plugins {
   `java-library`
 }
@@ -62,9 +60,11 @@ tasks.jar {
     if (targetFile.exists())
       targetFile.delete()
 
+    val targetLocation = "${rootDir}/mybatisx-plugin/src/main/resources"
+    logger.info("copy ${jarFile.absolutePath} to $targetLocation")
     project.copy {
       from(jarFile.absolutePath)
-      into("${rootDir}/mybatisx-plugin/src/main/resources")
+      into(targetLocation)
     }
   }
 }
