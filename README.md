@@ -7,26 +7,21 @@ development process.
 # Requirements
 
 - Java 11+
+- Kotlin 1.9.20 +
 - IntelliJ IDEA 2023.1.2 (Ultimate Edition)
 - Gradle 8.4+
 
-# Features
+# Added Features
 
-## MyBatis Sql Debugger
+## MyBatis Sql Preview
 
-Right-Click on the Gutter Icon on every mybatis mapper statements.
+Click the Run Icon on every mybatis mapper statements on the gutter.
 
-![mybatis-statement-debugger-entrypoint](assets/mybatis-statement-debugger-entrypoint.png)
+![mybatis-statement-debugger](/assets/mybatis-statement-demo.png)
 
 Fill your params, and then you can get an executable sql without running you application.
 
-![mybatis-statement-debugger](/assets/mybatis-statement-debugger.png)
-
-## MyBatis Mapper XML Fragments
-
-generate som common-used MyBatis Mapper XML Fragments sql template content like belows:
-
-![GIF 2024-4-15 20-23-03](assets/GIF_2024-4-15_20-23-03.gif)
+![mybatis-statement-debugger](/assets/mybatis-statement-preview-panel.png)
 
 # Respect
 
