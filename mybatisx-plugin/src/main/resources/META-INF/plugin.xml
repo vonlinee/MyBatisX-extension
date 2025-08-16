@@ -2,7 +2,7 @@
 <idea-plugin>
   <id>com.baomidou.plugin.idea.mybatisx.extension</id>
   <name>MyBatisX-extension</name>
-  <version>1.6.4</version>
+  <version>1.5.4</version>
   <vendor url="https://github.com/vonlinee/MyBatisX-extension">MyBatisX-extension</vendor>
 
   <description>It aims to realize the most convenient IDEA hot update plug-in, reduce user operation steps, and
