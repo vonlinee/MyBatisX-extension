@@ -11,8 +11,8 @@ import java.util.Collections;
  * 不查找,空值模式
  */
 public class EmptyAbstractElementFilter extends AbstractElementFilter {
-    @Override
-    protected Collection<? extends DomElement> getResults(@NotNull PsiElement element) {
-        return Collections.emptyList();
-    }
+  @Override
+  protected Collection<? extends DomElement> getResults(@NotNull PsiElement element) {
+    return Collections.emptyList();
+  }
 }

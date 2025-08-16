@@ -7,16 +7,16 @@ import com.intellij.openapi.ui.ComboBox;
  */
 public class TypeGroupComboBox extends ComboBox<String> {
 
-    public TypeGroupComboBox() {
-        super(new String[]{
-            "Java",
-            "MySQL",
-            "Oracle",
-            "Kotlin"
-        });
-    }
+  public TypeGroupComboBox() {
+    super(new String[]{
+      "Java",
+      "MySQL",
+      "Oracle",
+      "Kotlin"
+    });
+  }
 
-    public String getValue() {
-        return (String) getSelectedItem();
-    }
+  public String getValue() {
+    return (String) getSelectedItem();
+  }
 }

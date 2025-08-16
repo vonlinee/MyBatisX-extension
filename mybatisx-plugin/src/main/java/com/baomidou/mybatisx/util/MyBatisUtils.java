@@ -1,10 +1,12 @@
 package com.baomidou.mybatisx.util;
 
+import com.intellij.psi.PsiElement;
 import com.intellij.psi.util.ReferenceSetBase;
 import com.intellij.psi.xml.XmlDocument;
 import com.intellij.psi.xml.XmlElement;
 import com.intellij.psi.xml.XmlFile;
 import com.intellij.psi.xml.XmlTag;
+import org.jetbrains.annotations.Nullable;
 
 /**
  * The type Mybatis constants.
@@ -13,34 +15,40 @@ import com.intellij.psi.xml.XmlTag;
  */
 public final class MyBatisUtils {
 
-    /**
-     * The constant DOT_SEPARATOR.
-     */
-    public static final String DOT_SEPARATOR = String.valueOf(ReferenceSetBase.DOT_SEPARATOR);
-    /**
-     * The constant PRIORITY.
-     */
-    public static final double PRIORITY = 400.0;
+  public static final String NAMESPACE = "namespace";
 
-    private MyBatisUtils() {
-        throw new UnsupportedOperationException();
-    }
+  /**
+   * The constant DOT_SEPARATOR.
+   */
+  public static final String DOT_SEPARATOR = String.valueOf(ReferenceSetBase.DOT_SEPARATOR);
 
-    public static boolean isCrudXmlTag(String text) {
-        return "select".equals(text) || "insert".equals(text) || "update".equals(text) || "delete".equals(text);
-    }
+  private MyBatisUtils() {
+    throw new UnsupportedOperationException();
+  }
 
-    public static String getNamespace(XmlElement xmlElement) {
-        XmlFile containingFile = (XmlFile) xmlElement.getContainingFile();
-        // Mapper 标签
-        XmlDocument document = containingFile.getDocument();
-        if (document == null) {
-            return null;
-        }
-        XmlTag rootTag = containingFile.getDocument().getRootTag();
-        if (rootTag == null) {
-            return null;
-        }
-        return rootTag.getAttributeValue("namespace");
+  public static boolean isCrudXmlTag(String tagName) {
+    return "select".equals(tagName) || "insert".equals(tagName) || "update".equals(tagName) || "delete".equals(tagName);
+  }
+
+  @Nullable
+  public static String getNamespace(PsiElement element) {
+    if (element instanceof XmlElement) {
+      return getNamespace((XmlElement) element);
     }
+    return null;
+  }
+
+  public static String getNamespace(XmlElement xmlElement) {
+    XmlFile containingFile = (XmlFile) xmlElement.getContainingFile();
+    // Mapper 标签
+    XmlDocument document = containingFile.getDocument();
+    if (document == null) {
+      return null;
+    }
+    XmlTag rootTag = containingFile.getDocument().getRootTag();
+    if (rootTag == null) {
+      return null;
+    }
+    return rootTag.getAttributeValue("namespace");
+  }
 }

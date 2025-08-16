@@ -26,97 +26,97 @@ import java.util.Map;
  */
 @Service
 @State(
-    name = "MybatisXSettings",
-    storages = @Storage(value = MyBatisXPlugin.PERSISTENT_STATE_FILE))
+  name = "MybatisXSettings",
+  storages = @Storage(value = MyBatisXPlugin.PERSISTENT_STATE_FILE))
 public final class MyBatisXSettings implements PersistentStateComponent<MyBatisXSettings.State> {
 
-    private final State state = new State();
+  private final State state = new State();
 
+  /**
+   * Gets instance.
+   *
+   * @return the instance
+   */
+  public static MyBatisXSettings getInstance() {
+    return IntellijSDK.getService(MyBatisXSettings.class);
+  }
+
+  @NotNull
+  @Override
+  public MyBatisXSettings.State getState() {
+    return this.state;
+  }
+
+  @Override
+  public void loadState(@NotNull MyBatisXSettings.State state) {
+    XmlSerializerUtil.copyBean(state, this.state);
+  }
+
+  public String getMapperIcon() {
+    return state.mapperIcon;
+  }
+
+  public void setMapperIcon(String mapperIcon) {
+    this.state.mapperIcon = mapperIcon;
+  }
+
+  public String getInsertGenerator() {
+    return state.insertGenerator;
+  }
+
+  public void setInsertGenerator(String insertGenerator) {
+    this.state.insertGenerator = insertGenerator;
+  }
+
+  public String getUpdateGenerator() {
+    return state.updateGenerator;
+  }
+
+  public void setUpdateGenerator(String updateGenerator) {
+    this.state.updateGenerator = updateGenerator;
+  }
+
+  public String getDeleteGenerator() {
+    return state.deleteGenerator;
+  }
+
+  public void setDeleteGenerator(String deleteGenerator) {
+    this.state.deleteGenerator = deleteGenerator;
+  }
+
+  public String getSelectGenerator() {
+    return state.selectGenerator;
+  }
+
+  public void setSelectGenerator(String selectGenerator) {
+    this.state.selectGenerator = selectGenerator;
+  }
+
+  /**
+   * 配置值, 字段需要是public
+   * <a href="https://plugins.jetbrains.com/docs/intellij/persisting-state-of-components.html">...</a>
+   */
+  public static class State implements Serializable {
+
+    public String mapperIcon;
+    public String insertGenerator;
+    public String updateGenerator;
+    public String deleteGenerator;
+    public String selectGenerator;
+    public boolean hotswapEnabled;
+    public String port;
     /**
-     * Gets instance.
-     *
-     * @return the instance
+     * 数据类型映射
      */
-    public static MyBatisXSettings getInstance() {
-        return IntellijSDK.getService(MyBatisXSettings.class);
+    public Map<String, Map<String, String>> dataTypeMapping = new HashMap<>();
+
+    public State() {
+      // 配置的默认值
+      Joiner joiner = Joiner.on(";");
+      insertGenerator = joiner.join(StatementGenerators.INSERT_GENERATOR.getPatterns());
+      updateGenerator = joiner.join(StatementGenerators.UPDATE_GENERATOR.getPatterns());
+      deleteGenerator = joiner.join(StatementGenerators.DELETE_GENERATOR.getPatterns());
+      selectGenerator = joiner.join(StatementGenerators.SELECT_GENERATOR.getPatterns());
     }
-
-    @NotNull
-    @Override
-    public MyBatisXSettings.State getState() {
-        return this.state;
-    }
-
-    @Override
-    public void loadState(@NotNull MyBatisXSettings.State state) {
-        XmlSerializerUtil.copyBean(state, this.state);
-    }
-
-    public String getMapperIcon() {
-        return state.mapperIcon;
-    }
-
-    public void setMapperIcon(String mapperIcon) {
-        this.state.mapperIcon = mapperIcon;
-    }
-
-    public String getInsertGenerator() {
-        return state.insertGenerator;
-    }
-
-    public void setInsertGenerator(String insertGenerator) {
-        this.state.insertGenerator = insertGenerator;
-    }
-
-    public String getUpdateGenerator() {
-        return state.updateGenerator;
-    }
-
-    public void setUpdateGenerator(String updateGenerator) {
-        this.state.updateGenerator = updateGenerator;
-    }
-
-    public String getDeleteGenerator() {
-        return state.deleteGenerator;
-    }
-
-    public void setDeleteGenerator(String deleteGenerator) {
-        this.state.deleteGenerator = deleteGenerator;
-    }
-
-    public String getSelectGenerator() {
-        return state.selectGenerator;
-    }
-
-    public void setSelectGenerator(String selectGenerator) {
-        this.state.selectGenerator = selectGenerator;
-    }
-
-    /**
-     * 配置值, 字段需要是public
-     * <a href="https://plugins.jetbrains.com/docs/intellij/persisting-state-of-components.html">...</a>
-     */
-    public static class State implements Serializable {
-
-        public String mapperIcon;
-        public String insertGenerator;
-        public String updateGenerator;
-        public String deleteGenerator;
-        public String selectGenerator;
-        public boolean hotswapEnabled;
-        public String port;
-        /**
-         * 数据类型映射
-         */
-        public Map<String, Map<String, String>> dataTypeMapping = new HashMap<>();
-
-        public State() {
-            // 配置的默认值
-            Joiner joiner = Joiner.on(";");
-            insertGenerator = joiner.join(StatementGenerators.INSERT_GENERATOR.getPatterns());
-            updateGenerator = joiner.join(StatementGenerators.UPDATE_GENERATOR.getPatterns());
-            deleteGenerator = joiner.join(StatementGenerators.DELETE_GENERATOR.getPatterns());
-            selectGenerator = joiner.join(StatementGenerators.SELECT_GENERATOR.getPatterns());
-        }
-    }
+  }
 }

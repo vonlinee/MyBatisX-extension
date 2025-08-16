@@ -1,69 +1,74 @@
 plugins {
-    `java-library`
+  `java-library`
 }
 
 repositories {
-    mavenCentral()
+  mavenCentral()
+  mavenLocal()
 }
+
+val mybatisVersion = "3.6.0-SNAPSHOT"
 
 dependencies {
 
-    compileOnly("org.mybatis.spring.boot:mybatis-spring-boot-starter:2.3.0")
+  // https://mvnrepository.com/artifact/org.jetbrains/annotations
+  compileOnly("org.jetbrains:annotations:24.1.0")
 
-    // https://mvnrepository.com/artifact/org.mybatis/mybatis
-    // mybatis 内部提供了 javassist 库
-    compileOnly("org.mybatis:mybatis:3.5.16")
-    // https://mvnrepository.com/artifact/org.jetbrains/annotations
-    compileOnly("org.jetbrains:annotations:24.1.0")
+  // local pack for this plugin
+  // implementation("org.mybatis:mybatis3-embed-plugin-support:${mybatisVersion}")
 
-    testImplementation("org.mybatis.spring.boot:mybatis-spring-boot-starter:2.3.0")
+  testImplementation("org.mybatis.spring.boot:mybatis-spring-boot-starter:2.3.0")
 
-    // https://mvnrepository.com/artifact/org.javassist/javassist
-    implementation(project(":agent-api"))
+  // https://mvnrepository.com/artifact/org.javassist/javassist
+  implementation(project(":agent-api"))
+
+  implementation(files("${rootDir}/libs/mybatis-3.6.0-SNAPSHOT.jar"))
 }
 
 // 设置兼容性版本
 
 java {
-    sourceCompatibility = JavaVersion.VERSION_11
-    targetCompatibility = JavaVersion.VERSION_11
+  sourceCompatibility = JavaVersion.VERSION_11
+  targetCompatibility = JavaVersion.VERSION_11
 }
 
 tasks.jar {
-    dependsOn(":agent-api:jar")
+  dependsOn(":agent-api:jar")
 
-    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
-    archiveFileName = "mybatisx-agent.jar"
+  duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+  archiveFileName = "mybatisx-agent.jar"
 
-    manifest {
-        attributes["Agent-Class"] = "org.mybatisx.extension.agent.Agent"
-        attributes["Can-Redefine-Classes"] = true
-        attributes["Can-Retransform-Classes"] = true
-        attributes["Manifest-Version"] = 1.0
+  manifest {
+    attributes["Agent-Class"] = "org.mybatisx.extension.agent.Agent"
+    attributes["Can-Redefine-Classes"] = true
+    attributes["Can-Retransform-Classes"] = true
+    attributes["Manifest-Version"] = 1.0
+  }
+
+  from(configurations.runtimeClasspath.get().map { file ->
+    if (file.isDirectory) {
+      file
+    } else {
+      project.zipTree(file)
     }
+  })
 
-    from(configurations.runtimeClasspath.get().map { file ->
-        if (file.isDirectory) {
-            file
-        } else {
-            project.zipTree(file)
-        }
-    })
+  doLast {
+    val jarFile = outputs.files.files.first()
 
-    doLast {
-        val jarFile = outputs.files.files.first()
+    val targetFile = file("${rootDir}/mybatisx-plugin/src/main/resources/${jarFile.name}")
+    if (targetFile.exists())
+      targetFile.delete()
 
-        val targetFile = file("${rootDir}/mybatisx-plugin/src/main/resources/${jarFile.name}")
-        if (targetFile.exists())
-            targetFile.delete()
-
-        project.copy {
-            from(jarFile.absolutePath)
-            into("${rootDir}/mybatisx-plugin/src/main/resources")
-        }
+    val targetLocation = "${rootDir}/mybatisx-plugin/src/main/resources"
+    logger.info("copy ${jarFile.absolutePath} to $targetLocation")
+    project.copy {
+      from(jarFile.absolutePath)
+      into(targetLocation)
     }
+  }
 }
 
 tasks.test {
-    useJUnitPlatform()
+  useJUnitPlatform()
 }

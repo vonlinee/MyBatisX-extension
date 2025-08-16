@@ -15,16 +15,16 @@ import org.jetbrains.annotations.NotNull;
  */
 public class GenerateParamChooserAbstract extends AbstractJavaFileIntentionChooser {
 
-    /**
-     * The constant INSTANCE.
-     */
-    public static final AbstractJavaFileIntentionChooser INSTANCE = new GenerateParamChooserAbstract();
+  /**
+   * The constant INSTANCE.
+   */
+  public static final AbstractJavaFileIntentionChooser INSTANCE = new GenerateParamChooserAbstract();
 
-    @Override
-    public boolean isAvailable(@NotNull PsiElement element) {
-        PsiParameter parameter = PsiTreeUtil.getParentOfType(element, PsiParameter.class);
-        PsiMethod method = PsiTreeUtil.getParentOfType(element, PsiMethod.class);
-        return (null != parameter && !JavaUtils.isAnnotationPresent(parameter, Annotation.PARAM)) ||
-               (null != method && !JavaUtils.isAllParameterWithAnnotation(method, Annotation.PARAM));
-    }
+  @Override
+  public boolean isAvailable(@NotNull PsiElement element) {
+    PsiParameter parameter = PsiTreeUtil.getParentOfType(element, PsiParameter.class);
+    PsiMethod method = PsiTreeUtil.getParentOfType(element, PsiMethod.class);
+    return (null != parameter && !JavaUtils.isAnnotationPresent(parameter, Annotation.PARAM)) ||
+           (null != method && !JavaUtils.isAllParameterWithAnnotation(method, Annotation.PARAM));
+  }
 }

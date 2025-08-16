@@ -18,24 +18,24 @@ import java.util.Set;
  */
 public class SingleAliasResolver extends AliasResolver {
 
-    /**
-     * Instantiates a new Single alias resolver.
-     *
-     * @param project the project
-     */
-    public SingleAliasResolver(Project project) {
-        super(project);
-    }
+  /**
+   * Instantiates a new Single alias resolver.
+   *
+   * @param project the project
+   */
+  public SingleAliasResolver(Project project) {
+    super(project);
+  }
 
-    @NotNull
-    @Override
-    public Set<AliasDesc> getClassAliasDescriptions(@Nullable PsiElement element) {
-        final Set<AliasDesc> result = Sets.newHashSet();
-        MapperUtils.processConfiguredTypeAliases(project, typeAlias -> {
-            addAliasDesc(result, typeAlias.getType().getValue(), typeAlias.getAlias().getStringValue());
-            return true;
-        });
-        return result;
-    }
+  @NotNull
+  @Override
+  public Set<AliasDesc> getClassAliasDescriptions(@Nullable PsiElement element) {
+    final Set<AliasDesc> result = Sets.newHashSet();
+    MapperUtils.processConfiguredTypeAliases(project, typeAlias -> {
+      addAliasDesc(result, typeAlias.getType().getValue(), typeAlias.getAlias().getStringValue());
+      return true;
+    });
+    return result;
+  }
 
 }

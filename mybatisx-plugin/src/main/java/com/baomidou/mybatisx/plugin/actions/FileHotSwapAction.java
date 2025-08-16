@@ -22,49 +22,49 @@ import java.util.concurrent.TimeUnit;
 
 public class FileHotSwapAction extends AnAction {
 
-    /**
-     * 只会存在一个非核心线程，60秒回收，
-     */
-    private static final ExecutorService ACTION_THREAD_POOL = new ThreadPoolExecutor(0,
-            1,
-            60,
-            TimeUnit.SECONDS,
-            new LinkedBlockingQueue<>(100),
-            r -> new Thread(r, "action服务端线程"));
+  /**
+   * 只会存在一个非核心线程，60秒回收，
+   */
+  private static final ExecutorService ACTION_THREAD_POOL = new ThreadPoolExecutor(0,
+    1,
+    60,
+    TimeUnit.SECONDS,
+    new LinkedBlockingQueue<>(100),
+    r -> new Thread(r, "action服务端线程"));
 
-    /**
-     * 文件处理器集合
-     */
-    private static final List<Handler> fileHandlerList = new ArrayList<>();
+  /**
+   * 文件处理器集合
+   */
+  private static final List<Handler> fileHandlerList = new ArrayList<>();
 
-    static {
-        fileHandlerList.add(new XmlFileHandler());
-        fileHandlerList.add(new JavaFileHandler());
+  static {
+    fileHandlerList.add(new XmlFileHandler());
+    fileHandlerList.add(new JavaFileHandler());
+  }
+
+  public FileHotSwapAction(@Nullable String text) {
+    super(text);
+  }
+
+  @Override
+  public void actionPerformed(@NotNull AnActionEvent e) {
+    PsiFile psiFile = e.getData(PlatformDataKeys.PSI_FILE);
+    if (psiFile == null) {
+      return;
     }
-
-    public FileHotSwapAction(@Nullable String text) {
-        super(text);
+    final String fileName = psiFile.getName();
+    for (Handler handler : fileHandlerList) {
+      if (handler.supports(fileName)) {
+        ACTION_THREAD_POOL.execute(() -> {
+          try {
+            handler.execute(e);
+          } catch (AgentException ex) {
+            Notifications.notify(ex.getMessage(), NotificationType.ERROR);
+          }
+        });
+        break;
+      }
     }
-
-    @Override
-    public void actionPerformed(@NotNull AnActionEvent e) {
-        PsiFile psiFile = e.getData(PlatformDataKeys.PSI_FILE);
-        if (psiFile == null) {
-            return;
-        }
-        final String fileName = psiFile.getName();
-        for (Handler handler : fileHandlerList) {
-            if (handler.supports(fileName)) {
-                ACTION_THREAD_POOL.execute(() -> {
-                    try {
-                        handler.execute(e);
-                    } catch (AgentException ex) {
-                        Notifications.notify(ex.getMessage(), NotificationType.ERROR);
-                    }
-                });
-                break;
-            }
-        }
-    }
+  }
 
 }

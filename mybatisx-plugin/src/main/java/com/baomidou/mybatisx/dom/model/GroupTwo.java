@@ -19,31 +19,31 @@ import java.util.List;
  */
 public interface GroupTwo extends GroupOne {
 
-    /**
-     * Gets binds.
-     *
-     * @return the binds
-     */
-    @SubTagList("bind")
-    List<Bind> getBinds();
+  /**
+   * Gets binds.
+   *
+   * @return the binds
+   */
+  @SubTagList("bind")
+  List<Bind> getBinds();
 
-    /**
-     * Gets parameter map.
-     *
-     * @return the parameter map
-     */
-    @NotNull
-    @Attribute("parameterMap")
-    @Convert(ParameterMapConverter.class)
-    GenericAttributeValue<XmlTag> getParameterMap();
+  /**
+   * Gets parameter map.
+   *
+   * @return the parameter map
+   */
+  @NotNull
+  @Attribute("parameterMap")
+  @Convert(ParameterMapConverter.class)
+  GenericAttributeValue<XmlTag> getParameterMap();
 
-    /**
-     * Gets parameter type.
-     *
-     * @return the parameter type
-     */
-    @NotNull
-    @Attribute("parameterType")
-    @Convert(AliasConverter.class)
-    GenericAttributeValue<PsiClass> getParameterType();
+  /**
+   * Gets parameter type.
+   *
+   * @return the parameter type
+   */
+  @NotNull
+  @Attribute("parameterType")
+  @Convert(AliasConverter.class)
+  GenericAttributeValue<PsiClass> getParameterType();
 }

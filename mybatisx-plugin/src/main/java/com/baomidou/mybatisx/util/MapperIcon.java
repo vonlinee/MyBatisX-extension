@@ -5,13 +5,13 @@ package com.baomidou.mybatisx.util;
  */
 public enum MapperIcon {
 
-    /**
-     * 默认
-     */
-    DEFAULT,
+  /**
+   * 默认
+   */
+  DEFAULT,
 
-    /**
-     * 小鸟图标
-     */
-    BIRD
+  /**
+   * 小鸟图标
+   */
+  BIRD
 }

@@ -12,19 +12,19 @@ import java.util.List;
  */
 public interface Constructor extends DomElement {
 
-    /**
-     * Gets args.
-     *
-     * @return the args
-     */
-    @SubTagList("arg")
-    List<Arg> getArgs();
+  /**
+   * Gets args.
+   *
+   * @return the args
+   */
+  @SubTagList("arg")
+  List<Arg> getArgs();
 
-    /**
-     * Gets id args.
-     *
-     * @return the id args
-     */
-    @SubTagList("idArg")
-    List<IdArg> getIdArgs();
+  /**
+   * Gets id args.
+   *
+   * @return the id args
+   */
+  @SubTagList("idArg")
+  List<IdArg> getIdArgs();
 }

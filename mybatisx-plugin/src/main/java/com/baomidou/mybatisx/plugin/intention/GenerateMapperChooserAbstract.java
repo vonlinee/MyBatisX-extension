@@ -12,23 +12,23 @@ import org.jetbrains.annotations.NotNull;
  */
 public class GenerateMapperChooserAbstract extends AbstractJavaFileIntentionChooser {
 
-    /**
-     * The constant INSTANCE.
-     */
-    public static final AbstractJavaFileIntentionChooser INSTANCE = new GenerateMapperChooserAbstract();
+  /**
+   * The constant INSTANCE.
+   */
+  public static final AbstractJavaFileIntentionChooser INSTANCE = new GenerateMapperChooserAbstract();
 
-    @Override
-    public boolean isAvailable(@NotNull PsiElement element) {
-        if (isPositionOfInterfaceDeclaration(element)) {
-            // ensure parent element is a PsiClass
-            PsiClass firstParent = PsiTreeUtil.getParentOfType(element, PsiClass.class);
-            if (firstParent != null) {
-                if (firstParent.isInterface()) {
-                    return !isTargetPresentInXml(firstParent);
-                }
-            }
+  @Override
+  public boolean isAvailable(@NotNull PsiElement element) {
+    if (isPositionOfInterfaceDeclaration(element)) {
+      // ensure parent element is a PsiClass
+      PsiClass firstParent = PsiTreeUtil.getParentOfType(element, PsiClass.class);
+      if (firstParent != null) {
+        if (firstParent.isInterface()) {
+          return !isTargetPresentInXml(firstParent);
         }
-        return false;
+      }
     }
+    return false;
+  }
 
 }

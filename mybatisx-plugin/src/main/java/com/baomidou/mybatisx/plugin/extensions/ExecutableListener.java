@@ -7,12 +7,12 @@ package com.baomidou.mybatisx.plugin.extensions;
  */
 public interface ExecutableListener {
 
-    /**
-     * Is write action boolean.
-     *
-     * @return the boolean
-     */
-    default boolean isWriteAction() {
-        return false;
-    }
+  /**
+   * Is write action boolean.
+   *
+   * @return the boolean
+   */
+  default boolean isWriteAction() {
+    return false;
+  }
 }

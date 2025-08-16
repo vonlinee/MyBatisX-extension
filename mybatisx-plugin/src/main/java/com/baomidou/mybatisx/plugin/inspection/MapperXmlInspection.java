@@ -15,20 +15,20 @@ import com.intellij.util.xml.highlighting.DomHighlightingHelper;
  */
 public class MapperXmlInspection extends BasicDomElementsInspection<DomElement> {
 
-    /**
-     * Instantiates a new Mapper xml inspection.
-     */
-    public MapperXmlInspection() {
-        super(DomElement.class);
-    }
+  /**
+   * Instantiates a new Mapper xml inspection.
+   */
+  public MapperXmlInspection() {
+    super(DomElement.class);
+  }
 
-    @Override
-    protected void checkDomElement(DomElement element, DomElementAnnotationHolder holder, DomHighlightingHelper helper) {
-        super.checkDomElement(element, holder, helper);
-    }
+  @Override
+  protected void checkDomElement(DomElement element, DomElementAnnotationHolder holder, DomHighlightingHelper helper) {
+    super.checkDomElement(element, holder, helper);
+  }
 
-    @Override
-    public String getStaticDescription() {
-        return "Static MapperXmlInspection";
-    }
+  @Override
+  public String getStaticDescription() {
+    return "Static MapperXmlInspection";
+  }
 }

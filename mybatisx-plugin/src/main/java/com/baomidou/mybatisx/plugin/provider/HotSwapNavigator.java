@@ -29,68 +29,68 @@ import java.util.Collections;
  */
 public class HotSwapNavigator implements MapperNavigator {
 
-    private final AgentConnector<MapperHotSwapDTO, Object> connector;
+  private final AgentConnector<MapperHotSwapDTO, Object> connector;
 
-    public HotSwapNavigator() {
-        this.connector = TargetProxy.getProxy(new AgentConnectorImpl<>());
-    }
+  public HotSwapNavigator() {
+    this.connector = TargetProxy.getProxy(new AgentConnectorImpl<>());
+  }
 
-    @Override
-    public Icon getIcon() {
-        return Icons.GUTTER_HOT_SWAP_ICON;
-    }
+  @Override
+  public Icon getIcon() {
+    return Icons.GUTTER_HOT_SWAP_ICON;
+  }
 
-    @Override
-    public String getDisplayText() {
-        return "HotSwap";
-    }
+  @Override
+  public String getDisplayText() {
+    return "HotSwap";
+  }
 
-    @Override
-    public void navigate(Project project, MapperStatementItem item) {
-        int count = VMContext.size();
-        if (count == 0) {
-            Notifications.notify("No running process", NotificationType.ERROR);
-        } else if (count == 1) {
-            VMContext.first().ifPresent(vmInfo -> hotswap(project, item, vmInfo));
-        } else if (count > 1) {
-            VMInfo[] vmInfos = VMContext.values().toArray(new VMInfo[]{});
-            ListPopup listPopup = JBPopupFactory.getInstance().createListPopup(new BaseListPopupStep<VMInfo>("Running Profiles", vmInfos) {
+  @Override
+  public void navigate(Project project, MapperStatementItem item) {
+    int count = VMContext.size();
+    if (count == 0) {
+      Notifications.notify("No running process", NotificationType.ERROR);
+    } else if (count == 1) {
+      VMContext.first().ifPresent(vmInfo -> hotswap(project, item, vmInfo));
+    } else if (count > 1) {
+      VMInfo[] vmInfos = VMContext.values().toArray(new VMInfo[]{});
+      ListPopup listPopup = JBPopupFactory.getInstance().createListPopup(new BaseListPopupStep<VMInfo>("Running Profiles", vmInfos) {
 
-                @Override
-                public @NotNull String getTextFor(VMInfo vmInfo) {
-                    return vmInfo.getIp() + ":" + vmInfo.getPort() + " " + vmInfo.getPid() + " " + vmInfo.getProcessName();
-                }
-
-                @Override
-                public @Nullable PopupStep<?> onChosen(VMInfo selectedValue, boolean finalChoice) {
-                    hotswap(project, item, selectedValue);
-                    return PopupStep.FINAL_CHOICE;
-                }
-            });
-            listPopup.show(new RelativePoint(item.getOriginEvent()));
+        @Override
+        public @NotNull String getTextFor(VMInfo vmInfo) {
+          return vmInfo.getIp() + ":" + vmInfo.getPort() + " " + vmInfo.getPid() + " " + vmInfo.getProcessName();
         }
-    }
 
-    public void hotswap(Project project, MapperStatementItem item, VMInfo vmInfo) {
-
-        MapperHotSwapDTO mapperHotswapDto = new MapperHotSwapDTO();
-        mapperHotswapDto.setMapperXmlPath(item.getMapperXmlFileLocation());
-        mapperHotswapDto.setNamespace(item.getNamespace());
-        mapperHotswapDto.setContent(item.getContent());
-
-        AgentRequest<MapperHotSwapDTO> command = new AgentRequest<>(AgentCommandEnum.MYBATIS_MAPPER_STATEMENT_HOTSWAP, mapperHotswapDto);
-        try {
-            connector.sendRequest(Collections.singletonList(vmInfo), vm -> {
-                AgentResponse<Object> agentResponse = connector.execute(command);
-                Notifications.notify("[" + vm.getProcessName() + "]:" + agentResponse.getMsg(), agentResponse.isOk() ? NotificationType.INFORMATION : NotificationType.ERROR);
-            });
-        } catch (Throwable throwable) {
-            Notifications.notify("failed to hotswap " + throwable.getMessage(), NotificationType.ERROR);
+        @Override
+        public @Nullable PopupStep<?> onChosen(VMInfo selectedValue, boolean finalChoice) {
+          hotswap(project, item, selectedValue);
+          return PopupStep.FINAL_CHOICE;
         }
+      });
+      listPopup.show(new RelativePoint(item.getOriginEvent()));
     }
+  }
 
-    @Override
-    public String getNavigationGroupName() {
-        return null;
+  public void hotswap(Project project, MapperStatementItem item, VMInfo vmInfo) {
+
+    MapperHotSwapDTO mapperHotswapDto = new MapperHotSwapDTO();
+    mapperHotswapDto.setMapperXmlPath(item.getMapperXmlFileLocation());
+    mapperHotswapDto.setNamespace(item.getNamespace());
+    mapperHotswapDto.setContent(item.getContent());
+
+    AgentRequest<MapperHotSwapDTO> command = new AgentRequest<>(AgentCommandEnum.MYBATIS_MAPPER_STATEMENT_HOTSWAP, mapperHotswapDto);
+    try {
+      connector.sendRequest(Collections.singletonList(vmInfo), vm -> {
+        AgentResponse<Object> agentResponse = connector.execute(command);
+        Notifications.notify("[" + vm.getProcessName() + "]:" + agentResponse.getMsg(), agentResponse.isOk() ? NotificationType.INFORMATION : NotificationType.ERROR);
+      });
+    } catch (Throwable throwable) {
+      Notifications.notify("failed to hotswap " + throwable.getMessage(), NotificationType.ERROR);
     }
+  }
+
+  @Override
+  public String getNavigationGroupName() {
+    return null;
+  }
 }

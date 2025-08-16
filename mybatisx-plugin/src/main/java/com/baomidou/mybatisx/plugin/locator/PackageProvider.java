@@ -13,13 +13,13 @@ import java.util.Set;
  */
 public abstract class PackageProvider {
 
-    /**
-     * Gets packages.
-     *
-     * @param project the project
-     * @return the packages
-     */
-    @NotNull
-    public abstract Set<PsiPackage> getPackages(@NotNull Project project);
+  /**
+   * Gets packages.
+   *
+   * @param project the project
+   * @return the packages
+   */
+  @NotNull
+  public abstract Set<PsiPackage> getPackages(@NotNull Project project);
 
 }

@@ -1,12 +1,13 @@
+import java.nio.charset.StandardCharsets
+
 subprojects {
 
-    // 统一编码
-    tasks.withType<JavaCompile> {
-        options.encoding = "UTF-8"
+  tasks.withType<JavaCompile> {
+    options.encoding = StandardCharsets.UTF_8.name()
 
-        options.compilerArgs = listOf(
-            "--add-exports",
-            "jdk.internal.jvmstat/sun.jvmstat.monitor=ALL-UNNAMED",
-        )
-    }
+    options.compilerArgs = listOf(
+      "--add-exports",
+      "jdk.internal.jvmstat/sun.jvmstat.monitor=ALL-UNNAMED",
+    )
+  }
 }

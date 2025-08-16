@@ -29,54 +29,54 @@ import java.util.Optional;
  */
 public class InjectionLineMarkerProvider extends RelatedItemLineMarkerProvider {
 
-    @Override
-    protected void collectNavigationMarkers(@NotNull PsiElement element, @NotNull Collection<? super RelatedItemLineMarkerInfo<?>> result) {
-        if (!(element instanceof PsiField)) {
-            return;
-        }
-        PsiField field = (PsiField) element;
-        if (!isTargetField(field)) {
-            return;
-        }
-
-        PsiType type = field.getType();
-        if (!(type instanceof PsiClassReferenceType)) {
-            return;
-        }
-
-        Optional<PsiClass> clazz = JavaUtils.findClass(element.getProject(), type.getCanonicalText());
-        if (!clazz.isPresent()) {
-            return;
-        }
-
-        PsiClass psiClass = clazz.get();
-        Optional<Mapper> mapper = MapperUtils.findFirstMapper(element.getProject(), psiClass);
-        if (!mapper.isPresent()) {
-            return;
-        }
-
-        NavigationGutterIconBuilder<PsiElement> builder =
-                NavigationGutterIconBuilder.create(Icons.SPRING_INJECTION_ICON)
-                        .setAlignment(GutterIconRenderer.Alignment.CENTER)
-                        .setTarget(psiClass)
-                        .setTooltipTitle("Data access object found - " + psiClass.getQualifiedName());
-        result.add(builder.createLineMarkerInfo(field.getNameIdentifier()));
+  @Override
+  protected void collectNavigationMarkers(@NotNull PsiElement element, @NotNull Collection<? super RelatedItemLineMarkerInfo<?>> result) {
+    if (!(element instanceof PsiField)) {
+      return;
+    }
+    PsiField field = (PsiField) element;
+    if (!isTargetField(field)) {
+      return;
     }
 
-    private boolean isTargetField(PsiField field) {
-        if (JavaUtils.isAnnotationPresent(field, Annotation.AUTOWIRED)) {
-            return true;
-        }
-        Optional<PsiAnnotation> resourceAnno = JavaUtils.getPsiAnnotation(field, Annotation.RESOURCE);
-        if (resourceAnno.isPresent()) {
-            PsiAnnotationMemberValue nameValue = resourceAnno.get().findAttributeValue("name");
-            if (nameValue == null) {
-                return false;
-            }
-            String name = nameValue.getText().replaceAll("\"", "");
-            return StringUtils.isBlank(name) || name.equals(field.getName());
-        }
+    PsiType type = field.getType();
+    if (!(type instanceof PsiClassReferenceType)) {
+      return;
+    }
+
+    Optional<PsiClass> clazz = JavaUtils.findClass(element.getProject(), type.getCanonicalText());
+    if (!clazz.isPresent()) {
+      return;
+    }
+
+    PsiClass psiClass = clazz.get();
+    Optional<Mapper> mapper = MapperUtils.findFirstMapper(element.getProject(), psiClass);
+    if (!mapper.isPresent()) {
+      return;
+    }
+
+    NavigationGutterIconBuilder<PsiElement> builder =
+      NavigationGutterIconBuilder.create(Icons.SPRING_INJECTION_ICON)
+        .setAlignment(GutterIconRenderer.Alignment.CENTER)
+        .setTarget(psiClass)
+        .setTooltipTitle("Data access object found - " + psiClass.getQualifiedName());
+    result.add(builder.createLineMarkerInfo(field.getNameIdentifier()));
+  }
+
+  private boolean isTargetField(PsiField field) {
+    if (JavaUtils.isAnnotationPresent(field, Annotation.AUTOWIRED)) {
+      return true;
+    }
+    Optional<PsiAnnotation> resourceAnno = JavaUtils.getPsiAnnotation(field, Annotation.RESOURCE);
+    if (resourceAnno.isPresent()) {
+      PsiAnnotationMemberValue nameValue = resourceAnno.get().findAttributeValue("name");
+      if (nameValue == null) {
         return false;
+      }
+      String name = nameValue.getText().replaceAll("\"", "");
+      return StringUtils.isBlank(name) || name.equals(field.getName());
     }
+    return false;
+  }
 
 }

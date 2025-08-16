@@ -10,8 +10,8 @@ import com.baomidou.mybatisx.feat.jpa.common.appender.CustomAreaAppender;
 public class SelectCustomAreaAppender extends CustomAreaAppender {
 
 
-    public SelectCustomAreaAppender(final String area, final String areaType, final SyntaxAppenderFactory syntaxAppenderFactory) {
-        super(area, areaType, AreaSequence.AREA, AreaSequence.RESULT, syntaxAppenderFactory);
-    }
+  public SelectCustomAreaAppender(final String area, final String areaType, final SyntaxAppenderFactory syntaxAppenderFactory) {
+    super(area, areaType, AreaSequence.AREA, AreaSequence.RESULT, syntaxAppenderFactory);
+  }
 
 }

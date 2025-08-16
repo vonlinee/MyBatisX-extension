@@ -5,9 +5,9 @@ import lombok.Getter;
 @Getter
 public abstract class ConfigurableObject {
 
-    volatile boolean modified;
+  volatile boolean modified;
 
-    public void markModified() {
-        this.modified = true;
-    }
+  public void markModified() {
+    this.modified = true;
+  }
 }

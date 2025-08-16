@@ -9,19 +9,19 @@ import java.util.List;
  * 字段
  */
 public class FieldAppendType implements AppendType {
-    @Override
-    public String getName() {
-        return AppendTypeEnum.FIELD.name();
-    }
+  @Override
+  public String getName() {
+    return AppendTypeEnum.FIELD.name();
+  }
 
-    /**
-     * 允许所有区域
-     *
-     * @return
-     */
-    @Override
-    public List<String> getAllowAfter() {
-        return AppendTypeEnum.FIELD.getAllowedAfterList();
-    }
+  /**
+   * 允许所有区域
+   *
+   * @return
+   */
+  @Override
+  public List<String> getAllowAfter() {
+    return AppendTypeEnum.FIELD.getAllowedAfterList();
+  }
 
 }

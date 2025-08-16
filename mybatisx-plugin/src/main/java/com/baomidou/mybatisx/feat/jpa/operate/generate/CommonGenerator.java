@@ -32,127 +32,127 @@ import java.util.stream.Collectors;
  * @author ls9527
  */
 public class CommonGenerator implements PlatformGenerator {
-    /**
-     * The Appender manager.
-     */
-    final AreaOperateManager appenderManager;
-    private final String defaultDateWord;
-    private final @NotNull
-    LinkedList<SyntaxAppender> jpaList;
-    private final List<TxField> mappingField;
-    private final String tableName;
-    private final PsiClass entityClass;
-    private final String text;
-    private final Set<String> notNeedsResult = new HashSet<>() {
-        {
-            add("update");
-            add("insert");
-            add("delete");
-        }
-    };
-
-    private CommonGenerator(PsiClass entityClass,
-                            String text,
-                            DbmsAdaptor dbms,
-                            DasTableAdaptor dasTable,
-                            String tableName,
-                            List<TxField> fields) {
-        this.entityClass = entityClass;
-        this.text = text;
-        mappingField = fields;
-        defaultDateWord = dbms.getDefaultDateWord();
-        this.tableName = tableName;
-
-        appenderManager = AreaOperateManagerFactory.getAreaOperateManagerByDbms(dbms, mappingField, entityClass, dasTable, this.tableName);
-        jpaList = appenderManager.splitAppenderByText(text);
+  /**
+   * The Appender manager.
+   */
+  final AreaOperateManager appenderManager;
+  private final String defaultDateWord;
+  private final @NotNull
+  LinkedList<SyntaxAppender> jpaList;
+  private final List<TxField> mappingField;
+  private final String tableName;
+  private final PsiClass entityClass;
+  private final String text;
+  private final Set<String> notNeedsResult = new HashSet<>() {
+    {
+      add("update");
+      add("insert");
+      add("delete");
     }
+  };
 
-    /**
-     * Create editor auto completion common generator.
-     *
-     * @param entityClass the entity class
-     * @param text        the text
-     * @param dbms        the dbms
-     * @param dasTable    the das table
-     * @param tableName   the table name
-     * @param fields      the fields
-     * @return common generator
-     */
-    public static CommonGenerator createEditorAutoCompletion(PsiClass entityClass, String text,
-                                                             @NotNull DbmsAdaptor dbms,
-                                                             DasTableAdaptor dasTable,
-                                                             String tableName,
-                                                             List<TxField> fields) {
-        return new CommonGenerator(entityClass, text, dbms, dasTable, tableName, fields);
-    }
+  private CommonGenerator(PsiClass entityClass,
+                          String text,
+                          DbmsAdaptor dbms,
+                          DasTableAdaptor dasTable,
+                          String tableName,
+                          List<TxField> fields) {
+    this.entityClass = entityClass;
+    this.text = text;
+    mappingField = fields;
+    defaultDateWord = dbms.getDefaultDateWord();
+    this.tableName = tableName;
 
-    @Override
-    public String getDefaultDateWord() {
-        return defaultDateWord;
-    }
+    appenderManager = AreaOperateManagerFactory.getAreaOperateManagerByDbms(dbms, mappingField, entityClass, dasTable, this.tableName);
+    jpaList = appenderManager.splitAppenderByText(text);
+  }
 
-    @Override
-    public TypeDescriptor getParameter() {
-        List<TxParameter> parameters = appenderManager.getParameters(entityClass, new LinkedList<>(jpaList));
-        return new TxParameterDescriptor(parameters, mappingField);
-    }
+  /**
+   * Create editor auto completion common generator.
+   *
+   * @param entityClass the entity class
+   * @param text        the text
+   * @param dbms        the dbms
+   * @param dasTable    the das table
+   * @param tableName   the table name
+   * @param fields      the fields
+   * @return common generator
+   */
+  public static CommonGenerator createEditorAutoCompletion(PsiClass entityClass, String text,
+                                                           @NotNull DbmsAdaptor dbms,
+                                                           DasTableAdaptor dasTable,
+                                                           String tableName,
+                                                           List<TxField> fields) {
+    return new CommonGenerator(entityClass, text, dbms, dasTable, tableName, fields);
+  }
 
-    @Override
-    public TypeDescriptor getReturn() {
-        LinkedList<SyntaxAppender> linkedList = new LinkedList<>(jpaList);
-        return appenderManager.getReturnWrapper(text, entityClass, linkedList);
-    }
+  @Override
+  public String getDefaultDateWord() {
+    return defaultDateWord;
+  }
 
-    @Override
-    public void generateMapperXml(PsiMethod psiMethod,
-                                  ConditionFieldWrapper conditionFieldWrapper,
-                                  List<TxField> resultFields,
-                                  Generator generator) {
-        WriteAction.run(() -> {
-            // 生成完整版的内容
-            appenderManager.generateMapperXml(
-                text,
-                new LinkedList<>(jpaList),
-                entityClass,
-                psiMethod,
-                tableName,
-                generator,
-                conditionFieldWrapper,
-                resultFields);
-        });
-    }
+  @Override
+  public TypeDescriptor getParameter() {
+    List<TxParameter> parameters = appenderManager.getParameters(entityClass, new LinkedList<>(jpaList));
+    return new TxParameterDescriptor(parameters, mappingField);
+  }
 
-    @Override
-    public List<String> getConditionFields() {
-        return jpaList.stream()
-            .filter(syntaxAppender -> syntaxAppender.getAreaSequence() == AreaSequence.CONDITION
-                                      && syntaxAppender.getType() == AppendTypeEnum.FIELD &&
-                                      syntaxAppender instanceof CustomFieldAppender)
-            .flatMap(x -> Arrays.stream(((CustomFieldAppender) x).getFieldName().split(",")))
-            .collect(Collectors.toList());
-    }
+  @Override
+  public TypeDescriptor getReturn() {
+    LinkedList<SyntaxAppender> linkedList = new LinkedList<>(jpaList);
+    return appenderManager.getReturnWrapper(text, entityClass, linkedList);
+  }
 
-    @Override
-    public List<TxField> getAllFields() {
-        return mappingField;
-    }
+  @Override
+  public void generateMapperXml(PsiMethod psiMethod,
+                                ConditionFieldWrapper conditionFieldWrapper,
+                                List<TxField> resultFields,
+                                Generator generator) {
+    WriteAction.run(() -> {
+      // 生成完整版的内容
+      appenderManager.generateMapperXml(
+        text,
+        new LinkedList<>(jpaList),
+        entityClass,
+        psiMethod,
+        tableName,
+        generator,
+        conditionFieldWrapper,
+        resultFields);
+    });
+  }
 
-    @Override
-    public PsiClass getEntityClass() {
-        return entityClass;
-    }
+  @Override
+  public List<String> getConditionFields() {
+    return jpaList.stream()
+      .filter(syntaxAppender -> syntaxAppender.getAreaSequence() == AreaSequence.CONDITION
+                                && syntaxAppender.getType() == AppendTypeEnum.FIELD &&
+                                syntaxAppender instanceof CustomFieldAppender)
+      .flatMap(x -> Arrays.stream(((CustomFieldAppender) x).getFieldName().split(",")))
+      .collect(Collectors.toList());
+  }
 
-    @Override
-    public List<String> getResultFields() {
-        SyntaxAppender peek = jpaList.peek();
-        if (peek == null || notNeedsResult.contains(peek.getText())) {
-            return Collections.emptyList();
-        }
-        return jpaList.stream()
-            .filter(syntaxAppender -> syntaxAppender.getAreaSequence() == AreaSequence.RESULT
-                                      && syntaxAppender.getType() == AppendTypeEnum.FIELD &&
-                                      syntaxAppender instanceof CustomFieldAppender)
-            .flatMap(x -> Arrays.stream(x.getText().split(",")))
-            .collect(Collectors.toList());
+  @Override
+  public List<TxField> getAllFields() {
+    return mappingField;
+  }
+
+  @Override
+  public PsiClass getEntityClass() {
+    return entityClass;
+  }
+
+  @Override
+  public List<String> getResultFields() {
+    SyntaxAppender peek = jpaList.peek();
+    if (peek == null || notNeedsResult.contains(peek.getText())) {
+      return Collections.emptyList();
     }
+    return jpaList.stream()
+      .filter(syntaxAppender -> syntaxAppender.getAreaSequence() == AreaSequence.RESULT
+                                && syntaxAppender.getType() == AppendTypeEnum.FIELD &&
+                                syntaxAppender instanceof CustomFieldAppender)
+      .flatMap(x -> Arrays.stream(x.getText().split(",")))
+      .collect(Collectors.toList());
+  }
 }

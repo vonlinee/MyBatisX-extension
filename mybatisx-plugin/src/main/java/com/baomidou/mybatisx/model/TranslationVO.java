@@ -7,12 +7,12 @@ import lombok.Setter;
 @Getter
 public class TranslationVO {
 
-    private String src;
+  private String src;
 
-    private String dst;
+  private String dst;
 
-    public TranslationVO(String src, String dst) {
-        this.src = src;
-        this.dst = dst;
-    }
+  public TranslationVO(String src, String dst) {
+    this.src = src;
+    this.dst = dst;
+  }
 }

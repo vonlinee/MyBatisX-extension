@@ -20,37 +20,37 @@ import java.util.Optional;
  */
 public class TypeHandlerHashMarkTip implements HashMarkTip {
 
-    private static final String ORG_APACHE_IBATIS_TYPE_TYPE_HANDLER = "org.apache.ibatis.type.TypeHandler";
+  private static final String ORG_APACHE_IBATIS_TYPE_TYPE_HANDLER = "org.apache.ibatis.type.TypeHandler";
 
-    @Override
-    public String getName() {
-        return "typeHandler";
-    }
+  @Override
+  public String getName() {
+    return "typeHandler";
+  }
 
-    /**
-     * 通常希望提示自定义的类型处理器
-     *
-     * @param completionResultSet
-     * @param mapper
-     */
-    @Override
-    public void tipValue(CompletionResultSet completionResultSet, Mapper mapper) {
-        Project project = mapper.getXmlTag().getProject();
-        Optional<PsiClass> typeHandlerOptional = JavaUtils.findClass(project, ORG_APACHE_IBATIS_TYPE_TYPE_HANDLER);
-        if (typeHandlerOptional.isPresent()) {
-            PsiClass typeHandler = typeHandlerOptional.get();
-            Query<PsiClass> search = ClassInheritorsSearch.search(typeHandler, true);
-            Collection<PsiClass> all = search.findAll();
-            for (PsiClass typeHandlerImplClass : all) {
-                // 抽象类型不提示
-                if (typeHandlerImplClass.hasModifierProperty(PsiModifier.ABSTRACT)) {
-                    continue;
-                }
-                if (typeHandlerImplClass.getQualifiedName() == null) {
-                    continue;
-                }
-                completionResultSet.addElement(LookupElementBuilder.create(typeHandlerImplClass.getQualifiedName()));
-            }
+  /**
+   * 通常希望提示自定义的类型处理器
+   *
+   * @param completionResultSet
+   * @param mapper
+   */
+  @Override
+  public void tipValue(CompletionResultSet completionResultSet, Mapper mapper) {
+    Project project = mapper.getXmlTag().getProject();
+    Optional<PsiClass> typeHandlerOptional = JavaUtils.findClass(project, ORG_APACHE_IBATIS_TYPE_TYPE_HANDLER);
+    if (typeHandlerOptional.isPresent()) {
+      PsiClass typeHandler = typeHandlerOptional.get();
+      Query<PsiClass> search = ClassInheritorsSearch.search(typeHandler, true);
+      Collection<PsiClass> all = search.findAll();
+      for (PsiClass typeHandlerImplClass : all) {
+        // 抽象类型不提示
+        if (typeHandlerImplClass.hasModifierProperty(PsiModifier.ABSTRACT)) {
+          continue;
         }
+        if (typeHandlerImplClass.getQualifiedName() == null) {
+          continue;
+        }
+        completionResultSet.addElement(LookupElementBuilder.create(typeHandlerImplClass.getQualifiedName()));
+      }
     }
+  }
 }

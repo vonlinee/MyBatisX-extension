@@ -2,7 +2,15 @@ package com.baomidou.mybatisx.dom.model;
 
 import com.baomidou.mybatisx.dom.converter.NamespaceConverter;
 import com.intellij.psi.PsiClass;
-import com.intellij.util.xml.*;
+import com.intellij.util.xml.Attribute;
+import com.intellij.util.xml.Convert;
+import com.intellij.util.xml.DomElement;
+import com.intellij.util.xml.GenericAttributeValue;
+import com.intellij.util.xml.NameValue;
+import com.intellij.util.xml.Namespace;
+import com.intellij.util.xml.Required;
+import com.intellij.util.xml.SubTagList;
+import com.intellij.util.xml.SubTagsList;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
@@ -18,119 +26,119 @@ import java.util.List;
 @Namespace("MybatisXml")
 public interface Mapper extends DomElement {
 
-    /**
-     * Gets dao elements.
-     *
-     * @return the dao elements
-     */
-    @NotNull
-    @SubTagsList({"insert", "update", "delete", "select"})
-    List<IdDomElement> getDaoElements();
+  /**
+   * Gets dao elements.
+   *
+   * @return the dao elements
+   */
+  @NotNull
+  @SubTagsList({"insert", "update", "delete", "select"})
+  List<IdDomElement> getDaoElements();
 
-    /**
-     * Gets namespace.
-     *
-     * @return the namespace
-     */
-    @Required
-    @NameValue
-    @Convert(NamespaceConverter.class)
-    @NotNull
-    @Attribute("namespace")
-    GenericAttributeValue<PsiClass> getNamespace();
+  /**
+   * Gets namespace.
+   *
+   * @return the namespace
+   */
+  @Required
+  @NameValue
+  @Convert(NamespaceConverter.class)
+  @NotNull
+  @Attribute("namespace")
+  GenericAttributeValue<PsiClass> getNamespace();
 
-    /**
-     * Gets result maps.
-     *
-     * @return the result maps
-     */
-    @NotNull
-    @SubTagList("resultMap")
-    List<ResultMap> getResultMaps();
+  /**
+   * Gets result maps.
+   *
+   * @return the result maps
+   */
+  @NotNull
+  @SubTagList("resultMap")
+  List<ResultMap> getResultMaps();
 
-    /**
-     * Gets parameter maps.
-     *
-     * @return the parameter maps
-     */
-    @NotNull
-    @SubTagList("parameterMap")
-    List<ParameterMap> getParameterMaps();
+  /**
+   * Gets parameter maps.
+   *
+   * @return the parameter maps
+   */
+  @NotNull
+  @SubTagList("parameterMap")
+  List<ParameterMap> getParameterMaps();
 
-    /**
-     * Gets sqls.
-     *
-     * @return the sqls
-     */
-    @NotNull
-    @SubTagList("sql")
-    List<Sql> getSqlFragments();
+  /**
+   * Gets sqls.
+   *
+   * @return the sqls
+   */
+  @NotNull
+  @SubTagList("sql")
+  List<Sql> getSqlFragments();
 
-    /**
-     * Gets inserts.
-     *
-     * @return the inserts
-     */
-    @NotNull
-    @SubTagList("insert")
-    List<Insert> getInserts();
+  /**
+   * Gets inserts.
+   *
+   * @return the inserts
+   */
+  @NotNull
+  @SubTagList("insert")
+  List<Insert> getInserts();
 
-    /**
-     * Gets updates.
-     *
-     * @return the updates
-     */
-    @NotNull
-    @SubTagList("update")
-    List<Update> getUpdates();
+  /**
+   * Gets updates.
+   *
+   * @return the updates
+   */
+  @NotNull
+  @SubTagList("update")
+  List<Update> getUpdates();
 
-    /**
-     * Gets deletes.
-     *
-     * @return the deletes
-     */
-    @NotNull
-    @SubTagList("delete")
-    List<Delete> getDeletes();
+  /**
+   * Gets deletes.
+   *
+   * @return the deletes
+   */
+  @NotNull
+  @SubTagList("delete")
+  List<Delete> getDeletes();
 
-    /**
-     * Gets selects.
-     *
-     * @return the selects
-     */
-    @NotNull
-    @SubTagList("select")
-    List<Select> getSelects();
+  /**
+   * Gets selects.
+   *
+   * @return the selects
+   */
+  @NotNull
+  @SubTagList("select")
+  List<Select> getSelects();
 
-    /**
-     * Add select.
-     *
-     * @return the select
-     */
-    @SubTagList("select")
-    Select addSelect();
+  /**
+   * Add select.
+   *
+   * @return the select
+   */
+  @SubTagList("select")
+  Select addSelect();
 
-    /**
-     * Add update update.
-     *
-     * @return the update
-     */
-    @SubTagList("update")
-    Update addUpdate();
+  /**
+   * Add update update.
+   *
+   * @return the update
+   */
+  @SubTagList("update")
+  Update addUpdate();
 
-    /**
-     * Add insert insert.
-     *
-     * @return the insert
-     */
-    @SubTagList("insert")
-    Insert addInsert();
+  /**
+   * Add insert insert.
+   *
+   * @return the insert
+   */
+  @SubTagList("insert")
+  Insert addInsert();
 
-    /**
-     * Add delete delete.
-     *
-     * @return to delete
-     */
-    @SubTagList("delete")
-    Delete addDelete();
+  /**
+   * Add delete delete.
+   *
+   * @return to delete
+   */
+  @SubTagList("delete")
+  Delete addDelete();
 }

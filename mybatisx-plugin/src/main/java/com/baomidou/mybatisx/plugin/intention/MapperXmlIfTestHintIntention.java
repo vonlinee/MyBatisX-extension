@@ -16,32 +16,32 @@ import org.jetbrains.annotations.NotNull;
  */
 public class MapperXmlIfTestHintIntention extends MyBatisMapperXmlBaseIntentionAction {
 
-    @Override
-    public @IntentionName
-    @NotNull String getText() {
-        return "MyBatisX  Generate If String hasText Eq";
-    }
+  @Override
+  public @IntentionName
+  @NotNull String getText() {
+    return "MyBatisX  Generate If String hasText Eq";
+  }
 
-    @Override
-    public void invoke(@NotNull Project project, Editor editor, @NotNull PsiElement psiElement) throws IncorrectOperationException {
-        Document document = editor.getDocument();
-        CaretModel model = editor.getCaretModel();
-        Caret currentCaret = model.getCurrentCaret();
-        String selectedText = currentCaret.getSelectedText();
-        selectedText = StringUtils.hasText(selectedText) ? selectedText : "";
-        String sb = "<if test=\" " +
-                    selectedText +
-                    " != null and " +
-                    selectedText +
-                    " != ''\">\n" +
-                    " = #{" + selectedText + "}" +
-                    "\n" +
-                    "</if>";
-        document.insertString(currentCaret.getOffset(), sb);
-    }
+  @Override
+  public void invoke(@NotNull Project project, Editor editor, @NotNull PsiElement psiElement) throws IncorrectOperationException {
+    Document document = editor.getDocument();
+    CaretModel model = editor.getCaretModel();
+    Caret currentCaret = model.getCurrentCaret();
+    String selectedText = currentCaret.getSelectedText();
+    selectedText = StringUtils.hasText(selectedText) ? selectedText : "";
+    String sb = "<if test=\" " +
+                selectedText +
+                " != null and " +
+                selectedText +
+                " != ''\">\n" +
+                " = #{" + selectedText + "}" +
+                "\n" +
+                "</if>";
+    document.insertString(currentCaret.getOffset(), sb);
+  }
 
-    @Override
-    public boolean isAvailable(@NotNull Project project, Editor editor, @NotNull PsiElement psiElement) {
-        return isMyBatisMapperXmlFile(psiElement.getContainingFile());
-    }
+  @Override
+  public boolean isAvailable(@NotNull Project project, Editor editor, @NotNull PsiElement psiElement) {
+    return isMyBatisMapperXmlFile(psiElement.getContainingFile());
+  }
 }

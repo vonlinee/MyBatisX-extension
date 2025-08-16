@@ -16,45 +16,45 @@ import org.jetbrains.annotations.NotNull;
  */
 public class StatementNotExistsQuickFix extends GenericQuickFix {
 
-    private PsiMethod method;
+  private PsiMethod method;
 
-    /**
-     * Instantiates a new Statement not exists quick fix.
-     *
-     * @param method the method
-     */
-    public StatementNotExistsQuickFix(@NotNull PsiMethod method) {
-        this.method = method;
-    }
+  /**
+   * Instantiates a new Statement not exists quick fix.
+   *
+   * @param method the method
+   */
+  public StatementNotExistsQuickFix(@NotNull PsiMethod method) {
+    this.method = method;
+  }
 
-    @NotNull
-    @Override
-    public String getName() {
-        return "Generate statement";
-    }
+  @NotNull
+  @Override
+  public String getName() {
+    return "Generate statement";
+  }
 
-    @Override
-    public void applyFix(@NotNull Project project, @NotNull ProblemDescriptor descriptor) {
-        AbstractStatementGenerator.applyGenerate(method, project);
-    }
+  @Override
+  public void applyFix(@NotNull Project project, @NotNull ProblemDescriptor descriptor) {
+    AbstractStatementGenerator.applyGenerate(method, project);
+  }
 
-    /**
-     * Gets method.
-     *
-     * @return the method
-     */
-    @NotNull
-    public PsiMethod getMethod() {
-        return method;
-    }
+  /**
+   * Gets method.
+   *
+   * @return the method
+   */
+  @NotNull
+  public PsiMethod getMethod() {
+    return method;
+  }
 
-    /**
-     * Sets method.
-     *
-     * @param method the method
-     */
-    public void setMethod(@NotNull PsiMethod method) {
-        this.method = method;
-    }
+  /**
+   * Sets method.
+   *
+   * @param method the method
+   */
+  public void setMethod(@NotNull PsiMethod method) {
+    this.method = method;
+  }
 
 }

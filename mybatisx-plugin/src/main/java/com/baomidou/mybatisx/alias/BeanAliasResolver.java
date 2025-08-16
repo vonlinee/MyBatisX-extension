@@ -24,48 +24,48 @@ import java.util.Set;
  */
 public class BeanAliasResolver extends PackageAliasResolver {
 
-    private static final List<String> MAPPER_ALIAS_PACKAGE_CLASSES = List.of(
-        "org.mybatis.spring.SqlSessionFactoryBean",  // default
-        "com.baomidou.mybatisplus.extension.spring.MybatisSqlSessionFactoryBean", // mybatis-plus3
-        "com.baomidou.mybatisplus.spring.MybatisSqlSessionFactoryBean" // mybatis-plus2
-    );
+  private static final List<String> MAPPER_ALIAS_PACKAGE_CLASSES = List.of(
+    "org.mybatis.spring.SqlSessionFactoryBean",  // default
+    "com.baomidou.mybatisplus.extension.spring.MybatisSqlSessionFactoryBean", // mybatis-plus3
+    "com.baomidou.mybatisplus.spring.MybatisSqlSessionFactoryBean" // mybatis-plus2
+  );
 
-    private static final String MAPPER_ALIAS_PROPERTY = "typeAliasesPackage";
+  private static final String MAPPER_ALIAS_PROPERTY = "typeAliasesPackage";
 
-    /**
-     * Instantiates a new Bean alias resolver.
-     *
-     * @param project the project
-     */
-    public BeanAliasResolver(Project project) {
-        super(project);
-    }
+  /**
+   * Instantiates a new Bean alias resolver.
+   *
+   * @param project the project
+   */
+  public BeanAliasResolver(Project project) {
+    super(project);
+  }
 
-    @NotNull
-    @Override
-    public Collection<String> getPackages(@Nullable PsiElement element) {
-        Set<String> packages = new HashSet<>();
-        Set<PsiClass> classes = findSqlSessionFactories();
-        for (PsiClass sqlSessionFactoryClass : classes) {
-            CommonSpringModel springModel = SpringModelUtils.getInstance().getPsiClassSpringModel(sqlSessionFactoryClass);
-            SpringModelSearchParameters.BeanClass beanClass = SpringModelSearchParameters.BeanClass.byClass(sqlSessionFactoryClass);
-            springModel.processByClass(beanClass, springBeanPointer -> {
-                String propertyStringValue = SpringPropertyUtils.getPropertyStringValue(springBeanPointer.getSpringBean(), MAPPER_ALIAS_PROPERTY);
-                if (!StringUtils.isEmpty(propertyStringValue)) {
-                    packages.add(propertyStringValue);
-                    return true;
-                }
-                return false;
-            });
+  @NotNull
+  @Override
+  public Collection<String> getPackages(@Nullable PsiElement element) {
+    Set<String> packages = new HashSet<>();
+    Set<PsiClass> classes = findSqlSessionFactories();
+    for (PsiClass sqlSessionFactoryClass : classes) {
+      CommonSpringModel springModel = SpringModelUtils.getInstance().getPsiClassSpringModel(sqlSessionFactoryClass);
+      SpringModelSearchParameters.BeanClass beanClass = SpringModelSearchParameters.BeanClass.byClass(sqlSessionFactoryClass);
+      springModel.processByClass(beanClass, springBeanPointer -> {
+        String propertyStringValue = SpringPropertyUtils.getPropertyStringValue(springBeanPointer.getSpringBean(), MAPPER_ALIAS_PROPERTY);
+        if (!StringUtils.isEmpty(propertyStringValue)) {
+          packages.add(propertyStringValue);
+          return true;
         }
-        return packages;
+        return false;
+      });
     }
+    return packages;
+  }
 
-    private Set<PsiClass> findSqlSessionFactories() {
-        Set<PsiClass> sqlSessionFactorySet = new HashSet<>();
-        for (String mapperAliasPackageClass : BeanAliasResolver.MAPPER_ALIAS_PACKAGE_CLASSES) {
-            JavaUtils.findClass(project, mapperAliasPackageClass).ifPresent(sqlSessionFactorySet::add);
-        }
-        return sqlSessionFactorySet;
+  private Set<PsiClass> findSqlSessionFactories() {
+    Set<PsiClass> sqlSessionFactorySet = new HashSet<>();
+    for (String mapperAliasPackageClass : BeanAliasResolver.MAPPER_ALIAS_PACKAGE_CLASSES) {
+      JavaUtils.findClass(project, mapperAliasPackageClass).ifPresent(sqlSessionFactorySet::add);
     }
+    return sqlSessionFactorySet;
+  }
 }

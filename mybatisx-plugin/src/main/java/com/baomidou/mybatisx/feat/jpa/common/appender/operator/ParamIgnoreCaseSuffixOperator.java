@@ -13,18 +13,18 @@ import java.util.LinkedList;
 public class ParamIgnoreCaseSuffixOperator implements SuffixOperator {
 
 
-    @Override
-    public String getTemplateText(String fieldName,
-                                  LinkedList<TxParameter> parameters,
-                                  ConditionFieldWrapper conditionFieldWrapper) {
-        TxParameter parameter = parameters.poll();
-        if (parameter == null) {
-            return "";
-        }
-        return "UPPER(" + fieldName + ")"
-               + " "
-               + "="
-               + " "
-               + "UPPER(" + JdbcTypeUtils.wrapperField(parameter.getName(), parameter.getCanonicalTypeText()) + ")";
+  @Override
+  public String getTemplateText(String fieldName,
+                                LinkedList<TxParameter> parameters,
+                                ConditionFieldWrapper conditionFieldWrapper) {
+    TxParameter parameter = parameters.poll();
+    if (parameter == null) {
+      return "";
     }
+    return "UPPER(" + fieldName + ")"
+           + " "
+           + "="
+           + " "
+           + "UPPER(" + JdbcTypeUtils.wrapperField(parameter.getName(), parameter.getCanonicalTypeText()) + ")";
+  }
 }

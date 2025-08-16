@@ -25,99 +25,99 @@ import java.util.Optional;
 @Getter
 public abstract class ContextReferenceSetResolver<F extends PsiElement, K extends PsiElement> {
 
-    private static final Splitter SPLITTER = Splitter.on(MyBatisUtils.DOT_SEPARATOR);
+  private static final Splitter SPLITTER = Splitter.on(MyBatisUtils.DOT_SEPARATOR);
 
-    /**
-     * The Project.
-     */
-    protected Project project;
+  /**
+   * The Project.
+   */
+  protected Project project;
 
-    /**
-     * The Element.
-     */
-    protected F element;
+  /**
+   * The Element.
+   */
+  protected F element;
 
-    /**
-     * The Texts.
-     */
-    protected List<String> texts;
+  /**
+   * The Texts.
+   */
+  protected List<String> texts;
 
-    /**
-     * Instantiates a new Context reference set resolver.
-     *
-     * @param element the element
-     */
-    protected ContextReferenceSetResolver(@NotNull F element) {
-        this.element = element;
-        this.project = element.getProject();
-        this.texts = Lists.newArrayList(SPLITTER.split(getText()));
+  /**
+   * Instantiates a new Context reference set resolver.
+   *
+   * @param element the element
+   */
+  protected ContextReferenceSetResolver(@NotNull F element) {
+    this.element = element;
+    this.project = element.getProject();
+    this.texts = Lists.newArrayList(SPLITTER.split(getText()));
+  }
+
+  /**
+   * Resolve optional.
+   *
+   * @param index the index
+   * @return the optional
+   */
+  public final Optional<K> resolve(int index) {
+    Optional<K> startElement = getStartElement();
+
+    if (startElement.isPresent()) {
+      if (texts.size() > 1) {
+        return parseNext(startElement, texts, index);
+      }
+      return startElement;
     }
+    return Optional.empty();
+  }
 
-    /**
-     * Resolve optional.
-     *
-     * @param index the index
-     * @return the optional
-     */
-    public final Optional<K> resolve(int index) {
-        Optional<K> startElement = getStartElement();
-
-        if (startElement.isPresent()) {
-            if (texts.size() > 1) {
-                return parseNext(startElement, texts, index);
-            }
-            return startElement;
-        }
+  private Optional<K> parseNext(Optional<K> current, List<String> texts, int index) {
+    int ind = 1;
+    while (current.isPresent() && ind <= index) {
+      String text = texts.get(ind);
+      if (text.contains(" ")) {
         return Optional.empty();
+      }
+      current = resolve(current.get(), text);
+      ind++;
     }
+    return current;
+  }
 
-    private Optional<K> parseNext(Optional<K> current, List<String> texts, int index) {
-        int ind = 1;
-        while (current.isPresent() && ind <= index) {
-            String text = texts.get(ind);
-            if (text.contains(" ")) {
-                return Optional.empty();
-            }
-            current = resolve(current.get(), text);
-            ind++;
-        }
-        return current;
-    }
+  /**
+   * Gets start element.
+   *
+   * @return the start element
+   */
+  public Optional<K> getStartElement() {
+    return getStartElement(Iterables.getFirst(texts, null));
+  }
 
-    /**
-     * Gets start element.
-     *
-     * @return the start element
-     */
-    public Optional<K> getStartElement() {
-        return getStartElement(Iterables.getFirst(texts, null));
-    }
+  /**
+   * Gets start element.
+   *
+   * @param firstText the first text
+   * @return the start element
+   */
+  @NotNull
+  public abstract Optional<K> getStartElement(@Nullable String firstText);
 
-    /**
-     * Gets start element.
-     *
-     * @param firstText the first text
-     * @return the start element
-     */
-    @NotNull
-    public abstract Optional<K> getStartElement(@Nullable String firstText);
+  /**
+   * Gets text.
+   *
+   * @return the text
+   */
+  @NotNull
+  public abstract String getText();
 
-    /**
-     * Gets text.
-     *
-     * @return the text
-     */
-    @NotNull
-    public abstract String getText();
-
-    /**
-     * Resolve optional.
-     *
-     * @param current the current
-     * @param text    the text
-     * @return the optional
-     */
-    public Optional<K> resolve(K current, String text) {
-        return Optional.empty();
-    }
+  /**
+   * Resolve optional.
+   *
+   * @param current the current
+   * @param text    the text
+   * @return the optional
+   */
+  public Optional<K> resolve(K current, String text) {
+    return Optional.empty();
+  }
 }

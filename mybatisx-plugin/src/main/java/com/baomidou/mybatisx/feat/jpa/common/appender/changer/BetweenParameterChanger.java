@@ -15,35 +15,35 @@ import java.util.List;
  */
 public class BetweenParameterChanger implements MxParameterChanger {
 
-    /**
-     * The constant SPACE.
-     */
-    public static final String SPACE = " ";
+  /**
+   * The constant SPACE.
+   */
+  public static final String SPACE = " ";
 
-    @Override
-    public List<TxParameter> getParameter(TxParameter txParameter) {
-        TxParameter beginParameter = TxParameter.createByOrigin(
-            "begin" + StringUtils.upperCaseFirstChar(txParameter.getName()),
-            txParameter.getTypeText(),
-            txParameter.getCanonicalTypeText());
+  @Override
+  public List<TxParameter> getParameter(TxParameter txParameter) {
+    TxParameter beginParameter = TxParameter.createByOrigin(
+      "begin" + StringUtils.upperCaseFirstChar(txParameter.getName()),
+      txParameter.getTypeText(),
+      txParameter.getCanonicalTypeText());
 
-        TxParameter endParameter = TxParameter.createByOrigin(
-            "end" + StringUtils.upperCaseFirstChar(txParameter.getName()),
-            txParameter.getTypeText(),
-            txParameter.getCanonicalTypeText());
+    TxParameter endParameter = TxParameter.createByOrigin(
+      "end" + StringUtils.upperCaseFirstChar(txParameter.getName()),
+      txParameter.getTypeText(),
+      txParameter.getCanonicalTypeText());
 
-        return Arrays.asList(beginParameter, endParameter);
-    }
+    return Arrays.asList(beginParameter, endParameter);
+  }
 
-    @Override
-    public String getTemplateText(String fieldName, LinkedList<TxParameter> parameters, ConditionFieldWrapper conditionFieldWrapper) {
-        final TxParameter begin = parameters.poll();
-        final TxParameter end = parameters.poll();
-        assert begin != null;
-        assert end != null;
-        final String beginStr = conditionFieldWrapper.wrapperField(fieldName, begin.getName(), begin.getCanonicalTypeText());
-        final String endStr = conditionFieldWrapper.wrapperField(fieldName, end.getName(), end.getCanonicalTypeText());
+  @Override
+  public String getTemplateText(String fieldName, LinkedList<TxParameter> parameters, ConditionFieldWrapper conditionFieldWrapper) {
+    final TxParameter begin = parameters.poll();
+    final TxParameter end = parameters.poll();
+    assert begin != null;
+    assert end != null;
+    final String beginStr = conditionFieldWrapper.wrapperField(fieldName, begin.getName(), begin.getCanonicalTypeText());
+    final String endStr = conditionFieldWrapper.wrapperField(fieldName, end.getName(), end.getCanonicalTypeText());
 
-        return fieldName + SPACE + "between" + SPACE + beginStr + " and " + endStr;
-    }
+    return fieldName + SPACE + "between" + SPACE + beginStr + " and " + endStr;
+  }
 }

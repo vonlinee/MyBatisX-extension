@@ -20,34 +20,34 @@ import java.util.Optional;
  */
 public class PropertyConverter extends ConverterAdaptor<XmlAttributeValue> implements CustomReferenceConverter<XmlAttributeValue> {
 
-    @Override
-    public String getErrorMessage(@Nullable String property, ConvertContext context) {
-        return "property :" + property + " can not be found ";
-    }
+  @Override
+  public String getErrorMessage(@Nullable String property, ConvertContext context) {
+    return "property :" + property + " can not be found ";
+  }
 
-    @NotNull
-    @Override
-    public PsiReference @NotNull [] createReferences(GenericDomValue<XmlAttributeValue> value, PsiElement element, ConvertContext context) {
-        final String fieldName = value.getStringValue();
-        if (fieldName == null) {
-            return PsiReference.EMPTY_ARRAY;
-        }
-        return new ResultPropertyReferenceSet(fieldName, element, ElementManipulators.getOffsetInElement(element)).getPsiReferences();
+  @NotNull
+  @Override
+  public PsiReference @NotNull [] createReferences(GenericDomValue<XmlAttributeValue> value, PsiElement element, ConvertContext context) {
+    final String fieldName = value.getStringValue();
+    if (fieldName == null) {
+      return PsiReference.EMPTY_ARRAY;
     }
+    return new ResultPropertyReferenceSet(fieldName, element, ElementManipulators.getOffsetInElement(element)).getPsiReferences();
+  }
 
-    @Nullable
-    @Override
-    public XmlAttributeValue fromString(@Nullable @NonNls String firstText, ConvertContext context) {
-        DomElement ctxElement = context.getInvocationElement();
-        if (ctxElement instanceof GenericAttributeValue) {
-            final XmlAttributeValue xmlAttributeValue = ((GenericAttributeValue<?>) ctxElement).getXmlAttributeValue();
-            PropertySetterFind propertySetterFind = new PropertySetterFind();
-            final Optional<PsiField> startElement = propertySetterFind.getStartElement(firstText, xmlAttributeValue);
-            if (startElement.isPresent()) {
-                return xmlAttributeValue;
-            }
-        }
-        return null;
+  @Nullable
+  @Override
+  public XmlAttributeValue fromString(@Nullable @NonNls String firstText, ConvertContext context) {
+    DomElement ctxElement = context.getInvocationElement();
+    if (ctxElement instanceof GenericAttributeValue) {
+      final XmlAttributeValue xmlAttributeValue = ((GenericAttributeValue<?>) ctxElement).getXmlAttributeValue();
+      PropertySetterFind propertySetterFind = new PropertySetterFind();
+      final Optional<PsiField> startElement = propertySetterFind.getStartElement(firstText, xmlAttributeValue);
+      if (startElement.isPresent()) {
+        return xmlAttributeValue;
+      }
     }
+    return null;
+  }
 
 }

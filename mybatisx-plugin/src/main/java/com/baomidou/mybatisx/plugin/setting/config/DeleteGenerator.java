@@ -15,30 +15,30 @@ import org.jetbrains.annotations.NotNull;
  */
 public class DeleteGenerator extends AbstractStatementGenerator {
 
-    /**
-     * Instantiates a new Delete generator.
-     *
-     * @param patterns the patterns
-     */
-    public DeleteGenerator(@NotNull String... patterns) {
-        super(patterns);
-    }
+  /**
+   * Instantiates a new Delete generator.
+   *
+   * @param patterns the patterns
+   */
+  public DeleteGenerator(@NotNull String... patterns) {
+    super(patterns);
+  }
 
-    @NotNull
-    @Override
-    protected IdDomElement getTarget(@NotNull Mapper mapper, @NotNull PsiMethod method) {
-        return mapper.addDelete();
-    }
+  @NotNull
+  @Override
+  protected IdDomElement getTarget(@NotNull Mapper mapper, @NotNull PsiMethod method) {
+    return mapper.addDelete();
+  }
 
-    @NotNull
-    @Override
-    public String getId() {
-        return "DeleteGenerator";
-    }
+  @NotNull
+  @Override
+  public String getId() {
+    return "DeleteGenerator";
+  }
 
-    @NotNull
-    @Override
-    public String getDisplayText() {
-        return "Delete Statement";
-    }
+  @NotNull
+  @Override
+  public String getDisplayText() {
+    return "Delete Statement";
+  }
 }

@@ -17,24 +17,24 @@ import java.util.Collection;
  */
 public class ConfigPackageAliasResolver extends PackageAliasResolver {
 
-    /**
-     * Instantiates a new Config package alias resolver.
-     *
-     * @param project the project
-     */
-    public ConfigPackageAliasResolver(Project project) {
-        super(project);
-    }
+  /**
+   * Instantiates a new Config package alias resolver.
+   *
+   * @param project the project
+   */
+  public ConfigPackageAliasResolver(Project project) {
+    super(project);
+  }
 
-    @NotNull
-    @Override
-    public Collection<String> getPackages(@Nullable PsiElement element) {
-        final ArrayList<String> result = Lists.newArrayList();
-        MapperUtils.processConfiguredPackage(project, pkg -> {
-            result.add(pkg.getName().getStringValue());
-            return true;
-        });
-        return result;
-    }
+  @NotNull
+  @Override
+  public Collection<String> getPackages(@Nullable PsiElement element) {
+    final ArrayList<String> result = Lists.newArrayList();
+    MapperUtils.processConfiguredPackage(project, pkg -> {
+      result.add(pkg.getName().getStringValue());
+      return true;
+    });
+    return result;
+  }
 
 }

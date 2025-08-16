@@ -17,22 +17,22 @@ import java.util.List;
  */
 public interface ParameterMap extends IdDomElement {
 
-    /**
-     * Gets type.
-     *
-     * @return the type
-     */
-    @NotNull
-    @Attribute("type")
-    @Convert(AliasConverter.class)
-    GenericAttributeValue<PsiClass> getType();
+  /**
+   * Gets type.
+   *
+   * @return the type
+   */
+  @NotNull
+  @Attribute("type")
+  @Convert(AliasConverter.class)
+  GenericAttributeValue<PsiClass> getType();
 
-    /**
-     * Gets parameters.
-     *
-     * @return the parameters
-     */
-    @SubTagList("parameter")
-    List<Parameter> getParameters();
+  /**
+   * Gets parameters.
+   *
+   * @return the parameters
+   */
+  @SubTagList("parameter")
+  List<Parameter> getParameters();
 
 }

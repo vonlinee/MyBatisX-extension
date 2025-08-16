@@ -20,27 +20,27 @@ import java.util.Optional;
 public final class GenerateSmartJpaAction extends GenerateSmartJpaAdvanceAction {
 
 
-    private static final Logger logger = LoggerFactory.getLogger(GenerateSmartJpaAction.class);
+  private static final Logger logger = LoggerFactory.getLogger(GenerateSmartJpaAction.class);
 
-    @NotNull
-    @Override
-    public String getText() {
-        return "[MybatisX] Generate Mybatis Sql";
-    }
+  @NotNull
+  @Override
+  public String getText() {
+    return "[MybatisX] Generate Mybatis Sql";
+  }
 
 
-    @Override
-    protected Optional<ConditionFieldWrapper> getConditionFieldWrapper(@NotNull Project project,
-                                                                       String defaultDateWord,
-                                                                       List<TxField> allFields,
-                                                                       List<String> resultFields,
-                                                                       List<String> conditionFields,
-                                                                       PsiClass entityClass, boolean isSelect) {
-        return Optional.of(new NeverContainsFieldWrapper(project, allFields));
-    }
+  @Override
+  protected Optional<ConditionFieldWrapper> getConditionFieldWrapper(@NotNull Project project,
+                                                                     String defaultDateWord,
+                                                                     List<TxField> allFields,
+                                                                     List<String> resultFields,
+                                                                     List<String> conditionFields,
+                                                                     PsiClass entityClass, boolean isSelect) {
+    return Optional.of(new NeverContainsFieldWrapper(project, allFields));
+  }
 
-    @Override
-    public boolean startInWriteAction() {
-        return true;
-    }
+  @Override
+  public boolean startInWriteAction() {
+    return true;
+  }
 }

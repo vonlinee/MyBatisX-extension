@@ -16,20 +16,20 @@ import java.util.Optional;
 public class JpaAnnotationMappingResolver extends JpaMappingResolver implements EntityMappingResolver {
 
 
-    @Override
-    public List<TxField> findFields(PsiClass mapperClass, PsiClass entityClass) {
-        return initDataByCamel(entityClass);
-    }
+  @Override
+  public List<TxField> findFields(PsiClass mapperClass, PsiClass entityClass) {
+    return initDataByCamel(entityClass);
+  }
 
-    @Override
-    public Optional<PsiClass> findEntity(PsiClass mapperClass) {
-        return findEntityClassByMapperClass(mapperClass);
-    }
+  @Override
+  public Optional<PsiClass> findEntity(PsiClass mapperClass) {
+    return findEntityClassByMapperClass(mapperClass);
+  }
 
-    @Override
-    public Optional<String> findTableName(PsiClass entityClass) {
-        return getTableNameByJpa(entityClass);
-    }
+  @Override
+  public Optional<String> findTableName(PsiClass entityClass) {
+    return getTableNameByJpa(entityClass);
+  }
 
 
 }

@@ -13,22 +13,22 @@ import java.util.List;
  */
 public interface TypeAliases extends DomElement {
 
-    /**
-     * Gets type alias.
-     *
-     * @return the type alias
-     */
-    @NotNull
-    @SubTagList("typeAlias")
-    List<TypeAlias> getTypeAlias();
+  /**
+   * Gets type alias.
+   *
+   * @return the type alias
+   */
+  @NotNull
+  @SubTagList("typeAlias")
+  List<TypeAlias> getTypeAlias();
 
-    /**
-     * Gets packages.
-     *
-     * @return the packages
-     */
-    @NotNull
-    @SubTagList("package")
-    List<Package> getPackages();
+  /**
+   * Gets packages.
+   *
+   * @return the packages
+   */
+  @NotNull
+  @SubTagList("package")
+  List<Package> getPackages();
 
 }

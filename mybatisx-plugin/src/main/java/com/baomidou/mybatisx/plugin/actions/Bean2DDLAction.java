@@ -15,42 +15,42 @@ import java.util.concurrent.ConcurrentHashMap;
 
 public final class Bean2DDLAction extends AnAction {
 
-    public static ConcurrentHashMap<String, String> translationMap;
-    public static ConcurrentHashMap<String, ConvertBean> convertMap;
+  public static ConcurrentHashMap<String, String> translationMap;
+  public static ConcurrentHashMap<String, ConvertBean> convertMap;
 
-    BeanToolDialog dialog;
+  BeanToolDialog dialog;
 
-    @Override
-    public void actionPerformed(@NotNull AnActionEvent anActionEvent) {
-        PsiFile file = PsiUtils.getPsiFile(anActionEvent);
-        PsiClass currentClass = PsiUtils.getPsiClass(file);
-        if (currentClass == null) {
-            MessageNotification.showErrorDialog("No PsiClass Found");
-            return;
-        }
-
-        if (dialog == null) {
-            dialog = new BeanToolDialog(anActionEvent.getProject());
-        }
-
-        initTranslationMap();
-        initConvertMap();
-
-        dialog.showWithClass(currentClass);
+  @Override
+  public void actionPerformed(@NotNull AnActionEvent anActionEvent) {
+    PsiFile file = PsiUtils.getPsiFile(anActionEvent);
+    PsiClass currentClass = PsiUtils.getPsiClass(file);
+    if (currentClass == null) {
+      MessageNotification.showErrorDialog("No PsiClass Found");
+      return;
     }
 
-    private void initConvertMap() {
-        if (null != convertMap) {
-            convertMap.clear();
-        }
-        convertMap = SqlTypeMapUtil.getInstance().convertMapInit();
+    if (dialog == null) {
+      dialog = new BeanToolDialog(anActionEvent.getProject());
     }
 
-    private void initTranslationMap() {
-        if (null != translationMap) {
-            translationMap.clear();
-        } else {
-            translationMap = new ConcurrentHashMap<>();
-        }
+    initTranslationMap();
+    initConvertMap();
+
+    dialog.showWithClass(currentClass);
+  }
+
+  private void initConvertMap() {
+    if (null != convertMap) {
+      convertMap.clear();
     }
+    convertMap = SqlTypeMapUtil.getInstance().convertMapInit();
+  }
+
+  private void initTranslationMap() {
+    if (null != translationMap) {
+      translationMap.clear();
+    } else {
+      translationMap = new ConcurrentHashMap<>();
+    }
+  }
 }

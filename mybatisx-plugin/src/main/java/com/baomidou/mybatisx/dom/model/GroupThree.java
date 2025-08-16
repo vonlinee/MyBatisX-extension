@@ -11,12 +11,12 @@ import java.util.List;
  */
 public interface GroupThree extends GroupTwo {
 
-    /**
-     * Gets select key.
-     *
-     * @return the select key
-     */
-    @SubTagList("selectKey")
-    List<SelectKey> getSelectKey();
+  /**
+   * Gets select key.
+   *
+   * @return the select key
+   */
+  @SubTagList("selectKey")
+  List<SelectKey> getSelectKey();
 
 }

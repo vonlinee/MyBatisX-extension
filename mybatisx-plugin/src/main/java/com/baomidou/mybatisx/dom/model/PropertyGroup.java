@@ -18,39 +18,39 @@ import com.intellij.util.xml.GenericAttributeValue;
  */
 public interface PropertyGroup extends DomElement {
 
-    /**
-     * Gets property.
-     *
-     * @return the property
-     */
-    @Attribute("property")
-    @Convert(PropertyConverter.class)
-    GenericAttributeValue<XmlAttributeValue> getProperty();
+  /**
+   * Gets property.
+   *
+   * @return the property
+   */
+  @Attribute("property")
+  @Convert(PropertyConverter.class)
+  GenericAttributeValue<XmlAttributeValue> getProperty();
 
-    /**
-     * column
-     *
-     * @return
-     */
-    @Attribute("column")
-    @Convert(value = ColumnConverter.class, soft = true)
-    GenericAttributeValue<XmlAttributeValue> getColumn();
+  /**
+   * column
+   *
+   * @return
+   */
+  @Attribute("column")
+  @Convert(value = ColumnConverter.class, soft = true)
+  GenericAttributeValue<XmlAttributeValue> getColumn();
 
-    /**
-     * jdbcType
-     *
-     * @return
-     */
-    @Attribute("jdbcType")
-    @Convert(JdbcTypeConverter.class)
-    GenericAttributeValue<XmlAttributeValue> getJdbcType();
+  /**
+   * jdbcType
+   *
+   * @return
+   */
+  @Attribute("jdbcType")
+  @Convert(JdbcTypeConverter.class)
+  GenericAttributeValue<XmlAttributeValue> getJdbcType();
 
-    /**
-     * jdbcType
-     *
-     * @return
-     */
-    @Attribute("typeHandler")
-    @Convert(TypeHandlerConverter.class)
-    GenericAttributeValue<PsiClass> getTypeHandler();
+  /**
+   * jdbcType
+   *
+   * @return
+   */
+  @Attribute("typeHandler")
+  @Convert(TypeHandlerConverter.class)
+  GenericAttributeValue<PsiClass> getTypeHandler();
 }

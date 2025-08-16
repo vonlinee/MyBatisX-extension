@@ -22,49 +22,49 @@ import java.util.Collection;
  */
 public class MapperRefactoringProvider implements RefactoringElementListenerProvider {
 
-    @Nullable
-    @Override
-    public RefactoringElementListener getListener(final PsiElement element) {
-        if (!(element instanceof PsiClass)) {
-            return null;
-        }
-        return new RefactoringElementListener() {
-            @Override
-            public void elementMoved(@NotNull PsiElement newElement) {
-            }
-
-            @Override
-            public void elementRenamed(@NotNull final PsiElement newElement) {
-                if (newElement instanceof PsiClass) {
-                    ApplicationManager.getApplication().runWriteAction(new Runnable() {
-                        @Override
-                        public void run() {
-                            renameMapperXml((PsiClass) element, (PsiClass) newElement);
-                        }
-                    });
-                }
-            }
-        };
+  @Nullable
+  @Override
+  public RefactoringElementListener getListener(final PsiElement element) {
+    if (!(element instanceof PsiClass)) {
+      return null;
     }
+    return new RefactoringElementListener() {
+      @Override
+      public void elementMoved(@NotNull PsiElement newElement) {
+      }
 
-    private void renameMapperXml(@NotNull final PsiClass oldClazz, @NotNull final PsiClass newClazz) {
-        if (oldClazz.getQualifiedName() == null) {
-            return;
-        }
-        Collection<Mapper> mappers = MapperUtils.findMappers(oldClazz.getProject(), oldClazz);
-        try {
-            for (Mapper mapper : mappers) {
-                XmlTag xmlTag = mapper.getXmlTag();
-                if (xmlTag != null) {
-                    PsiElement originalElement = xmlTag.getOriginalElement();
-                    VirtualFile vf = originalElement.getContainingFile().getVirtualFile();
-                    if (null != vf) {
-                        vf.rename(MapperRefactoringProvider.this, newClazz.getName() + "." + vf.getExtension());
-                    }
-                }
+      @Override
+      public void elementRenamed(@NotNull final PsiElement newElement) {
+        if (newElement instanceof PsiClass) {
+          ApplicationManager.getApplication().runWriteAction(new Runnable() {
+            @Override
+            public void run() {
+              renameMapperXml((PsiClass) element, (PsiClass) newElement);
             }
-        } catch (IOException e) {
+          });
         }
+      }
+    };
+  }
+
+  private void renameMapperXml(@NotNull final PsiClass oldClazz, @NotNull final PsiClass newClazz) {
+    if (oldClazz.getQualifiedName() == null) {
+      return;
     }
+    Collection<Mapper> mappers = MapperUtils.findMappers(oldClazz.getProject(), oldClazz);
+    try {
+      for (Mapper mapper : mappers) {
+        XmlTag xmlTag = mapper.getXmlTag();
+        if (xmlTag != null) {
+          PsiElement originalElement = xmlTag.getOriginalElement();
+          VirtualFile vf = originalElement.getContainingFile().getVirtualFile();
+          if (null != vf) {
+            vf.rename(MapperRefactoringProvider.this, newClazz.getName() + "." + vf.getExtension());
+          }
+        }
+      }
+    } catch (IOException ignored) {
+    }
+  }
 
 }

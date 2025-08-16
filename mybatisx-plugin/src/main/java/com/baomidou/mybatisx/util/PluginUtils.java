@@ -10,52 +10,52 @@ import org.jetbrains.annotations.NotNull;
 
 public class PluginUtils {
 
-    public static final String PLUGIN_NAME = "MyBatisX";
-    public static final String PLUGIN_ID = "com.baomidou.plugin.idea.mybatisx";
-    private static volatile Boolean existsDatabaseTools = null;
+  public static final String PLUGIN_NAME = "MyBatisX";
+  public static final String PLUGIN_ID = "com.baomidou.plugin.idea.mybatisx";
+  private static volatile Boolean existsDatabaseTools = null;
 
-    private PluginUtils() {
-    }
+  private PluginUtils() {
+  }
 
-    /**
-     * Idea企业版才有Database Tool工具
-     *
-     * @return 是否存在Database Tool工具
-     */
-    public static boolean existsDbTools() {
+  /**
+   * Idea企业版才有Database Tool工具
+   *
+   * @return 是否存在Database Tool工具
+   */
+  public static boolean existsDbTools() {
+    if (existsDatabaseTools == null) {
+      synchronized (PluginUtils.class) {
         if (existsDatabaseTools == null) {
-            synchronized (PluginUtils.class) {
-                if (existsDatabaseTools == null) {
-                    try {
-                        Class.forName("com.intellij.database.psi.DbTable");
-                        existsDatabaseTools = true;
-                    } catch (ClassNotFoundException ex) {
-                        existsDatabaseTools = false;
-                    }
-                }
-            }
+          try {
+            Class.forName("com.intellij.database.psi.DbTable");
+            existsDatabaseTools = true;
+          } catch (ClassNotFoundException ex) {
+            existsDatabaseTools = false;
+          }
         }
-        return existsDatabaseTools;
+      }
     }
+    return existsDatabaseTools;
+  }
 
-    public static void invokeLater(@NotNull Runnable runnable) {
-        ApplicationManager.getApplication().invokeLater(runnable);
-    }
+  public static void invokeLater(@NotNull Runnable runnable) {
+    ApplicationManager.getApplication().invokeLater(runnable);
+  }
 
-    public static boolean isJavaElement(PsiElement element) {
-        return element.getLanguage().is(JavaLanguage.INSTANCE);
-    }
+  public static boolean isJavaElement(PsiElement element) {
+    return element.getLanguage().is(JavaLanguage.INSTANCE);
+  }
 
-    public static boolean isJavaClassElement(PsiElement element) {
-        return element instanceof PsiClass;
-    }
+  public static boolean isJavaClassElement(PsiElement element) {
+    return element instanceof PsiClass;
+  }
 
-    /**
-     * 获取当前的 Project 实例
-     *
-     * @return Project
-     */
-    public static Project getCurrentProject() {
-        return ProjectManager.getInstance().getDefaultProject();
-    }
+  /**
+   * 获取当前的 Project 实例
+   *
+   * @return Project
+   */
+  public static Project getCurrentProject() {
+    return ProjectManager.getInstance().getDefaultProject();
+  }
 }

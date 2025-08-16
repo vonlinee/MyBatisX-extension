@@ -10,29 +10,39 @@ import javax.swing.*;
 
 public interface MapperNavigator {
 
-    Icon getIcon();
+  /**
+   * 显示的图标
+   *
+   * @return 图标
+   */
+  Icon getIcon();
 
-    String getDisplayText();
+  /**
+   * 显示的文本
+   *
+   * @return 显示的文本
+   */
+  String getDisplayText();
 
-    void navigate(Project project, MapperStatementItem item);
+  void navigate(Project project, MapperStatementItem item);
 
-    String getNavigationGroupName();
+  String getNavigationGroupName();
 
-    /**
-     * 搜索Mapper Statement标签对应的PSI元素
-     *
-     * @param lineElement 每行标记的标签
-     * @return Xml标签元素
-     */
-    default XmlTag findMapperStatementTag(PsiElement lineElement) {
-        if (lineElement instanceof XmlToken) {
-            return findMapperStatementTag(lineElement.getParent());
-        } else if (lineElement instanceof XmlTag) {
-            XmlTag tag = (XmlTag) lineElement;
-            if (MyBatisUtils.isCrudXmlTag(tag.getName())) {
-                return tag;
-            }
-        }
-        return null;
+  /**
+   * 搜索Mapper Statement标签对应的PSI元素
+   *
+   * @param lineElement 每行标记的标签
+   * @return Xml标签元素
+   */
+  default XmlTag findMapperStatementTag(PsiElement lineElement) {
+    if (lineElement instanceof XmlToken) {
+      return findMapperStatementTag(lineElement.getParent());
+    } else if (lineElement instanceof XmlTag) {
+      XmlTag tag = (XmlTag) lineElement;
+      if (MyBatisUtils.isCrudXmlTag(tag.getName())) {
+        return tag;
+      }
     }
+    return null;
+  }
 }

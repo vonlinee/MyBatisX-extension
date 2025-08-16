@@ -15,13 +15,13 @@ import java.util.List;
 @Namespace("MybatisConfiguration")
 public interface Configuration extends DomElement {
 
-    /**
-     * Gets type aliases.
-     *
-     * @return the type aliases
-     */
-    @NotNull
-    @SubTagList("typeAliases")
-    List<TypeAliases> getTypeAliases();
+  /**
+   * Gets type aliases.
+   *
+   * @return the type aliases
+   */
+  @NotNull
+  @SubTagList("typeAliases")
+  List<TypeAliases> getTypeAliases();
 
 }

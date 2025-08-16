@@ -22,108 +22,108 @@ import java.util.Set;
  */
 public abstract class PackageAliasResolver extends AliasResolver {
 
-    private JavaPsiFacade javaPsiFacade;
+  private JavaPsiFacade javaPsiFacade;
 
-    /**
-     * Instantiates a new Package alias resolver.
-     *
-     * @param project the project
-     */
-    public PackageAliasResolver(Project project) {
-        super(project);
-        this.javaPsiFacade = JavaPsiFacade.getInstance(project);
+  /**
+   * Instantiates a new Package alias resolver.
+   *
+   * @param project the project
+   */
+  public PackageAliasResolver(Project project) {
+    super(project);
+    this.javaPsiFacade = JavaPsiFacade.getInstance(project);
+  }
+
+
+  @NotNull
+  @Override
+  public Set<AliasDesc> getClassAliasDescriptions(@Nullable PsiElement element) {
+    Set<AliasDesc> result = new HashSet<>();
+    for (String pkgName : getPackages(element)) {
+      if (null == pkgName) {
+        continue;
+      }
+      addPackages(result, pkgName);
     }
+    return result;
+  }
 
-
-    @NotNull
-    @Override
-    public Set<AliasDesc> getClassAliasDescriptions(@Nullable PsiElement element) {
-        Set<AliasDesc> result = new HashSet<>();
-        for (String pkgName : getPackages(element)) {
-            if (null == pkgName) {
-                continue;
-            }
-            addPackages(result, pkgName);
+  /**
+   * @param result
+   * @param pkgNameCandidate 可能具有通配符的包名
+   */
+  private void addPackages(Set<AliasDesc> result, String pkgNameCandidate) {
+    // mybatis 通配符支持
+    String[] packages = SpringStringUtils.tokenizeToStringArray(pkgNameCandidate, ",; \t\n");
+    for (String packageName : packages) {
+      String firstPackage = findPackageName(pkgNameCandidate, packageName);
+      JavaPsiFacade javaPsiFacade = JavaPsiFacade.getInstance(project);
+      PsiPackage basePackage = javaPsiFacade.findPackage(firstPackage);
+      if (basePackage != null) {
+        AntPathMatcher antPathMatcher = new AntPathMatcher();
+        if (antPathMatcher.match(pkgNameCandidate, basePackage.getQualifiedName())) {
+          addPackage(result, basePackage.getQualifiedName());
         }
-        return result;
+        matchSubPackages(pkgNameCandidate, basePackage, result);
+      }
     }
+  }
 
-    /**
-     * @param result
-     * @param pkgNameCandidate 可能具有通配符的包名
-     */
-    private void addPackages(Set<AliasDesc> result, String pkgNameCandidate) {
-        // mybatis 通配符支持
-        String[] packages = SpringStringUtils.tokenizeToStringArray(pkgNameCandidate, ",; \t\n");
-        for (String packageName : packages) {
-            String firstPackage = findPackageName(pkgNameCandidate, packageName);
-            JavaPsiFacade javaPsiFacade = JavaPsiFacade.getInstance(project);
-            PsiPackage basePackage = javaPsiFacade.findPackage(firstPackage);
-            if (basePackage != null) {
-                AntPathMatcher antPathMatcher = new AntPathMatcher();
-                if (antPathMatcher.match(pkgNameCandidate, basePackage.getQualifiedName())) {
-                    addPackage(result, basePackage.getQualifiedName());
-                }
-                matchSubPackages(pkgNameCandidate, basePackage, result);
-            }
-        }
+  @NotNull
+  private String findPackageName(String pkgName, String packageName) {
+    String firstPackage = null;
+    int firstWildcard = packageName.indexOf(".*");
+    if (firstWildcard > -1) {
+      firstPackage = pkgName.substring(0, firstWildcard);
     }
-
-    @NotNull
-    private String findPackageName(String pkgName, String packageName) {
-        String firstPackage = null;
-        int firstWildcard = packageName.indexOf(".*");
-        if (firstWildcard > -1) {
-            firstPackage = pkgName.substring(0, firstWildcard);
-        }
-        if (firstPackage == null) {
-            firstPackage = packageName;
-        }
-        return firstPackage;
+    if (firstPackage == null) {
+      firstPackage = packageName;
     }
+    return firstPackage;
+  }
 
-    /**
-     * 匹配子包
-     *
-     * @param pkgName
-     * @param basePackage
-     * @param result
-     */
-    private void matchSubPackages(String pkgName, PsiPackage basePackage, Set<AliasDesc> result) {
-        for (PsiPackage subPackage : basePackage.getSubPackages()) {
-            AntPathMatcher antPathMatcher = new AntPathMatcher();
-            if (antPathMatcher.match(pkgName, subPackage.getQualifiedName())) {
-                addPackage(result, subPackage.getQualifiedName());
-            } else {
-                matchSubPackages(pkgName, subPackage, result);
-            }
-        }
+  /**
+   * 匹配子包
+   *
+   * @param pkgName
+   * @param basePackage
+   * @param result
+   */
+  private void matchSubPackages(String pkgName, PsiPackage basePackage, Set<AliasDesc> result) {
+    for (PsiPackage subPackage : basePackage.getSubPackages()) {
+      AntPathMatcher antPathMatcher = new AntPathMatcher();
+      if (antPathMatcher.match(pkgName, subPackage.getQualifiedName())) {
+        addPackage(result, subPackage.getQualifiedName());
+      } else {
+        matchSubPackages(pkgName, subPackage, result);
+      }
     }
+  }
 
 
-    private void addPackage(Set<AliasDesc> result, String pkgName) {
-        PsiPackage pkg = javaPsiFacade.findPackage(pkgName);
-        if (null != pkg) {
-            addAliasDesc(result, pkg);
-            for (PsiPackage tmp : pkg.getSubPackages()) {
-                addAliasDesc(result, tmp);
-            }
-        }
+  private void addPackage(Set<AliasDesc> result, String pkgName) {
+    PsiPackage pkg = javaPsiFacade.findPackage(pkgName);
+    if (null != pkg) {
+      addAliasDesc(result, pkg);
+      for (PsiPackage tmp : pkg.getSubPackages()) {
+        addAliasDesc(result, tmp);
+      }
     }
+  }
 
-    private void addAliasDesc(Set<AliasDesc> result, PsiPackage pkg) {
-        for (PsiClass clazz : pkg.getClasses()) {
-            String aliasName = StringUtils.lowerCaseFirstChar(clazz.getName());
-            addAliasDesc(result, clazz, aliasName);
-        }
+  private void addAliasDesc(Set<AliasDesc> result, PsiPackage pkg) {
+    for (PsiClass clazz : pkg.getClasses()) {
+      String aliasName = StringUtils.lowerCaseFirstChar(clazz.getName());
+      addAliasDesc(result, clazz, aliasName);
     }
+  }
 
-    /**
-     * Gets packages.
-     *
-     * @param element the element
-     * @return the packages
-     */
-    @NotNull
-    public abstract Collection<String> getPackages(@Nullable PsiElement element);
+  /**
+   * Gets packages.
+   *
+   * @param element the element
+   * @return the packages
+   */
+  @NotNull
+  public abstract Collection<String> getPackages(@Nullable PsiElement element);
 }

@@ -14,13 +14,13 @@ import com.intellij.util.xml.GenericAttributeValue;
  */
 public interface Include extends DomElement {
 
-    /**
-     * Gets ref id.
-     *
-     * @return the ref id
-     */
-    @Attribute("refid")
-    @Convert(SqlConverter.class)
-    GenericAttributeValue<XmlTag> getRefId();
+  /**
+   * Gets ref id.
+   *
+   * @return the ref id
+   */
+  @Attribute("refid")
+  @Convert(SqlConverter.class)
+  GenericAttributeValue<XmlTag> getRefId();
 
 }

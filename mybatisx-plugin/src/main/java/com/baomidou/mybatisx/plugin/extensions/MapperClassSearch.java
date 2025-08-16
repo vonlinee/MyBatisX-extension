@@ -19,31 +19,31 @@ import java.util.Collection;
  * </p>
  */
 public class MapperClassSearch extends QueryExecutorBase<PsiElement, DefinitionsScopedSearch.SearchParameters> {
-    /**
-     * 必须是只读的操作, 否则无法读取java的类
-     */
-    public MapperClassSearch() {
-        super(true);
+  /**
+   * 必须是只读的操作, 否则无法读取java的类
+   */
+  public MapperClassSearch() {
+    super(true);
+  }
+
+  @Override
+  public void processQuery(@NotNull DefinitionsScopedSearch.SearchParameters queryParameters, @NotNull Processor<? super PsiElement> consumer) {
+    final PsiElement element = queryParameters.getElement();
+    if (element instanceof PsiMethod) {
+      final PsiMethod psiMethod = (PsiMethod) element;
+      final Collection<XmlElement> tags = MapperUtils.findTags(psiMethod.getProject(), psiMethod);
+      for (XmlElement idDomElement : tags) {
+        consumer.process(idDomElement);
+      }
+    }
+    if (element instanceof PsiClass) {
+      Collection<Mapper> mappers = MapperUtils.findMappers(queryParameters.getProject(), (PsiClass) element);
+      for (Mapper mapper : mappers) {
+        consumer.process(mapper.getXmlElement());
+      }
     }
 
-    @Override
-    public void processQuery(@NotNull DefinitionsScopedSearch.SearchParameters queryParameters, @NotNull Processor<? super PsiElement> consumer) {
-        final PsiElement element = queryParameters.getElement();
-        if (element instanceof PsiMethod) {
-            final PsiMethod psiMethod = (PsiMethod) element;
-            final Collection<XmlElement> tags = MapperUtils.findTags(psiMethod.getProject(), psiMethod);
-            for (XmlElement idDomElement : tags) {
-                consumer.process(idDomElement);
-            }
-        }
-        if (element instanceof PsiClass) {
-            Collection<Mapper> mappers = MapperUtils.findMappers(queryParameters.getProject(), (PsiClass) element);
-            for (Mapper mapper : mappers) {
-                consumer.process(mapper.getXmlElement());
-            }
-        }
-
-    }
+  }
 
 
 }

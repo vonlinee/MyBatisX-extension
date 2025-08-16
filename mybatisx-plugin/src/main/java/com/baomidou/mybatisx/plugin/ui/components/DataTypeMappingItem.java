@@ -9,29 +9,29 @@ import java.sql.JDBCType;
 @Getter
 public class DataTypeMappingItem {
 
-    private String group;
-    private String identifier;
-    private String anotherGroup;
-    private String anotherIdentifier;
+  private String group;
+  private String identifier;
+  private String anotherGroup;
+  private String anotherIdentifier;
 
-    /**
-     * java数据类型，简单类型
-     */
-    private String javaType;
+  /**
+   * java数据类型，简单类型
+   */
+  private String javaType;
 
-    /**
-     * jdbc类型
-     */
-    private String jdbcType;
+  /**
+   * jdbc类型
+   */
+  private String jdbcType;
 
-    /**
-     * mysql类型
-     */
-    private String mysqlType;
+  /**
+   * mysql类型
+   */
+  private String mysqlType;
 
-    private String oracleType;
+  private String oracleType;
 
-    public void setJdbcTypeEnum(JDBCType jdbcTypeEnum) {
-        this.jdbcType = jdbcTypeEnum.getName();
-    }
+  public void setJdbcTypeEnum(JDBCType jdbcTypeEnum) {
+    this.jdbcType = jdbcTypeEnum.getName();
+  }
 }

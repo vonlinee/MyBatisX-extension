@@ -21,26 +21,26 @@ import java.util.Optional;
  * mapper.xml 和 mapperClass 的文件图标修改为骚气的小鸟
  */
 public class XmlAndMapperIconProvider extends IconProvider {
-    private final MyBatisXSettings instance = MyBatisXSettings.getInstance();
+  private final MyBatisXSettings instance = MyBatisXSettings.getInstance();
 
-    @Override
-    public @Nullable Icon getIcon(@NotNull PsiElement element, int flags) {
-        if (instance.getMapperIcon() != null && Objects.equals(MapperIcon.DEFAULT.name(), instance.getMapperIcon())) {
-            return null;
-        }
-        Language language = element.getLanguage();
-        if (language.is(JavaLanguage.INSTANCE)) {
-            if (element instanceof PsiClass) {
-                PsiClass mayMapperClass = (PsiClass) element;
-                Optional<Mapper> firstMapper = MapperUtils.findFirstMapper(element.getProject(), mayMapperClass);
-                if (firstMapper.isPresent()) {
-                    return Icons.MAPPER_CLASS_ICON;
-                }
-            }
-        }
-        if (MapperUtils.isElementWithinMybatisFile(element)) {
-            return Icons.MAPPER_XML_ICON;
-        }
-        return null;
+  @Override
+  public @Nullable Icon getIcon(@NotNull PsiElement element, int flags) {
+    if (instance.getMapperIcon() != null && Objects.equals(MapperIcon.DEFAULT.name(), instance.getMapperIcon())) {
+      return null;
     }
+    Language language = element.getLanguage();
+    if (language.is(JavaLanguage.INSTANCE)) {
+      if (element instanceof PsiClass) {
+        PsiClass mayMapperClass = (PsiClass) element;
+        Optional<Mapper> firstMapper = MapperUtils.findFirstMapper(element.getProject(), mayMapperClass);
+        if (firstMapper.isPresent()) {
+          return Icons.MAPPER_CLASS_ICON;
+        }
+      }
+    }
+    if (MapperUtils.isElementWithinMybatisFile(element)) {
+      return Icons.MAPPER_XML_ICON;
+    }
+    return null;
+  }
 }

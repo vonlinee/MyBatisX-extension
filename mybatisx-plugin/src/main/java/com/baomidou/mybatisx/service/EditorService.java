@@ -21,58 +21,58 @@ import org.jetbrains.annotations.NotNull;
  */
 public final class EditorService {
 
-    private Project project;
+  private Project project;
 
-    private FileEditorManager fileEditorManager;
+  private FileEditorManager fileEditorManager;
 
-    private CodeFormatterFacade codeFormatterFacade;
+  private CodeFormatterFacade codeFormatterFacade;
 
-    /**
-     * Instantiates a new Editor service.
-     *
-     * @param project the project
-     */
-    public EditorService(Project project) {
-        this.project = project;
-        this.fileEditorManager = FileEditorManager.getInstance(project);
+  /**
+   * Instantiates a new Editor service.
+   *
+   * @param project the project
+   */
+  public EditorService(Project project) {
+    this.project = project;
+    this.fileEditorManager = FileEditorManager.getInstance(project);
+  }
+
+  /**
+   * Gets instance.
+   *
+   * @param project the project
+   * @return the instance
+   */
+  public static EditorService getInstance(@NotNull Project project) {
+    return ServiceManager.getService(project, EditorService.class);
+  }
+
+  /**
+   * Format.
+   *
+   * @param file    the file
+   * @param element the element
+   */
+  public void format(@NotNull PsiFile file, @NotNull PsiElement element) {
+    CodeStyleSettingsManager instance = CodeStyleSettingsManager.getInstance(element.getProject());
+    CodeStyleSettings settings = instance.getMainProjectCodeStyle();
+    this.codeFormatterFacade = new CodeFormatterFacade(settings, element.getLanguage());
+    codeFormatterFacade.processText(file, new FormatTextRanges(element.getTextRange(), true), true);
+  }
+
+  /**
+   * Scroll to.
+   *
+   * @param element the element
+   * @param offset  the offset
+   */
+  public void scrollTo(@NotNull PsiElement element, int offset) {
+    NavigationUtil.activateFileWithPsiElement(element, true);
+    Editor editor = fileEditorManager.getSelectedTextEditor();
+    if (null != editor) {
+      editor.getCaretModel().moveToOffset(offset);
+      editor.getScrollingModel().scrollToCaret(ScrollType.RELATIVE);
     }
-
-    /**
-     * Gets instance.
-     *
-     * @param project the project
-     * @return the instance
-     */
-    public static EditorService getInstance(@NotNull Project project) {
-        return ServiceManager.getService(project, EditorService.class);
-    }
-
-    /**
-     * Format.
-     *
-     * @param file    the file
-     * @param element the element
-     */
-    public void format(@NotNull PsiFile file, @NotNull PsiElement element) {
-        CodeStyleSettingsManager instance = CodeStyleSettingsManager.getInstance(element.getProject());
-        CodeStyleSettings settings = instance.getMainProjectCodeStyle();
-        this.codeFormatterFacade = new CodeFormatterFacade(settings, element.getLanguage());
-        codeFormatterFacade.processText(file, new FormatTextRanges(element.getTextRange(), true), true);
-    }
-
-    /**
-     * Scroll to.
-     *
-     * @param element the element
-     * @param offset  the offset
-     */
-    public void scrollTo(@NotNull PsiElement element, int offset) {
-        NavigationUtil.activateFileWithPsiElement(element, true);
-        Editor editor = fileEditorManager.getSelectedTextEditor();
-        if (null != editor) {
-            editor.getCaretModel().moveToOffset(offset);
-            editor.getScrollingModel().scrollToCaret(ScrollType.RELATIVE);
-        }
-    }
+  }
 
 }

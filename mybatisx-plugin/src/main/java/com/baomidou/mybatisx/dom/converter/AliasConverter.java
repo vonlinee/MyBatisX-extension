@@ -21,45 +21,45 @@ import org.jetbrains.annotations.Nullable;
  */
 public class AliasConverter extends ConverterAdaptor<PsiClass> implements CustomReferenceConverter<PsiClass> {
 
-    private final PsiClassConverter delegate = new PsiClassConverter();
+  private final PsiClassConverter delegate = new PsiClassConverter();
 
-    @Nullable
-    @Override
-    public PsiClass fromString(@Nullable @NonNls String s, ConvertContext context) {
-        if (StringUtil.isEmptyOrSpaces(s)) {
-            return null;
-        }
-
-        // 识别别名
-        if (!s.contains(MyBatisUtils.DOT_SEPARATOR)) {
-            return AliasFacade.getInstance(context.getProject())
-                    .findPsiClass(context.getXmlElement(), s)
-                    .orElse(null);
-        }
-        // 根据全程查找
-        return DomJavaUtil.findClass(s, context.getFile(), context.getModule(), GlobalSearchScope.allScope(context.getProject()));
+  @Nullable
+  @Override
+  public PsiClass fromString(@Nullable @NonNls String s, ConvertContext context) {
+    if (StringUtil.isEmptyOrSpaces(s)) {
+      return null;
     }
 
-
-    @Nullable
-    @Override
-    public String toString(@Nullable PsiClass psiClass, ConvertContext context) {
-        return delegate.toString(psiClass, context);
+    // 识别别名
+    if (!s.contains(MyBatisUtils.DOT_SEPARATOR)) {
+      return AliasFacade.getInstance(context.getProject())
+        .findPsiClass(context.getXmlElement(), s)
+        .orElse(null);
     }
+    // 根据全程查找
+    return DomJavaUtil.findClass(s, context.getFile(), context.getModule(), GlobalSearchScope.allScope(context.getProject()));
+  }
 
-    @NotNull
-    @Override
-    public PsiReference[] createReferences(GenericDomValue<PsiClass> value, PsiElement element, ConvertContext context) {
-        if (notAlias((XmlAttributeValue) element)) {
-            return delegate.createReferences(value, element, context);
-        } else {
-            return new PsiReference[]{new AliasClassReference((XmlAttributeValue) element)};
-        }
-    }
 
-    private boolean notAlias(XmlAttributeValue element) {
-        return element.getValue().contains(MyBatisUtils.DOT_SEPARATOR);
+  @Nullable
+  @Override
+  public String toString(@Nullable PsiClass psiClass, ConvertContext context) {
+    return delegate.toString(psiClass, context);
+  }
+
+  @NotNull
+  @Override
+  public PsiReference[] createReferences(GenericDomValue<PsiClass> value, PsiElement element, ConvertContext context) {
+    if (notAlias((XmlAttributeValue) element)) {
+      return delegate.createReferences(value, element, context);
+    } else {
+      return new PsiReference[]{new AliasClassReference((XmlAttributeValue) element)};
     }
+  }
+
+  private boolean notAlias(XmlAttributeValue element) {
+    return element.getValue().contains(MyBatisUtils.DOT_SEPARATOR);
+  }
 
 
 }

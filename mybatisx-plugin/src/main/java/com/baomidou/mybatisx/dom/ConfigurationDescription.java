@@ -10,15 +10,15 @@ import com.intellij.util.xml.DomFileDescription;
  */
 public class ConfigurationDescription extends DomFileDescription<Configuration> {
 
-    /**
-     * Instantiates a new Configuration description.
-     */
-    public ConfigurationDescription() {
-        super(Configuration.class, "configuration");
-    }
+  /**
+   * Instantiates a new Configuration description.
+   */
+  public ConfigurationDescription() {
+    super(Configuration.class, "configuration");
+  }
 
-    @Override
-    protected void initializeFileDescription() {
-        registerNamespacePolicy("MybatisConfiguration", "-//mybatis.org//DTD Config 3.0//EN", "http://mybatis.org/dtd/mybatis-3-config.dtd");
-    }
+  @Override
+  protected void initializeFileDescription() {
+    registerNamespacePolicy("MybatisConfiguration", "-//mybatis.org//DTD Config 3.0//EN", "http://mybatis.org/dtd/mybatis-3-config.dtd");
+  }
 }

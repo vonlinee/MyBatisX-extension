@@ -10,21 +10,21 @@ import com.intellij.util.xml.*;
  */
 public interface IdDomElement extends DomElement {
 
-    /**
-     * Gets id.
-     *
-     * @return the id
-     */
-    @Required
-    @NameValue
-    @Attribute("id")
-    @Convert(DaoMethodConverter.class)
-    GenericAttributeValue<Object> getId();
+  /**
+   * Gets id.
+   *
+   * @return the id
+   */
+  @Required
+  @NameValue
+  @Attribute("id")
+  @Convert(DaoMethodConverter.class)
+  GenericAttributeValue<Object> getId();
 
-    /**
-     * Sets value.
-     *
-     * @param content the content
-     */
-    void setValue(String content);
+  /**
+   * Sets value.
+   *
+   * @param content the content
+   */
+  void setValue(String content);
 }

@@ -13,9 +13,9 @@ import com.intellij.codeInspection.ProblemDescriptor;
  */
 public abstract class MapperInspection extends AbstractBaseJavaLocalInspectionTool {
 
-    /**
-     * The constant EMPTY_ARRAY.
-     */
-    public static final ProblemDescriptor[] EMPTY_ARRAY = new ProblemDescriptor[0];
+  /**
+   * The constant EMPTY_ARRAY.
+   */
+  public static final ProblemDescriptor[] EMPTY_ARRAY = new ProblemDescriptor[0];
 
 }

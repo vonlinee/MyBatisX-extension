@@ -10,13 +10,13 @@ import java.util.LinkedList;
  */
 public interface SuffixOperator {
 
-    /**
-     * Gets template text.
-     *
-     * @param fieldName             the field name
-     * @param parameters            the parameters
-     * @param conditionFieldWrapper
-     * @return the template text
-     */
-    String getTemplateText(String fieldName, LinkedList<TxParameter> parameters, ConditionFieldWrapper conditionFieldWrapper);
+  /**
+   * Gets template text.
+   *
+   * @param fieldName             the field name
+   * @param parameters            the parameters
+   * @param conditionFieldWrapper
+   * @return the template text
+   */
+  String getTemplateText(String fieldName, LinkedList<TxParameter> parameters, ConditionFieldWrapper conditionFieldWrapper);
 }

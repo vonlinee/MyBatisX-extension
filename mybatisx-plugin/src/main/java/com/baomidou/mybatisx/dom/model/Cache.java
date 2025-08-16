@@ -12,12 +12,12 @@ import java.util.List;
  */
 public interface Cache extends DomElement {
 
-    /**
-     * Gets properties.
-     *
-     * @return the properties
-     */
-    @SubTagList("property")
-    List<Property> getProperties();
+  /**
+   * Gets properties.
+   *
+   * @return the properties
+   */
+  @SubTagList("property")
+  List<Property> getProperties();
 
 }

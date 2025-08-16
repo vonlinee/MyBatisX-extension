@@ -21,27 +21,27 @@ import java.util.Objects;
  */
 public class ResultMapConverter extends IdBasedTagConverter {
 
-    @NotNull
-    @Override
-    public Collection<? extends IdDomElement> getComparisons(@Nullable Mapper mapper, ConvertContext context) {
-        if (mapper == null) {
-            return Collections.emptyList();
-        }
-        DomElement invocationElement = context.getInvocationElement();
-        if (isContextElementOfResultMap(mapper, invocationElement)) {
-            return doFilterResultMapItself(mapper, (ResultMap) invocationElement.getParent());
-        } else {
-            return mapper.getResultMaps();
-        }
+  @NotNull
+  @Override
+  public Collection<? extends IdDomElement> getComparisons(@Nullable Mapper mapper, ConvertContext context) {
+    if (mapper == null) {
+      return Collections.emptyList();
     }
+    DomElement invocationElement = context.getInvocationElement();
+    if (isContextElementOfResultMap(mapper, invocationElement)) {
+      return doFilterResultMapItself(mapper, (ResultMap) invocationElement.getParent());
+    } else {
+      return mapper.getResultMaps();
+    }
+  }
 
-    private boolean isContextElementOfResultMap(Mapper mapper, DomElement invocationElement) {
-        return MapperUtils.isMapperWithSameNamespace(MapperUtils.getMapper(invocationElement), mapper)
-               && invocationElement.getParent() instanceof ResultMap;
-    }
+  private boolean isContextElementOfResultMap(Mapper mapper, DomElement invocationElement) {
+    return MapperUtils.isMapperWithSameNamespace(MapperUtils.getMapper(invocationElement), mapper)
+           && invocationElement.getParent() instanceof ResultMap;
+  }
 
-    private Collection<? extends IdDomElement> doFilterResultMapItself(Mapper mapper, final ResultMap resultMap) {
-        return Collections2.filter(mapper.getResultMaps(), input -> !Objects.equals(MapperUtils.getId(input), MapperUtils.getId(resultMap)));
-    }
+  private Collection<? extends IdDomElement> doFilterResultMapItself(Mapper mapper, final ResultMap resultMap) {
+    return Collections2.filter(mapper.getResultMaps(), input -> !Objects.equals(MapperUtils.getId(input), MapperUtils.getId(resultMap)));
+  }
 
 }

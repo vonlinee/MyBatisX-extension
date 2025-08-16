@@ -12,38 +12,38 @@ import javax.swing.tree.MutableTreeNode;
 @Getter
 public class DataTypeMappingNode extends DefaultMutableTreeNode {
 
-    @Nullable
-    DataTypeMappingItem item;
+  @Nullable
+  DataTypeMappingItem item;
 
-    public DataTypeMappingNode() {
-    }
+  public DataTypeMappingNode() {
+  }
 
-    public DataTypeMappingNode(@Nullable DataTypeMappingItem item) {
-        this.item = item;
-    }
+  public DataTypeMappingNode(@Nullable DataTypeMappingItem item) {
+    this.item = item;
+  }
 
-    public String getGroup() {
-        return item == null ? null : item.getGroup();
-    }
+  public String getGroup() {
+    return item == null ? null : item.getGroup();
+  }
 
-    public String getIdentifier() {
-        return item == null ? null : item.getIdentifier();
-    }
+  public String getIdentifier() {
+    return item == null ? null : item.getIdentifier();
+  }
 
-    public String getAnotherGroup() {
-        return item == null ? null : item.getAnotherGroup();
-    }
+  public String getAnotherGroup() {
+    return item == null ? null : item.getAnotherGroup();
+  }
 
-    public String getAnotherIdentifier() {
-        return item == null ? null : item.getAnotherIdentifier();
-    }
+  public String getAnotherIdentifier() {
+    return item == null ? null : item.getAnotherIdentifier();
+  }
 
-    public void add(DataTypeMappingNode newChild) {
-        super.add(newChild);
-    }
+  public void add(DataTypeMappingNode newChild) {
+    super.add(newChild);
+  }
 
-    @Override
-    public void add(MutableTreeNode newChild) {
-        super.add(newChild);
-    }
+  @Override
+  public void add(MutableTreeNode newChild) {
+    super.add(newChild);
+  }
 }

@@ -9,10 +9,10 @@ import java.util.Optional;
  * The interface Append type command.
  */
 public interface AppendTypeCommand {
-    /**
-     * Execute optional.
-     *
-     * @return the optional
-     */
-    Optional<SyntaxAppender> execute();
+  /**
+   * Execute optional.
+   *
+   * @return the optional
+   */
+  Optional<SyntaxAppender> execute();
 }
