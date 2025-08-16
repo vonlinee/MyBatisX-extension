@@ -1,12 +1,12 @@
 package com.baomidou.mybatisx.plugin.ui.components;
 
 import com.baomidou.mybatisx.feat.bean.TemplateInfo;
-import com.baomidou.mybatisx.plugin.component.CodeArea;
-import com.baomidou.mybatisx.plugin.component.SplitPane;
-import com.baomidou.mybatisx.plugin.component.TabPane;
-import com.baomidou.mybatisx.plugin.component.TreeModel;
-import com.baomidou.mybatisx.plugin.component.TreeView;
-import com.baomidou.mybatisx.plugin.component.VBox;
+import com.baomidou.mybatisx.plugin.components.CodeArea;
+import com.baomidou.mybatisx.plugin.components.SplitPane;
+import com.baomidou.mybatisx.plugin.components.TabPane;
+import com.baomidou.mybatisx.plugin.components.TreeModel;
+import com.baomidou.mybatisx.plugin.components.TreeView;
+import com.baomidou.mybatisx.plugin.components.VBox;
 import com.baomidou.mybatisx.plugin.setting.TemplatesSettings;
 import com.baomidou.mybatisx.util.FileUtils;
 import com.intellij.ide.fileTemplates.impl.FileTemplateConfigurable;

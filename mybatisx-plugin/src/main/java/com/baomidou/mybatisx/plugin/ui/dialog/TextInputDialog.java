@@ -1,6 +1,6 @@
 package com.baomidou.mybatisx.plugin.ui.dialog;
 
-import com.baomidou.mybatisx.plugin.component.BorderPane;
+import com.baomidou.mybatisx.plugin.components.BorderPane;
 import com.intellij.openapi.project.Project;
 import com.intellij.ui.components.JBTextArea;
 import org.jetbrains.annotations.Nullable;

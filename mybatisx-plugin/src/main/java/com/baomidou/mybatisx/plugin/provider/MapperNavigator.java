@@ -10,8 +10,18 @@ import javax.swing.*;
 
 public interface MapperNavigator {
 
+  /**
+   * 显示的图标
+   *
+   * @return 图标
+   */
   Icon getIcon();
 
+  /**
+   * 显示的文本
+   *
+   * @return 显示的文本
+   */
   String getDisplayText();
 
   void navigate(Project project, MapperStatementItem item);

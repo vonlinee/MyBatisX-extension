@@ -1,9 +1,9 @@
 package com.baomidou.mybatisx.plugin.setting;
 
 import com.baomidou.mybatisx.feat.bean.TemplateInfo;
-import com.baomidou.mybatisx.feat.generate.dto.TemplateContext;
-import com.baomidou.mybatisx.feat.generate.dto.TemplateSettingDTO;
-import com.baomidou.mybatisx.feat.generate.setting.DefaultSettingsConfig;
+import com.baomidou.mybatisx.feat.mybatis.generator.dto.TemplateContext;
+import com.baomidou.mybatisx.feat.mybatis.generator.dto.TemplateSettingDTO;
+import com.baomidou.mybatisx.feat.mybatis.generator.setting.DefaultSettingsConfig;
 import com.baomidou.mybatisx.util.IntellijSDK;
 import com.baomidou.mybatisx.util.MyBatisXPlugin;
 import com.intellij.openapi.components.PersistentStateComponent;

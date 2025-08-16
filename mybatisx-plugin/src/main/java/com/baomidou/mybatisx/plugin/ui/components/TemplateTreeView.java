@@ -1,8 +1,8 @@
 package com.baomidou.mybatisx.plugin.ui.components;
 
 import com.baomidou.mybatisx.feat.bean.TemplateInfo;
-import com.baomidou.mybatisx.plugin.component.TreeModel;
-import com.baomidou.mybatisx.plugin.component.TreeView;
+import com.baomidou.mybatisx.plugin.components.TreeModel;
+import com.baomidou.mybatisx.plugin.components.TreeView;
 import com.intellij.ui.AnActionButtonRunnable;
 import com.intellij.util.ui.EditableTreeModel;
 

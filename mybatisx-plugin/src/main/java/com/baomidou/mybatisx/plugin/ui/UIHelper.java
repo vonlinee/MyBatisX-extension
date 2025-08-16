@@ -41,8 +41,8 @@ public final class UIHelper {
     component.setBorder(JBUI.Borders.empty(topLeftBottomRight, topLeftBottomRight, topLeftBottomRight, topLeftBottomRight));
   }
 
-  public static void setEmptyBorder(JButton button) {
-    button.setBorder(BorderFactory.createEmptyBorder());
+  public static void setEmptyBorder(JComponent component) {
+    component.setBorder(BorderFactory.createEmptyBorder());
   }
 
   public static Icon getIcon(String name) {
@@ -75,6 +75,12 @@ public final class UIHelper {
     return button;
   }
 
+  /**
+   * 获取编辑器提交的文本
+   *
+   * @param e 事件
+   * @return 文本
+   */
   public static String getCellEditorStringValue(@NotNull ChangeEvent e) {
     Object source = e.getSource();
     DefaultCellEditor editor = (DefaultCellEditor) source;

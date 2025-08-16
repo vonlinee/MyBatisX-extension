@@ -2,11 +2,11 @@ package com.baomidou.mybatisx.plugin.ui.components;
 
 import com.baomidou.mybatisx.model.DataTypeSet;
 import com.baomidou.mybatisx.model.DataTypeSystem;
-import com.baomidou.mybatisx.plugin.component.LabeledListCellRenderer;
-import com.baomidou.mybatisx.plugin.component.ListView;
-import com.baomidou.mybatisx.plugin.component.SplitPane;
-import com.baomidou.mybatisx.plugin.component.TextFieldListCellRenderer;
-import com.baomidou.mybatisx.plugin.component.TitledListPane;
+import com.baomidou.mybatisx.plugin.components.LabeledListCellRenderer;
+import com.baomidou.mybatisx.plugin.components.ListView;
+import com.baomidou.mybatisx.plugin.components.SplitPane;
+import com.baomidou.mybatisx.plugin.components.TextFieldListCellRenderer;
+import com.baomidou.mybatisx.plugin.components.TitledListPane;
 import com.baomidou.mybatisx.plugin.ui.dialog.SingleValueEditorDialog;
 import com.baomidou.mybatisx.util.StringUtils;
 import com.intellij.ui.AnActionButton;

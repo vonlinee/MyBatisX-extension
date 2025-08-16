@@ -3,7 +3,6 @@ package com.baomidou.mybatisx.service;
 import com.baomidou.mybatisx.plugin.actions.Bean2DDLAction;
 import com.baomidou.mybatisx.feat.bean.Field;
 import com.baomidou.mybatisx.plugin.setting.OtherSetting;
-import com.baomidou.mybatisx.util.BaseUtil;
 import com.baomidou.mybatisx.util.CollectionUtils;
 import com.baomidou.mybatisx.util.PsiUtils;
 import com.baomidou.mybatisx.util.StringUtils;
@@ -57,7 +56,7 @@ public final class BeanSqlService {
     // return PsiLiteralUtil.getStringLiteralContent(((PsiLiteralExpressionImpl) name));
     // 低版本兼容
     // return ((PsiLiteralExpressionImpl) name).getInnerText();
-    String tableName = BaseUtil.getStringLiteralContent(((PsiLiteralExpressionImpl) value));
+    String tableName = PsiUtils.getStringLiteralContent(((PsiLiteralExpressionImpl) value));
     return StringUtils.isNotBlank(tableName) ? tableName : getTableNameFromClass(currentClass);
   }
 

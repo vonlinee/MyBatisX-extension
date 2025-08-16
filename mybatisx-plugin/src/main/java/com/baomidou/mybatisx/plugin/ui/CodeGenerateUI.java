@@ -1,11 +1,11 @@
 package com.baomidou.mybatisx.plugin.ui;
 
-import com.baomidou.mybatisx.feat.generate.DomainPlaceHolder;
-import com.baomidou.mybatisx.feat.generate.dto.DomainInfo;
-import com.baomidou.mybatisx.feat.generate.dto.GenerateConfig;
-import com.baomidou.mybatisx.feat.generate.dto.ModuleInfoGo;
-import com.baomidou.mybatisx.feat.generate.dto.TemplateAnnotationType;
-import com.baomidou.mybatisx.feat.generate.dto.TemplateSettingDTO;
+import com.baomidou.mybatisx.feat.mybatis.generator.DomainPlaceHolder;
+import com.baomidou.mybatisx.feat.mybatis.generator.dto.DomainInfo;
+import com.baomidou.mybatisx.feat.mybatis.generator.dto.GenerateConfig;
+import com.baomidou.mybatisx.feat.mybatis.generator.dto.ModuleInfoGo;
+import com.baomidou.mybatisx.feat.mybatis.generator.dto.TemplateAnnotationType;
+import com.baomidou.mybatisx.feat.mybatis.generator.dto.TemplateSettingDTO;
 import com.baomidou.mybatisx.util.StringUtils;
 import com.intellij.openapi.actionSystem.ActionToolbarPosition;
 import com.intellij.openapi.actionSystem.AnActionEvent;

@@ -1,8 +1,8 @@
 package com.baomidou.mybatisx.plugin.ui.dialog;
 
 import com.baomidou.mybatisx.model.DataTypeSystem;
-import com.baomidou.mybatisx.plugin.component.HBox;
-import com.baomidou.mybatisx.plugin.component.SimpleComboBox;
+import com.baomidou.mybatisx.plugin.components.HBox;
+import com.baomidou.mybatisx.plugin.components.SimpleComboBox;
 import com.baomidou.mybatisx.plugin.setting.DataTypeSettings;
 import com.baomidou.mybatisx.plugin.ui.components.DataTypeMappingItem;
 import org.jetbrains.annotations.NotNull;

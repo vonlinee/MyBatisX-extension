@@ -1,6 +1,6 @@
 package com.baomidou.mybatisx.model;
 
-import com.baomidou.mybatisx.plugin.component.ComboBoxItem;
+import com.baomidou.mybatisx.plugin.components.ComboBoxItem;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 

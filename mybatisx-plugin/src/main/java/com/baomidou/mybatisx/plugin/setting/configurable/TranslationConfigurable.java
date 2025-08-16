@@ -2,7 +2,6 @@ package com.baomidou.mybatisx.plugin.setting.configurable;
 
 import com.baomidou.mybatisx.feat.bean.TranslationAppComboBoxItem;
 import com.baomidou.mybatisx.feat.ddl.TranslationAppEnum;
-import com.baomidou.mybatisx.plugin.component.ComboBoxItem;
 import com.baomidou.mybatisx.plugin.setting.OtherSetting;
 import com.baomidou.mybatisx.plugin.ui.TranslationSettingPanel;
 import com.baomidou.mybatisx.util.StringUtils;
@@ -33,9 +32,9 @@ public final class TranslationConfigurable extends SearchableConfigurableBase {
       String.valueOf(settingPanel.getAutoTranslationRadio().isSelected()))) {
       return true;
     }
-    ComboBoxItem appComboBox = (ComboBoxItem) settingPanel.getTranslationAppComboBox().getSelectedItem();
-    assert appComboBox != null;
-    if (!StringUtils.equals(myProperties.getTranslationAppComboBox(), String.valueOf(appComboBox.getValue()))) {
+    TranslationAppEnum appEnum = settingPanel.getTranslationAppComboBox().getSelectedItem();
+    assert appEnum != null;
+    if (!StringUtils.equals(myProperties.getTranslationAppComboBox(), String.valueOf(appEnum.getValue()))) {
       return true;
     }
     if (!StringUtils.equals(myProperties.getAppIdText(), settingPanel.getAppIdText().getText())) {
@@ -58,7 +57,7 @@ public final class TranslationConfigurable extends SearchableConfigurableBase {
     myProperties.setSecretText(settingPanel.getSecretText().getText());
     myProperties.setSecretId(settingPanel.getSecretId().getText());
     myProperties.setSecretKey(settingPanel.getSecretKey().getText());
-    ComboBoxItem appComboBox = (ComboBoxItem) settingPanel.getTranslationAppComboBox().getSelectedItem();
+    TranslationAppEnum appComboBox = settingPanel.getTranslationAppComboBox().getSelectedItem();
     assert appComboBox != null;
     myProperties.setTranslationAppComboBox(String.valueOf(appComboBox.getValue()));
   }

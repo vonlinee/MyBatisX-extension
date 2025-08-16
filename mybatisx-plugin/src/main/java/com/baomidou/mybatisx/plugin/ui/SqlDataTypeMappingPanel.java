@@ -2,7 +2,7 @@ package com.baomidou.mybatisx.plugin.ui;
 
 import com.baomidou.mybatisx.feat.bean.SqlTypeComboBoxItem;
 import com.baomidou.mybatisx.feat.ddl.SqlTypeEnum;
-import com.baomidou.mybatisx.plugin.component.ComboBoxItem;
+import com.baomidou.mybatisx.plugin.components.ComboBoxItem;
 import com.baomidou.mybatisx.plugin.setting.OtherSetting;
 import com.baomidou.mybatisx.service.BaseTypeItemListener;
 import com.baomidou.mybatisx.util.IntellijSDK;

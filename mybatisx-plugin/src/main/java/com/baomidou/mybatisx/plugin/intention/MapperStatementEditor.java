@@ -1,9 +1,8 @@
 package com.baomidou.mybatisx.plugin.intention;
 
-import com.baomidou.mybatisx.feat.mybatis.DefaultMappedStatementSqlBuilder;
-import com.baomidou.mybatisx.feat.mybatis.MappedStatementSqlBuilder;
 import com.baomidou.mybatisx.util.IntellijSDK;
 import com.baomidou.mybatisx.util.PsiUtils;
+import com.baomidou.mybatisx.util.SqlUtils;
 import com.baomidou.mybatisx.util.StringUtils;
 import com.intellij.ide.fileTemplates.impl.FileTemplateHighlighter;
 import com.intellij.ide.highlighter.XmlFileType;
@@ -14,13 +13,10 @@ import com.intellij.openapi.editor.EditorFactory;
 import com.intellij.openapi.editor.EditorSettings;
 import com.intellij.openapi.editor.colors.EditorColorsManager;
 import com.intellij.openapi.editor.colors.EditorColorsScheme;
-import com.intellij.openapi.editor.event.DocumentEvent;
-import com.intellij.openapi.editor.event.DocumentListener;
 import com.intellij.openapi.editor.ex.EditorEx;
 import com.intellij.openapi.editor.ex.util.LayerDescriptor;
 import com.intellij.openapi.editor.ex.util.LayeredLexerEditorHighlighter;
 import com.intellij.openapi.editor.highlighter.EditorHighlighter;
-import com.intellij.openapi.editor.impl.EditorImpl;
 import com.intellij.openapi.fileTypes.PlainSyntaxHighlighter;
 import com.intellij.openapi.fileTypes.SyntaxHighlighter;
 import com.intellij.openapi.fileTypes.SyntaxHighlighterFactory;
@@ -36,14 +32,18 @@ import com.intellij.ui.HorizontalScrollBarEditorCustomization;
 import com.intellij.ui.LanguageTextField;
 import lombok.Setter;
 import org.apache.ibatis.builder.Configuration;
+import org.apache.ibatis.mapping.BoundSql;
 import org.apache.ibatis.mapping.InlineResultMap;
 import org.apache.ibatis.mapping.MappedStatement;
 import org.apache.ibatis.mapping.ParameterMapping;
+import org.apache.ibatis.mapping.ParameterMode;
 import org.apache.ibatis.mapping.ResultMap;
+import org.apache.ibatis.reflection.ParamNameResolver;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.mybatisx.extension.agent.mybatis.XmlStatementParser;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -54,11 +54,7 @@ import java.util.Objects;
  */
 public class MapperStatementEditor extends LanguageTextField {
 
-  private XmlDocument mapperFileDocument;
-  private boolean myModified = false;
   private XmlFile mapperFile;
-
-  private XmlTag mapperStatementXmlTag;
 
   @Setter
   private String namespace;
@@ -89,13 +85,14 @@ public class MapperStatementEditor extends LanguageTextField {
     editorSettings.setAdditionalLinesCount(3);
     editorSettings.setCaretRowShown(false);
 
+    /*
     editor.getDocument().addDocumentListener(new DocumentListener() {
       @Override
       public void documentChanged(@NotNull DocumentEvent e) {
         myModified = true;
       }
     }, ((EditorImpl) editor).getDisposable());
-
+    */
     // editor.setHighlighter(createHighlighter());
 
     return editor;
@@ -126,7 +123,6 @@ public class MapperStatementEditor extends LanguageTextField {
    */
   public void updateStatement(@NotNull XmlTag statement) {
     this.mapperFile = (XmlFile) statement.getContainingFile();
-    this.mapperFileDocument = mapperFile.getDocument();
     String resource = PsiUtils.getPathOfContainingFile(statement);
     IntellijSDK.invoke(() -> {
       String text = XmlStatementParser.getString(resource, statement.getAttributeValue("id"));
@@ -225,15 +221,41 @@ public class MapperStatementEditor extends LanguageTextField {
    *
    * @return 可执行的sql
    */
-  public String computeSql(Map<String, Object> params) {
+  public String computeSql(Map<String, Object> params, boolean inline) {
     String mapperStatement = this.getText();
     String sql = null;
     if (StringUtils.hasText(mapperStatement)) {
+      ParamNameResolver.wrapToMapIfCollection(params, null);
       MappedStatement mappedStatement = parseMappedStatement(this.namespace, mapperStatement);
-      MappedStatementSqlBuilder mappedStatementSqlBuilder = new DefaultMappedStatementSqlBuilder();
-      sql = mappedStatementSqlBuilder.build(mappedStatement, params);
+      if (inline) {
+        sql = computeSql(mappedStatement, params);
+      } else {
+        sql = mappedStatement.getSqlSource().getBoundSql(params).getSql();
+      }
     }
     return sql;
+  }
+
+  private String computeSql(MappedStatement mappedStatement, Object parameterObject) {
+    BoundSql boundSql = mappedStatement.getBoundSql(parameterObject);
+    List<String> paramItems = new ArrayList<>();
+    List<ParameterMapping> parameterMappings = boundSql.getParameterMappings();
+    if (parameterMappings != null) {
+      for (ParameterMapping parameterMapping : parameterMappings) {
+        if (parameterMapping.getMode() != ParameterMode.OUT) {
+          Object value = parameterMapping.getValue();
+          if (value == null) {
+            paramItems.add("null");
+          } else {
+            paramItems.add(value + "(" + value.getClass().getSimpleName() + ")");
+          }
+        }
+      }
+    }
+    String log = "==>  Preparing: " + boundSql.getSql().replace("\n", " ");
+    log += "\n";
+    log += "==> Parameters: " + StringUtils.join(paramItems, ",");
+    return SqlUtils.parseExecutableSql(log);
   }
 
   /**
@@ -250,7 +272,6 @@ public class MapperStatementEditor extends LanguageTextField {
         if (resultMaps.containsKey(id)) {
           return super.getResultMap(id);
         }
-        // resultMap is not necessary
         // TODO 换种更好的方式
         return new InlineResultMap("", Object.class);
       }

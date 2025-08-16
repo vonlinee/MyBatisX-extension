@@ -1,10 +1,10 @@
 package com.baomidou.mybatisx.plugin.ui.components;
 
 import com.baomidou.mybatisx.model.DataTypeMappingSystem;
-import com.baomidou.mybatisx.plugin.component.DecoratedTableView;
-import com.baomidou.mybatisx.plugin.component.DefaultListTableModel;
-import com.baomidou.mybatisx.plugin.component.TablePane;
-import com.baomidou.mybatisx.plugin.component.TableView;
+import com.baomidou.mybatisx.plugin.components.DecoratedTableView;
+import com.baomidou.mybatisx.plugin.components.DefaultListTableModel;
+import com.baomidou.mybatisx.plugin.components.TablePane;
+import com.baomidou.mybatisx.plugin.components.TableView;
 import com.baomidou.mybatisx.plugin.ui.dialog.DataTypeMappingUpdateDialog;
 import com.baomidou.mybatisx.util.StringUtils;
 import com.intellij.ui.AnActionButton;

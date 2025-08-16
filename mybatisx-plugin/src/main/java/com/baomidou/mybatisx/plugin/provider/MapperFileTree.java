@@ -1,15 +1,14 @@
 package com.baomidou.mybatisx.plugin.provider;
 
-import com.baomidou.mybatisx.plugin.component.Label;
-import com.baomidou.mybatisx.plugin.component.ScrollPane;
-import com.baomidou.mybatisx.plugin.component.TreeModel;
-import com.baomidou.mybatisx.plugin.component.TreeView;
+import com.baomidou.mybatisx.plugin.components.Label;
+import com.baomidou.mybatisx.plugin.components.ScrollPane;
+import com.baomidou.mybatisx.plugin.components.TreeModel;
+import com.baomidou.mybatisx.plugin.components.TreeView;
 import com.baomidou.mybatisx.util.ObjectUtils;
 import com.intellij.openapi.fileChooser.tree.FileTreeModel;
 import com.intellij.psi.PsiElement;
 import com.intellij.ui.AnActionButton;
 import com.intellij.ui.AnActionButtonRunnable;
-import com.intellij.ui.JBSplitter;
 import com.intellij.ui.render.LabelBasedRenderer;
 import com.intellij.util.containers.ArrayListSet;
 import com.intellij.util.containers.MultiMap;

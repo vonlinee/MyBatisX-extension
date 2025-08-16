@@ -1,6 +1,6 @@
 package com.baomidou.mybatisx.plugin.ui.components;
 
-import com.baomidou.mybatisx.plugin.component.JBTreeTableView;
+import com.baomidou.mybatisx.plugin.components.TreeTableView;
 import com.intellij.ui.treeStructure.treetable.ListTreeTableModelOnColumns;
 import com.intellij.ui.treeStructure.treetable.TreeTableModel;
 import com.intellij.util.ui.ColumnInfo;
@@ -21,7 +21,7 @@ import java.util.Date;
  *
  * @see com.intellij.openapi.vfs.encoding.FileEncodingConfigurable
  */
-public class DataTypeTreeTable extends JBTreeTableView<DataTypeItem> {
+public class DataTypeTreeTable extends TreeTableView<DataTypeItem> {
 
   DataTypeNode root;
 

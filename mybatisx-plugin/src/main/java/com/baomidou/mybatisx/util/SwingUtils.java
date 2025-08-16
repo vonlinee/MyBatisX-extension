@@ -60,6 +60,25 @@ public class SwingUtils {
     column.setWidth(width);
   }
 
+  /**
+   * 设置固定宽度
+   *
+   * @param table       表格
+   * @param columnIndex 列索引
+   * @param width       列宽度
+   */
+  public static void setFixedWidth(JTable table, int columnIndex, int width) {
+    int columnCount = table.getColumnCount();
+    if (columnIndex < 0 || columnCount <= columnIndex) {
+      return;
+    }
+    TableColumn column = table.getColumnModel().getColumn(columnIndex);
+    column.setMinWidth(width);
+    column.setMaxWidth(width);
+    column.setWidth(width);
+    column.setPreferredWidth(width);
+  }
+
   public static Dimension getScreenBasedDimension(double wr, double hr) {
     Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
     return new Dimension((int) (screenSize.getWidth() * wr), (int) (screenSize.getHeight() * hr));
@@ -173,5 +192,10 @@ public class SwingUtils {
     for (int i = 0; i < tree.getRowCount(); i++) {
       tree.expandRow(i);
     }
+  }
+
+  public static void wrapFilterBox() {
+    Box box = Box.createHorizontalBox();
+    box.add(new Box.Filler(new Dimension(100, 0), new Dimension(200, 0), new Dimension(Short.MAX_VALUE, 0)));
   }
 }

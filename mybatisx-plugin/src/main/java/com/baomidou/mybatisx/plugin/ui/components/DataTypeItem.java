@@ -1,6 +1,6 @@
 package com.baomidou.mybatisx.plugin.ui.components;
 
-import com.baomidou.mybatisx.plugin.component.ComboBoxItem;
+import com.baomidou.mybatisx.plugin.components.ComboBoxItem;
 import lombok.Getter;
 import lombok.Setter;
 import org.jetbrains.annotations.NotNull;

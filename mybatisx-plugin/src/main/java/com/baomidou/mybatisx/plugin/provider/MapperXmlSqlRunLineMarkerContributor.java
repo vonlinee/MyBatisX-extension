@@ -1,29 +1,22 @@
 package com.baomidou.mybatisx.plugin.provider;
 
-import com.baomidou.mybatisx.plugin.component.SplitPane;
+import com.baomidou.mybatisx.plugin.components.BorderPane;
 import com.baomidou.mybatisx.plugin.intention.MyBatisSqlPreviewDialog;
 import com.baomidou.mybatisx.util.Icons;
-import com.baomidou.mybatisx.util.IntellijSDK;
 import com.baomidou.mybatisx.util.MyBatisUtils;
 import com.intellij.execution.lineMarker.RunLineMarkerContributor;
 import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.project.DumbAware;
 import com.intellij.openapi.project.Project;
-import com.intellij.openapi.wm.ToolWindow;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.xml.XmlElement;
 import com.intellij.psi.xml.XmlFile;
 import com.intellij.psi.xml.XmlTag;
-import com.intellij.ui.content.Content;
-import com.intellij.ui.content.ContentManager;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import javax.swing.*;
-import java.awt.*;
-import java.awt.event.InputEvent;
-import java.awt.event.MouseEvent;
 
 public class MapperXmlSqlRunLineMarkerContributor extends RunLineMarkerContributor {
 
@@ -59,7 +52,7 @@ public class MapperXmlSqlRunLineMarkerContributor extends RunLineMarkerContribut
         return null;
       }
       final String statementId = getStatementId(element);
-      return new Info(Icons.GUTTER_RUN_ICON_OLD, element1 -> statementId, new LineMarkIconAction(statementId, element));
+      return new Info(Icons.GUTTER_RUN_ICON_OLD, element1 -> statementId, new LineMarkIconAction(statementId, (XmlTag) element));
     }
     return null;
   }
@@ -67,10 +60,10 @@ public class MapperXmlSqlRunLineMarkerContributor extends RunLineMarkerContribut
   private static class LineMarkIconAction extends AnAction implements DumbAware {
 
     private final String statementId;
-    private final PsiElement element;
+    private final XmlTag element;
     private final String fileName;
 
-    public LineMarkIconAction(String statementId, PsiElement element) {
+    public LineMarkIconAction(String statementId, XmlTag element) {
       this.statementId = statementId;
       this.element = element;
       this.fileName = element.getContainingFile().getName();
@@ -81,72 +74,27 @@ public class MapperXmlSqlRunLineMarkerContributor extends RunLineMarkerContribut
       if (e.getProject() == null) {
         return;
       }
-
-      InputEvent inputEvent = e.getInputEvent();
-      if (inputEvent instanceof MouseEvent) {
-        String namespace = MyBatisUtils.getNamespace(element);
-        MyBatisSqlPreviewDialog dialog = new MyBatisSqlPreviewDialog(e.getProject(), namespace, (XmlTag) element);
-        dialog.show();
-        dialog.initUI();
-        return;
-      }
-
-      ToolWindow toolWindow = IntellijSDK.getToolWindow(e.getProject(), MyBatisToolWindowView.NAME);
-      if (toolWindow == null) {
-        return;
-      }
-      ContentManager contentManager = toolWindow.getContentManager();
-
-      final int contentCount = contentManager.getContentCount();
-      if (contentCount == 1) {
-        // Statement
-        Content content = contentManager.getFactory().createContent(createContentPanel(element), "Statements", false);
-        content.setCloseable(false);
-        contentManager.addContent(content);
-        contentManager.setSelectedContent(content);
-      } else {
-        //
-        Content content = contentManager.getContent(1);
-        if (content != null) {
-          StatementPanel statementPanel = (StatementPanel) content.getComponent();
-          statementPanel.fileTree.addStatement(element);
-        }
-      }
-
-      if (toolWindow.isVisible()) {
-        toolWindow.show();
-      } else {
-        toolWindow.activate(() -> {
-        });
-      }
+      String namespace = MyBatisUtils.getNamespace(element);
+      MyBatisSqlPreviewDialog dialog = new MyBatisSqlPreviewDialog(e.getProject(), namespace, element);
+      dialog.show();
     }
 
     @Nullable
     private JComponent createContentPanel(PsiElement element) {
       if (element instanceof XmlTag) {
-        StatementPanel statementPanel = new StatementPanel(element.getProject());
-        statementPanel.fileTree.addStatement(element);
-        return statementPanel;
+        return new StatementPanel(element.getProject());
       }
       return null;
     }
   }
 
-  static class StatementPanel extends SplitPane {
+  static class StatementPanel extends BorderPane {
 
-    MapperFileTree fileTree;
     SqlPreviewPanel previewPanel;
 
-
     public StatementPanel(Project project) {
-
-      fileTree = new MapperFileTree();
-      fileTree.setPreferredSize(new Dimension(200, 400));
-
       previewPanel = new SqlPreviewPanel(project);
-
-      this.setLeftComponent(fileTree);
-      this.setRightComponent(previewPanel);
+      this.setCenter(previewPanel);
     }
   }
 }

@@ -26,7 +26,6 @@ public class MapperStatementRunnerNavigator implements MapperNavigator {
   public void navigate(Project project, MapperStatementItem item) {
     MyBatisSqlPreviewDialog dialog = new MyBatisSqlPreviewDialog(project, item.getNamespace(), (XmlTag) item.getElement().getParent());
     dialog.show();
-    dialog.initUI();
   }
 
   @Override

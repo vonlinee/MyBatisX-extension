@@ -2,9 +2,9 @@ package com.baomidou.mybatisx.plugin.ui.components;
 
 import com.baomidou.mybatisx.model.DataTypeMappingSystem;
 import com.baomidou.mybatisx.model.DataTypeSystem;
-import com.baomidou.mybatisx.plugin.component.BorderPane;
-import com.baomidou.mybatisx.plugin.component.HBox;
-import com.baomidou.mybatisx.plugin.component.SimpleComboBox;
+import com.baomidou.mybatisx.plugin.components.BorderPane;
+import com.baomidou.mybatisx.plugin.components.HBox;
+import com.baomidou.mybatisx.plugin.components.SimpleComboBox;
 import com.baomidou.mybatisx.util.CollectionUtils;
 
 import java.awt.event.ItemEvent;

@@ -1,6 +1,6 @@
 package com.baomidou.mybatisx.plugin.ui.components;
 
-import com.baomidou.mybatisx.plugin.component.TabPane;
+import com.baomidou.mybatisx.plugin.components.TabPane;
 import com.baomidou.mybatisx.plugin.setting.DataTypeSettings;
 
 /**

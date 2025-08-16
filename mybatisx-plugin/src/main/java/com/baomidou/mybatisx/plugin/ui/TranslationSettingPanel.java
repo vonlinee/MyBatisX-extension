@@ -2,8 +2,8 @@ package com.baomidou.mybatisx.plugin.ui;
 
 import com.baomidou.mybatisx.feat.bean.TranslationAppComboBoxItem;
 import com.baomidou.mybatisx.feat.ddl.TranslationAppEnum;
-import com.baomidou.mybatisx.plugin.component.EnumComboBox;
-import com.baomidou.mybatisx.plugin.component.HBox;
+import com.baomidou.mybatisx.plugin.components.EnumComboBox;
+import com.baomidou.mybatisx.plugin.components.HBox;
 import com.baomidou.mybatisx.plugin.setting.OtherSetting;
 import com.baomidou.mybatisx.util.IntellijSDK;
 import com.baomidou.mybatisx.util.StringUtils;
@@ -109,7 +109,7 @@ public class TranslationSettingPanel {
     // 单选按钮设置事件
     autoTranslationRadio.addActionListener(e -> {
       if (autoTranslationRadio.isSelected()) {
-        TranslationAppComboBoxItem item = (TranslationAppComboBoxItem) translationAppComboBox.getSelectedItem();
+        TranslationAppEnum item = translationAppComboBox.getSelectedItem();
         if (item != null) {
           if (translationAppComboBox.getItemCount() > 2) {
             translationAppComboBox.setSelectedIndex(1);
@@ -132,7 +132,7 @@ public class TranslationSettingPanel {
   private void translationAppComboBoxInit() {
     // 填充下拉框数据
     for (TranslationAppEnum e : TranslationAppEnum.values()) {
-      translationAppComboBox.addItems(new TranslationAppComboBoxItem(e.getName(), e.getValue()));
+      translationAppComboBox.addItems(e);
     }
     // 从配置中设置值
     TranslationAppEnum appEnum = TranslationAppEnum.findByValue(properties.getTranslationAppComboBox());

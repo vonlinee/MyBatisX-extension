@@ -1,6 +1,6 @@
 package com.baomidou.mybatisx.util;
 
-import com.baomidou.mybatisx.feat.generate.dto.TemplateSettingDTO;
+import com.baomidou.mybatisx.feat.mybatis.generator.dto.TemplateSettingDTO;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;

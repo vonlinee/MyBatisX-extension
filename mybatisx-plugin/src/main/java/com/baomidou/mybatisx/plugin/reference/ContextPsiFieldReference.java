@@ -12,6 +12,7 @@ import com.intellij.psi.PsiReference;
 import com.intellij.psi.PsiReferenceBase;
 import com.intellij.psi.xml.XmlAttributeValue;
 import lombok.Getter;
+import lombok.Setter;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -24,23 +25,16 @@ import java.util.Optional;
  * @author yanglin
  */
 @Getter
+@Setter
 public class ContextPsiFieldReference extends PsiReferenceBase<XmlAttributeValue> {
 
   /**
    * The Resolver.
-   * -- GETTER --
-   * Gets resolver.
-   *
-   * @return the resolver
    */
   protected ContextReferenceSetResolver<XmlAttributeValue, PsiField> resolver;
 
   /**
    * The Index.
-   * -- GETTER --
-   * Gets index.
-   *
-   * @return the index
    */
   protected int index;
 
@@ -61,7 +55,7 @@ public class ContextPsiFieldReference extends PsiReferenceBase<XmlAttributeValue
   @Override
   public PsiElement resolve() {
     Optional<PsiField> resolved = resolver.resolve(index);
-    if (!resolved.isPresent()) {
+    if (resolved.isEmpty()) {
       final Optional<PsiClass> targetClazz = getTargetClazz();
       return targetClazz.orElse(null);
     }
@@ -72,7 +66,7 @@ public class ContextPsiFieldReference extends PsiReferenceBase<XmlAttributeValue
   @Override
   public Object[] getVariants() {
     Optional<PsiClass> clazz = getTargetClazz();
-    if (!clazz.isPresent()) {
+    if (clazz.isEmpty()) {
       return PsiReference.EMPTY_ARRAY;
     }
     final PsiClass psiClass = clazz.get();

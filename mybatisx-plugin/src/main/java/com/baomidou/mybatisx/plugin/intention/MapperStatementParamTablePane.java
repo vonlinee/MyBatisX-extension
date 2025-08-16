@@ -1,50 +1,54 @@
 package com.baomidou.mybatisx.plugin.intention;
 
 import com.baomidou.mybatisx.model.ParamDataType;
-import com.intellij.openapi.project.Project;
-import com.intellij.util.ui.ComboBoxCellEditor;
+import com.baomidou.mybatisx.util.SwingUtils;
+import com.intellij.ui.AnActionButton;
+import com.intellij.ui.ToolbarDecorator;
+import com.intellij.ui.treeStructure.treetable.ListTreeTableModelOnColumns;
+import com.intellij.ui.treeStructure.treetable.TreeTableTree;
 
 import javax.swing.*;
-import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableCellEditor;
-import javax.swing.table.TableColumn;
-import java.util.Arrays;
-import java.util.Collections;
+import javax.swing.tree.TreeNode;
+import javax.swing.tree.TreePath;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Mapper 语句参数表格面板
+ */
 public class MapperStatementParamTablePane extends JScrollPane {
 
-  MSParamTreeTable table;
+  private final MSParamTreeTable table;
 
-  public MapperStatementParamTablePane(Project project) {
-    table = new MSParamTreeTable(project);
-    JPanel panel = table.getPanel();
-    setViewportView(panel);
-
-    TableColumn dataTypeColumn = table.getColumnModel().getColumn(2);
-    dataTypeColumn.setCellEditor(new ComboBoxCellEditor() {
-      @Override
-      protected List<String> getComboBoxItems() {
-        return Arrays.asList(ParamDataType.names());
+  public MapperStatementParamTablePane(AnActionButton[] actions) {
+    table = new MSParamTreeTable();
+    // 添加工具栏
+    ToolbarDecorator decorator = ToolbarDecorator.createDecorator(table);
+    decorator.setAddAction(aab -> {
+      ParamNode child = new ParamNode("param", "", ParamDataType.STRING);
+      final TreeTableTree tree = table.getTree();
+      TreePath selectionPath = table.getTree().getSelectionPath();
+      ListTreeTableModelOnColumns model = (ListTreeTableModelOnColumns) table.getTreeTableModel();
+      if (selectionPath == null) {
+        ParamNode root = (ParamNode) tree.getModel().getRoot();
+        model.insertNodeInto(child, root, root.getChildCount());
+        root.add(child);
+        tree.scrollPathToVisible(new TreePath(child.getPath()));
+      } else {
+        ParamNode parent = (ParamNode) selectionPath.getLastPathComponent();
+        model.insertNodeInto(child, parent, parent.getChildCount());
+        parent.add(child);
+        tree.scrollPathToVisible(new TreePath(child.getPath()));
       }
     });
-    dataTypeColumn.setMaxWidth(120);
-    dataTypeColumn.setMinWidth(120);
-
-    TableColumn paramKeyColumn = table.getColumnModel().getColumn(0);
-    paramKeyColumn.setMaxWidth(300);
-    paramKeyColumn.setMinWidth(150);
-  }
-
-  /**
-   * TODO 支持导入模式
-   *
-   * @param params
-   * @param mode
-   */
-  public void addParams(List<ParamNode> params, ImportModel mode) {
-    table.resetAll(params);
+    decorator.setRemoveAction(anActionButton -> {
+      TreeNode removedNode = table.deleteSelectedRow();
+      if (!removedNode.isLeaf()) {
+        SwingUtils.expandAll(table.getTree());
+      }
+    });
+    decorator.addExtraActions(actions);
+    setViewportView(decorator.createPanel());
   }
 
   /**
@@ -56,59 +60,11 @@ public class MapperStatementParamTablePane extends JScrollPane {
     return table.getParamsAsMap();
   }
 
-  /**
-   * 校验表格数据
-   *
-   * @return 校验成功返回空集合，失败返回错误信息
-   */
-  public List<String> validateParams() {
-    TableModel tableModel = (TableModel) table.getModel();
-    int rowCount = tableModel.getRowCount();
-    return Collections.emptyList();
-  }
-
   public void setAll(List<ParamNode> paramNodeList) {
     table.setAll(paramNodeList);
   }
 
-  /**
-   * 参数表
-   *
-   * @deprecated
-   */
-  @Deprecated
-  static class ParamTable extends JTable {
-
-    public ParamTable() {
-      super(new TableModel());
-    }
-
-    @Override
-    public TableCellEditor getCellEditor(int row, int column) {
-      if (column != 1) {
-        return super.getCellEditor(row, column);
-      }
-      // 根据数据类型来确定不同的参数值编辑器
-      Object dataType = getModel().getValueAt(row, column + 1);
-      return super.getCellEditor(row, column);
-    }
-  }
-
-  @Deprecated
-  private static class TableModel extends DefaultTableModel {
-
-    public TableModel() {
-      super(null, new String[]{"Key", "Value", "Type", "JdbcType"});
-    }
-
-    /**
-     * @param row    行号，从0开始
-     * @param column 列号，从0开始
-     * @return 是否可编辑
-     */
-    @Override
-    public boolean isCellEditable(int row, int column) {
-      return true;
-    }
+  public void resetAll(List<ParamNode> paramNodeList) {
+    table.resetAll(paramNodeList);
   }
 }

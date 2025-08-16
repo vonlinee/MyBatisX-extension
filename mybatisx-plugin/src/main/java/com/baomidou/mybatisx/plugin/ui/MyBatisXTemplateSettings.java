@@ -1,12 +1,11 @@
 package com.baomidou.mybatisx.plugin.ui;
 
-import com.baomidou.mybatisx.feat.generate.dto.TemplateContext;
-import com.baomidou.mybatisx.feat.generate.dto.TemplateSettingDTO;
+import com.baomidou.mybatisx.feat.mybatis.generator.dto.TemplateContext;
+import com.baomidou.mybatisx.feat.mybatis.generator.dto.TemplateSettingDTO;
 import com.baomidou.mybatisx.plugin.setting.TemplatesSettings;
 import com.baomidou.mybatisx.util.IntellijSDK;
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.ui.AnActionButton;
-import com.intellij.ui.AnActionButtonRunnable;
 import com.intellij.ui.ToolbarDecorator;
 import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.util.PlatformIcons;

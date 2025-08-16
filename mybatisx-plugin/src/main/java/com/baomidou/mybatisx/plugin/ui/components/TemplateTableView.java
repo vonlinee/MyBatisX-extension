@@ -1,7 +1,7 @@
 package com.baomidou.mybatisx.plugin.ui.components;
 
 import com.baomidou.mybatisx.feat.bean.TemplateInfo;
-import com.baomidou.mybatisx.plugin.component.TableView;
+import com.baomidou.mybatisx.plugin.components.TableView;
 import com.intellij.util.ui.ColumnInfo;
 import com.intellij.util.ui.ListTableModel;
 import org.jetbrains.annotations.Nullable;

@@ -1,6 +1,6 @@
 package com.baomidou.mybatisx.plugin.ui.dialog;
 
-import com.baomidou.mybatisx.plugin.component.TextField;
+import com.baomidou.mybatisx.plugin.components.TextField;
 import com.baomidou.mybatisx.util.StringUtils;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;

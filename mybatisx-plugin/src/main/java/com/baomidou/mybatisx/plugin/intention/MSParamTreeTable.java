@@ -1,22 +1,19 @@
 package com.baomidou.mybatisx.plugin.intention;
 
 import com.baomidou.mybatisx.model.ParamDataType;
-import com.baomidou.mybatisx.plugin.component.CustomComboBox;
-import com.baomidou.mybatisx.plugin.component.EnumComboBox;
-import com.baomidou.mybatisx.plugin.component.JBTreeTableView;
+import com.baomidou.mybatisx.plugin.components.EnumComboBox;
+import com.baomidou.mybatisx.plugin.components.TextField;
+import com.baomidou.mybatisx.plugin.components.TreeTableView;
 import com.baomidou.mybatisx.plugin.ui.UIHelper;
-import com.baomidou.mybatisx.plugin.ui.dialog.DialogBase;
-import com.baomidou.mybatisx.plugin.ui.dialog.TextInputDialog;
-import com.baomidou.mybatisx.tip.JdbcType;
 import com.baomidou.mybatisx.util.SwingUtils;
-import com.intellij.openapi.project.Project;
-import com.intellij.ui.ToolbarDecorator;
 import com.intellij.ui.components.JBTextField;
+import com.intellij.ui.components.fields.ExpandableTextField;
 import com.intellij.ui.treeStructure.treetable.ListTreeTableModelOnColumns;
 import com.intellij.ui.treeStructure.treetable.TreeTableCellRenderer;
 import com.intellij.ui.treeStructure.treetable.TreeTableModel;
 import com.intellij.ui.treeStructure.treetable.TreeTableTree;
 import com.intellij.util.ui.ColumnInfo;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import javax.swing.*;
@@ -24,6 +21,8 @@ import javax.swing.event.CellEditorListener;
 import javax.swing.event.ChangeEvent;
 import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableCellRenderer;
+import javax.swing.table.TableColumn;
+import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreeNode;
 import javax.swing.tree.TreePath;
@@ -32,14 +31,16 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
-public class MSParamTreeTable extends JBTreeTableView<ParamNode> {
+public class MSParamTreeTable extends TreeTableView<ParamNode> {
+
+  private static final int VALUE_COLUMN_INDEX = 2;
 
   private final TableModel model;
 
   private final ColumnInfo<ParamNode, ?>[] columns;
 
   @SuppressWarnings("unchecked")
-  public MSParamTreeTable(Project project) {
+  public MSParamTreeTable() {
     super(new TableModel(new ParamNode("root", null, ParamDataType.UNKNOWN),
       new ColumnInfo[]{
         new ColumnInfo<ParamNode, String>("Name") {
@@ -52,6 +53,25 @@ public class MSParamTreeTable extends JBTreeTableView<ParamNode> {
           public Class<?> getColumnClass() {
             return TreeTableModel.class;
           }
+
+          @Override
+          public @NotNull TableCellEditor getEditor(ParamNode paramNode) {
+            TextField textField = new TextField();
+            DefaultCellEditor editor = new DefaultCellEditor(textField);
+            editor.addCellEditorListener(new CellEditorListener() {
+              @Override
+              public void editingStopped(ChangeEvent e) {
+                String s = UIHelper.getCellEditorStringValue(e);
+                paramNode.setKey(s);
+                textField.setToolTipText(s);
+              }
+
+              @Override
+              public void editingCanceled(ChangeEvent e) {
+              }
+            });
+            return editor;
+          }
         },
         new ColumnInfo<ParamNode, ParamDataType>("Type") {
 
@@ -62,10 +82,8 @@ public class MSParamTreeTable extends JBTreeTableView<ParamNode> {
 
           @Override
           public TableCellEditor getEditor(ParamNode paramNode) {
-            CustomComboBox<ParamDataType> customComboBox = new CustomComboBox<>();
-            customComboBox.addItems(ParamDataType.values());
-
-            DefaultCellEditor editor = new DefaultCellEditor(customComboBox);
+            EnumComboBox<ParamDataType> paramTypeComboBox = new EnumComboBox<>(ParamDataType.class);
+            DefaultCellEditor editor = new DefaultCellEditor(paramTypeComboBox);
             editor.addCellEditorListener(new CellEditorListener() {
               @Override
               public void editingStopped(ChangeEvent e) {
@@ -79,7 +97,7 @@ public class MSParamTreeTable extends JBTreeTableView<ParamNode> {
             return editor;
           }
         },
-        new ColumnInfo<ParamNode, String>("JdbcType") {
+        /*new ColumnInfo<ParamNode, String>("JdbcType") {
 
           @Override
           public @Nullable String valueOf(ParamNode paramNode) {
@@ -88,8 +106,7 @@ public class MSParamTreeTable extends JBTreeTableView<ParamNode> {
 
           @Override
           public TableCellEditor getEditor(ParamNode paramNode) {
-            EnumComboBox<JdbcType> comboBox = new EnumComboBox<>();
-            comboBox.addItems(JdbcType.values());
+            EnumComboBox<JdbcType> comboBox = new EnumComboBox<>(JdbcType.class);
             DefaultCellEditor editor = new DefaultCellEditor(comboBox);
             editor.addCellEditorListener(new CellEditorListener() {
               @Override
@@ -103,7 +120,7 @@ public class MSParamTreeTable extends JBTreeTableView<ParamNode> {
             });
             return editor;
           }
-        },
+        },*/
         new ColumnInfo<ParamNode, String>("Value") {
 
           @Override
@@ -113,7 +130,12 @@ public class MSParamTreeTable extends JBTreeTableView<ParamNode> {
 
           @Override
           public TableCellEditor getEditor(ParamNode paramNode) {
-            JBTextField textField = new JBTextField();
+            JBTextField textField;
+            if (paramNode.getDataType().isArray()) {
+              textField = new ExpandableTextField();
+            } else {
+              textField = new JBTextField();
+            }
             DefaultCellEditor editor = new DefaultCellEditor(textField);
             editor.addCellEditorListener(new CellEditorListener() {
               @Override
@@ -133,46 +155,13 @@ public class MSParamTreeTable extends JBTreeTableView<ParamNode> {
       }));
     this.model = (TableModel) getTreeTableModel();
     this.columns = this.model.getColumns();
+
+    TableColumn column = getColumnModel().getColumn(1);
+    SwingUtils.setFixedWidth(column, 110);
+
+    setAutoResizeMode(JTable.AUTO_RESIZE_LAST_COLUMN);
     JTree tree = this.getTree();
-
     tree.setShowsRootHandles(true);
-  }
-
-  public JPanel getPanel() {
-    ToolbarDecorator decorator = ToolbarDecorator.createDecorator(this);
-    decorator.setAddAction(anActionButton -> {
-      ParamNode child = new ParamNode("param", "", ParamDataType.STRING);
-      final TreeTableTree tree = getTree();
-      TreePath selectionPath = getTree().getSelectionPath();
-      if (selectionPath == null) {
-        ParamNode root = (ParamNode) tree.getModel().getRoot();
-        model.insertNodeInto(child, root, root.getChildCount());
-        root.add(child);
-        tree.scrollPathToVisible(new TreePath(child.getPath()));
-      } else {
-        ParamNode parent = (ParamNode) selectionPath.getLastPathComponent();
-        model.insertNodeInto(child, parent, parent.getChildCount());
-        parent.add(child);
-        tree.scrollPathToVisible(new TreePath(child.getPath()));
-      }
-    });
-
-    decorator.setRemoveAction(anActionButton -> {
-      // 通过JTable获取选中的行
-      int selectedRow = getSelectedRow();
-      // 通过行获取JTree中的TreePath
-      TreePath selectedPath = getTree().getPathForRow(selectedRow);
-      // 删除该Path
-      removeSelectedPath(selectedPath);
-      // 获取待删除节点的父节点
-      ParamNode lastNode = (ParamNode) selectedPath.getLastPathComponent();
-      TreeNode parent = lastNode.getParent();
-      DefaultTreeModel treeModel = (DefaultTreeModel) getTree().getModel();
-      treeModel.nodeStructureChanged(parent);
-      treeModel.removeNodeFromParent(lastNode);
-    });
-
-    return decorator.createPanel();
   }
 
   @Override
@@ -197,27 +186,29 @@ public class MSParamTreeTable extends JBTreeTableView<ParamNode> {
   @Override
   public TableCellEditor getCellEditor(int row, int column) {
     TreePath treePath = getTree().getPathForRow(row);
-    if (treePath == null) return super.getCellEditor(row, column);
+    if (treePath == null) {
+      return super.getCellEditor(row, column);
+    }
     Object node = treePath.getLastPathComponent();
     TableCellEditor editor = columns[column].getEditor((ParamNode) node);
     return editor == null ? super.getCellEditor(row, column) : editor;
   }
 
-  public final void setAll(List<ParamNode> params) {
+  public void setAll(List<ParamNode> params) {
     ParamNode rootNode = (ParamNode) getTreeTableModel().getRoot();
     rootNode.setChildren(params);
     for (ParamNode param : params) {
       rootNode.add(param);
     }
-
     final TreeTableTree tree = getTree();
     TreeNode[] path = rootNode.getLastLeaf().getPath();
     tree.scrollPathToVisible(new TreePath(path));
+    TableModel model = (TableModel) getTreeTableModel();
     model.nodeStructureChanged(rootNode);
     SwingUtils.expandAll(tree);
   }
 
-  public final void resetAll(List<ParamNode> params) {
+  public void resetAll(List<ParamNode> params) {
     DefaultTreeModel treeModel = (DefaultTreeModel) getTree().getModel();
     ParamNode paramNode = new ParamNode();
     for (ParamNode param : params) {
@@ -235,7 +226,6 @@ public class MSParamTreeTable extends JBTreeTableView<ParamNode> {
   public Map<String, Object> getParamsAsMap() {
     Map<String, Object> map = new HashMap<>();
     ParamNode root = (ParamNode) getTree().getModel().getRoot();
-
     for (int i = 0; i < root.getChildCount(); i++) {
       ParamNode child = (ParamNode) root.getChildAt(i);
       LinkedList<String> list = new LinkedList<>();
@@ -260,7 +250,7 @@ public class MSParamTreeTable extends JBTreeTableView<ParamNode> {
     }
   }
 
-  private Map<String, Object> getParamsAsMap1() {
+  private Map<String, Object> getParamsAsFlattenMap() {
     Map<String, Object> map = new HashMap<>();
     TableModel tableModel = (TableModel) this.getModel();
     int rowCount = 10;
@@ -293,13 +283,12 @@ public class MSParamTreeTable extends JBTreeTableView<ParamNode> {
       return super.getValueAt(value, column);
     }
 
-
     @Override
     public boolean isCellEditable(Object node, int column) {
-      if (!(node instanceof ParamNode)) {
+      if (!(node instanceof DefaultMutableTreeNode)) {
         return false;
       }
-      ParamNode row = (ParamNode) node;
+      DefaultMutableTreeNode row = (DefaultMutableTreeNode) node;
       return row.getChildCount() <= 0;
     }
   }

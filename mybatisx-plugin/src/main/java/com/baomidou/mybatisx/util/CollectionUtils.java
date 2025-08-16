@@ -69,7 +69,7 @@ public final class CollectionUtils {
   public static Map<String, Object> expandKeys(Map<String, Object> data, String separator) {
     Map<String, Object> result = new LinkedHashMap<>();
     for (Map.Entry<String, Object> entry : data.entrySet()) {
-      String[] keys = entry.getKey().split("\\.");
+      String[] keys = entry.getKey().split(separator);
       Object value = entry.getValue();
       Map<String, Object> map = result;
       for (int i = 0; i < keys.length - 1; i++) {

@@ -4,7 +4,7 @@ import com.baomidou.mybatisx.feat.bean.BeanInfo;
 import com.baomidou.mybatisx.plugin.ui.components.BeanFieldsTable;
 import com.baomidou.mybatisx.plugin.ui.components.BeanToolPane;
 import com.baomidou.mybatisx.plugin.ui.components.DDLCreatorTool;
-import com.baomidou.mybatisx.util.IdeUtils;
+import com.baomidou.mybatisx.util.JBComponents;
 import com.baomidou.mybatisx.util.SwingUtils;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.ui.DialogWrapper;
@@ -47,7 +47,7 @@ public class BeanToolDialog extends DialogWrapper {
     button.addMouseListener(new MouseAdapter() {
       @Override
       public void mouseClicked(MouseEvent e) {
-        IdeUtils.chooseClass(project, psiClass -> {
+        JBComponents.chooseClass(project, psiClass -> {
           beanNameJTf.setText(psiClass.getQualifiedName());
           beanFieldsTable.appendFieldsOfPsiClass(psiClass);
         });
