@@ -43,14 +43,11 @@ dependencies {
   annotationProcessor("org.projectlombok:lombok:1.18.32")
 
   implementation("com.softwareloop:mybatis-generator-lombok-plugin:1.0")
-  implementation("uk.com.robust-it:cloning:1.9.2")
   implementation("org.mybatis.generator:mybatis-generator-core:1.4.0")
   implementation("org.freemarker:freemarker:2.3.30")
-  implementation("com.itranswarp:compiler:1.0")
   implementation(files("${rootDir}/libs/tools.jar"))
   // this is published locally
   implementation(files("${rootDir}/libs/mybatis-3.6.0-SNAPSHOT.jar"))
-  implementation("com.google.guava:guava:33.2.1-jre")
   implementation("org.apache.httpcomponents:httpclient:4.5.7")
   implementation("com.tencentcloudapi:tencentcloud-sdk-java:3.1.210")
   implementation(project(":agent-api"))

@@ -30,6 +30,7 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 public class MSParamTreeTable extends TreeTableView<ParamNode> {
 
@@ -210,12 +211,47 @@ public class MSParamTreeTable extends TreeTableView<ParamNode> {
 
   public void resetAll(List<ParamNode> params) {
     DefaultTreeModel treeModel = (DefaultTreeModel) getTree().getModel();
-    ParamNode paramNode = new ParamNode();
-    for (ParamNode param : params) {
-      paramNode.add(param);
+    ParamNode root = (ParamNode) treeModel.getRoot();
+    for (ParamNode child : root.getChildren()) {
+      for (ParamNode newChild : params) {
+        if (Objects.equals(child.getKey(), newChild.getKey())) {
+          updateValue(root, child, newChild);
+        }
+      }
     }
-    treeModel.setRoot(paramNode);
-    setAll(params);
+    treeModel.nodeChanged(root);
+    SwingUtils.expandAll(getTree());
+  }
+
+  private void updateValue(ParamNode parent, ParamNode old, ParamNode newNode) {
+    if (old.hasChildren()) {
+      for (ParamNode child : old.getChildren()) {
+        boolean found = false;
+        for (ParamNode newNodeChild : newNode.getChildren()) {
+          if (Objects.equals(child.getKey(), newNodeChild.getKey())) {
+            updateValue(old, child, newNodeChild);
+            found = true;
+            break;
+          }
+        }
+        if (!found) {
+          // 新增的节点
+          parent.addChild(newNode);
+        }
+      }
+    } else {
+      // 尽量不修改已经确定好的类型
+      if (old.getDataType() == ParamDataType.STRING && "null".equalsIgnoreCase(newNode.getValue())) {
+        old.setValue("");
+      } else {
+        old.setValue(newNode.getValue());
+      }
+      if (old.getDataType() == ParamDataType.UNKNOWN) {
+        old.setDataType(newNode.getDataType().toString());
+      } else if (newNode.getDataType() != null && newNode.getDataType() != ParamDataType.UNKNOWN) {
+        old.setDataType(newNode.getDataType().toString());
+      }
+    }
   }
 
   /**

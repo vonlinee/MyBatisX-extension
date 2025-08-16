@@ -10,7 +10,6 @@ import com.intellij.database.model.RawConnectionConfig;
 import com.intellij.database.psi.DbTable;
 import com.intellij.database.util.DasUtil;
 import com.intellij.util.containers.JBIterable;
-import com.rits.cloning.Cloner;
 import org.jetbrains.annotations.NotNull;
 
 import java.sql.Types;
@@ -21,7 +20,6 @@ import java.util.List;
  * The type Db tools utils.
  */
 public class DbToolsUtils {
-  private static final Cloner MY_CLONER = new Cloner();
 
   /**
    * Build intellij table info intellij table info.
@@ -46,15 +44,13 @@ public class DbToolsUtils {
     List<IntellijColumnInfo> primaryColumnInfos = new ArrayList<>();
     DasTableKey primaryKey = DasUtil.getPrimaryKey(currentTable);
     if (primaryKey != null) {
-      MultiRef<? extends DasTypedObject> columnsRef = primaryKey.getColumnsRef();
-      MultiRef.It<? extends DasTypedObject> iterate = columnsRef.iterate();
+      MultiRef.It<? extends DasTypedObject> iterate = primaryKey.getColumnsRef().iterate();
       short s = 0;
       while (iterate.hasNext()) {
         String columnName = iterate.next();
         for (IntellijColumnInfo intellijColumnInfo : intellijColumnInfos) {
           if (columnName.equals(intellijColumnInfo.getName())) {
-            IntellijColumnInfo info = MY_CLONER.deepClone(intellijColumnInfo);
-            info.setKeySeq(s);
+            IntellijColumnInfo info = copyIntellijColumnInfo(intellijColumnInfo, s);
             primaryColumnInfos.add(info);
             s++;
             break;
@@ -64,6 +60,23 @@ public class DbToolsUtils {
     }
     tableInfo.setPrimaryKeyColumns(primaryColumnInfos);
     return tableInfo;
+  }
+
+  @NotNull
+  private static IntellijColumnInfo copyIntellijColumnInfo(IntellijColumnInfo intellijColumnInfo, short s) {
+    IntellijColumnInfo info = new IntellijColumnInfo();
+    info.setName(intellijColumnInfo.getName());
+    info.setSize(intellijColumnInfo.getSize());
+    info.setAutoIncrement(intellijColumnInfo.isAutoIncrement());
+    info.setRemarks(intellijColumnInfo.getRemarks());
+    info.setNullable(intellijColumnInfo.getNullable());
+    info.setDecimalDigits(intellijColumnInfo.getDecimalDigits());
+    info.setDataType(intellijColumnInfo.getDataType());
+    info.setSize(intellijColumnInfo.getSize());
+    info.setColumnDefaultValue(intellijColumnInfo.getColumnDefaultValue());
+    info.setGeneratedColumn(intellijColumnInfo.isGeneratedColumn());
+    info.setKeySeq(s);
+    return info;
   }
 
 

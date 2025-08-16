@@ -7,7 +7,6 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -15,7 +14,7 @@ import java.util.Map;
 public class FormLayout implements LayoutManager2, Serializable {
   private final List<ColumnSpec> colSpecs;
   private final List<RowSpec> rowSpecs;
-  private final Map constraintMap;
+  private final Map<Component, CellConstraints> constraintMap;
   private final ComponentSizeCache componentSizeCache;
   private final Measure minimumWidthMeasure;
   private final Measure minimumHeightMeasure;
@@ -23,8 +22,8 @@ public class FormLayout implements LayoutManager2, Serializable {
   private final Measure preferredHeightMeasure;
   private int[][] colGroupIndices;
   private int[][] rowGroupIndices;
-  private transient List[] colComponents;
-  private transient List[] rowComponents;
+  private transient LinkedList<Component>[] colComponents;
+  private transient LinkedList<Component>[] rowComponents;
 
   public FormLayout() {
     this(new ColumnSpec[0], new RowSpec[0]);
@@ -148,11 +147,8 @@ public class FormLayout implements LayoutManager2, Serializable {
 
   private void shiftComponentsHorizontally(int columnIndex, boolean remove) {
     int offset = remove ? -1 : 1;
-    Iterator i = this.constraintMap.entrySet().iterator();
-
-    while (i.hasNext()) {
-      Map.Entry entry = (Map.Entry) i.next();
-      CellConstraints constraints = (CellConstraints) entry.getValue();
+    for (Map.Entry<Component, CellConstraints> entry : this.constraintMap.entrySet()) {
+      CellConstraints constraints = entry.getValue();
       int x1 = constraints.gridX;
       int w = constraints.gridWidth;
       int x2 = x1 + w - 1;
@@ -171,11 +167,9 @@ public class FormLayout implements LayoutManager2, Serializable {
 
   private void shiftComponentsVertically(int rowIndex, boolean remove) {
     int offset = remove ? -1 : 1;
-    Iterator i = this.constraintMap.entrySet().iterator();
 
-    while (i.hasNext()) {
-      Map.Entry entry = (Map.Entry) i.next();
-      CellConstraints constraints = (CellConstraints) entry.getValue();
+    for (Map.Entry<Component, CellConstraints> entry : this.constraintMap.entrySet()) {
+      CellConstraints constraints = entry.getValue();
       int y1 = constraints.gridY;
       int h = constraints.gridHeight;
       int y2 = y1 + h - 1;
@@ -194,10 +188,7 @@ public class FormLayout implements LayoutManager2, Serializable {
 
   private void adjustGroupIndices(int[][] allGroupIndices, int modifiedIndex, boolean remove) {
     int offset = remove ? -1 : 1;
-
-    for (int group = 0; group < allGroupIndices.length; ++group) {
-      int[] groupIndices = allGroupIndices[group];
-
+    for (int[] groupIndices : allGroupIndices) {
       for (int i = 0; i < groupIndices.length; ++i) {
         int index = groupIndices[i];
         if (index == modifiedIndex && remove) {
@@ -209,18 +200,17 @@ public class FormLayout implements LayoutManager2, Serializable {
         }
       }
     }
-
   }
 
   public CellConstraints getConstraints(Component component) {
     if (component == null) {
       throw new NullPointerException("The component must not be null.");
     } else {
-      CellConstraints constraints = (CellConstraints) this.constraintMap.get(component);
+      CellConstraints constraints = this.constraintMap.get(component);
       if (constraints == null) {
         throw new NullPointerException("The component has not been added to the container.");
       } else {
-        return (CellConstraints) constraints.clone();
+        return constraints.clone();
       }
     }
   }
@@ -255,11 +245,9 @@ public class FormLayout implements LayoutManager2, Serializable {
         if (colIndex < 1 || colIndex > maxColumn) {
           throw new IndexOutOfBoundsException("Invalid column group index " + colIndex + " in group " + (group + 1));
         }
-
         if (usedIndices[colIndex]) {
           throw new IllegalArgumentException("Column index " + colIndex + " must not be used in multiple column groups.");
         }
-
         usedIndices[colIndex] = true;
       }
     }
@@ -399,16 +387,13 @@ public class FormLayout implements LayoutManager2, Serializable {
     this.rowComponents = new LinkedList[this.getRowCount()];
 
     for (int i = 0; i < this.getRowCount(); ++i) {
-      this.rowComponents[i] = new LinkedList();
+      this.rowComponents[i] = new LinkedList<>();
     }
 
-    Iterator i = this.constraintMap.entrySet().iterator();
-
-    while (i.hasNext()) {
-      Map.Entry entry = (Map.Entry) i.next();
-      Component component = (Component) entry.getKey();
+    for (Map.Entry<Component, CellConstraints> entry : this.constraintMap.entrySet()) {
+      Component component = entry.getKey();
       if (component.isVisible()) {
-        CellConstraints constraints = (CellConstraints) entry.getValue();
+        CellConstraints constraints = entry.getValue();
         if (constraints.gridWidth == 1) {
           this.colComponents[constraints.gridX - 1].add(component);
         }
@@ -435,13 +420,11 @@ public class FormLayout implements LayoutManager2, Serializable {
       int maxHeight = height1;
       int[] maxFixedSizeColsTable = this.computeMaximumFixedSpanTable(this.colSpecs);
       int[] maxFixedSizeRowsTable = this.computeMaximumFixedSpanTable(this.rowSpecs);
-      Iterator i = this.constraintMap.entrySet().iterator();
 
-      while (i.hasNext()) {
-        Map.Entry entry = (Map.Entry) i.next();
-        Component component = (Component) entry.getKey();
+      for (Map.Entry<Component, CellConstraints> entry : this.constraintMap.entrySet()) {
+        Component component = entry.getKey();
         if (component.isVisible()) {
-          CellConstraints constraints = (CellConstraints) entry.getValue();
+          CellConstraints constraints = entry.getValue();
           int compHeight;
           int gridY1;
           int gridY2;
@@ -509,12 +492,9 @@ public class FormLayout implements LayoutManager2, Serializable {
 
   private void layoutComponents(int[] x, int[] y) {
     Rectangle cellBounds = new Rectangle();
-    Iterator i = this.constraintMap.entrySet().iterator();
-
-    while (i.hasNext()) {
-      Map.Entry entry = (Map.Entry) i.next();
-      Component component = (Component) entry.getKey();
-      CellConstraints constraints = (CellConstraints) entry.getValue();
+    for (Map.Entry<Component, CellConstraints> entry : this.constraintMap.entrySet()) {
+      Component component = entry.getKey();
+      CellConstraints constraints = entry.getValue();
       int gridX = constraints.gridX - 1;
       int gridY = constraints.gridY - 1;
       int gridWidth = constraints.gridWidth;
@@ -525,7 +505,6 @@ public class FormLayout implements LayoutManager2, Serializable {
       cellBounds.height = y[gridY + gridHeight] - cellBounds.y;
       constraints.setBounds(component, this, cellBounds, this.minimumWidthMeasure, this.minimumHeightMeasure, this.preferredWidthMeasure, this.preferredHeightMeasure);
     }
-
   }
 
   private void invalidateCaches() {
@@ -552,8 +531,8 @@ public class FormLayout implements LayoutManager2, Serializable {
     } else {
       int count = formSpecs.size();
       int[] sizes = new int[count];
-      double totalCompressionSpace = (double) (totalPrefSize - totalSize);
-      double maxCompressionSpace = (double) (totalPrefSize - totalMinSize);
+      double totalCompressionSpace = totalPrefSize - totalSize;
+      double maxCompressionSpace = totalPrefSize - totalMinSize;
       double compressionFactor = totalCompressionSpace / maxCompressionSpace;
 
       for (int i = 0; i < count; ++i) {
@@ -601,7 +580,7 @@ public class FormLayout implements LayoutManager2, Serializable {
   }
 
   private int[] distributedSizes(List formSpecs, int totalSize, int totalPrefSize, int[] inputSizes) {
-    double totalFreeSpace = (double) (totalSize - totalPrefSize);
+    double totalFreeSpace = totalSize - totalPrefSize;
     if (totalFreeSpace < 0.0) {
       return inputSizes;
     } else {
@@ -651,13 +630,13 @@ public class FormLayout implements LayoutManager2, Serializable {
     return sum;
   }
 
-  private int[] computeMaximumFixedSpanTable(List formSpecs) {
+  private int[] computeMaximumFixedSpanTable(List<? extends FormSpec> formSpecs) {
     int size = formSpecs.size();
     int[] table = new int[size];
     int maximumFixedSpan = Integer.MAX_VALUE;
 
     for (int i = size - 1; i >= 0; --i) {
-      FormSpec spec = (FormSpec) formSpecs.get(i);
+      FormSpec spec = formSpecs.get(i);
       if (spec.canGrow()) {
         maximumFixedSpan = 0;
       }
@@ -688,7 +667,7 @@ public class FormLayout implements LayoutManager2, Serializable {
     int[][] result = new int[array.length][];
 
     for (int i = 0; i < result.length; ++i) {
-      result[i] = (int[]) array[i].clone();
+      result[i] = array[i].clone();
     }
 
     return result;

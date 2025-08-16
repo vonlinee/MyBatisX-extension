@@ -5,9 +5,9 @@
 
 package com.baomidou.mybatisx.plugin.components;
 
-import java.awt.Component;
-import java.awt.Insets;
-import java.awt.Rectangle;
+import com.intellij.util.ui.JBUI;
+
+import java.awt.*;
 import java.io.Serializable;
 import java.util.Locale;
 import java.util.StringTokenizer;
@@ -25,7 +25,7 @@ public final class CellConstraints implements Cloneable, Serializable {
 
   static {
     VALUES = new Alignment[]{DEFAULT, FILL, LEFT, RIGHT, CENTER, TOP, BOTTOM};
-    EMPTY_INSETS = new Insets(0, 0, 0, 0);
+    EMPTY_INSETS = JBUI.emptyInsets();
   }
 
   public int gridX;
@@ -335,7 +335,8 @@ public final class CellConstraints implements Cloneable, Serializable {
     return alignment == FILL ? cellSize : componentSize;
   }
 
-  public Object clone() {
+  @Override
+  public CellConstraints clone() {
     try {
       CellConstraints c = (CellConstraints) super.clone();
       c.insets = (Insets) this.insets.clone();
@@ -345,8 +346,9 @@ public final class CellConstraints implements Cloneable, Serializable {
     }
   }
 
+  @Override
   public String toString() {
-    StringBuffer buffer = new StringBuffer("CellConstraints");
+    StringBuilder buffer = new StringBuilder("CellConstraints");
     buffer.append("[x=");
     buffer.append(this.gridX);
     buffer.append("; y=");
@@ -373,7 +375,7 @@ public final class CellConstraints implements Cloneable, Serializable {
   }
 
   public String toShortString(FormLayout layout) {
-    StringBuffer buffer = new StringBuffer("(");
+    StringBuilder buffer = new StringBuilder("(");
     buffer.append(this.formatInt(this.gridX));
     buffer.append(", ");
     buffer.append(this.formatInt(this.gridY));
@@ -460,6 +462,7 @@ public final class CellConstraints implements Cloneable, Serializable {
       }
     }
 
+    @Override
     public String toString() {
       return this.name;
     }

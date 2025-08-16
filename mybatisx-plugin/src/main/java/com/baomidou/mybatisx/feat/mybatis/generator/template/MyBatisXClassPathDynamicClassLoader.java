@@ -4,7 +4,6 @@ import com.baomidou.mybatisx.util.ClassCreator;
 import com.intellij.psi.PsiClass;
 import com.intellij.psi.PsiField;
 import com.intellij.psi.PsiModifier;
-import com.itranswarp.compiler.JavaStringCompiler;
 
 import java.io.IOException;
 import java.util.Arrays;

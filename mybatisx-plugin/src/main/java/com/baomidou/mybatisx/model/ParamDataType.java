@@ -1,6 +1,7 @@
 package com.baomidou.mybatisx.model;
 
 import com.baomidou.mybatisx.plugin.components.ComboBoxItem;
+import com.baomidou.mybatisx.util.JsonUtils;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -142,6 +143,12 @@ public enum ParamDataType implements ComboBoxItem {
       if (literalValue == null || literalValue.isEmpty()) {
         return Collections.emptyList();
       }
+      if (literalValue.startsWith("[")) {
+        literalValue = literalValue.substring(1);
+      }
+      if (literalValue.endsWith("]")) {
+        literalValue = literalValue.substring(0, literalValue.length() - 1);
+      }
       List<Number> nums = new ArrayList<>();
       String[] items = literalValue.split(",");
       for (String item : items) {
@@ -175,6 +182,12 @@ public enum ParamDataType implements ComboBoxItem {
       if (literalValue == null) {
         return Collections.emptyList();
       }
+      if (literalValue.startsWith("[")) {
+        literalValue = literalValue.substring(1);
+      }
+      if (literalValue.endsWith("]")) {
+        literalValue = literalValue.substring(0, literalValue.length() - 1);
+      }
       String[] items = literalValue.split(",");
       return Arrays.asList(items);
     }
@@ -193,6 +206,17 @@ public enum ParamDataType implements ComboBoxItem {
     @Override
     public Class<?> getComponentType() {
       return CharSequence.class;
+    }
+  },
+  JSON_ARRAY() {
+    @Override
+    public @Nullable Object parseObject(String literalValue, StringBuilder sb) {
+      try {
+        return JsonUtils.parseJsonArray(literalValue);
+      } catch (Throwable throwable) {
+        sb.append(throwable.getMessage());
+        return null;
+      }
     }
   },
   /**

@@ -7,13 +7,13 @@ import com.baomidou.mybatisx.plugin.components.TabPane;
 import com.baomidou.mybatisx.util.CollectionUtils;
 import com.baomidou.mybatisx.util.JsonUtils;
 import com.baomidou.mybatisx.util.StringUtils;
+import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
 import com.intellij.json.JsonFileType;
 import com.intellij.openapi.fileTypes.PlainTextFileType;
 import com.intellij.openapi.project.Project;
-import com.intellij.ui.tabs.impl.JBTabsImpl;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -56,8 +56,6 @@ public class ParamImportPane extends BorderPane {
   }
 
   /**
-   * TODO
-   *
    * @param parent 父节点
    */
   private void parseJsonParams(String key, JsonElement element, ParamNode parent) {
@@ -78,7 +76,24 @@ public class ParamImportPane extends BorderPane {
             parent.add(new ParamNode(key, element.getAsString(), ParamDataType.STRING));
           }
         } else if (element.isJsonArray()) {
-          parent.add(new ParamNode(key, element.getAsString(), ParamDataType.ARRAY));
+          JsonArray jsonArray = element.getAsJsonArray();
+          if (jsonArray.size() == 0) {
+            parent.addChild(new ParamNode(key, "", ParamDataType.ARRAY));
+          } else {
+            JsonElement jsonElement = jsonArray.get(0);
+            String value = String.valueOf(element);
+            if (jsonElement.isJsonPrimitive()) {
+              JsonPrimitive primitive = jsonElement.getAsJsonPrimitive();
+              if (primitive.isString()) {
+                parent.addChild(new ParamNode(key, value, ParamDataType.STRING_ARRAY));
+              } else if (primitive.isNumber()) {
+                parent.addChild(new ParamNode(key, value, ParamDataType.NUMBER_ARRAY));
+              }
+            } else {
+              // 对象类型
+              parent.addChild(new ParamNode(key, JsonUtils.toJSONString(element), ParamDataType.JSON_ARRAY));
+            }
+          }
         } else {
           ParamNode paramNode = new ParamNode(entry.getKey(), null, ParamDataType.UNKNOWN);
           parent.addChild(paramNode);

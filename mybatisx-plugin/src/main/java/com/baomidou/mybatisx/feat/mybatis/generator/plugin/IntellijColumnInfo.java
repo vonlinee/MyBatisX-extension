@@ -16,5 +16,4 @@ public class IntellijColumnInfo {
   private String columnDefaultValue;
   private Boolean nullable;
   private short keySeq;
-
 }

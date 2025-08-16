@@ -2,6 +2,7 @@ package com.baomidou.mybatisx.util;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
+import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.intellij.util.ExceptionUtil;
 import net.minidev.json.JSONStyle;
@@ -63,5 +64,9 @@ public abstract class JsonUtils {
 
   public static JsonElement parseJsonTree(String json) {
     return gson.fromJson(json, JsonElement.class);
+  }
+
+  public static JsonArray parseJsonArray(String json) {
+    return gson.fromJson(json, JsonArray.class);
   }
 }
