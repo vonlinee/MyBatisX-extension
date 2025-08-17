@@ -2,10 +2,12 @@ package com.baomidou.mybatisx.util;
 
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.util.ReferenceSetBase;
+import com.intellij.psi.xml.XmlAttribute;
 import com.intellij.psi.xml.XmlDocument;
 import com.intellij.psi.xml.XmlElement;
 import com.intellij.psi.xml.XmlFile;
 import com.intellij.psi.xml.XmlTag;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 /**
@@ -28,6 +30,16 @@ public final class MyBatisUtils {
 
   public static boolean isCrudXmlTag(String tagName) {
     return "select".equals(tagName) || "insert".equals(tagName) || "update".equals(tagName) || "delete".equals(tagName);
+  }
+
+  @Nullable
+  public static String getDatabaseId(@NotNull XmlTag element) {
+    final XmlAttribute databaseIdAttr = element.getAttribute("databaseId");
+    String databaseId = null;
+    if (databaseIdAttr != null) {
+      databaseId = databaseIdAttr.getValue();
+    }
+    return databaseId;
   }
 
   @Nullable

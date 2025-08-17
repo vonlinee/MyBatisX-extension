@@ -218,4 +218,18 @@ public class PsiUtils {
     }
     return elements;
   }
+
+  @NotNull
+  public static String getProjectRelativePath(@NotNull PsiElement element) {
+    Project project = element.getProject();
+    String basePath = project.getBasePath();
+    String absolutePath = element.getContainingFile().getVirtualFile().getPath();
+    String relativePath;
+    if (basePath == null) {
+      relativePath = absolutePath;
+    } else {
+      relativePath = absolutePath.replace(basePath, "");
+    }
+    return relativePath;
+  }
 }

@@ -101,7 +101,6 @@ public final class JavaService {
       return;
     }
     Collection<Mapper> mappers = MapperUtils.findMappers(psiMethod.getProject());
-
     Set<String> ids = new HashSet<>();
     String id = psiClass.getQualifiedName() + "." + psiMethod.getName();
     ids.add(id);
