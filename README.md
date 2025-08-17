@@ -19,7 +19,7 @@ Click the Run Icon on every mybatis mapper statements on the gutter.
 
 ![mybatis-statement-debugger](/assets/mybatis-statement-demo.png)
 
-Fill your params, and then you can get an executable sql without running you application.
+Fill necessary parameters, then you can click the RawSQL button to get the raw sql without running your application.
 
 ![mybatis-statement-debugger](/assets/mybatis-statement-preview-panel.png)
 
