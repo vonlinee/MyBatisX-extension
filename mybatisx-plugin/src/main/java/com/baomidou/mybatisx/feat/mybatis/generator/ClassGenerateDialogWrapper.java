@@ -5,6 +5,7 @@ import com.baomidou.mybatisx.feat.mybatis.generator.dto.DomainInfo;
 import com.baomidou.mybatisx.feat.mybatis.generator.dto.GenerateConfig;
 import com.baomidou.mybatisx.feat.mybatis.generator.dto.TemplateContext;
 import com.baomidou.mybatisx.feat.mybatis.generator.dto.TemplateSettingDTO;
+import com.baomidou.mybatisx.feat.mybatis.generator.setting.DefaultSettingsConfig;
 import com.baomidou.mybatisx.plugin.setting.TemplatesSettings;
 import com.baomidou.mybatisx.plugin.ui.CodeGenerateUI;
 import com.baomidou.mybatisx.plugin.ui.TablePreviewUI;
@@ -87,9 +88,9 @@ public class ClassGenerateDialogWrapper extends DialogWrapper {
 
     TemplatesSettings templatesSettings = TemplatesSettings.getInstance(project);
     final TemplateContext templateContext = templatesSettings.getTemplateContext();
-    final Map<String, List<TemplateSettingDTO>> settingMap = templatesSettings.getTemplateSettingMap();
+    Map<String, List<TemplateSettingDTO>> settingMap = templatesSettings.getTemplateSettingMap();
     if (settingMap.isEmpty()) {
-      throw new RuntimeException("无法获取模板");
+      settingMap = DefaultSettingsConfig.defaultSettings();
     }
     codeGenerateUI.fillData(project,
       generateConfig,
@@ -126,11 +127,6 @@ public class ClassGenerateDialogWrapper extends DialogWrapper {
     generateConfig = templateContext.getGenerateConfig();
     if (generateConfig == null) {
       generateConfig = new DefaultGenerateConfig(templateContext);
-    }
-
-    Map<String, List<TemplateSettingDTO>> settingMap = templatesSettings.getTemplateSettingMap();
-    if (settingMap.isEmpty()) {
-      throw new RuntimeException("无法获取模板");
     }
     tablePreviewUI.fillData(project, tableElements, generateConfig);
   }

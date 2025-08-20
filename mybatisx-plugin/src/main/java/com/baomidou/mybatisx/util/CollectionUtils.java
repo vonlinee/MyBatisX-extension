@@ -32,6 +32,10 @@ public final class CollectionUtils {
     return null == collection || collection.isEmpty();
   }
 
+  public static boolean isEmpty(Map<?, ?> map) {
+    return null == map || map.isEmpty();
+  }
+
   /**
    * Is not empty boolean.
    *

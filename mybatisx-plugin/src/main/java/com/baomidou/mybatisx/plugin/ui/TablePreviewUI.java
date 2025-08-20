@@ -18,6 +18,7 @@ import com.intellij.ui.table.TableView;
 import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.util.ui.ColumnInfo;
 import com.intellij.util.ui.ListTableModel;
+import lombok.Getter;
 import org.jetbrains.annotations.Nullable;
 
 import javax.swing.*;
@@ -34,16 +35,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class TablePreviewUI {
-  ListTableModel<TableUIInfo> model = new ListTableModel<>(
-    new MyBatisXTableColumnInfo("tableName", false),
-    new MyBatisXTableColumnInfo("className", true)
-  );
-  List<NamingStrategy> classNameStrategies = new ArrayList<NamingStrategy>() {
+  ListTableModel<TableUIInfo> model = new ListTableModel<>(new MyBatisXTableColumnInfo("tableName", false), new MyBatisXTableColumnInfo("className", true));
+  List<NamingStrategy> classNameStrategies = new ArrayList<>() {
     {
       add(DefaultNamingStrategy.CAMEL);
       add(DefaultNamingStrategy.SAME);
     }
   };
+  @Getter
   private JPanel rootPanel;
   private JPanel listPanel;
   private JTextField ignoreTablePrefixTextField;
@@ -75,13 +74,7 @@ public class TablePreviewUI {
     GridConstraints gridConstraints = new GridConstraints();
     gridConstraints.setFill(GridConstraints.FILL_HORIZONTAL);
 
-    listPanel.add(ToolbarDecorator.createDecorator(tableView)
-        .setPreferredSize(new Dimension(860, 200))
-        .disableAddAction()
-        .disableRemoveAction()
-        .disableUpDownActions()
-        .createPanel(),
-      gridConstraints);
+    listPanel.add(ToolbarDecorator.createDecorator(tableView).setPreferredSize(new Dimension(860, 200)).disableAddAction().disableRemoveAction().disableUpDownActions().createPanel(), gridConstraints);
   }
 
   public DomainInfo buildDomainInfo() {
@@ -94,10 +87,6 @@ public class TablePreviewUI {
     // 放一个自己名字的引用
     domainInfo.setFileName("${domain.fileName}");
     return domainInfo;
-  }
-
-  public JPanel getRootPanel() {
-    return rootPanel;
   }
 
   public void fillData(Project project, List<DbTable> dbTables, GenerateConfig generateConfig) {
@@ -273,7 +262,7 @@ public class TablePreviewUI {
 
   private static class MyBatisXTableColumnInfo extends ColumnInfo<TableUIInfo, String> {
 
-    private boolean editable;
+    private final boolean editable;
 
     public MyBatisXTableColumnInfo(String name, boolean editable) {
       super(name);
