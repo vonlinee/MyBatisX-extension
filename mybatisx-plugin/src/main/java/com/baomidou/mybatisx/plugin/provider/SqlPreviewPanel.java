@@ -16,6 +16,7 @@ import com.baomidou.mybatisx.plugin.ui.UIHelper;
 import com.baomidou.mybatisx.util.CollectionUtils;
 import com.baomidou.mybatisx.util.Icons;
 import com.baomidou.mybatisx.util.IntellijSDK;
+import com.baomidou.mybatisx.util.JBComponents;
 import com.baomidou.mybatisx.util.SqlUtils;
 import com.baomidou.mybatisx.util.StringUtils;
 import com.baomidou.mybatisx.util.SwingUtils;
@@ -151,7 +152,7 @@ public class SqlPreviewPanel extends BorderPane {
     this.label.setText(namespace);
     statementEditor.setNamespace(namespace);
     statementEditor.updateStatement(element);
-    statementEditor.setCaretPosition(0);
+    JBComponents.setCaretPositionToBegin(statementEditor);
   }
 
   public void fillSqlWithParams() {

@@ -1,7 +1,6 @@
 package com.baomidou.mybatisx.plugin.intention;
 
 import com.baomidou.mybatisx.util.IntellijSDK;
-import com.baomidou.mybatisx.util.PsiUtils;
 import com.baomidou.mybatisx.util.SqlUtils;
 import com.baomidou.mybatisx.util.StringUtils;
 import com.intellij.ide.fileTemplates.impl.FileTemplateHighlighter;
@@ -123,9 +122,8 @@ public class MapperStatementEditor extends LanguageTextField {
    */
   public void updateStatement(@NotNull XmlTag statement) {
     this.mapperFile = (XmlFile) statement.getContainingFile();
-    String resource = PsiUtils.getPathOfContainingFile(statement);
     IntellijSDK.invoke(() -> {
-      String text = XmlStatementParser.getString(resource, statement.getAttributeValue("id"));
+      String text = MappedStatementTextBuilder.build(statement);
       setText(text);
       this.mappedStatement = parseMappedStatement(namespace, text);
     });

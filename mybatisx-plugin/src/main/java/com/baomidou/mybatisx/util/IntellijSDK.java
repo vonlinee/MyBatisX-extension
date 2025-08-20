@@ -2,6 +2,8 @@ package com.baomidou.mybatisx.util;
 
 import com.intellij.debugger.JavaDebuggerBundle;
 import com.intellij.openapi.application.ApplicationManager;
+import com.intellij.openapi.diagnostic.Logger;
+import com.intellij.openapi.diagnostic.LoggerKt;
 import com.intellij.openapi.extensions.PluginId;
 import com.intellij.openapi.fileTypes.FileType;
 import com.intellij.openapi.fileTypes.FileTypeManager;
@@ -23,6 +25,10 @@ import java.util.function.Supplier;
  * @see PsiUtils
  */
 public abstract class IntellijSDK {
+
+  public static Logger getLogger(Class<?> clazz) {
+    return Logger.getInstance(clazz);
+  }
 
   public static void invokeLater(@NotNull Runnable runnable) {
     ApplicationManager.getApplication().invokeLater(runnable);

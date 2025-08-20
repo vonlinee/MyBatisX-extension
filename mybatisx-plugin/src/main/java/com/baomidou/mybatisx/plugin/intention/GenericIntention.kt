@@ -1,46 +1,34 @@
-package com.baomidou.mybatisx.plugin.intention;
+package com.baomidou.mybatisx.plugin.intention
 
-import com.intellij.codeInsight.intention.IntentionAction;
-import com.intellij.openapi.editor.Editor;
-import com.intellij.openapi.project.Project;
-import com.intellij.psi.PsiFile;
-import org.jetbrains.annotations.NotNull;
+import com.intellij.codeInsight.intention.IntentionAction
+import com.intellij.openapi.editor.Editor
+import com.intellij.openapi.project.Project
+import com.intellij.psi.PsiFile
 
 /**
  * The type Generic intention.
  *
  * @author yanglin
  */
-public abstract class GenericIntention implements IntentionAction {
-
+abstract class GenericIntention(
   /**
    * The Chooser.
    */
-  protected IntentionChooser chooser;
+  private var chooser: IntentionChooser
+) : IntentionAction {
 
-  /**
-   * Instantiates a new Generic intention.
-   *
-   * @param chooser the chooser
-   */
-  public GenericIntention(@NotNull IntentionChooser chooser) {
-    this.chooser = chooser;
-  }
-
-  @NotNull
   @Override
-  public String getFamilyName() {
-    return getText();
+  override fun getFamilyName(): String {
+    return text
   }
 
   @Override
-  public boolean isAvailable(@NotNull Project project, Editor editor, PsiFile file) {
-    return chooser.isAvailable(project, editor, file);
+  override fun isAvailable(project: Project, editor: Editor, file: PsiFile): Boolean {
+    return chooser.isAvailable(project, editor, file)
   }
 
   @Override
-  public boolean startInWriteAction() {
-    return true;
+  override fun startInWriteAction(): Boolean {
+    return true
   }
-
 }

@@ -99,8 +99,8 @@ public class PsiUtils {
   /**
    * 获取当前类的所有字段(包括父类)
    *
-   * @param psiClass
-   * @return
+   * @param psiClass psi class
+   * @return fields of PsiClass
    */
   public static PsiField[] getAllPsiFields(PsiClass psiClass) {
     if (null == psiClass) {
@@ -112,8 +112,8 @@ public class PsiUtils {
   /**
    * 获取当前类的所有字段
    *
-   * @param psiClass
-   * @return
+   * @param psiClass psi class
+   * @return fields of PsiClass
    */
   public static PsiField[] getPsiFields(PsiClass psiClass) {
     if (null == psiClass) {

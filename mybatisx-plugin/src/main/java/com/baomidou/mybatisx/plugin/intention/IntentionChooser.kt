@@ -1,17 +1,15 @@
-package com.baomidou.mybatisx.plugin.intention;
+package com.baomidou.mybatisx.plugin.intention
 
-import com.intellij.openapi.editor.Editor;
-import com.intellij.openapi.project.Project;
-import com.intellij.psi.PsiFile;
-import org.jetbrains.annotations.NotNull;
+import com.intellij.openapi.editor.Editor
+import com.intellij.openapi.project.Project
+import com.intellij.psi.PsiFile
 
 /**
  * The interface Intention chooser.
  *
  * @author yanglin
  */
-public interface IntentionChooser {
-
+interface IntentionChooser {
   /**
    * Is available boolean.
    *
@@ -20,5 +18,5 @@ public interface IntentionChooser {
    * @param file    the file
    * @return the boolean
    */
-  boolean isAvailable(@NotNull Project project, Editor editor, PsiFile file);
+  fun isAvailable(project: Project, editor: Editor?, file: PsiFile?): Boolean
 }

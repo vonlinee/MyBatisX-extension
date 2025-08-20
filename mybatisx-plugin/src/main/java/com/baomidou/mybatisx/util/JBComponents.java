@@ -97,6 +97,12 @@ public abstract class JBComponents {
     }
   }
 
+  public static void setCaretPositionToBegin(LanguageTextField textField) {
+    if (textField != null) {
+      textField.setCaretPosition(0);
+    }
+  }
+
   /**
    * 设置编辑器光标到文本的结尾
    *
