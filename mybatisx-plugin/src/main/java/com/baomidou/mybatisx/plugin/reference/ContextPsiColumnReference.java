@@ -54,7 +54,7 @@ public class ContextPsiColumnReference extends PsiReferenceBase<XmlAttributeValu
    * @param element     the element
    * @param range       the range
    * @param index       the index
-   * @param mapperClass
+   * @param mapperClass mapper class
    */
   public ContextPsiColumnReference(XmlAttributeValue element, TextRange range, int index, PsiClass mapperClass) {
     super(element, range, false);
@@ -67,7 +67,7 @@ public class ContextPsiColumnReference extends PsiReferenceBase<XmlAttributeValu
    * 如果能找到正确的列, 线条转到正确的列
    * 无法找到数据库的列, 引用当前节点
    *
-   * @return
+   * @return PsiElement
    */
   @Nullable
   @Override
@@ -88,11 +88,11 @@ public class ContextPsiColumnReference extends PsiReferenceBase<XmlAttributeValu
   /**
    * 获取用于提示的变量列表
    *
-   * @return
+   * @return 用于提示的变量列表
    */
   @NotNull
   @Override
-  public Object[] getVariants() {
+  public Object @NotNull [] getVariants() {
     Project project = getElement().getProject();
 
     EntityMappingResolverFactory entityMappingResolverFactory
@@ -117,7 +117,7 @@ public class ContextPsiColumnReference extends PsiReferenceBase<XmlAttributeValu
           List<DbElement> dbElementList = new LinkedList<>();
           JBIterable<? extends DasColumn> columns = DasUtil.getColumns(dasTable);
           for (DasColumn column : columns) {
-            DbElement element = dbPsiFacade.findElement(column);
+            DbElement element = dataSource.findElement(column);
             dbElementList.add(element);
           }
           return dbElementList;

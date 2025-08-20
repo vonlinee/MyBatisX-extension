@@ -175,12 +175,15 @@ public abstract class StringUtils {
     return splitWorker(str, separatorChars, -1, false);
   }
 
+  public static List<String> splitToArrayList(String str, String separatorChars) {
+    return new ArrayList<>(Arrays.asList(splitWorker(str, separatorChars, -1, false)));
+  }
 
   public static String[] split(String str, String separatorChars, int max) {
     return splitWorker(str, separatorChars, max, false);
   }
 
-  private static String[] splitWorker(String str, String separatorChars, int max, boolean preserveAllTokens) {
+  public static String[] splitWorker(String str, String separatorChars, int max, boolean preserveAllTokens) {
     if (str == null) {
       return null;
     } else {

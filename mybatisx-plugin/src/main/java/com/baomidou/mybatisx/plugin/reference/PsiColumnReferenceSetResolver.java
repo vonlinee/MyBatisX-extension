@@ -2,10 +2,10 @@ package com.baomidou.mybatisx.plugin.reference;
 
 import com.baomidou.mybatisx.dom.MapperBacktrackingUtils;
 import com.baomidou.mybatisx.feat.jpa.component.mapping.EntityMappingResolverFactory;
+import com.baomidou.mybatisx.util.CollectionUtils;
 import com.baomidou.mybatisx.util.MyBatisUtils;
-import com.google.common.base.Splitter;
+import com.baomidou.mybatisx.util.StringUtils;
 import com.google.common.collect.Iterables;
-import com.google.common.collect.Lists;
 import com.intellij.database.model.DasColumn;
 import com.intellij.database.model.DasNamespace;
 import com.intellij.database.model.DasTable;
@@ -35,8 +35,6 @@ import java.util.Optional;
 @Getter
 public class PsiColumnReferenceSetResolver {
 
-  private static final Splitter SPLITTER = Splitter.on(MyBatisUtils.DOT_SEPARATOR);
-
   /**
    * The Project.
    */
@@ -60,7 +58,7 @@ public class PsiColumnReferenceSetResolver {
   protected PsiColumnReferenceSetResolver(@NotNull XmlAttributeValue element) {
     this.element = element;
     this.project = element.getProject();
-    this.texts = Lists.newArrayList(SPLITTER.split(getText()));
+    this.texts = StringUtils.splitToArrayList(getText(), MyBatisUtils.DOT_SEPARATOR);
   }
 
   /**
@@ -112,7 +110,7 @@ public class PsiColumnReferenceSetResolver {
   }
 
   public Optional<DbElement> findColumns(DasTable dasTable) {
-    String firstText = Iterables.getFirst(texts, null);
+    String firstText = CollectionUtils.getFirst(texts);
     DbPsiFacade dbPsiFacade = DbPsiFacade.getInstance(project);
     DasColumn child = DasUtil.findChild(dasTable, DasColumn.class, ObjectKind.COLUMN, firstText);
     if (child != null) {

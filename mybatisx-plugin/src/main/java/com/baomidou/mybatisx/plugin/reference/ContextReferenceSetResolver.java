@@ -1,8 +1,8 @@
 package com.baomidou.mybatisx.plugin.reference;
 
+import com.baomidou.mybatisx.util.CollectionUtils;
 import com.baomidou.mybatisx.util.MyBatisUtils;
 import com.google.common.base.Splitter;
-import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
 import com.intellij.openapi.project.Project;
 import com.intellij.psi.PsiElement;
@@ -90,7 +90,7 @@ public abstract class ContextReferenceSetResolver<F extends PsiElement, K extend
    * @return the start element
    */
   public Optional<K> getStartElement() {
-    return getStartElement(Iterables.getFirst(texts, null));
+    return getStartElement(CollectionUtils.getFirst(texts, null));
   }
 
   /**

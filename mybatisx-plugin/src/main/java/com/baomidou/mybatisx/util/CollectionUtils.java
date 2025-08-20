@@ -87,4 +87,14 @@ public final class CollectionUtils {
   public static <T> T getOnlyElement(Iterable<T> iterable) {
     return Iterables.getOnlyElement(iterable);
   }
+
+  @Nullable
+  public static <T, V extends T> T getFirst(Iterable<? extends T> iterable, @Nullable V defaultValue) {
+    return Iterables.getFirst(iterable, defaultValue);
+  }
+
+  @Nullable
+  public static <T, V extends T> T getFirst(Iterable<? extends T> iterable) {
+    return Iterables.getFirst(iterable, null);
+  }
 }
