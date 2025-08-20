@@ -1,15 +1,27 @@
 package com.baomidou.mybatisx.plugin.intention;
 
 import com.baomidou.mybatisx.model.ParamDataType;
+import com.baomidou.mybatisx.plugin.components.Button;
+import com.baomidou.mybatisx.util.JsonUtils;
 import com.baomidou.mybatisx.util.SwingUtils;
+import com.intellij.json.JsonLanguage;
+import com.intellij.openapi.actionSystem.AnActionEvent;
+import com.intellij.openapi.project.Project;
+import com.intellij.openapi.ui.DialogWrapper;
 import com.intellij.ui.AnActionButton;
+import com.intellij.ui.LanguageTextField;
 import com.intellij.ui.ToolbarDecorator;
 import com.intellij.ui.treeStructure.treetable.ListTreeTableModelOnColumns;
 import com.intellij.ui.treeStructure.treetable.TreeTableTree;
+import com.intellij.util.PlatformIcons;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import javax.swing.*;
 import javax.swing.tree.TreeNode;
 import javax.swing.tree.TreePath;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.List;
 import java.util.Map;
 
@@ -48,6 +60,17 @@ public class MapperStatementParamTablePane extends JScrollPane {
       }
     });
     decorator.addExtraActions(actions);
+
+    decorator.addExtraAction(new AnActionButton("Export Params As Json", PlatformIcons.EXPORT_ICON) {
+      @Override
+      public void actionPerformed(@NotNull AnActionEvent e) {
+        Map<String, Object> map = getParamsAsMap();
+        String string = JsonUtils.toJsonPrettyString(map);
+        ParamExportResultDialog dialog = new ParamExportResultDialog(e.getProject(), string);
+        dialog.show();
+      }
+    });
+
     setViewportView(decorator.createPanel());
   }
 
@@ -66,5 +89,49 @@ public class MapperStatementParamTablePane extends JScrollPane {
 
   public void resetAll(List<ParamNode> paramNodeList) {
     table.resetAll(paramNodeList);
+  }
+
+  /**
+   * 参数导出JSON弹窗
+   */
+  private static class ParamExportResultDialog extends DialogWrapper {
+
+    private final Project project;
+    private final String initialValue;
+    private LanguageTextField textField;
+
+    protected ParamExportResultDialog(@Nullable Project project, @Nullable String initialValue) {
+      super(project);
+      this.project = project;
+      this.initialValue = initialValue == null ? "" : initialValue;
+      setModal(true);
+      this.setSize(600, 400);
+      this.setTitle("Parameters");
+      setOKActionEnabled(false);
+      init();
+    }
+
+    @Override
+    protected @Nullable JComponent createCenterPanel() {
+      textField = new LanguageTextField(JsonLanguage.INSTANCE, project, initialValue);
+
+      return textField;
+    }
+
+    @Override
+    protected JComponent createSouthPanel() {
+      Button btn_copyToClipboard = new Button("Copy To Clipboard");
+      btn_copyToClipboard.addMouseListener(new MouseAdapter() {
+        @Override
+        public void mouseClicked(MouseEvent e) {
+          String text = textField.getText();
+          if (text.isBlank()) {
+            return;
+          }
+          SwingUtils.copyToClipboard(text);
+        }
+      });
+      return btn_copyToClipboard;
+    }
   }
 }
