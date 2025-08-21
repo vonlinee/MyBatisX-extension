@@ -1,8 +1,10 @@
 package com.baomidou.mybatisx.plugin.intention;
 
 import com.baomidou.mybatisx.model.ParamDataType;
-import com.baomidou.mybatisx.plugin.components.Button;
+import com.baomidou.mybatisx.plugin.ui.UIHelper;
+import com.baomidou.mybatisx.util.CollectionUtils;
 import com.baomidou.mybatisx.util.JsonUtils;
+import com.baomidou.mybatisx.util.StringUtils;
 import com.baomidou.mybatisx.util.SwingUtils;
 import com.intellij.json.JsonLanguage;
 import com.intellij.openapi.actionSystem.AnActionEvent;
@@ -20,8 +22,6 @@ import org.jetbrains.annotations.Nullable;
 import javax.swing.*;
 import javax.swing.tree.TreeNode;
 import javax.swing.tree.TreePath;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.util.List;
 import java.util.Map;
 
@@ -65,6 +65,7 @@ public class MapperStatementParamTablePane extends JScrollPane {
       @Override
       public void actionPerformed(@NotNull AnActionEvent e) {
         Map<String, Object> map = getParamsAsMap();
+        map = CollectionUtils.expandKeys(map, StringUtils.SPLITTER);
         String string = JsonUtils.toJsonPrettyString(map);
         ParamExportResultDialog dialog = new ParamExportResultDialog(e.getProject(), string);
         dialog.show();
@@ -107,31 +108,25 @@ public class MapperStatementParamTablePane extends JScrollPane {
       setModal(true);
       this.setSize(600, 400);
       this.setTitle("Parameters");
-      setOKActionEnabled(false);
+      setOKButtonText("Copy To Clipboard");
       init();
     }
 
     @Override
     protected @Nullable JComponent createCenterPanel() {
       textField = new LanguageTextField(JsonLanguage.INSTANCE, project, initialValue);
-
+      UIHelper.setEmptyBorder(textField);
       return textField;
     }
 
     @Override
-    protected JComponent createSouthPanel() {
-      Button btn_copyToClipboard = new Button("Copy To Clipboard");
-      btn_copyToClipboard.addMouseListener(new MouseAdapter() {
-        @Override
-        public void mouseClicked(MouseEvent e) {
-          String text = textField.getText();
-          if (text.isBlank()) {
-            return;
-          }
-          SwingUtils.copyToClipboard(text);
-        }
-      });
-      return btn_copyToClipboard;
+    protected void doOKAction() {
+      super.doOKAction();
+      String text = textField.getText();
+      if (text.isBlank()) {
+        return;
+      }
+      SwingUtils.copyToClipboard(text);
     }
   }
 }

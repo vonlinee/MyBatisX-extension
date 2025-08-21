@@ -5,6 +5,7 @@ import com.baomidou.mybatisx.plugin.components.EnumComboBox;
 import com.baomidou.mybatisx.plugin.components.TextField;
 import com.baomidou.mybatisx.plugin.components.TreeTableView;
 import com.baomidou.mybatisx.plugin.ui.UIHelper;
+import com.baomidou.mybatisx.tip.JdbcType;
 import com.baomidou.mybatisx.util.SwingUtils;
 import com.intellij.ui.components.JBTextField;
 import com.intellij.ui.components.fields.ExpandableTextField;
@@ -34,7 +35,9 @@ import java.util.Objects;
 
 public class MSParamTreeTable extends TreeTableView<ParamNode> {
 
-  private static final int VALUE_COLUMN_INDEX = 2;
+  private static final int PARAM_KEY_COLUMN_INDEX = 0;
+  private static final int JAVA_TYPE_COLUMN_INDEX = 1;
+  private static final int JDBC_TYPE_COLUMN_INDEX = 2;
 
   private final TableModel model;
 
@@ -84,21 +87,19 @@ public class MSParamTreeTable extends TreeTableView<ParamNode> {
           @Override
           public TableCellEditor getEditor(ParamNode paramNode) {
             EnumComboBox<ParamDataType> paramTypeComboBox = new EnumComboBox<>(ParamDataType.class);
-            DefaultCellEditor editor = new DefaultCellEditor(paramTypeComboBox);
-            editor.addCellEditorListener(new CellEditorListener() {
-              @Override
-              public void editingStopped(ChangeEvent e) {
-                paramNode.setDataType(UIHelper.getCellEditorStringValue(e));
-              }
-
-              @Override
-              public void editingCanceled(ChangeEvent e) {
+            paramTypeComboBox.addActionListener(e -> {
+              EnumComboBox<ParamDataType> source = (EnumComboBox<ParamDataType>) e.getSource();
+              ParamDataType selectedItem = source.getSelectedItem();
+              if (selectedItem != null) {
+                paramNode.setDataType(selectedItem.name());
               }
             });
+            DefaultCellEditor editor = new DefaultCellEditor(paramTypeComboBox);
+            editor.setClickCountToStart(1);
             return editor;
           }
         },
-        /*new ColumnInfo<ParamNode, String>("JdbcType") {
+        new ColumnInfo<ParamNode, String>("JdbcType") {
 
           @Override
           public @Nullable String valueOf(ParamNode paramNode) {
@@ -108,20 +109,18 @@ public class MSParamTreeTable extends TreeTableView<ParamNode> {
           @Override
           public TableCellEditor getEditor(ParamNode paramNode) {
             EnumComboBox<JdbcType> comboBox = new EnumComboBox<>(JdbcType.class);
-            DefaultCellEditor editor = new DefaultCellEditor(comboBox);
-            editor.addCellEditorListener(new CellEditorListener() {
-              @Override
-              public void editingStopped(ChangeEvent e) {
-                paramNode.setJdbcType(UIHelper.getCellEditorStringValue(e));
-              }
-
-              @Override
-              public void editingCanceled(ChangeEvent e) {
+            comboBox.addActionListener(e -> {
+              EnumComboBox<JdbcType> source = (EnumComboBox<JdbcType>) e.getSource();
+              JdbcType selectedItem = source.getSelectedItem();
+              if (selectedItem != null) {
+                paramNode.setJdbcType(selectedItem.name());
               }
             });
+            DefaultCellEditor editor = new DefaultCellEditor(comboBox);
+            editor.setClickCountToStart(1);
             return editor;
           }
-        },*/
+        },
         new ColumnInfo<ParamNode, String>("Value") {
 
           @Override
@@ -157,8 +156,9 @@ public class MSParamTreeTable extends TreeTableView<ParamNode> {
     this.model = (TableModel) getTreeTableModel();
     this.columns = this.model.getColumns();
 
-    TableColumn column = getColumnModel().getColumn(1);
+    TableColumn column = getColumnModel().getColumn(JAVA_TYPE_COLUMN_INDEX);
     SwingUtils.setFixedWidth(column, 110);
+    SwingUtils.setFixedWidth(getColumnModel().getColumn(JDBC_TYPE_COLUMN_INDEX), 110);
 
     setAutoResizeMode(JTable.AUTO_RESIZE_LAST_COLUMN);
     JTree tree = this.getTree();
@@ -293,10 +293,10 @@ public class MSParamTreeTable extends TreeTableView<ParamNode> {
     Map<String, ParamDataType> dataTypeNameMap = ParamDataType.asMap();
     StringBuilder sb = new StringBuilder();
     for (int i = 0; i < rowCount; i++) {
-      String dataType = (String) tableModel.getValueAt(i, 2);
+      String dataType = (String) tableModel.getValueAt(i, JAVA_TYPE_COLUMN_INDEX);
       ParamDataType type = dataTypeNameMap.getOrDefault(dataType, ParamDataType.UNKNOWN);
-      String value = (String) tableModel.getValueAt(i, 1);
-      map.put((String) tableModel.getValueAt(i, 0), type.parseObject(value, sb));
+      String value = (String) tableModel.getValueAt(i, JDBC_TYPE_COLUMN_INDEX);
+      map.put((String) tableModel.getValueAt(i, PARAM_KEY_COLUMN_INDEX), type.parseObject(value, sb));
     }
     return map;
   }
@@ -322,6 +322,9 @@ public class MSParamTreeTable extends TreeTableView<ParamNode> {
     @Override
     public boolean isCellEditable(Object node, int column) {
       if (!(node instanceof DefaultMutableTreeNode)) {
+        return false;
+      }
+      if (column == JDBC_TYPE_COLUMN_INDEX) {
         return false;
       }
       DefaultMutableTreeNode row = (DefaultMutableTreeNode) node;

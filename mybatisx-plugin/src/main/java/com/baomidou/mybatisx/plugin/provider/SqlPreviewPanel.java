@@ -44,6 +44,8 @@ import java.util.Optional;
 
 public class SqlPreviewPanel extends BorderPane {
 
+  static final String ROOT = "root";
+
   private final Tabs tabPane;
   private final MapperStatementEditor statementEditor;
   private final SqlEditor resultSqlEditor;
@@ -87,7 +89,6 @@ public class SqlPreviewPanel extends BorderPane {
     btnApply.addMouseListener(new MouseAdapter() {
       @Override
       public void mouseClicked(MouseEvent e) {
-        super.mouseClicked(e);
         if (!importPane.isVisible()) {
           importPane.setVisible(true);
         }
@@ -103,7 +104,6 @@ public class SqlPreviewPanel extends BorderPane {
     btnHide.addMouseListener(new MouseAdapter() {
       @Override
       public void mouseClicked(MouseEvent e) {
-        super.mouseClicked(e);
         importPane.setVisible(false);
       }
     });
@@ -112,7 +112,6 @@ public class SqlPreviewPanel extends BorderPane {
     btnGenerate.addMouseListener(new MouseAdapter() {
       @Override
       public void mouseClicked(MouseEvent e) {
-        super.mouseClicked(e);
         importPane.generateParamTemplate(table.getParamsAsMap());
       }
     });
@@ -170,7 +169,7 @@ public class SqlPreviewPanel extends BorderPane {
       fillMapperStatementParams();
     }
     Map<String, Object> map = table.getParamsAsMap();
-    map = CollectionUtils.expandKeys(map, "\\.");
+    map = CollectionUtils.expandKeys(map, StringUtils.SPLITTER);
     try {
       String sql = statementEditor.computeSql(map, inline);
       return SqlUtils.format(sql);
@@ -195,9 +194,9 @@ public class SqlPreviewPanel extends BorderPane {
   }
 
   private static ParamNode buildTree(List<ParameterMapping> mappings) {
-    ParamNode root = new ParamNode("root", null, ParamDataType.UNKNOWN); // 根节点
+    ParamNode root = new ParamNode(ROOT, null, ParamDataType.UNKNOWN); // 根节点
     for (ParameterMapping mapping : mappings) {
-      String[] parts = mapping.getProperty().split("\\.");
+      String[] parts = mapping.getProperty().split(StringUtils.SPLITTER);
       addToTree(root, parts, mapping);
     }
     return root;
@@ -205,13 +204,21 @@ public class SqlPreviewPanel extends BorderPane {
 
   private static void addToTree(ParamNode currentNode, String[] parts, ParameterMapping mapping) {
     for (String part : parts) {
-      Optional<ParamNode> existingNode = Optional.ofNullable(currentNode.getChildren()).map(List::stream).flatMap(stream -> stream.filter(child -> child.getKey().equals(part)).findFirst());
+      Optional<ParamNode> existingNode = Optional.ofNullable(currentNode.getChildren())
+        .map(List::stream)
+        .flatMap(stream -> stream.filter(child -> child.getKey().equals(part))
+          .findFirst());
       if (existingNode.isPresent()) {
         currentNode = existingNode.get(); // 如果节点存在，进入该节点
       } else {
         ParamNode newNode = new ParamNode(part, null, getParamDataType(mapping));
+        if (mapping.getJdbcType() != null) {
+          newNode.setJdbcType(mapping.getJdbcType().name());
+        } else if (mapping.getJdbcTypeName() != null) {
+          newNode.setJdbcType(mapping.getJdbcTypeName());
+        }
         currentNode.addChild(newNode);
-        currentNode = newNode; // 进入新节点
+        currentNode = newNode;
       }
     }
   }

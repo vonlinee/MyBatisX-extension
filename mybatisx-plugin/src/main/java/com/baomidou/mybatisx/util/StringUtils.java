@@ -15,6 +15,7 @@ import java.util.stream.Collectors;
 public abstract class StringUtils {
 
   public static final String EMPTY = "";
+  public static final String SPLITTER = "\\.";
   public static final String[] EMPTY_STRING_ARRAY = new String[0];
 
   /**

@@ -4,6 +4,7 @@ import com.intellij.ui.treeStructure.treetable.TreeTable;
 import com.intellij.ui.treeStructure.treetable.TreeTableModel;
 import org.jetbrains.annotations.Nullable;
 
+import javax.swing.table.TableColumn;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreeNode;
@@ -52,5 +53,9 @@ public class TreeTableView<T> extends TreeTable {
 
   public final TreeTableModel getTreeTableModel() {
     return treeTableModel;
+  }
+
+  public TableColumn getTreeTableColumn(int columnIndex) {
+    return getColumnModel().getColumn(columnIndex);
   }
 }
