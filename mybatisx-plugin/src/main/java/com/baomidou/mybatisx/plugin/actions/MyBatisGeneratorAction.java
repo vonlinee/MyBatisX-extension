@@ -4,8 +4,8 @@ import com.baomidou.mybatisx.feat.mybatis.generator.ClassGenerateDialogWrapper;
 import com.baomidou.mybatisx.feat.mybatis.generator.dto.GenerateConfig;
 import com.baomidou.mybatisx.feat.mybatis.generator.dto.TableUIInfo;
 import com.baomidou.mybatisx.feat.mybatis.generator.dto.TemplateContext;
-import com.baomidou.mybatisx.plugin.setting.TemplatesSettings;
 import com.baomidou.mybatisx.feat.mybatis.generator.template.CodeGenerator;
+import com.baomidou.mybatisx.plugin.setting.TemplatesSettings;
 import com.baomidou.mybatisx.util.ArrayUtils;
 import com.baomidou.mybatisx.util.PluginUtils;
 import com.baomidou.mybatisx.util.PsiUtils;
@@ -13,7 +13,6 @@ import com.intellij.database.model.DasObject;
 import com.intellij.database.psi.DbTable;
 import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;
-import com.intellij.openapi.actionSystem.LangDataKeys;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.ui.Messages;
 import com.intellij.openapi.vfs.VirtualFileManager;
@@ -51,7 +50,7 @@ public final class MyBatisGeneratorAction extends AnAction {
   @Override
   public void actionPerformed(@NotNull AnActionEvent e) {
     Project project = e.getProject();
-    PsiElement[] dbToolElements = e.getData(LangDataKeys.PSI_ELEMENT_ARRAY);
+    PsiElement[] dbToolElements = PsiUtils.getPsiElementArray(e);
     if (dbToolElements == null || dbToolElements.length == 0) {
       logger.error("未选择表, 无法生成代码");
       return;

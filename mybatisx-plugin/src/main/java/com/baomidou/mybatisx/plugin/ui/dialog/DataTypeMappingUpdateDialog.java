@@ -14,8 +14,8 @@ public class DataTypeMappingUpdateDialog extends DialogBase {
 
   String typeGroup;
   String anotherTypeGroup;
-  private SimpleComboBox<String> types = new SimpleComboBox<>();
-  private SimpleComboBox<String> anotherTypes = new SimpleComboBox<>();
+  private final SimpleComboBox<String> types = new SimpleComboBox<>();
+  private final SimpleComboBox<String> anotherTypes = new SimpleComboBox<>();
 
   public DataTypeMappingUpdateDialog(@NotNull String typeGroup, @NotNull String anotherTypeGroup) {
     this.typeGroup = typeGroup;
@@ -30,9 +30,7 @@ public class DataTypeMappingUpdateDialog extends DialogBase {
 
   @Override
   protected @Nullable JComponent createCenterPanel() {
-    HBox hBox = new HBox();
-    hBox.addChildren(types, anotherTypes);
-    return hBox;
+    return new HBox(types, anotherTypes);
   }
 
   public DataTypeMappingItem getTypeMappingItem() {

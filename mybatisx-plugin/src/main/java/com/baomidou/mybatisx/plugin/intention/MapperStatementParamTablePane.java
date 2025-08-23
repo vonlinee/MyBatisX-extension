@@ -64,8 +64,7 @@ public class MapperStatementParamTablePane extends JScrollPane {
     decorator.addExtraAction(new AnActionButton("Export Params As Json", PlatformIcons.EXPORT_ICON) {
       @Override
       public void actionPerformed(@NotNull AnActionEvent e) {
-        Map<String, Object> map = getParamsAsMap();
-        map = CollectionUtils.expandKeys(map, StringUtils.SPLITTER);
+        Map<String, Object> map = CollectionUtils.expandKeys(getParamsAsMap(), StringUtils.SPLITTER);
         String string = JsonUtils.toJsonPrettyString(map);
         ParamExportResultDialog dialog = new ParamExportResultDialog(e.getProject(), string);
         dialog.show();

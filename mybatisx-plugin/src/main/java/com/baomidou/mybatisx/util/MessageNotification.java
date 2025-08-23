@@ -13,7 +13,7 @@ import org.jetbrains.annotations.Nullable;
 import javax.swing.*;
 
 /**
- * 消息通知
+ * 消息通知：弹窗通知
  *
  * @see com.baomidou.mybatisx.util.Notifications
  */
@@ -55,5 +55,10 @@ public abstract class MessageNotification {
                                        @NotNull String title,
                                        @Nullable Icon icon) {
     Messages.showMessageDialog(message, title, icon);
+  }
+
+  public static void warn(String message,
+                          @NotNull String title) {
+    Messages.showMessageDialog(message, title, Messages.getWarningIcon());
   }
 }

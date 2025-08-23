@@ -69,4 +69,8 @@ public abstract class JsonUtils {
   public static JsonArray parseJsonArray(String json) {
     return gson.fromJson(json, JsonArray.class);
   }
+
+  public static Map<String, Object> parseJsonToMap(String json) {
+    return gson.fromJson(json, Map.class);
+  }
 }

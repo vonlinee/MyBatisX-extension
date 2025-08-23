@@ -11,8 +11,6 @@ import com.baomidou.mybatisx.util.JavaUtils;
 import com.google.common.base.Function;
 import com.google.common.collect.Collections2;
 import com.google.common.collect.Iterables;
-import com.google.common.collect.Lists;
-import com.google.common.collect.Sets;
 import com.intellij.openapi.command.WriteCommandAction;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.ui.popup.JBPopupFactory;
@@ -31,7 +29,9 @@ import lombok.Setter;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -69,7 +69,7 @@ public abstract class AbstractStatementGenerator {
    * @param patterns the patterns
    */
   public AbstractStatementGenerator(@NotNull String... patterns) {
-    this.patterns = Sets.newHashSet(patterns);
+    this.patterns = new HashSet<>(List.of(patterns));
   }
 
   /**
@@ -120,11 +120,11 @@ public abstract class AbstractStatementGenerator {
       generators[0].execute(method, method.getProject());
     } else {
       BaseListPopupStep<AbstractStatementGenerator> step = new BaseListPopupStep<>("[ Statement type for method: " + method.getName() + "]", generators) {
-          @Override
-          public PopupStep<?> onChosen(AbstractStatementGenerator selectedValue, boolean finalChoice) {
-              return this.doFinalStep(() -> WriteCommandAction.writeCommandAction(project)
-                      .run(() -> selectedValue.execute(method, project)));
-          }
+        @Override
+        public PopupStep<?> onChosen(AbstractStatementGenerator selectedValue, boolean finalChoice) {
+          return this.doFinalStep(() -> WriteCommandAction.writeCommandAction(project)
+            .run(() -> selectedValue.execute(method, project)));
+        }
       };
       JBPopupFactory.getInstance().createListPopup(step).showInFocusCenter();
     }
@@ -139,7 +139,7 @@ public abstract class AbstractStatementGenerator {
   @NotNull
   public static AbstractStatementGenerator[] getGenerators(@NotNull PsiMethod method) {
     String target = method.getName();
-    List<AbstractStatementGenerator> result = Lists.newArrayList();
+    List<AbstractStatementGenerator> result = new ArrayList<>();
     for (AbstractStatementGenerator generator : StatementGenerators.ALL) {
       for (String pattern : generator.getPatterns()) {
         // 一定是以关键字开头
@@ -164,7 +164,7 @@ public abstract class AbstractStatementGenerator {
     }
     CollectProcessor<Mapper> processor = new CollectProcessor<>();
     JavaService.getInstance(project).processClass(psiClass, processor);
-    final List<Mapper> mappers = Lists.newArrayList(processor.getResults());
+    final List<Mapper> mappers = new ArrayList<>(processor.getResults());
     if (1 == mappers.size()) {
       setupTag(method, (Mapper) Iterables.getOnlyElement(mappers, (Object) null), project);
     } else if (mappers.size() > 1) {

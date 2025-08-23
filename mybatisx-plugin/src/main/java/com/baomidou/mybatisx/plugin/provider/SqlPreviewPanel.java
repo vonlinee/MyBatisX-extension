@@ -21,11 +21,13 @@ import com.baomidou.mybatisx.util.SqlUtils;
 import com.baomidou.mybatisx.util.StringUtils;
 import com.baomidou.mybatisx.util.SwingUtils;
 import com.intellij.openapi.actionSystem.AnActionEvent;
+import com.intellij.openapi.actionSystem.Presentation;
 import com.intellij.openapi.project.Project;
 import com.intellij.psi.xml.XmlTag;
 import com.intellij.ui.AnActionButton;
 import com.intellij.util.ExceptionUtil;
 import com.intellij.util.PlatformIcons;
+import lombok.Getter;
 import org.apache.ibatis.mapping.ParameterMapping;
 import org.jetbrains.annotations.NotNull;
 
@@ -50,16 +52,19 @@ public class SqlPreviewPanel extends BorderPane {
   private final MapperStatementEditor statementEditor;
   private final SqlEditor resultSqlEditor;
   private final MapperStatementParamTablePane table;
-  private final SplitPane center;
-  private final Project project;
-  private final SplitPane paramContainer;
   private final Label label;
+  private final ParamImportPane importPane;
+
+  /**
+   * true - 直接使用JSON转换的数据作为参数进行SQL预览， false - 通过参数表格组件提取的参数
+   */
+  @Getter
+  private boolean useRawUserInputParams;
 
   private String namespace;
 
   public SqlPreviewPanel(Project project) {
     UIHelper.setEmptyBorder(this, 5, 10, 7, 10);
-    this.project = project;
 
     HBox top = new HBox();
     Label label = new Label("Namespace: ");
@@ -81,12 +86,10 @@ public class SqlPreviewPanel extends BorderPane {
     tabPane.addTab("SQL", resultSqlEditor);
 
     center.setFirstComponent(this.tabPane = tabPane);
-    paramContainer = new SplitPane(true, 0.5f);
+    SplitPane paramContainer = new SplitPane(true, 0.5f);
 
     ParamImportPane importPane = new ParamImportPane(project);
-    Button btnApply = new Button("Apply");
-    btnApply.setToolTipText("fill param table with params parsed by user input");
-    btnApply.addMouseListener(new MouseAdapter() {
+    Button btnApply = new Button("Apply", "fill param table with params parsed by user input", new MouseAdapter() {
       @Override
       public void mouseClicked(MouseEvent e) {
         if (!importPane.isVisible()) {
@@ -99,25 +102,20 @@ public class SqlPreviewPanel extends BorderPane {
         table.resetAll(params);
       }
     });
-    Button btnHide = new Button("Close");
-    btnHide.setToolTipText("close params import panel");
-    btnHide.addMouseListener(new MouseAdapter() {
+    Button btnHide = new Button("Close", "close params import panel", new MouseAdapter() {
       @Override
       public void mouseClicked(MouseEvent e) {
         importPane.setVisible(false);
       }
     });
-    Button btnGenerate = new Button("Generate");
-    btnGenerate.setToolTipText("generate default params with null value");
-    btnGenerate.addMouseListener(new MouseAdapter() {
+    Button btnGenerate = new Button("Generate", "generate default params with null value", new MouseAdapter() {
       @Override
       public void mouseClicked(MouseEvent e) {
         importPane.generateParamTemplate(table.getParamsAsMap());
       }
     });
-    HBox hBox = new HBox();
-    hBox.addChildren(btnApply, btnGenerate, btnHide);
-    importPane.setBottom(hBox);
+
+    importPane.setBottom(new HBox(btnApply, btnGenerate, btnHide));
 
     AnActionButton[] actions = new AnActionButton[]{new AnActionButton("Import Params", "Import params", PlatformIcons.IMPORT_ICON) {
       @Override
@@ -132,17 +130,29 @@ public class SqlPreviewPanel extends BorderPane {
       public void actionPerformed(@NotNull AnActionEvent e) {
         fillMapperStatementParams();
       }
+    }, new AnActionButton("Enable of Disable Parameter Table", Icons.STATUS_ENABLED) {
+      @Override
+      public void actionPerformed(@NotNull AnActionEvent e) {
+        useRawUserInputParams = !useRawUserInputParams;
+        Presentation presentation = e.getPresentation();
+        if (useRawUserInputParams) {
+          presentation.setIcon(Icons.STATUS_DISABLED);
+          presentation.setText("Parameter Table Is Disabled");
+        } else {
+          presentation.setIcon(Icons.STATUS_ENABLED);
+          presentation.setText("Parameter Table Is Enabled");
+        }
+        repaint();
+      }
     }};
     table = new MapperStatementParamTablePane(actions);
-
-    importPane.setVisible(false);
-
     paramContainer.setFirstComponent(table);
     paramContainer.setRightComponent(importPane);
     center.setLeftComponent(tabPane);
     center.setRightComponent(paramContainer);
 
-    setCenter(this.center = center);
+    this.importPane = importPane;
+    setCenter(center);
     this.setPreferredSize(SwingUtils.getScreenBasedDimension(0.7));
   }
 
@@ -168,8 +178,14 @@ public class SqlPreviewPanel extends BorderPane {
     if (refreshParams) {
       fillMapperStatementParams();
     }
-    Map<String, Object> map = table.getParamsAsMap();
-    map = CollectionUtils.expandKeys(map, StringUtils.SPLITTER);
+    Map<String, Object> map;
+    System.out.println(useRawUserInputParams);
+    if (useRawUserInputParams) {
+      map = importPane.getParamsAsMap();
+    } else {
+      map = table.getParamsAsMap();
+      map = CollectionUtils.expandKeys(map, StringUtils.SPLITTER);
+    }
     try {
       String sql = statementEditor.computeSql(map, inline);
       return SqlUtils.format(sql);

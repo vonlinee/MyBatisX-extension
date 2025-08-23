@@ -56,4 +56,8 @@ public interface Icons {
 
   Icon AUTO_REFRESH = IconLoader.getIcon("/icons/autoRefresh.svg", Icons.class);
   Icon AUTO_REFRESH_DARK = IconLoader.getIcon("/icons/autoRefresh_dark.svg", Icons.class);
+  Icon STATUS_ENABLED = IconLoader.getIcon("/icons/statusEnabled.svg", Icons.class);
+  Icon STATUS_ENABLED_DARK = IconLoader.getIcon("/icons/statusEnabled_dark.svg", Icons.class);
+  Icon STATUS_DISABLED = IconLoader.getIcon("/icons/statusDisabled.svg", Icons.class);
+  Icon STATUS_DISABLED_DARK = IconLoader.getIcon("/icons/statusDisabled_dark.svg", Icons.class);
 }

@@ -3,10 +3,11 @@ package com.baomidou.mybatisx.util;
 import com.intellij.debugger.JavaDebuggerBundle;
 import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.diagnostic.Logger;
-import com.intellij.openapi.diagnostic.LoggerKt;
 import com.intellij.openapi.extensions.PluginId;
 import com.intellij.openapi.fileTypes.FileType;
 import com.intellij.openapi.fileTypes.FileTypeManager;
+import com.intellij.openapi.module.Module;
+import com.intellij.openapi.module.ModuleManager;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.project.ProjectManager;
 import com.intellij.openapi.wm.ToolWindow;
@@ -105,5 +106,9 @@ public abstract class IntellijSDK {
       Notifications.error(throwable.getMessage());
       return null;
     }
+  }
+
+  public static Module[] getProjectModules(Project project) {
+    return ModuleManager.getInstance(project).getModules();
   }
 }

@@ -17,6 +17,11 @@ public class HBox extends Pane {
     super(new HorizontalLayout());
   }
 
+  public HBox(Component... components) {
+    super(new HorizontalLayout());
+    addChildren(components);
+  }
+
   public final void addChildren(Component... components) {
     for (Component component : components) {
       add(component);

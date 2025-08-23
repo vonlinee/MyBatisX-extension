@@ -16,6 +16,8 @@ import com.intellij.openapi.fileTypes.PlainTextFileType;
 import com.intellij.openapi.project.Project;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -77,7 +79,7 @@ public class ParamImportPane extends BorderPane {
           }
         } else if (element.isJsonArray()) {
           JsonArray jsonArray = element.getAsJsonArray();
-          if (jsonArray.size() == 0) {
+          if (jsonArray.isEmpty()) {
             parent.addChild(new ParamNode(key, "", ParamDataType.ARRAY));
           } else {
             JsonElement jsonElement = jsonArray.get(0);
@@ -101,6 +103,44 @@ public class ParamImportPane extends BorderPane {
         }
       }
     }
+  }
+
+  public Map<String, Object> getParamsAsMap() {
+    int index = tabbedPane.getSelectedIndex();
+    Map<String, Object> result = new HashMap<>();
+    String text;
+    switch (index) {
+      case 0: // json
+        text = jsonParamEditor.getText();
+        if (StringUtils.isBlank(text)) {
+          return Collections.emptyMap();
+        }
+        result.putAll(JsonUtils.parseJsonToMap(text));
+      case 1:
+        text = urlParamEditor.getText();
+        if (!StringUtils.isBlank(text)) {
+          int i = text.indexOf("?");
+          if (i >= 0) {
+            String[] nvPairs = text.substring(i + 1).split("&");
+            for (String nvPair : nvPairs) {
+              int j = nvPair.indexOf("=");
+              if (j >= 0) {
+                result.put(nvPair.substring(0, j), nvPair.substring(j + 1));
+              }
+            }
+          } else {
+            String[] nvPairs = text.split("&");
+            for (String nvPair : nvPairs) {
+              int j = nvPair.indexOf("=");
+              if (j >= 0) {
+                result.put(nvPair.substring(0, j), nvPair.substring(j + 1));
+              }
+            }
+          }
+        }
+        break;
+    }
+    return result;
   }
 
   /**

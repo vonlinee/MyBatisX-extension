@@ -11,7 +11,11 @@ import org.jetbrains.annotations.NotNull;
 public class PluginUtils {
 
   public static final String PLUGIN_NAME = "MyBatisX";
-  public static final String PLUGIN_ID = "com.baomidou.plugin.idea.mybatisx";
+
+  /**
+   * same with the <id> in plugin.xml
+   */
+  public static final String PLUGIN_ID = "com.baomidou.plugin.idea.mybatisx.extension";
   private static volatile Boolean existsDatabaseTools = null;
 
   private PluginUtils() {

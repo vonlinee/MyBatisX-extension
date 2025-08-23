@@ -2,8 +2,7 @@ package com.baomidou.mybatisx.plugin.reference;
 
 import com.baomidou.mybatisx.util.CollectionUtils;
 import com.baomidou.mybatisx.util.MyBatisUtils;
-import com.google.common.base.Splitter;
-import com.google.common.collect.Lists;
+import com.baomidou.mybatisx.util.StringUtils;
 import com.intellij.openapi.project.Project;
 import com.intellij.psi.PsiElement;
 import lombok.Getter;
@@ -24,8 +23,6 @@ import java.util.Optional;
 @Setter
 @Getter
 public abstract class ContextReferenceSetResolver<F extends PsiElement, K extends PsiElement> {
-
-  private static final Splitter SPLITTER = Splitter.on(MyBatisUtils.DOT_SEPARATOR);
 
   /**
    * The Project.
@@ -50,7 +47,8 @@ public abstract class ContextReferenceSetResolver<F extends PsiElement, K extend
   protected ContextReferenceSetResolver(@NotNull F element) {
     this.element = element;
     this.project = element.getProject();
-    this.texts = Lists.newArrayList(SPLITTER.split(getText()));
+    this.texts = StringUtils.splitToArrayList(getText(), MyBatisUtils.DOT_SEPARATOR);
+    ;
   }
 
   /**

@@ -10,7 +10,6 @@ import com.baomidou.mybatisx.util.Icons;
 import com.baomidou.mybatisx.util.JavaUtils;
 import com.baomidou.mybatisx.util.MapperUtils;
 import com.baomidou.mybatisx.util.StringUtils;
-import com.google.common.collect.ImmutableSet;
 import com.intellij.psi.PsiClass;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiMethod;
@@ -24,6 +23,7 @@ import org.jetbrains.annotations.Nullable;
 
 import javax.swing.*;
 import java.util.Optional;
+import java.util.Set;
 
 /**
  * The type Statement line marker provider.
@@ -33,7 +33,7 @@ import java.util.Optional;
 public class StatementLineMarkerProvider extends SimpleLineMarkerProvider<XmlToken, PsiElement> {
 
   private static final String MAPPER_CLASS = Mapper.class.getSimpleName().toLowerCase();
-  private static final ImmutableSet<String> TARGET_TYPES = ImmutableSet.of(
+  private static final Set<String> TARGET_TYPES = Set.of(
     Select.class.getSimpleName().toLowerCase(),
     Insert.class.getSimpleName().toLowerCase(),
     Update.class.getSimpleName().toLowerCase(),
@@ -52,9 +52,7 @@ public class StatementLineMarkerProvider extends SimpleLineMarkerProvider<XmlTok
     DomElement domElement = DomUtil.getDomElement(from);
     if (null == domElement) {
       return Optional.empty();
-    }
-    // 方法
-    else if (domElement instanceof IdDomElement) {
+    } else if (domElement instanceof IdDomElement) { // 方法
       return JavaUtils.findMethods(from.getProject(),
         MapperUtils.getNamespace(domElement),
         MapperUtils.getId((IdDomElement) domElement));
@@ -97,9 +95,7 @@ public class StatementLineMarkerProvider extends SimpleLineMarkerProvider<XmlTok
       targetType = false;
     }
     return targetType;
-
   }
-
 
   @Override
   public @Nullable("null means disabled")
@@ -112,7 +108,6 @@ public class StatementLineMarkerProvider extends SimpleLineMarkerProvider<XmlTok
   public Icon getIcon() {
     return Icons.MAPPER_LINE_MARKER_ICON;
   }
-
 
   @Override
   @NotNull

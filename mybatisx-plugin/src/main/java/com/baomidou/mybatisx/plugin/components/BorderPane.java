@@ -6,6 +6,9 @@ import java.awt.*;
 
 /**
  * BorderLayout
+ *
+ * @see BorderLayout
+ * @see BorderLayoutPanel
  */
 public class BorderPane extends BorderLayoutPanel {
 

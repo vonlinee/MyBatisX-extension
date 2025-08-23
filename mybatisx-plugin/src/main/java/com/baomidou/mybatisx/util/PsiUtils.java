@@ -19,6 +19,7 @@ import com.intellij.psi.search.searches.AnnotatedElementsSearch;
 import com.intellij.psi.util.PsiTreeUtil;
 import org.apache.commons.compress.utils.Lists;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -231,5 +232,10 @@ public class PsiUtils {
       relativePath = absolutePath.replace(basePath, "");
     }
     return relativePath;
+  }
+
+  @Nullable
+  public static PsiElement[] getPsiElementArray(AnActionEvent e) {
+    return e.getData(LangDataKeys.PSI_ELEMENT_ARRAY);
   }
 }

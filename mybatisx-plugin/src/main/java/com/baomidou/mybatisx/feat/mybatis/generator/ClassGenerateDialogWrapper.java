@@ -6,27 +6,27 @@ import com.baomidou.mybatisx.feat.mybatis.generator.dto.GenerateConfig;
 import com.baomidou.mybatisx.feat.mybatis.generator.dto.TemplateContext;
 import com.baomidou.mybatisx.feat.mybatis.generator.dto.TemplateSettingDTO;
 import com.baomidou.mybatisx.feat.mybatis.generator.setting.DefaultSettingsConfig;
+import com.baomidou.mybatisx.plugin.components.BorderPane;
 import com.baomidou.mybatisx.plugin.setting.TemplatesSettings;
 import com.baomidou.mybatisx.plugin.ui.CodeGenerateUI;
 import com.baomidou.mybatisx.plugin.ui.TablePreviewUI;
+import com.baomidou.mybatisx.util.CollectionUtils;
 import com.baomidou.mybatisx.util.MessageNotification;
 import com.baomidou.mybatisx.util.StringUtils;
 import com.intellij.database.psi.DbTable;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.ui.DialogWrapper;
-import com.intellij.openapi.ui.Messages;
 import lombok.extern.slf4j.Slf4j;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 /**
- * 代码生成器配置
+ * 代码生成器弹窗
  */
 @Slf4j
 public class ClassGenerateDialogWrapper extends DialogWrapper {
@@ -35,9 +35,8 @@ public class ClassGenerateDialogWrapper extends DialogWrapper {
 
   private final TablePreviewUI tablePreviewUI = new TablePreviewUI();
 
-  private final JPanel rootPanel = new JPanel();
+  private final BorderPane rootPanel = new BorderPane();
   private final Action previousAction;
-  private List<JPanel> containerPanelList;
   private int page = 0;
   private int lastPage = 1;
   private Project project;
@@ -53,8 +52,7 @@ public class ClassGenerateDialogWrapper extends DialogWrapper {
     previousAction = new DialogWrapperAction("Previous") {
       @Override
       protected void doAction(ActionEvent e) {
-        page = page - 1;
-        switchPage(page);
+        switchPage(page = page - 1);
         previousAction.setEnabled(false);
         setOKButtonText("Next");
       }
@@ -62,11 +60,8 @@ public class ClassGenerateDialogWrapper extends DialogWrapper {
     // 默认禁用 上一个设置
     previousAction.setEnabled(false);
     // 初始化容器列表
-    containerPanelList = new ArrayList<>();
-    containerPanelList.add(tablePreviewUI.getRootPanel());
-    containerPanelList.add(codeGenerateUI.getRootPanel());
     // 默认切换到第一页
-    switchPage(0);
+    rootPanel.setCenter(tablePreviewUI.getRootPanel());
     super.init();
   }
 
@@ -79,7 +74,7 @@ public class ClassGenerateDialogWrapper extends DialogWrapper {
     // 替换第二个panel的占位符
     DomainInfo domainInfo = tablePreviewUI.buildDomainInfo();
     if (StringUtils.isEmpty(domainInfo.getModulePath())) {
-      MessageNotification.showMessageDialog("Please select module to generate files", "Generate File", Messages.getWarningIcon());
+      MessageNotification.warn("Please select module to generate files", "Generate File");
       return;
     }
     page = page + 1;
@@ -97,15 +92,19 @@ public class ClassGenerateDialogWrapper extends DialogWrapper {
       domainInfo,
       templateContext.getTemplateName(),
       settingMap);
+
     switchPage(page);
+
   }
 
   private void switchPage(int newPage) {
-    rootPanel.removeAll();
-    JPanel comp = containerPanelList.get(newPage);
-    rootPanel.add(comp);
-    rootPanel.repaint();//刷新页面，重绘面板
-    rootPanel.validate();//使重绘的面板确认生效
+    if (newPage == 0) {
+      rootPanel.remove(codeGenerateUI.getRootPanel());
+      rootPanel.setCenter(tablePreviewUI.getRootPanel());
+    } else if (newPage == 1) {
+      rootPanel.remove(tablePreviewUI.getRootPanel());
+      rootPanel.setCenter(codeGenerateUI.getRootPanel());
+    }
   }
 
   @Nullable
@@ -128,6 +127,11 @@ public class ClassGenerateDialogWrapper extends DialogWrapper {
     if (generateConfig == null) {
       generateConfig = new DefaultGenerateConfig(templateContext);
     }
+
+    if (CollectionUtils.isEmpty(templatesSettings.getTemplateSettingMap())) {
+      templateContext.setTemplateSettingMap(DefaultSettingsConfig.defaultSettings());
+    }
+
     tablePreviewUI.fillData(project, tableElements, generateConfig);
   }
 

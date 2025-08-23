@@ -5,11 +5,11 @@ import com.baomidou.mybatisx.feat.mybatis.generator.NamingStrategy;
 import com.baomidou.mybatisx.feat.mybatis.generator.dto.DomainInfo;
 import com.baomidou.mybatisx.feat.mybatis.generator.dto.GenerateConfig;
 import com.baomidou.mybatisx.feat.mybatis.generator.dto.TableUIInfo;
+import com.baomidou.mybatisx.util.IntellijSDK;
 import com.baomidou.mybatisx.util.JBComponents;
 import com.baomidou.mybatisx.util.StringUtils;
 import com.intellij.database.psi.DbTable;
 import com.intellij.openapi.module.Module;
-import com.intellij.openapi.module.ModuleManager;
 import com.intellij.openapi.module.ModuleUtil;
 import com.intellij.openapi.project.Project;
 import com.intellij.psi.PsiElement;
@@ -32,16 +32,12 @@ import java.awt.event.ItemListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class TablePreviewUI {
   ListTableModel<TableUIInfo> model = new ListTableModel<>(new MyBatisXTableColumnInfo("tableName", false), new MyBatisXTableColumnInfo("className", true));
-  List<NamingStrategy> classNameStrategies = new ArrayList<>() {
-    {
-      add(DefaultNamingStrategy.CAMEL);
-      add(DefaultNamingStrategy.SAME);
-    }
-  };
+  List<NamingStrategy> classNameStrategies = new ArrayList<>(Arrays.asList(DefaultNamingStrategy.values()));
   @Getter
   private JPanel rootPanel;
   private JPanel listPanel;
@@ -67,7 +63,6 @@ public class TablePreviewUI {
   private PsiElement[] tableElements;
   private List<DbTable> dbTables;
   private String moduleName;
-
 
   public TablePreviewUI() {
     TableView<TableUIInfo> tableView = new TableView<>(model);
@@ -111,8 +106,7 @@ public class TablePreviewUI {
     moduleName = generateConfig.getModuleName();
 
     if (!StringUtils.isEmpty(moduleName)) {
-      Module[] modules = ModuleManager.getInstance(project).getModules();
-      for (Module module : modules) {
+      for (Module module : IntellijSDK.getProjectModules(project)) {
         if (module.getName().equals(moduleName)) {
           chooseModulePath(module);
         }
