@@ -36,19 +36,17 @@ java {
 }
 
 dependencies {
-  compileOnly("org.projectlombok:lombok:1.18.0")
+  compileOnly("org.projectlombok:lombok:1.18.32")
 
   // 解决 lombok 不生效问题
   // 还需在Build,Execution,Deployment -> Compiler -> Annotation Processor开启注解处理器
   annotationProcessor("org.projectlombok:lombok:1.18.32")
 
-  implementation("com.softwareloop:mybatis-generator-lombok-plugin:1.0")
   implementation("org.mybatis.generator:mybatis-generator-core:1.4.0")
   implementation("org.freemarker:freemarker:2.3.30")
   implementation(files("${rootDir}/libs/tools.jar"))
   // this is published locally
   implementation(files("${rootDir}/libs/mybatis-3.6.0-SNAPSHOT.jar"))
-  implementation("org.apache.httpcomponents:httpclient:4.5.7")
   implementation("com.tencentcloudapi:tencentcloud-sdk-java:3.1.210")
   implementation(project(":agent-api"))
   implementation(project(":mybatisx-agent"))

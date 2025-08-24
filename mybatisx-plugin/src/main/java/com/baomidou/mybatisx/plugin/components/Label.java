@@ -18,6 +18,7 @@ public class Label extends JBLabel {
 
   public Label(String text) {
     super(text == null ? "" : text);
+    setHorizontalAlignment(Label.LEFT);
   }
 
   public void setPreferredSize(int w, int h) {

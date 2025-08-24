@@ -48,6 +48,11 @@ public class SwingUtils {
     component.setBorder(BorderFactory.createEmptyBorder());
   }
 
+  public static void setTitledBorder(JComponent component, String title) {
+    TitledBorder border = BorderFactory.createTitledBorder(title);
+    component.setBorder(border);
+  }
+
   /**
    * 设置固定宽度
    *

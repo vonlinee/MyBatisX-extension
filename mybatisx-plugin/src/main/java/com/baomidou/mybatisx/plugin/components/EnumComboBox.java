@@ -30,4 +30,13 @@ public class EnumComboBox<E extends Enum<E>> extends ComboBox<E> {
   public E getSelectedItem() {
     return (E) super.getSelectedItem();
   }
+
+  @Nullable
+  public String getNameOfSelectedItem() {
+    E selectedItem = getSelectedItem();
+    if (selectedItem == null) {
+      return null;
+    }
+    return selectedItem.name();
+  }
 }
