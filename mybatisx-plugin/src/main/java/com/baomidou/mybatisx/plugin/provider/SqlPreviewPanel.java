@@ -3,6 +3,7 @@ package com.baomidou.mybatisx.plugin.provider;
 import com.baomidou.mybatisx.model.ParamDataType;
 import com.baomidou.mybatisx.plugin.components.BorderPane;
 import com.baomidou.mybatisx.plugin.components.Button;
+import com.baomidou.mybatisx.plugin.components.CheckBox;
 import com.baomidou.mybatisx.plugin.components.HBox;
 import com.baomidou.mybatisx.plugin.components.Label;
 import com.baomidou.mybatisx.plugin.components.SplitPane;
@@ -165,16 +166,20 @@ public class SqlPreviewPanel extends BorderPane {
   }
 
   public void fillSqlWithParams() {
-    fillSqlWithParams(false);
+    fillSqlWithParams(false, false);
   }
 
   public void fillSqlWithParams(boolean inline) {
-    String sql = computeSqlWithParams(inline, false);
+    fillSqlWithParams(inline, false);
+  }
+
+  public void fillSqlWithParams(boolean inline, boolean formatSql) {
+    String sql = computeSqlWithParams(inline, false, formatSql);
     resultSqlEditor.setText(sql);
     tabPane.selectTab(1);
   }
 
-  public String computeSqlWithParams(boolean inline, boolean refreshParams) {
+  public String computeSqlWithParams(boolean inline, boolean refreshParams, boolean formatSql) {
     if (refreshParams) {
       fillMapperStatementParams();
     }
@@ -188,7 +193,7 @@ public class SqlPreviewPanel extends BorderPane {
     }
     try {
       String sql = statementEditor.computeSql(map, inline);
-      return SqlUtils.format(sql);
+      return formatSql ? SqlUtils.format(sql) : sql;
     } catch (Throwable throwable) {
       return ExceptionUtil.getThrowableText(throwable);
     }
@@ -260,11 +265,14 @@ public class SqlPreviewPanel extends BorderPane {
   public static Box createOperationBox(SqlPreviewPanel panel) {
     Box box = Box.createHorizontalBox();
     box.add(Box.createHorizontalGlue());
+    CheckBox cboxFormatSql = new CheckBox("Format Sql");
+    box.add(cboxFormatSql);
+    box.add(Box.createHorizontalStrut(5));
     Button btnGetSql = new Button("Raw SQL");
     btnGetSql.addMouseListener(new MouseAdapter() {
       @Override
       public void mouseClicked(MouseEvent e) {
-        panel.fillSqlWithParams(true);
+        panel.fillSqlWithParams(true, cboxFormatSql.isSelected());
       }
     });
 
@@ -272,7 +280,7 @@ public class SqlPreviewPanel extends BorderPane {
     btnGetPreparedSql.addMouseListener(new MouseAdapter() {
       @Override
       public void mouseClicked(MouseEvent e) {
-        panel.fillSqlWithParams();
+        panel.fillSqlWithParams(false, cboxFormatSql.isSelected());
       }
     });
     box.add(btnGetPreparedSql);

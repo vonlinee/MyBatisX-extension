@@ -1,6 +1,7 @@
 package com.baomidou.mybatisx.feat.mybatis.generator.template;
 
 import com.baomidou.mybatisx.feat.mybatis.generator.dto.FieldInfo;
+import lombok.Getter;
 import org.mybatis.generator.api.IntrospectedTable;
 import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
 
@@ -12,6 +13,7 @@ import java.util.stream.Stream;
 /**
  * 实体类的信息
  */
+@Getter
 public class ClassInfo {
   /**
    * 类的全称(包括包名)
@@ -87,41 +89,5 @@ public class ClassInfo {
       .distinct()
       .collect(Collectors.toList());
     return classInfo;
-  }
-
-  public String getTableName() {
-    return tableName;
-  }
-
-  public String getFullClassName() {
-    return fullClassName;
-  }
-
-  public String getShortClassName() {
-    return shortClassName;
-  }
-
-  public List<FieldInfo> getPkFields() {
-    return pkFields;
-  }
-
-  public List<FieldInfo> getAllFields() {
-    return allFields;
-  }
-
-  public List<FieldInfo> getBaseFields() {
-    return baseFields;
-  }
-
-  public List<FieldInfo> getBaseBlobFields() {
-    return baseBlobFields;
-  }
-
-  public String getRemark() {
-    return remark;
-  }
-
-  public List<String> getImportList() {
-    return importList;
   }
 }

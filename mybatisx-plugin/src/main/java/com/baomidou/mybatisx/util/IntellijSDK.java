@@ -3,6 +3,9 @@ package com.baomidou.mybatisx.util;
 import com.intellij.debugger.JavaDebuggerBundle;
 import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.diagnostic.Logger;
+import com.intellij.openapi.editor.event.DocumentListener;
+import com.intellij.openapi.editor.ex.EditorEx;
+import com.intellij.openapi.editor.impl.EditorImpl;
 import com.intellij.openapi.extensions.PluginId;
 import com.intellij.openapi.fileTypes.FileType;
 import com.intellij.openapi.fileTypes.FileTypeManager;
@@ -110,5 +113,23 @@ public abstract class IntellijSDK {
 
   public static Module[] getProjectModules(Project project) {
     return ModuleManager.getInstance(project).getModules();
+  }
+
+  /**
+   * <pre>
+   * {@code
+   *   editor.getDocument().addDocumentListener(new DocumentListener() {
+   *     @Override
+   *     public void documentChanged(@NotNull DocumentEvent e) {
+   *     }
+   *   }, ((EditorImpl) editor).getDisposable());
+   * }
+   * </pre>
+   *
+   * @param editor   editor
+   * @param listener listener
+   */
+  public static void addDocumentListener(EditorEx editor, DocumentListener listener) {
+    editor.getDocument().addDocumentListener(listener, ((EditorImpl) editor).getDisposable());
   }
 }

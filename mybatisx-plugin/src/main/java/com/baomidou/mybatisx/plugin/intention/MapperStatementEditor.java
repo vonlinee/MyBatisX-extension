@@ -78,22 +78,13 @@ public class MapperStatementEditor extends LanguageTextField {
     editorSettings.setVirtualSpace(false);
     editorSettings.setLineMarkerAreaShown(false);
     editorSettings.setIndentGuidesShown(false);
-    editorSettings.setLineNumbersShown(false);
+    editorSettings.setLineNumbersShown(true);
     editorSettings.setFoldingOutlineShown(false);
     editorSettings.setAdditionalColumnsCount(3);
     editorSettings.setAdditionalLinesCount(3);
     editorSettings.setCaretRowShown(false);
 
-    /*
-    editor.getDocument().addDocumentListener(new DocumentListener() {
-      @Override
-      public void documentChanged(@NotNull DocumentEvent e) {
-        myModified = true;
-      }
-    }, ((EditorImpl) editor).getDisposable());
-    */
     // editor.setHighlighter(createHighlighter());
-
     return editor;
   }
 

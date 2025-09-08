@@ -2,7 +2,6 @@ package com.baomidou.mybatisx.feat.mybatis.generator.type;
 
 import com.baomidou.mybatisx.feat.mybatis.generator.dto.TemplateAnnotationType;
 
-
 public class AnnotationTypeOperatorFactory {
   public static AnnotationTypeOperator findByType(String type) {
     TemplateAnnotationType templateAnnotationType = TemplateAnnotationType.valueOf(type);

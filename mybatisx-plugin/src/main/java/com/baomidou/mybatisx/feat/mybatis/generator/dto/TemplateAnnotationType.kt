@@ -1,0 +1,38 @@
+package com.baomidou.mybatisx.feat.mybatis.generator.dto
+
+/**
+ * 模板注解类型
+ */
+enum class TemplateAnnotationType {
+  /**
+   * 实体类没有注解
+   */
+  NONE,
+
+  /**
+   * 实体类加入 MYBATIS_PLUS3 注解
+   */
+  MYBATIS_PLUS3,
+
+  /**
+   * 实体类加入 MYBATIS_PLUS2 注解
+   */
+  MYBATIS_PLUS2,
+
+  /**
+   * 实体类加入 JPA 注解
+   */
+  JPA;
+
+  companion object {
+    @JvmStatic
+    fun find(name: String?): TemplateAnnotationType? {
+      for (item in TemplateAnnotationType.values()) {
+        if (item.name == name) {
+          return item
+        }
+      }
+      return null
+    }
+  }
+}
