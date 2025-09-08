@@ -7,6 +7,7 @@ import com.baomidou.mybatisx.plugin.components.TabPane;
 import com.baomidou.mybatisx.util.CollectionUtils;
 import com.baomidou.mybatisx.util.JsonUtils;
 import com.baomidou.mybatisx.util.StringUtils;
+import com.baomidou.mybatisx.util.URLParamUtils;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -27,6 +28,9 @@ public class ParamImportPane extends BorderPane {
   private final SimpleTextEditor urlParamEditor;
   private final TabPane tabbedPane;
 
+  private static final int TAB_JSON = 0;
+  private static final int TAB_URL = 1;
+
   public ParamImportPane(Project project) {
     tabbedPane = new TabPane();
     jsonParamEditor = new SimpleTextEditor(project, JsonFileType.INSTANCE);
@@ -39,18 +43,22 @@ public class ParamImportPane extends BorderPane {
 
   public void generateParamTemplate(Map<String, Object> paramValues) {
     paramValues = CollectionUtils.expandKeys(paramValues, "\\.");
-    jsonParamEditor.setText(JsonUtils.toJsonPrettyString(paramValues));
+    int index = tabbedPane.getSelectedIndex();
+    if (index == TAB_JSON) {
+      jsonParamEditor.setText(JsonUtils.toJsonPrettyString(paramValues));
+    } else if (index == TAB_URL) {
+      urlParamEditor.setText(URLParamUtils.toUrlParamString(paramValues));
+    }
   }
 
   public String getUserInput() {
     String text = null;
     int index = tabbedPane.getSelectedIndex();
-    List<ParamNode> paramNodes = new ArrayList<>();
     switch (index) {
-      case 0: // json
+      case TAB_JSON: // json
         text = jsonParamEditor.getText();
         break;
-      case 1: // url
+      case TAB_URL: // url
         text = urlParamEditor.getText();
         break;
     }
