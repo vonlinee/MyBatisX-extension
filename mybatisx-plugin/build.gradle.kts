@@ -1,3 +1,4 @@
+import org.jetbrains.intellij.tasks.RunPluginVerifierTask
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 import java.nio.charset.StandardCharsets
 
@@ -86,6 +87,34 @@ tasks.patchPluginXml {
   changeNotes = """
     <b>初始版本</b>
     """
+}
+
+/**
+ * run gradle task:
+ * gradle :mybatisx-plugin:runPluginVerifier --stacktrace
+ * gradle :mybatisx-plugin:runPluginVerifier --stacktrace --info --debug
+ * available build versions on IntelliJ Platform Builds list:
+ * https://jb.gg/intellij-platform-builds-list
+ */
+tasks.runPluginVerifier {
+
+  ideVersions.set(
+    listOf(
+      "IIU-2021.2.3",
+      "IIU-2025.2.2",
+      "IIU-2025.2.1",
+    )
+  )
+
+  failureLevel = RunPluginVerifierTask.FailureLevel.ALL
+
+  // https://plugins.jetbrains.com/docs/intellij/tools-gradle-intellij-plugin.html#tasks-runpluginverifier-downloaddir
+  // ${GRADLE_HOME}/caches/modules-2/metadata-2.106/descriptors/com.jetbrains/ides
+
+  val absolutePath = rootDir.toPath().toAbsolutePath().toString()
+  val first = File.listRoots().first { absolutePath.startsWith(it.toString()) }.toString()
+  downloadDir = "$first/jetbrains/ides"
+  println("runPluginVerifier download directory : $first")
 }
 
 tasks.withType<KotlinCompile> {
