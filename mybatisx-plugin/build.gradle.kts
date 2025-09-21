@@ -52,7 +52,7 @@ dependencies {
   implementation(project(":mybatisx-agent"))
 
   testImplementation("junit:junit:4.13.1")
-  testImplementation("commons-io:commons-io:2.8.0")
+  testImplementation("commons-io:commons-io:2.14.0")
   testImplementation("org.junit.jupiter:junit-jupiter-api:5.8.1")
   testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.8.1")
   testImplementation("org.junit.jupiter:junit-jupiter-api:5.6.0")
