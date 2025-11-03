@@ -133,21 +133,18 @@ public class VerticalFlowLayout implements LayoutManager, Serializable {
     hLeft.addActionListener(e -> {
       layout.setHAlign(VerticalFlowLayout.LEFT);
       panel.revalidate();
-      System.out.println(layout);
     });
     hAlign.add(hLeft);
     JRadioButton hCenter = new JRadioButton("Center");
     hCenter.addActionListener(e -> {
       layout.setHAlign(VerticalFlowLayout.CENTER);
       panel.revalidate();
-      System.out.println(layout);
     });
     hAlign.add(hCenter);
     JRadioButton hRight = new JRadioButton("Right");
     hRight.addActionListener(e -> {
       layout.setHAlign(VerticalFlowLayout.RIGHT);
       panel.revalidate();
-      System.out.println(layout);
     });
     hAlign.add(hRight);
     hAlignPanel.add(new JLabel("hAlign"));
@@ -164,21 +161,18 @@ public class VerticalFlowLayout implements LayoutManager, Serializable {
     vTop.addActionListener(e -> {
       layout.setVAlign(VerticalFlowLayout.TOP);
       panel.revalidate();
-      System.out.println(layout);
     });
     vAlign.add(vTop);
     JRadioButton vCenter = new JRadioButton("Center");
     vCenter.addActionListener(e -> {
       layout.setVAlign(VerticalFlowLayout.CENTER);
       panel.revalidate();
-      System.out.println(layout);
     });
     vAlign.add(vCenter);
     JRadioButton vBottom = new JRadioButton("Bottom");
     vBottom.addActionListener(e -> {
       layout.setVAlign(VerticalFlowLayout.BOTTOM);
       panel.revalidate();
-      System.out.println(layout);
     });
     vAlign.add(vBottom);
     vAlignPanel.add(new JLabel("vAlign"));
@@ -195,7 +189,6 @@ public class VerticalFlowLayout implements LayoutManager, Serializable {
     hPaddingSpinner.addChangeListener(e -> {
       layout.setHPadding((int) hPaddingSpinner.getValue());
       panel.revalidate();
-      System.out.println(layout);
     });
 
     JPanel vPaddingPanel = new JPanel();
@@ -207,7 +200,6 @@ public class VerticalFlowLayout implements LayoutManager, Serializable {
     vPaddingSpinner.addChangeListener(e -> {
       layout.setVPadding((int) vPaddingSpinner.getValue());
       panel.revalidate();
-      System.out.println(layout);
     });
 
     JPanel hGapPanel = new JPanel();
@@ -219,7 +211,6 @@ public class VerticalFlowLayout implements LayoutManager, Serializable {
     hGapSpinner.addChangeListener(e -> {
       layout.setHGap((int) hGapSpinner.getValue());
       panel.revalidate();
-      System.out.println(layout);
     });
 
     JPanel vGapPanel = new JPanel();
@@ -231,7 +222,6 @@ public class VerticalFlowLayout implements LayoutManager, Serializable {
     vGapSpinner.addChangeListener(e -> {
       layout.setVGap((int) vGapSpinner.getValue());
       panel.revalidate();
-      System.out.println(layout);
     });
 
     JPanel fillPanel = new JPanel();
@@ -244,14 +234,12 @@ public class VerticalFlowLayout implements LayoutManager, Serializable {
     fillTrue.addActionListener(e -> {
       layout.setFill(true);
       panel.revalidate();
-      System.out.println(layout);
     });
     JRadioButton fillFalse = new JRadioButton("false");
     fillGroup.add(fillFalse);
     fillFalse.addActionListener(e -> {
       layout.setFill(false);
       panel.revalidate();
-      System.out.println(layout);
     });
     fillPanel.add(new JLabel("fill"));
     fillPanel.add(fillTrue);
@@ -266,7 +254,6 @@ public class VerticalFlowLayout implements LayoutManager, Serializable {
     wrapTrue.addActionListener(e -> {
       layout.setWrap(true);
       panel.revalidate();
-      System.out.println(layout);
     });
     JRadioButton wrapFalse = new JRadioButton("false");
     wrapFalse.setSelected(true);
@@ -274,7 +261,6 @@ public class VerticalFlowLayout implements LayoutManager, Serializable {
     wrapFalse.addActionListener(e -> {
       layout.setWrap(false);
       panel.revalidate();
-      System.out.println(layout);
     });
     wrapPanel.add(new JLabel("wrap"));
     wrapPanel.add(wrapTrue);
@@ -285,8 +271,6 @@ public class VerticalFlowLayout implements LayoutManager, Serializable {
     frame.setSize(frame.getSize().width + 1000, frame.getSize().height + 200);
     frame.setLocationRelativeTo(null);
     frame.setVisible(true);
-
-    System.out.println(layout);
   }
 
   public int getHAlign() {
