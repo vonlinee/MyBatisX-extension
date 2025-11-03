@@ -37,6 +37,7 @@ import org.apache.ibatis.mapping.MappedStatement;
 import org.apache.ibatis.mapping.ParameterMapping;
 import org.apache.ibatis.mapping.ParameterMode;
 import org.apache.ibatis.mapping.ResultMap;
+import org.apache.ibatis.reflection.MetaObject;
 import org.apache.ibatis.reflection.ParamNameResolver;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -227,12 +228,20 @@ public class MapperStatementEditor extends LanguageTextField {
 
   private String computeSql(MappedStatement mappedStatement, Object parameterObject) {
     BoundSql boundSql = mappedStatement.getBoundSql(parameterObject);
+    Configuration configuration = mappedStatement.getConfiguration();
+    MetaObject metaObject = MetaObject.forObject(parameterObject, configuration.getObjectFactory(),
+      configuration.getObjectWrapperFactory(), configuration.getReflectorFactory());
     List<String> paramItems = new ArrayList<>();
     List<ParameterMapping> parameterMappings = boundSql.getParameterMappings();
     if (parameterMappings != null) {
       for (ParameterMapping parameterMapping : parameterMappings) {
         if (parameterMapping.getMode() != ParameterMode.OUT) {
-          Object value = parameterMapping.getValue();
+          Object value;
+          if (parameterMapping.hasValue()) {
+            value = parameterMapping.getValue();
+          } else {
+            value = metaObject.getValue(parameterMapping.getProperty());
+          }
           if (value == null) {
             paramItems.add("null");
           } else {
