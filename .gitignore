@@ -10,3 +10,5 @@ idea-sandbox
 mybatisql.jar
 .intellijPlatform
 mybatisx-agent.jar
+
+.kotlin
