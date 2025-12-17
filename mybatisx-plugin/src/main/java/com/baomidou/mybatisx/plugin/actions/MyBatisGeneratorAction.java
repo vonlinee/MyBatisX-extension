@@ -11,6 +11,7 @@ import com.baomidou.mybatisx.util.PluginUtils;
 import com.baomidou.mybatisx.util.PsiUtils;
 import com.intellij.database.model.DasObject;
 import com.intellij.database.psi.DbTable;
+import com.intellij.openapi.actionSystem.ActionUpdateThread;
 import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.project.Project;
@@ -109,6 +110,11 @@ public final class MyBatisGeneratorAction extends AnAction {
     } catch (Exception e) {
       logger.error("生成代码出错", e);
     }
+  }
+
+  @Override
+  public @NotNull ActionUpdateThread getActionUpdateThread() {
+    return ActionUpdateThread.BGT;
   }
 
   @Override
