@@ -11,6 +11,7 @@ import com.intellij.psi.PsiClass;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiField;
 import com.intellij.psi.PsiFile;
+import com.intellij.psi.PsiIdentifier;
 import com.intellij.psi.PsiLiteralExpression;
 import com.intellij.psi.PsiMethod;
 import com.intellij.psi.PsiModifier;
@@ -220,6 +221,13 @@ public class PsiUtils {
     return elements;
   }
 
+  /**
+   * Gets the relative path of the file containing the given PSI element within its project.
+   *
+   * @param element the PSI element for which to find the project-relative path
+   * @return the relative path from the project base directory to the file containing the element,
+   *         or the absolute path if the project base path cannot be determined
+   */
   @NotNull
   public static String getProjectRelativePath(@NotNull PsiElement element) {
     Project project = element.getProject();
@@ -237,5 +245,17 @@ public class PsiUtils {
   @Nullable
   public static PsiElement[] getPsiElementArray(AnActionEvent e) {
     return e.getData(LangDataKeys.PSI_ELEMENT_ARRAY);
+  }
+
+  public static String getQualifiedMethodName(PsiMethod method) {
+    PsiClass containingClass = method.getContainingClass();
+    if (containingClass != null) {
+      return containingClass.getName() + "#" + method.getName();
+    }
+    PsiIdentifier nameIdentifier = method.getNameIdentifier();
+    if (nameIdentifier != null) {
+      return nameIdentifier.getText();
+    }
+    return method.getName();
   }
 }

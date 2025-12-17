@@ -167,7 +167,7 @@ public final class JavaUtils {
       List<PsiMethod> collect = Arrays.stream(classes.get())
         .map(psiClass -> psiClass.findMethodsByName(methodName, true))
         .flatMap(Arrays::stream)
-        .collect(Collectors.toList());
+        .toList();
       return collect.isEmpty() ? Optional.empty() : Optional.of(collect.toArray(new PsiMethod[0]));
 
     }

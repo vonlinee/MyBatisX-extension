@@ -114,9 +114,7 @@ public class PsiColumnReferenceSetResolver {
     DbPsiFacade dbPsiFacade = DbPsiFacade.getInstance(project);
     DasColumn child = DasUtil.findChild(dasTable, DasColumn.class, ObjectKind.COLUMN, firstText);
     if (child != null) {
-      // DbElement element = dbPsiFacade.findElement(child);
-      throw new UnsupportedOperationException("findColumns");
-//      return Optional.empty();
+      return Optional.ofNullable(dbPsiFacade.findElement(child));
     }
     return Optional.empty();
   }

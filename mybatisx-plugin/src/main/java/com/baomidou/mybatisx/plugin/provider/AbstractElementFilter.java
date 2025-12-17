@@ -26,7 +26,7 @@ public abstract class AbstractElementFilter {
       NavigationGutterIconBuilder<PsiElement> builder =
         NavigationGutterIconBuilder.create(Icons.MAPPER_LINE_MARKER_ICON)
           .setAlignment(GutterIconRenderer.Alignment.CENTER)
-          .setCellRenderer(new GotoMapperXmlSchemaTypeRendererProvider.MapperXmlTagListCellRender())
+          .setCellRenderer(GotoMapperXmlSchemaTypeRendererProvider.MapperXmlTagListCellRender::new)
           .setTargets(xmlTags)
           .setTooltipTitle("Navigation to Target in Mapper Xml");
       final PsiElement targetMarkerInfo = Objects.requireNonNull(((PsiNameIdentifierOwner) element).getNameIdentifier());
