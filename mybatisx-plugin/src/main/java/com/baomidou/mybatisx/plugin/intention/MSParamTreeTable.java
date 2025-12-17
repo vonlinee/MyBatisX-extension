@@ -131,7 +131,7 @@ public class MSParamTreeTable extends TreeTableView<ParamNode> {
           @Override
           public TableCellEditor getEditor(ParamNode paramNode) {
             JBTextField textField;
-            if (paramNode.getDataType().isArray()) {
+            if (paramNode.getDataType().isArray() || paramNode.getDataType() == ParamDataType.STRING) {
               textField = new ExpandableTextField();
             } else {
               textField = new JBTextField();
@@ -309,10 +309,9 @@ public class MSParamTreeTable extends TreeTableView<ParamNode> {
 
     @Override
     public Object getValueAt(Object value, int column) {
-      if (!(value instanceof ParamNode)) {
+      if (!(value instanceof ParamNode row)) {
         return null;
       }
-      ParamNode row = (ParamNode) value;
       if (column != 0 && row.getChildCount() > 0) {
         return null;
       }
@@ -321,13 +320,12 @@ public class MSParamTreeTable extends TreeTableView<ParamNode> {
 
     @Override
     public boolean isCellEditable(Object node, int column) {
-      if (!(node instanceof DefaultMutableTreeNode)) {
+      if (!(node instanceof DefaultMutableTreeNode row)) {
         return false;
       }
       if (column == JDBC_TYPE_COLUMN_INDEX) {
         return false;
       }
-      DefaultMutableTreeNode row = (DefaultMutableTreeNode) node;
       return row.getChildCount() <= 0;
     }
   }
