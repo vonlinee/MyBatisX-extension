@@ -12,21 +12,21 @@ public class LocalizedMessages {
   @NonNls
   private static final String PATH_TO_BUNDLE = "messages.messages";
   private static final DynamicBundle INSTANCE =
-    new DynamicBundle(PATH_TO_BUNDLE);
+    new DynamicBundle(LocalizedMessages.class, PATH_TO_BUNDLE);
 
   private LocalizedMessages() {
   }
 
   public static @NotNull @Nls String getMessage(
     @NotNull @PropertyKey(resourceBundle = PATH_TO_BUNDLE) String key,
-    Object @NotNull ... params
+    Object... params
   ) {
     return INSTANCE.getMessage(key, params);
   }
 
-  public static Supplier<@Nls String> getLazyMessage(
+  public static Supplier<String> getLazyMessage(
     @NotNull @PropertyKey(resourceBundle = PATH_TO_BUNDLE) String key,
-    Object @NotNull ... params
+    Object... params
   ) {
     return INSTANCE.getLazyMessage(key, params);
   }

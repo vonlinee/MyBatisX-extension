@@ -5,11 +5,11 @@
 
 package com.baomidou.mybatisx.plugin.components;
 
-import java.awt.Component;
-import java.awt.Container;
+import java.awt.*;
 import java.io.Serializable;
 import java.util.List;
 import java.util.Locale;
+import java.util.Objects;
 
 public final class ConstantSize implements Size, Serializable {
   public static final Unit PIXEL = new Unit("Pixel", "px", true);
@@ -134,7 +134,7 @@ public final class ConstantSize implements Size, Serializable {
   }
 
   public int hashCode() {
-    return (new Double(this.value)).hashCode() + 37 * this.unit.hashCode();
+    return Objects.hashCode(this.value) + 37 * this.unit.hashCode();
   }
 
   public String toString() {

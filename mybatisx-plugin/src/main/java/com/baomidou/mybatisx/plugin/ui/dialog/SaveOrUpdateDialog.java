@@ -1,5 +1,6 @@
 package com.baomidou.mybatisx.plugin.ui.dialog;
 
+import com.intellij.openapi.project.Project;
 import org.jetbrains.annotations.NotNull;
 
 import javax.swing.*;
@@ -10,11 +11,12 @@ public abstract class SaveOrUpdateDialog<T> extends DialogBase {
   T target;
   boolean saveOrUpdate;
 
-  public SaveOrUpdateDialog() {
-    this(null);
+  public SaveOrUpdateDialog(Project project) {
+    super(project);
   }
 
   public SaveOrUpdateDialog(T target) {
+    super(null);
     this.target = target;
     this.saveOrUpdate = this.target == null;
     if (target == null) {

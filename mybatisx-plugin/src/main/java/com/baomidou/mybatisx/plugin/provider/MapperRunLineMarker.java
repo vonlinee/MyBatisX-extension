@@ -43,7 +43,7 @@ public class MapperRunLineMarker extends LineMarkerProviderDescriptor {
 
   static class LineMarkInfo extends MergeableLineMarkerInfo<PsiElement> {
 
-    public LineMarkInfo(@NotNull PsiElement element, @NotNull TextRange textRange, @NotNull Icon icon, @Nullable Function<? super PsiElement, String> tooltipProvider, @Nullable GutterIconNavigationHandler<PsiElement> navHandler, @NotNull GutterIconRenderer.Alignment alignment, @NotNull Supplier<@NotNull @Nls String> accessibleNameProvider) {
+    public LineMarkInfo(@NotNull PsiElement element, @NotNull TextRange textRange, @NotNull Icon icon, @Nullable Function<? super PsiElement, String> tooltipProvider, @Nullable GutterIconNavigationHandler<PsiElement> navHandler, @NotNull GutterIconRenderer.Alignment alignment, @NotNull Supplier<String> accessibleNameProvider) {
       super(element, textRange, icon, tooltipProvider, navHandler, alignment, accessibleNameProvider);
     }
 

@@ -35,7 +35,7 @@ public class MappedStatementTextBuilder extends XmlRecursiveElementVisitor {
     this(root, null);
   }
 
-  private MappedStatementTextBuilder(XmlTag root, Map<String, @Nullable XmlTag> sqlTagMap) {
+  private MappedStatementTextBuilder(XmlTag root, Map<String, XmlTag> sqlTagMap) {
     this.root = root;
     if (sqlTagMap == null) {
       Map<String, XmlTag> sqlTags = new HashMap<>();

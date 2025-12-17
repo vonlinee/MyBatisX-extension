@@ -92,7 +92,7 @@ public class ContextPsiColumnReference extends PsiReferenceBase<XmlAttributeValu
    */
   @NotNull
   @Override
-  public Object @NotNull [] getVariants() {
+  public Object[] getVariants() {
     Project project = getElement().getProject();
 
     EntityMappingResolverFactory entityMappingResolverFactory

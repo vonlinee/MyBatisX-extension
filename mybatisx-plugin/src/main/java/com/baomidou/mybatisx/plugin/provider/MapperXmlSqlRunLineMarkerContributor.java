@@ -52,7 +52,7 @@ public class MapperXmlSqlRunLineMarkerContributor extends RunLineMarkerContribut
         return null;
       }
       final String statementId = getStatementId(element);
-      return new Info(Icons.GUTTER_RUN_ICON_OLD, element1 -> statementId, new LineMarkIconAction(statementId, (XmlTag) element));
+      return new Info(Icons.GUTTER_RUN_ICON_OLD, new AnAction[]{new LineMarkIconAction(statementId, (XmlTag) element)}, element1 -> statementId);
     }
     return null;
   }

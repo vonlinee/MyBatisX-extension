@@ -29,7 +29,7 @@ public class JdbcTypeConverter extends ConverterAdaptor<XmlAttributeValue> imple
 
   @NotNull
   @Override
-  public PsiReference @NotNull [] createReferences(GenericDomValue<XmlAttributeValue> value, PsiElement element, ConvertContext context) {
+  public PsiReference[] createReferences(GenericDomValue<XmlAttributeValue> value, PsiElement element, ConvertContext context) {
     final String stringValue = value.getStringValue();
     if (stringValue == null) {
       return PsiReference.EMPTY_ARRAY;
@@ -101,7 +101,7 @@ public class JdbcTypeConverter extends ConverterAdaptor<XmlAttributeValue> imple
 
     @NotNull
     @Override
-    public Object @NotNull [] getVariants() {
+    public Object[] getVariants() {
       Project project = resolver.getProject();
       Object[] objects = jdbcTypeVariantHolder.getVariants();
       if (objects != null) {

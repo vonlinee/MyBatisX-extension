@@ -9,11 +9,7 @@ import org.jetbrains.annotations.Nullable;
  */
 public abstract class DialogBase extends DialogWrapper {
 
-  private Project project;
-
-  public DialogBase() {
-    super(null);
-  }
+  private final Project project;
 
   protected DialogBase(@Nullable Project project) {
     super(project);

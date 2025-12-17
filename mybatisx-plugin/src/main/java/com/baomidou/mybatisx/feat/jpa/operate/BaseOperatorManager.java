@@ -13,7 +13,7 @@ import com.baomidou.mybatisx.feat.jpa.operate.manager.StatementBlock;
 import com.baomidou.mybatisx.feat.jpa.operate.manager.StatementBlockFactory;
 import com.intellij.psi.PsiClass;
 import com.intellij.psi.PsiMethod;
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;

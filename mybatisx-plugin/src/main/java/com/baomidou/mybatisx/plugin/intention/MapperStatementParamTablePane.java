@@ -16,6 +16,7 @@ import com.intellij.ui.ToolbarDecorator;
 import com.intellij.ui.treeStructure.treetable.ListTreeTableModelOnColumns;
 import com.intellij.ui.treeStructure.treetable.TreeTableTree;
 import com.intellij.util.PlatformIcons;
+import com.intellij.util.ui.JButtonAction;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -61,7 +62,7 @@ public class MapperStatementParamTablePane extends JScrollPane {
     });
     decorator.addExtraActions(actions);
 
-    decorator.addExtraAction(new AnActionButton("Export Params As Json", PlatformIcons.EXPORT_ICON) {
+    decorator.addExtraAction(new JButtonAction("Export Params As Json", "", PlatformIcons.EXPORT_ICON) {
       @Override
       public void actionPerformed(@NotNull AnActionEvent e) {
         Map<String, Object> map = CollectionUtils.expandKeys(getParamsAsMap(), StringUtils.SPLITTER);

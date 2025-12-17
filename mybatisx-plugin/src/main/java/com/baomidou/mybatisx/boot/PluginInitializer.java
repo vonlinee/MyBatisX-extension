@@ -41,15 +41,15 @@ public class PluginInitializer implements AppLifecycleListener {
       if (url == null) {
         if (classLoader instanceof PluginClassLoader) {
           PluginClassLoader pcl = (PluginClassLoader) classLoader;
-          List<String> libDirectories = pcl.getLibDirectories();
-          String rootDir = null;
-          for (String libDirectory : libDirectories) {
-            if (libDirectory.contains("mybatisx-plugin")) {
+          List<Path> libDirectories = pcl.getLibDirectories();
+          Path rootDir = null;
+          for (Path libDirectory : libDirectories) {
+            if (libDirectory.toString().contains("mybatisx-plugin")) {
               rootDir = libDirectory;
             }
           }
           if (rootDir != null) {
-            File[] files = new File(rootDir).listFiles();
+            File[] files = rootDir.toFile().listFiles();
             if (files != null) {
               for (File file : files) {
                 if (file.getName().endsWith("mybatisx-plugin.jar")) {

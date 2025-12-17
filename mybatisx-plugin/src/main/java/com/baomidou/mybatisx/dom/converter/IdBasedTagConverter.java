@@ -92,7 +92,7 @@ public abstract class IdBasedTagConverter extends ConverterAdaptor<XmlAttributeV
 
   @NotNull
   @Override
-  public PsiReference @NotNull [] createReferences(GenericDomValue<XmlAttributeValue> value, PsiElement element, ConvertContext context) {
+  public PsiReference[] createReferences(GenericDomValue<XmlAttributeValue> value, PsiElement element, ConvertContext context) {
     return PsiClassConverter.createJavaClassReferenceProvider(value, null, new ValueReferenceProvider(context))
       .getReferencesByElement(element);
   }
@@ -179,7 +179,7 @@ public abstract class IdBasedTagConverter extends ConverterAdaptor<XmlAttributeV
      */
     @NotNull
     @Override
-    public PsiReference @NotNull [] getReferencesByString(String text, @NotNull PsiElement position, int offsetInPosition) {
+    public PsiReference[] getReferencesByString(String text, @NotNull PsiElement position, int offsetInPosition) {
       List<PsiReference> refs = new ArrayList<>(Arrays.asList(super.getReferencesByString(text, position, offsetInPosition)));
       ValueReference vr = new ValueReference(position, getTextRange(position), context, text);
       if (!refs.isEmpty() && 0 != vr.getVariants().length) {
@@ -223,7 +223,7 @@ public abstract class IdBasedTagConverter extends ConverterAdaptor<XmlAttributeV
 
     @NotNull
     @Override
-    public Object @NotNull [] getVariants() {
+    public Object[] getVariants() {
       Set<String> res = getElement().getText()
         .contains(MyBatisUtils.DOT_SEPARATOR) ? setupContextIdSignature() : setupGlobalIdSignature();
       return res.toArray(new String[0]);

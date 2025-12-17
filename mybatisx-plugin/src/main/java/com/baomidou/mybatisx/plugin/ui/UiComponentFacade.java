@@ -78,7 +78,7 @@ public final class UiComponentFacade {
                                                    @NotNull String clickableTitle,
                                                    @Nullable final ClickableListener clickableListener,
                                                    @NotNull T[] objs) {
-    PopupChooserBuilder<@NotNull T> builder = createListPopupBuilder(popupTitle, popupListener, objs);
+    PopupChooserBuilder<T> builder = createListPopupBuilder(popupTitle, popupListener, objs);
     JBCheckBox checkBox = new JBCheckBox(clickableTitle);
     builder.setSouthComponent(checkBox);
     final JBPopup popup = builder.createPopup();

@@ -11,10 +11,6 @@
     articles from time to time.
   </description>
 
-  <!-- please see https://plugins.jetbrains.com/docs/intellij/plugin-compatibility.html
-       on how to target different products -->
-  <depends>com.intellij.modules.platform</depends>
-
   <resource-bundle>messages.messages</resource-bundle>
 
   <description><![CDATA[
@@ -45,8 +41,13 @@
       ]]>
   </change-notes>
 
-  <idea-version since-build="213.0"/>
+  <idea-version since-build="252.0"/>
+
+  <!-- Plugin Dependency -->
+  <!-- please see https://plugins.jetbrains.com/docs/intellij/plugin-compatibility.html on how to target different products -->
+  <depends>com.intellij.modules.platform</depends>
   <depends>com.intellij.modules.java</depends>
+  <depends>com.intellij.modules.ultimate</depends>
   <depends optional="true" config-file="database.xml">com.intellij.database</depends>
   <!-- support aliases -->
   <depends optional="true" config-file="spring.xml">com.intellij.spring</depends>

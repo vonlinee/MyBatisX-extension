@@ -18,6 +18,7 @@ public class DataTypeMappingUpdateDialog extends DialogBase {
   private final SimpleComboBox<String> anotherTypes = new SimpleComboBox<>();
 
   public DataTypeMappingUpdateDialog(@NotNull String typeGroup, @NotNull String anotherTypeGroup) {
+    super(null);
     this.typeGroup = typeGroup;
     this.anotherTypeGroup = anotherTypeGroup;
     DataTypeSettings dataTypeSettings = DataTypeSettings.getInstance();

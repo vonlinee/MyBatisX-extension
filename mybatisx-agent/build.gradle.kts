@@ -25,13 +25,6 @@ dependencies {
   implementation(files("${rootDir}/libs/mybatis-3.6.0-SNAPSHOT.jar"))
 }
 
-// 设置兼容性版本
-
-java {
-  sourceCompatibility = JavaVersion.VERSION_11
-  targetCompatibility = JavaVersion.VERSION_11
-}
-
 tasks.jar {
   dependsOn(":agent-api:jar")
 

@@ -3,6 +3,7 @@ package com.baomidou.mybatisx.plugin.ui.components;
 import com.baomidou.mybatisx.plugin.components.Label;
 import com.baomidou.mybatisx.plugin.components.Pane;
 import com.baomidou.mybatisx.plugin.ui.dialog.SaveOrUpdateDialog;
+import com.intellij.openapi.project.Project;
 import com.intellij.util.ui.JBUI;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -19,6 +20,7 @@ public class DataTypeSaveOrUpdateDialog extends SaveOrUpdateDialog<MultableDataT
   TextField maxLength;
 
   public DataTypeSaveOrUpdateDialog(String typeGroup) {
+    super((Project) null);
     this.typeGroup = typeGroup;
   }
 

@@ -1,20 +1,12 @@
 package com.baomidou.mybatisx.plugin.components;
 
-import com.intellij.util.ui.MultiRowFlowPanel;
-
+import javax.swing.*;
 import java.awt.*;
 
-public class FlowPane extends MultiRowFlowPanel {
+public class FlowPane extends JPanel {
 
   public FlowPane() {
-    super(FlowLayout.LEFT, 5, 5);
-  }
-
-  /**
-   * @param align see {@link java.awt.FlowLayout#LEFT}
-   */
-  public FlowPane(int align, int hGap, int vGap) {
-    super(align, hGap, vGap);
+    super(new FlowLayout(FlowLayout.LEFT, 5, 5));
   }
 
   public void addComponents(Component... components) {

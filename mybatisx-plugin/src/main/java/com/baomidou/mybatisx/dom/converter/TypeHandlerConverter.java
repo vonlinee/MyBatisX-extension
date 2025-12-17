@@ -46,7 +46,7 @@ public class TypeHandlerConverter extends ConverterAdaptor<PsiClass>
 
   @NotNull
   @Override
-  public PsiReference @NotNull [] createReferences(GenericDomValue<PsiClass> value, PsiElement element, ConvertContext context) {
+  public PsiReference[] createReferences(GenericDomValue<PsiClass> value, PsiElement element, ConvertContext context) {
     return psiClassConverter.createReferences(value, element, context);
   }
 

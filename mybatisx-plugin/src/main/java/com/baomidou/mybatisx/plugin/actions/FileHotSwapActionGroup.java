@@ -13,7 +13,7 @@ import java.util.List;
 
 public class FileHotSwapActionGroup extends ActionGroup {
   @Override
-  public AnAction @NotNull [] getChildren(@Nullable AnActionEvent e) {
+  public AnAction[] getChildren(@Nullable AnActionEvent e) {
     List<AnAction> actions = new ArrayList<>();
     for (VMInfo process : VMContext.values()) {
       actions.add(new FileHotSwapAction(process.getProcessName()));

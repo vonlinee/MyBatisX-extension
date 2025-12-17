@@ -114,7 +114,7 @@ public class ClassGenerateDialogWrapper extends DialogWrapper {
   }
 
   @Override
-  protected Action @NotNull [] createActions() {
+  protected Action[] createActions() {
     return new Action[]{previousAction, getOKAction(), getCancelAction()};
   }
 

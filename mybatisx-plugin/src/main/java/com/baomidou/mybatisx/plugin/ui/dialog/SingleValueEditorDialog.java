@@ -13,6 +13,7 @@ public abstract class SingleValueEditorDialog extends DialogBase {
   private final TextField textField = new TextField();
 
   public SingleValueEditorDialog(String title) {
+    super(null);
     setTitle(title);
   }
 

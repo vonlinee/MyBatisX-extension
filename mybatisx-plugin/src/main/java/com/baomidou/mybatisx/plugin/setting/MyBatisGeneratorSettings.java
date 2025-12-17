@@ -18,7 +18,7 @@ public final class MyBatisGeneratorSettings implements PersistentStateComponent<
   private final State state = new State();
 
   @Override
-  public MyBatisGeneratorSettings.@NotNull State getState() {
+  public MyBatisGeneratorSettings.State getState() {
     return this.state;
   }
 

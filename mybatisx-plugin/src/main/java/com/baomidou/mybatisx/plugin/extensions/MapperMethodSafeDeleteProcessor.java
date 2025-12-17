@@ -23,19 +23,29 @@ import java.util.List;
  */
 public class MapperMethodSafeDeleteProcessor extends SafeDeleteProcessorDelegateBase {
 
-
   @Override
   public boolean handlesElement(PsiElement element) {
     // 只处理方法重命名就好了
-    if (!(element instanceof PsiMethod)) {
+    if (!(element instanceof PsiMethod psiMethod)) {
       return false;
     }
-    PsiMethod psiMethod = (PsiMethod) element;
     final PsiClass containingClass = psiMethod.getContainingClass();
     if (containingClass == null) {
       return false;
     }
     return !MapperUtils.findMappers(psiMethod.getProject(), containingClass).isEmpty();
+  }
+
+  @Nullable
+  @Override
+  public NonCodeUsageSearchInfo findUsages(@NotNull PsiElement element, PsiElement[] allElementsToDelete, @NotNull List<? super UsageInfo> result) {
+    return null;
+  }
+
+  @Nullable
+  @Override
+  public Collection<PsiElement> getAdditionalElementsToDelete(@NotNull PsiElement element, @NotNull Collection<? extends PsiElement> allElementsToDelete, boolean askUser) {
+    return List.of();
   }
 
 
@@ -50,19 +60,7 @@ public class MapperMethodSafeDeleteProcessor extends SafeDeleteProcessorDelegate
 
   @Override
   public @Nullable
-  NonCodeUsageSearchInfo findUsages(@NotNull PsiElement element, @NotNull PsiElement @NotNull [] allElementsToDelete, @NotNull List<UsageInfo> result) {
-    return null;
-  }
-
-  @Override
-  public @Nullable
-  Collection<PsiElement> getAdditionalElementsToDelete(@NotNull PsiElement element, @NotNull Collection<PsiElement> allElementsToDelete, boolean askUser) {
-    return null;
-  }
-
-  @Override
-  public @Nullable
-  Collection<String> findConflicts(@NotNull PsiElement element, @NotNull PsiElement @NotNull [] allElementsToDelete) {
+  Collection<String> findConflicts(@NotNull PsiElement element, @NotNull PsiElement[] allElementsToDelete) {
     return null;
   }
 
@@ -93,9 +91,9 @@ public class MapperMethodSafeDeleteProcessor extends SafeDeleteProcessorDelegate
 
   }
 
+  @Nullable
   @Override
-  public @Nullable
-  Collection<? extends PsiElement> getElementsToSearch(@NotNull PsiElement element, @Nullable Module module, @NotNull Collection<PsiElement> allElementsToDelete) {
-    return null;
+  public Collection<? extends PsiElement> getElementsToSearch(@NotNull PsiElement element, @Nullable Module module, @NotNull Collection<? extends PsiElement> allElementsToDelete) {
+    return List.of();
   }
 }

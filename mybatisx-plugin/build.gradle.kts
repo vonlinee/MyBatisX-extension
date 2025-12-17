@@ -1,10 +1,13 @@
-import org.jetbrains.intellij.tasks.RunPluginVerifierTask
+import org.jetbrains.intellij.platform.gradle.IntelliJPlatformType
+import org.jetbrains.intellij.platform.gradle.TestFrameworkType
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 import java.nio.charset.StandardCharsets
 
 buildscript {
   repositories {
     mavenLocal()
+    maven { url = uri("https://www.jetbrains.com/intellij-repository/releases") }
     maven { url = uri("https://maven.aliyun.com/repository/public/") }
     mavenCentral()
     maven { url = uri("https://plugins.gradle.org/m2/") }
@@ -14,26 +17,31 @@ buildscript {
   }
   dependencies {
     classpath("org.jetbrains.intellij.plugins:gradle-intellij-plugin:1.17.3")
-    classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:1.9.20")
+    classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:2.2.0")
   }
 }
 
 plugins {
   java
-  id("org.jetbrains.kotlin.jvm") version "1.9.20"
-  id("org.jetbrains.intellij") version "1.14.0"
+  id("org.jetbrains.kotlin.jvm") version "2.2.0"
+  id("org.jetbrains.intellij.platform") version "2.9.0"
+  id("org.jetbrains.intellij.platform.module") version "2.9.0"
 }
 
 repositories {
   mavenLocal()
   maven { url = uri("https://maven.aliyun.com/repository/public/") }
   mavenCentral()
+  intellijPlatform {
+    defaultRepositories()
+  }
 }
 
-// 设置兼容性版本
-java {
-  sourceCompatibility = JavaVersion.VERSION_11
-  targetCompatibility = JavaVersion.VERSION_11
+intellijPlatform {
+
+  dependencies {
+    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
+  }
 }
 
 dependencies {
@@ -49,6 +57,8 @@ dependencies {
   // this is published locally
   implementation(files("${rootDir}/libs/mybatis-3.6.0-SNAPSHOT.jar"))
   implementation("com.tencentcloudapi:tencentcloud-sdk-java:3.1.210")
+  // https://mvnrepository.com/artifact/net.minidev/json-smart
+  implementation("net.minidev:json-smart:2.6.0")
   implementation(project(":agent-api"))
   implementation(project(":mybatisx-agent"))
 
@@ -59,29 +69,26 @@ dependencies {
   testImplementation("org.junit.jupiter:junit-jupiter-api:5.6.0")
 
   testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine")
-}
 
-// See https://github.com/JetBrains/gradle-intellij-plugin/
-intellij {
-  version = "2021.3.3"
-  type = "IU"
+  intellijPlatform {
+    create(IntelliJPlatformType.IntellijIdeaUltimate, "2025.2.1")
 
-  // sandboxDir = "${rootDir}/idea-sandbox-${version}"
-  updateSinceUntilBuild = false
+    bundledPlugins(
+      "com.intellij.java",
+      "com.intellij.spring.boot",
+      "com.intellij.spring",
+      "com.intellij.database",
+      "com.intellij.modules.json",
+      "org.intellij.intelliLang",
+      "org.jetbrains.kotlin"
+    )
 
-  // Bundled plugin dependencies
-  plugins = listOf(
-    "com.intellij.spring.boot",
-    "com.intellij.java",
-    "org.intellij.intelliLang",
-    "com.intellij.spring",
-    "com.intellij.database",
-    "org.jetbrains.kotlin"
-  )
+    testFramework(TestFrameworkType.Platform)
+  }
 }
 
 tasks.patchPluginXml {
-  sinceBuild = "213"
+  sinceBuild = "252"
   // 包含未来所有版本分支
   untilBuild = ""
   changeNotes = """
@@ -89,42 +96,12 @@ tasks.patchPluginXml {
     """
 }
 
-/**
- * run gradle task:
- * gradle :mybatisx-plugin:runPluginVerifier --stacktrace
- * gradle :mybatisx-plugin:runPluginVerifier --stacktrace --info --debug
- * available build versions on IntelliJ Platform Builds list:
- * https://jb.gg/intellij-platform-builds-list
- */
-tasks.runPluginVerifier {
-
-  ideVersions.set(
-    listOf(
-      "IIU-2021.2.3",
-      "IIU-2025.2.2",
-      "IIU-2025.2.1",
-    )
-  )
-
-  failureLevel = RunPluginVerifierTask.FailureLevel.ALL
-
-  // https://plugins.jetbrains.com/docs/intellij/tools-gradle-intellij-plugin.html#tasks-runpluginverifier-downloaddir
-  // ${GRADLE_HOME}/caches/modules-2/metadata-2.106/descriptors/com.jetbrains/ides
-
-  val absolutePath = rootDir.toPath().toAbsolutePath().toString()
-  val first = File.listRoots().first { absolutePath.startsWith(it.toString()) }.toString()
-  downloadDir = "$first/jetbrains/ides"
-  println("runPluginVerifier download directory : $first")
-}
-
 tasks.withType<KotlinCompile> {
   /**
    * Kotlin compiler options
    */
-  kotlinOptions {
-    // This option specifies the target version of the generated JVM bytecode
-    jvmTarget = "11"
-  }
+  // This option specifies the target version of the generated JVM bytecode
+  compilerOptions.jvmTarget = JvmTarget.JVM_17
 }
 
 tasks.withType<JavaCompile> {

@@ -9,6 +9,7 @@ import com.intellij.ui.AnActionButton;
 import com.intellij.ui.ToolbarDecorator;
 import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.util.PlatformIcons;
+import com.intellij.util.ui.JButtonAction;
 import lombok.Getter;
 import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
@@ -147,7 +148,7 @@ public class MyBatisXTemplateSettings {
     return true;
   }
 
-  private static class CopyAction extends AnActionButton {
+  private static class CopyAction extends JButtonAction {
     CopyAction() {
       super(IntellijSDK.message("button.copy"),
         IntellijSDK.message("user.renderers.configurable.button.description.copy"),
@@ -156,10 +157,6 @@ public class MyBatisXTemplateSettings {
 
     @Override
     public void actionPerformed(@NotNull AnActionEvent e) {
-    }
-
-    @Override
-    public void updateButton(@NotNull AnActionEvent e) {
     }
   }
 

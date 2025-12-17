@@ -20,6 +20,7 @@ import com.intellij.ui.table.TableView;
 import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.util.PlatformIcons;
 import com.intellij.util.ui.ColumnInfo;
+import com.intellij.util.ui.JButtonAction;
 import com.intellij.util.ui.ListTableModel;
 import lombok.Getter;
 import org.jetbrains.annotations.NotNull;
@@ -154,7 +155,7 @@ public class CodeGenerateUI {
 
     templateExtraPanel.add(ToolbarDecorator.createDecorator(tableView)
       .setToolbarPosition(ActionToolbarPosition.TOP) // 工具栏的位置，相对表格的位置
-      .addExtraAction(new AnActionButton("Refresh Template", PlatformIcons.SYNCHRONIZE_ICON) {
+      .addExtraAction(new JButtonAction("Refresh Template", "", PlatformIcons.SYNCHRONIZE_ICON) {
         @Override
         public void actionPerformed(@NotNull AnActionEvent e) {
           AbstractButton selectedTemplateName = findSelectedTemplateName();
