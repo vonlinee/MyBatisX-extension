@@ -21,11 +21,11 @@ import com.baomidou.mybatisx.util.JBComponents;
 import com.baomidou.mybatisx.util.SqlUtils;
 import com.baomidou.mybatisx.util.StringUtils;
 import com.baomidou.mybatisx.util.SwingUtils;
+import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.actionSystem.Presentation;
 import com.intellij.openapi.project.Project;
 import com.intellij.psi.xml.XmlTag;
-import com.intellij.ui.AnActionButton;
 import com.intellij.util.ExceptionUtil;
 import com.intellij.util.PlatformIcons;
 import lombok.Getter;
@@ -118,7 +118,7 @@ public class SqlPreviewPanel extends BorderPane {
 
     importPane.setBottom(new HBox(btnApply, btnGenerate, btnHide));
 
-    AnActionButton[] actions = new AnActionButton[]{new AnActionButton("Import Params", "Import params", PlatformIcons.IMPORT_ICON) {
+    AnAction[] actions = new AnAction[]{new AnAction(() -> "Import Params", PlatformIcons.IMPORT_ICON) {
       @Override
       public void actionPerformed(@NotNull AnActionEvent e) {
         if (!importPane.isVisible() && StringUtils.isBlank(importPane.getUserInput())) {
@@ -126,12 +126,12 @@ public class SqlPreviewPanel extends BorderPane {
         }
         importPane.setVisible(true);
       }
-    }, new AnActionButton("Refresh Params", Icons.AUTO_REFRESH) {
+    }, new AnAction(() -> "Refresh Params", Icons.AUTO_REFRESH) {
       @Override
       public void actionPerformed(@NotNull AnActionEvent e) {
         fillMapperStatementParams();
       }
-    }, new AnActionButton("Enable of Disable Parameter Table", Icons.STATUS_ENABLED) {
+    }, new AnAction(() -> "Enable of Disable Parameter Table", Icons.STATUS_ENABLED) {
       @Override
       public void actionPerformed(@NotNull AnActionEvent e) {
         useRawUserInputParams = !useRawUserInputParams;

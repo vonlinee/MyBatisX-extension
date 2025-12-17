@@ -8,6 +8,7 @@ import com.baomidou.mybatisx.feat.mybatis.generator.dto.TemplateAnnotationType;
 import com.baomidou.mybatisx.feat.mybatis.generator.dto.TemplateSettingDTO;
 import com.baomidou.mybatisx.util.StringUtils;
 import com.intellij.openapi.actionSystem.ActionToolbarPosition;
+import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.module.Module;
 import com.intellij.openapi.module.ModuleManager;
@@ -155,7 +156,7 @@ public class CodeGenerateUI {
 
     templateExtraPanel.add(ToolbarDecorator.createDecorator(tableView)
       .setToolbarPosition(ActionToolbarPosition.TOP) // 工具栏的位置，相对表格的位置
-      .addExtraAction(new JButtonAction("Refresh Template", "", PlatformIcons.SYNCHRONIZE_ICON) {
+      .addExtraAction(new AnAction("Refresh Template", "", PlatformIcons.SYNCHRONIZE_ICON) {
         @Override
         public void actionPerformed(@NotNull AnActionEvent e) {
           AbstractButton selectedTemplateName = findSelectedTemplateName();

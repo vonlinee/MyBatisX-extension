@@ -7,16 +7,15 @@ import com.baomidou.mybatisx.util.JsonUtils;
 import com.baomidou.mybatisx.util.StringUtils;
 import com.baomidou.mybatisx.util.SwingUtils;
 import com.intellij.json.JsonLanguage;
+import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.ui.DialogWrapper;
-import com.intellij.ui.AnActionButton;
 import com.intellij.ui.LanguageTextField;
 import com.intellij.ui.ToolbarDecorator;
 import com.intellij.ui.treeStructure.treetable.ListTreeTableModelOnColumns;
 import com.intellij.ui.treeStructure.treetable.TreeTableTree;
 import com.intellij.util.PlatformIcons;
-import com.intellij.util.ui.JButtonAction;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -33,7 +32,7 @@ public class MapperStatementParamTablePane extends JScrollPane {
 
   private final MSParamTreeTable table;
 
-  public MapperStatementParamTablePane(AnActionButton[] actions) {
+  public MapperStatementParamTablePane(AnAction[] actions) {
     table = new MSParamTreeTable();
     // 添加工具栏
     ToolbarDecorator decorator = ToolbarDecorator.createDecorator(table);
@@ -62,7 +61,7 @@ public class MapperStatementParamTablePane extends JScrollPane {
     });
     decorator.addExtraActions(actions);
 
-    decorator.addExtraAction(new JButtonAction("Export Params As Json", "", PlatformIcons.EXPORT_ICON) {
+    decorator.addExtraAction(new AnAction(() -> "Export Params As Json", PlatformIcons.EXPORT_ICON) {
       @Override
       public void actionPerformed(@NotNull AnActionEvent e) {
         Map<String, Object> map = CollectionUtils.expandKeys(getParamsAsMap(), StringUtils.SPLITTER);
