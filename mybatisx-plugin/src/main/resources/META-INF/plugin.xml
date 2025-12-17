@@ -188,29 +188,36 @@
     <!--提示动作 start-->
     <!-- 生成参数注解 @Param -->
     <intentionAction id="baomidou.GenerateParamAnnotationIntention">
+      <language>JAVA</language>
       <className>com.baomidou.mybatisx.plugin.intention.GenerateParamAnnotationIntention</className>
     </intentionAction>
     <!-- 通过方法名生成对应的 查询语句 -->
     <intentionAction id="baomidou.GenerateStatementIntention">
+      <language>JAVA</language>
       <className>com.baomidou.mybatisx.plugin.intention.GenerateStatementIntention</className>
     </intentionAction>
     <!-- 生成mybatis mapper.xml文件 -->
     <intentionAction order="first" id="baomidou.GenerateMapperIntention">
+      <language>JAVA</language>
       <className>com.baomidou.mybatisx.plugin.intention.GenerateMapperIntention</className>
     </intentionAction>
     <!-- mybatis mapper.xml 文件 提示 if test -->
     <intentionAction id="baomidou.MapperXmlIfTestHintIntention">
+      <language>XML</language>
       <className>com.baomidou.mybatisx.plugin.intention.MapperXmlIfTestHintIntention</className>
     </intentionAction>
     <!-- mybatis mapper.xml 文件 提示 foreach -->
     <intentionAction id="baomidou.MapperXmlForeachHintIntention">
+      <language>XML</language>
       <className>com.baomidou.mybatisx.plugin.intention.MapperXmlForeachHintIntention</className>
     </intentionAction>
     <!-- 根据jpa名字生成方法和xml文件内容 -->
     <intentionAction id="baomidou.GenerateMapperMethodSmartJpaAction">
+      <language>JAVA</language>
       <className>com.baomidou.mybatisx.feat.jpa.GenerateSmartJpaAction</className>
     </intentionAction>
     <intentionAction id="baomidou.GenerateMapperMethodSmartAdvanceJpaAction">
+      <language>JAVA</language>
       <className>com.baomidou.mybatisx.feat.jpa.GenerateSmartJpaAdvanceAction</className>
     </intentionAction>
     <!--提示动作 end-->
