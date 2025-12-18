@@ -41,7 +41,7 @@
       ]]>
   </change-notes>
 
-  <idea-version since-build="252.0"/>
+  <idea-version since-build="251" until-build="252.*"/>
 
   <!-- Plugin Dependency -->
   <!-- please see https://plugins.jetbrains.com/docs/intellij/plugin-compatibility.html on how to target different products -->

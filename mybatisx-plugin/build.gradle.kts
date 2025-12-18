@@ -88,9 +88,9 @@ dependencies {
 }
 
 tasks.patchPluginXml {
-  sinceBuild = "252"
+  sinceBuild = "251"
   // 包含未来所有版本分支
-  untilBuild = ""
+  untilBuild = "252.*"
   changeNotes = """
     <b>初始版本</b>
     """
