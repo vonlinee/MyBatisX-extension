@@ -184,7 +184,6 @@ public class SqlPreviewPanel extends BorderPane {
       fillMapperStatementParams();
     }
     Map<String, Object> map;
-    System.out.println(useRawUserInputParams);
     if (useRawUserInputParams) {
       map = importPane.getParamsAsMap();
     } else {

@@ -37,7 +37,11 @@ import org.apache.ibatis.mapping.MappedStatement;
 import org.apache.ibatis.mapping.ParameterMapping;
 import org.apache.ibatis.mapping.ParameterMode;
 import org.apache.ibatis.mapping.ResultMap;
+import org.apache.ibatis.reflection.DefaultReflectorFactory;
+import org.apache.ibatis.reflection.MetaObject;
 import org.apache.ibatis.reflection.ParamNameResolver;
+import org.apache.ibatis.reflection.factory.DefaultObjectFactory;
+import org.apache.ibatis.reflection.wrapper.DefaultObjectWrapperFactory;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.mybatisx.extension.agent.mybatis.XmlStatementParser;
@@ -172,10 +176,9 @@ public class MapperStatementEditor extends LanguageTextField {
   }
 
   private void recursiveReplace(PsiElement element, XmlDocument document) {
-    if (!(element instanceof XmlTag)) {
+    if (!(element instanceof XmlTag xmlTag)) {
       return;
     }
-    XmlTag xmlTag = (XmlTag) element;
     if ("include".equals(xmlTag.getName())) {
       String refid = xmlTag.getAttributeValue("refid");
       XmlTag rootTag = document.getRootTag();
@@ -228,11 +231,17 @@ public class MapperStatementEditor extends LanguageTextField {
   private String computeSql(MappedStatement mappedStatement, Object parameterObject) {
     BoundSql boundSql = mappedStatement.getBoundSql(parameterObject);
     List<String> paramItems = new ArrayList<>();
+    MetaObject metaObject = MetaObject.forObject(parameterObject, new DefaultObjectFactory(), new DefaultObjectWrapperFactory(), new DefaultReflectorFactory());
     List<ParameterMapping> parameterMappings = boundSql.getParameterMappings();
     if (parameterMappings != null) {
       for (ParameterMapping parameterMapping : parameterMappings) {
         if (parameterMapping.getMode() != ParameterMode.OUT) {
-          Object value = parameterMapping.getValue();
+          Object value;
+          if (parameterMapping.hasValue()) {
+            value = parameterMapping.getValue();
+          } else {
+            value = metaObject.getValue(parameterMapping.getProperty());
+          }
           if (value == null) {
             paramItems.add("null");
           } else {
