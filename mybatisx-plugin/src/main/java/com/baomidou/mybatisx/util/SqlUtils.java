@@ -29,7 +29,7 @@ public abstract class SqlUtils {
   }
 
   public static String parseExecutableSqlFromMyBatisLog(String mybatisLog) {
-    return parseExecutableSql(mybatisLog, true);
+    return parseExecutableSql(mybatisLog, false);
   }
 
   public static String parseExecutableSql(String mybatisLog, boolean formatSqlEnabled) {
