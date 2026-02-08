@@ -197,6 +197,7 @@ public class MSParamTreeTable extends TreeTableView<ParamNode> {
 
   public void setAll(List<ParamNode> params) {
     ParamNode rootNode = (ParamNode) getTreeTableModel().getRoot();
+    rootNode.removeAllChildren();
     rootNode.setChildren(params);
     for (ParamNode param : params) {
       rootNode.add(param);

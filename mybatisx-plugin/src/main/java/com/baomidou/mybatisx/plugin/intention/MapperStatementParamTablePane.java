@@ -3,6 +3,7 @@ package com.baomidou.mybatisx.plugin.intention;
 import com.baomidou.mybatisx.model.ParamDataType;
 import com.baomidou.mybatisx.plugin.ui.UIHelper;
 import com.baomidou.mybatisx.util.CollectionUtils;
+import com.baomidou.mybatisx.util.IntellijSDK;
 import com.baomidou.mybatisx.util.JsonUtils;
 import com.baomidou.mybatisx.util.StringUtils;
 import com.baomidou.mybatisx.util.SwingUtils;
@@ -84,7 +85,7 @@ public class MapperStatementParamTablePane extends JScrollPane {
   }
 
   public void setAll(List<ParamNode> paramNodeList) {
-    table.setAll(paramNodeList);
+    IntellijSDK.invokeLater(() -> table.setAll(paramNodeList));
   }
 
   public void resetAll(List<ParamNode> paramNodeList) {
