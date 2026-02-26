@@ -91,7 +91,9 @@ public class DataTypeMappingPane extends BorderPane {
       type.removeAllItems();
       type.addItems(typeSystem.getTypeGroupIds());
     }
-    type.setSelectedIndex(0);
+    if (!type.getItems().isEmpty()) {
+      type.setSelectedIndex(0);
+    }
     firePrimaryTypeGroupChange(type.getSelectedItem());
   }
 
