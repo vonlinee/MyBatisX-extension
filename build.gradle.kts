@@ -21,3 +21,12 @@ java {
   sourceCompatibility = JavaVersion.VERSION_17 // 源码兼容版本
   targetCompatibility = JavaVersion.VERSION_17 // 目标字节码版本（通常与源码版本一致）
 }
+
+subprojects {
+  tasks.withType<JavaCompile> {
+    options.encoding = StandardCharsets.UTF_8.name()
+
+    sourceCompatibility = "17"
+    targetCompatibility = "17"
+  }
+}
