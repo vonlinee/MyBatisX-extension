@@ -83,7 +83,7 @@ public class SqlPreviewPanel extends BorderPane {
     resultSqlEditor = new SqlEditor(project);
 
     Tabs tabPane = new Tabs(project);
-    tabPane.addTab("MappedStatement", statementEditor);
+    tabPane.addTab("XML", statementEditor);
     tabPane.addTab("SQL", resultSqlEditor);
 
     center.setFirstComponent(this.tabPane = tabPane);
