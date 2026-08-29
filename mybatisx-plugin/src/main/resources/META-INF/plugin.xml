@@ -116,6 +116,9 @@
                       rootTagName="configuration"
                       implementation="com.baomidou.mybatisx.dom.ConfigurationDescription"/>
 
+    <xmlStructureViewBuilderProvider implementation="com.baomidou.mybatisx.plugin.structure.MyBatisMapperXmlStructureViewFactory"
+                                     order="first"/>
+
     <!-- Ctrl+B, 定位类的跳转, 定位方法的跳转 -->
     <definitionsScopedSearch id="baomidou.MapperClassSearch"
                              implementation="com.baomidou.mybatisx.plugin.extensions.MapperClassSearch"/>

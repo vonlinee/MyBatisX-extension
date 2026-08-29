@@ -53,6 +53,10 @@ public interface Icons {
   Icon GUTTER_RUN_ICON_OLD = IconLoader.getIcon("/icons/run_old.svg", Icons.class);
   Icon GUTTER_HOT_SWAP_ICON = IconLoader.getIcon("/icons/swap.svg", Icons.class);
   Icon ICON_COPY = IconLoader.getIcon("/icons/copy.svg", Icons.class);
+  Icon STATEMENT_SELECT_ICON = IconLoader.getIcon("/icons/statement_select.svg", Icons.class);
+  Icon STATEMENT_INSERT_ICON = IconLoader.getIcon("/icons/statement_insert.svg", Icons.class);
+  Icon STATEMENT_UPDATE_ICON = IconLoader.getIcon("/icons/statement_update.svg", Icons.class);
+  Icon STATEMENT_DELETE_ICON = IconLoader.getIcon("/icons/statement_delete.svg", Icons.class);
 
   Icon AUTO_REFRESH = IconLoader.getIcon("/icons/autoRefresh.svg", Icons.class);
   Icon AUTO_REFRESH_DARK = IconLoader.getIcon("/icons/autoRefresh_dark.svg", Icons.class);
