@@ -7,6 +7,7 @@ import java.nio.charset.StandardCharsets;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 public class MyBatisMapperXmlStructureItemTypeTest {
@@ -67,7 +68,7 @@ public class MyBatisMapperXmlStructureItemTypeTest {
   private void assertStatementIconContainsText(String tagName, String text) throws Exception {
     try (InputStream inputStream = getClass().getResourceAsStream(
       MyBatisMapperXmlStructureItemType.getStatementIconPath(tagName))) {
-      assertTrue("Missing icon resource for " + tagName, inputStream != null);
+      assertNotNull("Missing icon resource for " + tagName, inputStream);
       String svg = new String(inputStream.readAllBytes(), StandardCharsets.UTF_8);
       assertTrue("Icon should contain full text " + text, svg.contains(">" + text + "<"));
     }
