@@ -28,7 +28,7 @@ public class MyBatisMapperXmlStructureViewFactory implements PsiStructureViewFac
     return getStructureViewBuilder(xmlFile);
   }
 
-  static boolean isMyBatisMapperXml(@Nullable PsiFile psiFile) {
+  public static boolean isMyBatisMapperXml(@Nullable PsiFile psiFile) {
     if (!(psiFile instanceof XmlFile)) {
       return false;
     }
