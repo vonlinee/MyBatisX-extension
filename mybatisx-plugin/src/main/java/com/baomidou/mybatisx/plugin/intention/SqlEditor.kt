@@ -1,12 +1,12 @@
 package com.baomidou.mybatisx.plugin.intention
 
+import com.baomidou.mybatisx.util.IntellijSDK
 import com.intellij.openapi.editor.ex.EditorEx
 import com.intellij.openapi.project.Project
-import com.intellij.sql.SqlFileType
 import com.intellij.ui.EditorTextField
 import com.intellij.ui.HorizontalScrollBarEditorCustomization
 
-class SqlEditor(project: Project?) : EditorTextField(project, SqlFileType.INSTANCE) {
+class SqlEditor(project: Project?) : EditorTextField(project, IntellijSDK.getSqlFileType()) {
   init {
     this.isOneLineMode = false
     this.isEnabled = true

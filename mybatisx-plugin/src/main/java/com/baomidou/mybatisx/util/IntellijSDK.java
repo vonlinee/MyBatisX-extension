@@ -9,6 +9,8 @@ import com.intellij.openapi.editor.impl.EditorImpl;
 import com.intellij.openapi.extensions.PluginId;
 import com.intellij.openapi.fileTypes.FileType;
 import com.intellij.openapi.fileTypes.FileTypeManager;
+import com.intellij.openapi.fileTypes.PlainTextFileType;
+import com.intellij.openapi.fileTypes.UnknownFileType;
 import com.intellij.openapi.module.Module;
 import com.intellij.openapi.module.ModuleManager;
 import com.intellij.openapi.project.Project;
@@ -82,6 +84,11 @@ public abstract class IntellijSDK {
 
   public static FileType getFileType(String extension) {
     return FileTypeManager.getInstance().getFileTypeByExtension(extension);
+  }
+
+  public static FileType getSqlFileType() {
+    FileType fileType = getFileType("sql");
+    return fileType == UnknownFileType.INSTANCE ? PlainTextFileType.INSTANCE : fileType;
   }
 
   public static ToolWindow getToolWindow(Project project, String name) {

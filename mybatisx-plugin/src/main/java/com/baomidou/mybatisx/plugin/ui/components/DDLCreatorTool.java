@@ -3,9 +3,9 @@ package com.baomidou.mybatisx.plugin.ui.components;
 import com.baomidou.mybatisx.feat.bean.BeanInfo;
 import com.baomidou.mybatisx.feat.bean.Field;
 import com.baomidou.mybatisx.util.DdlFormatUtil;
+import com.baomidou.mybatisx.util.IntellijSDK;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.ui.ComboBox;
-import com.intellij.sql.SqlFileType;
 import com.intellij.ui.EditorTextField;
 
 import javax.swing.*;
@@ -33,7 +33,7 @@ public final class DDLCreatorTool extends JPanel implements BeanToolHandler {
     topPanel.add(dbTypeLabel);
     topPanel.add(dbTypeComboBox);
 
-    ddlEditor = new EditorTextField(project, SqlFileType.INSTANCE);
+    ddlEditor = new EditorTextField(project, IntellijSDK.getSqlFileType());
 
     setLayout(new BorderLayout());
     add(topPanel, BorderLayout.NORTH);
