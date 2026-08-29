@@ -6,7 +6,6 @@ import java.util.Set;
 
 enum MyBatisMapperXmlStructureItemType {
   RESULT_MAP("resultMap"),
-  SQL("sql"),
   STATEMENT("select", "insert", "update", "delete");
 
   private final Set<String> tagNames;

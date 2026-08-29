@@ -59,7 +59,7 @@ class MyBatisMapperXmlStructureViewElement implements StructureViewTreeElement {
 
       @Override
       public @Nullable String getLocationString() {
-        return element instanceof XmlTag ? ((XmlTag) element).getName() : null;
+        return null;
       }
 
       @Override

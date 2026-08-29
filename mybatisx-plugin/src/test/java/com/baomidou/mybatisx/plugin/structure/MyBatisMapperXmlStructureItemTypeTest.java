@@ -16,8 +16,6 @@ public class MyBatisMapperXmlStructureItemTypeTest {
   public void shouldRecognizeNavigableMyBatisMapperTags() {
     assertEquals(MyBatisMapperXmlStructureItemType.RESULT_MAP,
       MyBatisMapperXmlStructureItemType.fromTagName("resultMap"));
-    assertEquals(MyBatisMapperXmlStructureItemType.SQL,
-      MyBatisMapperXmlStructureItemType.fromTagName("sql"));
     assertEquals(MyBatisMapperXmlStructureItemType.STATEMENT,
       MyBatisMapperXmlStructureItemType.fromTagName("select"));
     assertEquals(MyBatisMapperXmlStructureItemType.STATEMENT,
@@ -31,6 +29,7 @@ public class MyBatisMapperXmlStructureItemTypeTest {
   @Test
   public void shouldIgnoreNonStructureTags() {
     assertFalse(MyBatisMapperXmlStructureItemType.isSupportedTagName("mapper"));
+    assertFalse(MyBatisMapperXmlStructureItemType.isSupportedTagName("sql"));
     assertFalse(MyBatisMapperXmlStructureItemType.isSupportedTagName("if"));
     assertFalse(MyBatisMapperXmlStructureItemType.isSupportedTagName("where"));
     assertFalse(MyBatisMapperXmlStructureItemType.isSupportedTagName(null));
