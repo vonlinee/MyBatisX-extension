@@ -20,7 +20,7 @@ public class MyBatisSqlPreviewDialog extends DialogWrapper implements DumbAware 
     setModal(false);
     setAutoAdjustable(true);
     setCrossClosesWindow(true);
-    this.setTitle("Mapped Statement Sql Preview");
+    this.setTitle("MyBatis Sql Preview");
     setOKButtonText("Next");
     setCancelButtonText("Cancel");
     init();
