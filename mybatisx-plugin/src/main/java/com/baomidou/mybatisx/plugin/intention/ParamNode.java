@@ -65,6 +65,10 @@ public class ParamNode extends DefaultMutableTreeNode {
     add(child);
   }
 
+  public List<ParamNode> getChildren() {
+    return children != null ? children : new ArrayList<>();
+  }
+
   @Override
   public String toString() {
     return key;
