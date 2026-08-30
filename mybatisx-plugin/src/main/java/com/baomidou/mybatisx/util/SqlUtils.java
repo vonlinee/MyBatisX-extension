@@ -64,7 +64,7 @@ public abstract class SqlUtils {
     if (paramsMatcher.find()) {
       String params = paramsMatcher.group(1);
       if (StringUtils.isBlank(params)) {
-        return format(preparedSql);
+        return preparedSql;
       }
       String[] paramItems = params.split(COMMA);
       for (int i = 0; i < paramItems.length; i++) {

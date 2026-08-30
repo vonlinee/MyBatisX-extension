@@ -250,7 +250,7 @@ public class MapperStatementEditor extends LanguageTextField {
         }
       }
     }
-    String log = "==>  Preparing: " + boundSql.getSql().replace("\n", " ");
+    String log = "==>  Preparing: " + boundSql.getSql();
     log += "\n";
     log += "==> Parameters: " + StringUtils.join(paramItems, ",");
     return SqlUtils.parseExecutableSql(log);
