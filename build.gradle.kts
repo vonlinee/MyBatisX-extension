@@ -30,3 +30,14 @@ subprojects {
     targetCompatibility = "17"
   }
 }
+
+allprojects {
+  tasks.withType<JavaExec> {
+    jvmArgs = listOf(
+      // 解决中文乱码问题
+      "-Dfile.encoding=UTF-8",
+      "-Dsun.stdout.encoding=UTF-8",
+      "-Dsun.stderr.encoding=UTF-8"
+    )
+  }
+}
