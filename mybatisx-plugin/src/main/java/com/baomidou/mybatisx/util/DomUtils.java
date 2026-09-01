@@ -1,6 +1,7 @@
 package com.baomidou.mybatisx.util;
 
 import com.intellij.openapi.project.Project;
+import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiFile;
 import com.intellij.psi.search.GlobalSearchScope;
 import com.intellij.psi.xml.XmlAttribute;
@@ -9,6 +10,7 @@ import com.intellij.psi.xml.XmlTag;
 import com.intellij.util.xml.DomElement;
 import com.intellij.util.xml.DomFileElement;
 import com.intellij.util.xml.DomService;
+import lombok.NonNull;
 import org.jetbrains.annotations.NonNls;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -39,6 +41,36 @@ public final class DomUtils {
   public static <T extends DomElement> Collection<T> findDomElements(@NotNull Project project, Class<T> clazz) {
     GlobalSearchScope scope = GlobalSearchScope.allScope(project);
     List<DomFileElement<T>> elements = DomService.getInstance().getFileElements(clazz, project, scope);
+    return elements.stream().map(DomFileElement::getRootElement).collect(Collectors.toList());
+  }
+
+  /**
+   * 在 PsiElement 元素文件范围内搜索 Dom 元素
+   * @param psiElement PsiElement
+   * @param clazz DOM 元素类型
+   * @return DOM 元素列表
+   * @param <T> DOM 元素列表
+   */
+  @NotNull
+  @NonNull
+  public static <T extends DomElement> Collection<T> searchDomElementsInPsiFile(PsiElement psiElement, Class<T> clazz) {
+    GlobalSearchScope fileSearchScope = GlobalSearchScope.fileScope(psiElement.getContainingFile());
+    List<DomFileElement<T>> elements = DomService.getInstance().getFileElements(clazz, psiElement.getProject(), fileSearchScope);
+    return elements.stream().map(DomFileElement::getRootElement).collect(Collectors.toList());
+  }
+
+  /**
+   * 在文件范围内搜索 Dom 元素
+   * @param psiFile 文件
+   * @param clazz DOM 元素类型
+   * @return DOM 元素列表
+   * @param <T> DOM 元素列表
+   */
+  @NotNull
+  @NonNull
+  public static <T extends DomElement> Collection<T> searchDomElementsInPsiFile(PsiFile psiFile, Class<T> clazz) {
+    GlobalSearchScope fileSearchScope = GlobalSearchScope.fileScope(psiFile);
+    List<DomFileElement<T>> elements = DomService.getInstance().getFileElements(clazz, psiFile.getProject(), fileSearchScope);
     return elements.stream().map(DomFileElement::getRootElement).collect(Collectors.toList());
   }
 
