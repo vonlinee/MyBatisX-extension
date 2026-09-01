@@ -188,6 +188,16 @@
     <refactoring.elementListenerProvider id="baomidou.MapperRefactoringProvider"
                                          implementation="com.baomidou.mybatisx.plugin.extensions.MapperRefactoringProvider"/>
 
+    <!-- 注册新版现代文档提供者 -->
+    <platform.backend.documentation.psiTargetProvider
+      implementation="com.baomidou.mybatisx.feat.mybatis.MybatisPsiDocumentationTargetProvider"/>
+
+    <action id="com.baomidou.mybatisx.feat.mybatis.MybatisDocumentationPin"
+            icon="AllIcons.Actions.PinTab"
+            class="com.baomidou.mybatisx.feat.mybatis.MybatisDocumentationPinAction">
+      <add-to-group group-id="Documentation.PrimaryGroup" anchor="last"/>
+    </action>
+
     <!-- 语法校验，让没有生成代码的方法产生错误 -->
     <localInspection language="JAVA" shortName="MybatisXMapperMethodInspection"
                      id="baomidou.MybatisMapperMethodInspection"
