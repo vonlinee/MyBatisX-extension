@@ -14,3 +14,6 @@
 - IntelliJ 插件功能开发请看 [docs/guidelines/intellij-plugin.md](docs/guidelines/intellij-plugin.md)
 - 仓库文件与变更管理请看 [docs/guidelines/repository-hygiene.md](docs/guidelines/repository-hygiene.md)
 
+## 构建与测试
+
+必须严格参照 `docs/guidelines/build-and-test.md` 执行构建和测试命令，不得使用文档之外的替代命令。
