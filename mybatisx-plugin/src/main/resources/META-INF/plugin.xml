@@ -193,7 +193,7 @@
 
     <!-- 注册新版现代文档提供者 -->
     <platform.backend.documentation.psiTargetProvider
-      implementation="com.baomidou.mybatisx.feat.mybatis.MybatisPsiDocumentationTargetProvider"/>
+      implementation="com.baomidou.mybatisx.feat.mybatis.SqlIncludeRefDocTargetProvider"/>
 
     <action id="com.baomidou.mybatisx.feat.mybatis.MybatisDocumentationPin"
             icon="AllIcons.Actions.PinTab"

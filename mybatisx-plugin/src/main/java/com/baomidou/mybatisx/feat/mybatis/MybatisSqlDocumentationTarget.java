@@ -4,6 +4,7 @@ import com.intellij.model.Pointer;
 import com.intellij.lang.documentation.DocumentationMarkup;
 import com.intellij.lang.xml.XMLLanguage;
 import com.intellij.openapi.editor.richcopy.HtmlSyntaxInfoUtil;
+import com.intellij.openapi.project.Project;
 import com.intellij.platform.backend.documentation.DocumentationResult;
 import com.intellij.platform.backend.documentation.DocumentationTarget;
 import com.intellij.platform.backend.presentation.TargetPresentation;
@@ -37,7 +38,7 @@ public class MybatisSqlDocumentationTarget implements DocumentationTarget {
   @Override
   public @NotNull TargetPresentation computePresentation() {
     // 获取 <sql> 的 id 作为展示名字
-    String name = "SQL Fragment";
+    String name = "<sql id = " + myTargetElement.getText() + ">";
     if (myTargetElement instanceof XmlAttributeValue) {
       name = ((XmlAttributeValue) myTargetElement).getValue();
     }
@@ -77,7 +78,7 @@ public class MybatisSqlDocumentationTarget implements DocumentationTarget {
     return (XmlTag) parent.getParent();
   }
 
-  static String buildDocumentationHtml(@NotNull com.intellij.openapi.project.Project project,
+  static String buildDocumentationHtml(@NotNull Project project,
                                         @Nullable String sqlId,
                                         @Nullable String sqlContent) {
     String content = sqlContent == null ? "" : sqlContent;
@@ -88,7 +89,8 @@ public class MybatisSqlDocumentationTarget implements DocumentationTarget {
       .append("</code>")
       .append(DocumentationMarkup.DEFINITION_END)
       .append(DocumentationMarkup.CONTENT_START)
-      .append("<pre class='code'>");
+      .append("<div style='width: 800px; max-width: 800px; overflow-x: auto;'>")
+      .append("<pre class='code' style='margin: 0; white-space: pre;'>");
 
     try {
       HtmlSyntaxInfoUtil.appendHighlightedByLexerAndEncodedAsHtmlCodeSnippet(
@@ -99,7 +101,7 @@ public class MybatisSqlDocumentationTarget implements DocumentationTarget {
       html.append(escapeHtml(content));
     }
 
-    html.append("</pre>")
+    html.append("</pre></div>")
       .append(DocumentationMarkup.CONTENT_END)
       .append("</html>");
     return html.toString();

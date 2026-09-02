@@ -19,11 +19,9 @@ import com.intellij.psi.xml.XmlFile;
 import com.intellij.psi.xml.XmlTag;
 import kotlin.Pair;
 import kotlin.Unit;
-import kotlin.jvm.functions.Function2;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -75,18 +73,17 @@ public final class SqlTagUsageCodeVisionProvider extends ReferencesCodeVisionPro
       if (hint == null) {
         continue;
       }
-      Function2<MouseEvent, Editor, Unit> clickHandler = (event, clickedEditor) -> {
-        SqlTagUsageCodeVisionProvider.super.handleClick(clickedEditor, idValue, event);
-        return Unit.INSTANCE;
-      };
       CodeVisionEntry entry = new ClickableTextCodeVisionEntry(
         hint, // 展示在编辑器代码上方的文本
         getId(), // 当前 CodeVisionProvider 的唯一标识符
-        clickHandler, // 回调函数，定义用户点击该文本时的行为。点击时的鼠标事件（MouseEvent，可能为 null）和当前的编辑器对象（Editor）
+        (event, editor1) -> {
+          SqlTagUsageCodeVisionProvider.super.handleClick(editor1, idValue, event);
+          return Unit.INSTANCE;
+        }, // 回调函数，定义用户点击该文本时的行为。点击时的鼠标事件（MouseEvent，可能为 null）和当前的编辑器对象（Editor）
         null, // 文本左侧显示的图标。如果不想要图标，传入 null
-        "5 references in project", // 当编辑器横向空间不足，或者在某些特殊长文本视图中展示的“完整/长版”文本。通常与 text 保持一致或更详细
+        hint, // 当编辑器横向空间不足，或者在某些特殊长文本视图中展示的“完整/长版”文本。通常与 text 保持一致或更详细
         "Click to view all usages in this project", // 当鼠标悬停在 Code Vision 文本上时显示的气泡提示（Tooltip）
-        Collections.emptyList() // 如果你希望用户右键该提示、或者在提示旁边显示一个小齿轮/下拉菜单来执行额外操作（如“隐藏此提示”、“配置...”），可以在这里传入操作列表。通常填 emptyList() 或直接不填。
+        Collections.emptyList() // 如果你希望用户右键该提示、或者在提示旁边显示一个小齿轮/下拉菜单来执行额外操作（如“隐藏此提示”、“配置...”），可以在这里传入操作列表。
       );
       result.add(to(idValue.getTextRange(), entry));
     }
