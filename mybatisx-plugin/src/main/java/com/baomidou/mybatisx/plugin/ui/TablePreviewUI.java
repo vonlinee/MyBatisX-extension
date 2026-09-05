@@ -2,6 +2,7 @@ package com.baomidou.mybatisx.plugin.ui;
 
 import com.baomidou.mybatisx.feat.mybatis.generator.DefaultNamingStrategy;
 import com.baomidou.mybatisx.feat.mybatis.generator.NamingStrategy;
+import com.baomidou.mybatisx.feat.mybatis.generator.TableInfo;
 import com.baomidou.mybatisx.feat.mybatis.generator.dto.DomainInfo;
 import com.baomidou.mybatisx.feat.mybatis.generator.dto.GenerateConfig;
 import com.baomidou.mybatisx.feat.mybatis.generator.dto.TableUIInfo;
@@ -61,7 +62,7 @@ public class TablePreviewUI {
   private JRadioButton sameAsTablenameRadioButton;
   private JPanel classNameStrategyPanel;
   private PsiElement[] tableElements;
-  private List<DbTable> dbTables;
+  private List<TableInfo> dbTables;
   private String moduleName;
 
   public TablePreviewUI() {
@@ -84,7 +85,7 @@ public class TablePreviewUI {
     return domainInfo;
   }
 
-  public void fillData(Project project, List<DbTable> dbTables, GenerateConfig generateConfig) {
+  public void fillData(Project project, List<TableInfo> dbTables, GenerateConfig generateConfig) {
     this.dbTables = dbTables;
     String ignorePrefix = generateConfig.getIgnoreTablePrefix();
     String ignoreSuffix = generateConfig.getIgnoreTableSuffix();
@@ -139,10 +140,9 @@ public class TablePreviewUI {
 
     final ItemListener classNameChangeListener = e -> {
       final Object source = e.getItem();
-      if (!(source instanceof JRadioButton)) {
+      if (!(source instanceof JRadioButton radioButton)) {
         return;
       }
-      JRadioButton radioButton = (JRadioButton) source;
       if (!radioButton.isSelected()) {
         return;
       }
@@ -156,13 +156,13 @@ public class TablePreviewUI {
     ignoreTableSuffixTextField.getDocument().addDocumentListener(listener);
   }
 
-  private void refreshTableNames(String classNameStrategyName, List<DbTable> dbTables, String ignorePrefix, String ignoreSuffix) {
+  private void refreshTableNames(String classNameStrategyName, List<TableInfo> dbTables, String ignorePrefix, String ignoreSuffix) {
     for (int currentRowIndex = model.getRowCount() - 1; currentRowIndex >= 0; currentRowIndex--) {
       model.removeRow(currentRowIndex);
     }
     NamingStrategy namingStrategy = findStrategyByName(classNameStrategyName);
-    for (DbTable dbTable : dbTables) {
-      String tableName = dbTable.getName();
+    for (TableInfo dbTable : dbTables) {
+      String tableName = dbTable.getTableName();
       String className = namingStrategy.apply(tableName, ignorePrefix, ignoreSuffix);
       model.addRow(new TableUIInfo(tableName, className));
     }
@@ -230,8 +230,7 @@ public class TablePreviewUI {
 
   private void selectClassNameStrategyByName(NamingStrategy namingStrategy) {
     for (Component component : classNameStrategyPanel.getComponents()) {
-      if (component instanceof JRadioButton) {
-        JRadioButton radioButton = (JRadioButton) component;
+      if (component instanceof JRadioButton radioButton) {
         if (radioButton.getText().equals(namingStrategy.getText())) {
           radioButton.setSelected(true);
           break;
@@ -243,8 +242,7 @@ public class TablePreviewUI {
   private String findClassNameStrategy() {
     String name = null;
     for (Component component : classNameStrategyPanel.getComponents()) {
-      if (component instanceof JRadioButton) {
-        JRadioButton radioButton = (JRadioButton) component;
+      if (component instanceof JRadioButton radioButton) {
         if (radioButton.isSelected()) {
           name = radioButton.getText();
           break;

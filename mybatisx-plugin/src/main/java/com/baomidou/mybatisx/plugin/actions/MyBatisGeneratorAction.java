@@ -1,6 +1,8 @@
 package com.baomidou.mybatisx.plugin.actions;
 
 import com.baomidou.mybatisx.feat.mybatis.generator.ClassGenerateDialogWrapper;
+import com.baomidou.mybatisx.feat.mybatis.generator.PsiTableInfo;
+import com.baomidou.mybatisx.feat.mybatis.generator.TableInfo;
 import com.baomidou.mybatisx.feat.mybatis.generator.dto.GenerateConfig;
 import com.baomidou.mybatisx.feat.mybatis.generator.dto.TableUIInfo;
 import com.baomidou.mybatisx.feat.mybatis.generator.dto.TemplateContext;
@@ -9,7 +11,6 @@ import com.baomidou.mybatisx.plugin.setting.TemplatesSettings;
 import com.baomidou.mybatisx.util.ArrayUtils;
 import com.baomidou.mybatisx.util.PluginUtils;
 import com.baomidou.mybatisx.util.PsiUtils;
-import com.intellij.database.model.DasObject;
 import com.intellij.database.psi.DbTable;
 import com.intellij.openapi.actionSystem.ActionUpdateThread;
 import com.intellij.openapi.actionSystem.AnAction;
@@ -56,10 +57,10 @@ public final class MyBatisGeneratorAction extends AnAction {
       return;
     }
     ClassGenerateDialogWrapper classGenerateDialogWrapper = new ClassGenerateDialogWrapper(project);
-    List<DbTable> tablesToGenerate = new ArrayList<>();
+    List<TableInfo> tablesToGenerate = new ArrayList<>();
     for (PsiElement element : dbToolElements) {
       if (element instanceof DbTable) {
-        tablesToGenerate.add((DbTable) element);
+        tablesToGenerate.add(new PsiTableInfo((DbTable) element));
       }
     }
     if (tablesToGenerate.isEmpty()) {
@@ -79,7 +80,7 @@ public final class MyBatisGeneratorAction extends AnAction {
     }
   }
 
-  public void generateCode(Project project, List<DbTable> psiElements, GenerateConfig generateConfig) {
+  public void generateCode(Project project, List<TableInfo> psiElements, GenerateConfig generateConfig) {
     try {
       // 保存配置, 更新最后一次存储的配置
       TemplatesSettings templatesSettings = TemplatesSettings.getInstance(project);
@@ -89,11 +90,11 @@ public final class MyBatisGeneratorAction extends AnAction {
       templateConfigs.setModuleName(generateConfig.getModuleName());
       templatesSettings.setTemplateContext(templateConfigs);
 
-      Map<String, DbTable> tableMapping = psiElements.stream()
-        .collect(Collectors.toMap(DasObject::getName, a -> a, (a, b) -> a));
+      Map<String, TableInfo> tableMapping = psiElements.stream()
+        .collect(Collectors.toMap(TableInfo::getTableName, a -> a, (a, b) -> a));
       for (TableUIInfo uiInfo : generateConfig.getTableUIInfoList()) {
         String tableName = uiInfo.getTableName();
-        DbTable dbTable = tableMapping.get(tableName);
+        TableInfo dbTable = tableMapping.get(tableName);
         if (dbTable != null) {
           // 生成代码
           CodeGenerator.generate(project,

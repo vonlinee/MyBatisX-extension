@@ -49,12 +49,12 @@ public class IntellijIntrospector {
   }
 
   private void calculatePrimaryKey(FullyQualifiedTable table, IntrospectedTable introspectedTable) {
-    Map<Short, String> keyColumns = new TreeMap<>();
+    Map<Integer, String> keyColumns = new TreeMap<>();
     List<IntellijColumnInfo> primaryKeyColumns = this.intellijTableInfo.getPrimaryKeyColumns();
 
     for (IntellijColumnInfo primaryKeyColumn : primaryKeyColumns) {
       String columnName = primaryKeyColumn.getName();
-      short keySeq = primaryKeyColumn.getKeySeq();
+      int keySeq = primaryKeyColumn.getKeySeq();
       keyColumns.put(keySeq, columnName);
     }
     for (String columnName : keyColumns.values()) {

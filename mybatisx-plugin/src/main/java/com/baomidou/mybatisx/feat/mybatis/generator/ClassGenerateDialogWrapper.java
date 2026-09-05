@@ -13,11 +13,8 @@ import com.baomidou.mybatisx.plugin.ui.TablePreviewUI;
 import com.baomidou.mybatisx.util.CollectionUtils;
 import com.baomidou.mybatisx.util.MessageNotification;
 import com.baomidou.mybatisx.util.StringUtils;
-import com.intellij.database.psi.DbTable;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.ui.DialogWrapper;
-import lombok.extern.slf4j.Slf4j;
-import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import javax.swing.*;
@@ -28,7 +25,6 @@ import java.util.Map;
 /**
  * 代码生成器弹窗
  */
-@Slf4j
 public class ClassGenerateDialogWrapper extends DialogWrapper {
 
   private final CodeGenerateUI codeGenerateUI = new CodeGenerateUI();
@@ -40,7 +36,6 @@ public class ClassGenerateDialogWrapper extends DialogWrapper {
   private int page = 0;
   private int lastPage = 1;
   private Project project;
-  private List<DbTable> tableElements;
   private GenerateConfig generateConfig;
 
   public ClassGenerateDialogWrapper(@Nullable Project project) {
@@ -118,9 +113,8 @@ public class ClassGenerateDialogWrapper extends DialogWrapper {
     return new Action[]{previousAction, getOKAction(), getCancelAction()};
   }
 
-  public void fillData(Project project, List<DbTable> tableElements) {
+  public void fillData(Project project, List<TableInfo> tableElements) {
     this.project = project;
-    this.tableElements = tableElements;
     TemplatesSettings templatesSettings = TemplatesSettings.getInstance(project);
     TemplateContext templateContext = templatesSettings.getTemplateContext();
     generateConfig = templateContext.getGenerateConfig();

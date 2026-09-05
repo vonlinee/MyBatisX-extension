@@ -1,6 +1,7 @@
 package com.baomidou.mybatisx.feat.mybatis.generator.template;
 
 import com.baomidou.mybatisx.feat.mybatis.generator.DomainPlaceHolder;
+import com.baomidou.mybatisx.feat.mybatis.generator.TableInfo;
 import com.baomidou.mybatisx.feat.mybatis.generator.dto.CustomTemplateRoot;
 import com.baomidou.mybatisx.feat.mybatis.generator.dto.DomainInfo;
 import com.baomidou.mybatisx.feat.mybatis.generator.dto.GenerateConfig;
@@ -16,7 +17,6 @@ import com.baomidou.mybatisx.util.DbToolsUtils;
 import com.baomidou.mybatisx.util.JavaUtils;
 import com.baomidou.mybatisx.util.SpringStringUtils;
 import com.baomidou.mybatisx.util.StringUtils;
-import com.intellij.database.psi.DbTable;
 import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.openapi.project.Project;
 import com.intellij.psi.PsiClass;
@@ -64,7 +64,7 @@ public class CodeGenerator {
   public static void generate(Project project,
                               GenerateConfig generateConfig,
                               Map<String, List<TemplateSettingDTO>> templateSettingMap,
-                              DbTable dbTable,
+                              TableInfo dbTable,
                               String domainName,
                               String tableName) throws Exception {
     List<String> warnings = new ArrayList<>();
