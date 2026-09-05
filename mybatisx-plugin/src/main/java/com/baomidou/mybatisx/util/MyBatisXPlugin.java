@@ -8,4 +8,6 @@ public class MyBatisXPlugin {
   public static final String ID = "com.baomidou.plugin.idea.mybatisx";
 
   public static final String PERSISTENT_STATE_FILE = "mybatisx.xml";
+  public static final String STORAGE_FILE_ROOT_NAME = "mybatisx";
+  public static final String STORAGE_FILE_EXTENSION = ".xml";
 }

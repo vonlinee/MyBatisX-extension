@@ -1,13 +1,10 @@
 package com.baomidou.mybatisx.feat.mybatis.generator.dto;
 
-import lombok.Getter;
-import lombok.Setter;
+import com.baomidou.mybatisx.plugin.ui.components.TemplateTreeViewNode;
+import lombok.Data;
 
-import java.io.Serializable;
-
-@Setter
-@Getter
-public class TemplateSettingDTO implements Serializable {
+@Data
+public class TemplateSettingDTO implements TemplateTreeViewNode {
   /**
    * 配置名称
    */
@@ -40,4 +37,9 @@ public class TemplateSettingDTO implements Serializable {
    * 相对模块的资源文件路径
    */
   private String basePath;
+
+  @Override
+  public String getName() {
+    return configFile;
+  }
 }

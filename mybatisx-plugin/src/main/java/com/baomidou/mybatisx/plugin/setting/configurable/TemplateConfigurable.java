@@ -13,7 +13,7 @@ import javax.swing.*;
  */
 public class TemplateConfigurable implements SearchableConfigurable {
 
-  TemplateSettingPane rootPanel;
+  private final TemplateSettingPane rootPanel;
 
   public TemplateConfigurable() {
     rootPanel = new TemplateSettingPane();
@@ -26,7 +26,7 @@ public class TemplateConfigurable implements SearchableConfigurable {
 
   @Override
   public String getDisplayName() {
-    return getId();
+    return "Template";
   }
 
   @Override
@@ -36,15 +36,20 @@ public class TemplateConfigurable implements SearchableConfigurable {
 
   @Override
   public boolean isModified() {
-
-    boolean b = rootPanel.hasChanged();
-
-    System.out.println(b);
-    return b;
+    return rootPanel.hasChanged();
   }
 
   @Override
   public void apply() throws ConfigurationException {
+    try {
+      rootPanel.apply();
+    } catch (Exception exception) {
+      throw new ConfigurationException(exception.getMessage(), "Unable to Save Templates");
+    }
+  }
 
+  @Override
+  public void reset() {
+    rootPanel.reset();
   }
 }

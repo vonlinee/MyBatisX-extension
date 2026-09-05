@@ -9,7 +9,6 @@ import com.baomidou.mybatisx.feat.mybatis.generator.dto.TableUIInfo;
 import com.baomidou.mybatisx.util.IntellijSDK;
 import com.baomidou.mybatisx.util.JBComponents;
 import com.baomidou.mybatisx.util.StringUtils;
-import com.intellij.database.psi.DbTable;
 import com.intellij.openapi.module.Module;
 import com.intellij.openapi.module.ModuleUtil;
 import com.intellij.openapi.project.Project;

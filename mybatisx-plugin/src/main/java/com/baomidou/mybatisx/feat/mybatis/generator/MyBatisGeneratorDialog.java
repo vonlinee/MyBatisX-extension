@@ -2,19 +2,15 @@ package com.baomidou.mybatisx.feat.mybatis.generator;
 
 import com.baomidou.mybatisx.feat.mybatis.generator.dto.DomainInfo;
 import com.baomidou.mybatisx.feat.mybatis.generator.dto.GenerateConfig;
-import com.baomidou.mybatisx.feat.mybatis.generator.dto.TableUIInfo;
 import com.baomidou.mybatisx.feat.mybatis.generator.dto.TemplateContext;
 import com.baomidou.mybatisx.feat.mybatis.generator.dto.TemplateSettingDTO;
 import com.baomidou.mybatisx.feat.mybatis.generator.setting.DefaultSettingsConfig;
-import com.baomidou.mybatisx.feat.mybatis.generator.template.CodeGenerator;
-import com.baomidou.mybatisx.plugin.setting.TemplatesSettings;
+import com.baomidou.mybatisx.plugin.setting.ProjectTemplatesSettings;
 import com.baomidou.mybatisx.util.MessageNotification;
 import com.baomidou.mybatisx.util.StringUtils;
-import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.ui.DialogWrapper;
 import com.intellij.openapi.ui.Messages;
-import com.intellij.openapi.vfs.VirtualFileManager;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -22,14 +18,11 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 /**
  * 代码生成器弹窗
  */
 public class MyBatisGeneratorDialog extends DialogWrapper {
-
-  private static final Logger logger = Logger.getInstance(MyBatisGeneratorDialog.class);
 
   MyBatisGeneratorPane myBatisGeneratorPane = new MyBatisGeneratorPane();
 
@@ -76,7 +69,7 @@ public class MyBatisGeneratorDialog extends DialogWrapper {
     setOKButtonText("Finish");
     previousAction.setEnabled(true);
 
-    TemplatesSettings templatesSettings = TemplatesSettings.getInstance(project);
+    ProjectTemplatesSettings templatesSettings = ProjectTemplatesSettings.getInstance(project);
     final TemplateContext templateContext = templatesSettings.getTemplateContext();
     Map<String, List<TemplateSettingDTO>> settingMap = templatesSettings.getTemplateSettingMap();
     if (settingMap.isEmpty()) {
@@ -119,43 +112,8 @@ public class MyBatisGeneratorDialog extends DialogWrapper {
       if (!generateConfig.checkGenerate()) {
         return;
       }
-      generateCode(project, tablesToGenerate, generateConfig);
+      myBatisGeneratorPane.generateCode(project, tablesToGenerate, generateConfig);
     }
   }
 
-  public void generateCode(Project project, List<TableInfo> tables, GenerateConfig generateConfig) {
-    if (tables.isEmpty()) {
-      return;
-    }
-    try {
-      // 保存配置, 更新最后一次存储的配置
-      TemplatesSettings templatesSettings = TemplatesSettings.getInstance(project);
-      TemplateContext templateConfigs = templatesSettings.getTemplateContext();
-      templateConfigs.setGenerateConfig(generateConfig);
-      templateConfigs.setTemplateName(generateConfig.getTemplatesName());
-      templateConfigs.setModuleName(generateConfig.getModuleName());
-      templatesSettings.setTemplateContext(templateConfigs);
-
-      Map<String, TableInfo> tableMapping = tables.stream()
-        .collect(Collectors.toMap(TableInfo::getTableName, a -> a, (a, b) -> a));
-      for (TableUIInfo uiInfo : generateConfig.getTableUIInfoList()) {
-        String tableName = uiInfo.getTableName();
-        TableInfo dbTable = tableMapping.get(tableName);
-        if (dbTable != null) {
-          // 生成代码
-          CodeGenerator.generate(project,
-            generateConfig,
-            templatesSettings.getTemplateSettingMap(),
-            dbTable,
-            uiInfo.getClassName(),
-            uiInfo.getTableName());
-        }
-      }
-      VirtualFileManager.getInstance().refreshWithoutFileWatcher(true);
-
-      logger.info("全部代码生成成功, 文件内容已更新. config: " + generateConfig);
-    } catch (Exception e) {
-      logger.error("生成代码出错", e);
-    }
-  }
 }

@@ -15,13 +15,11 @@ import com.intellij.openapi.module.ModuleManager;
 import com.intellij.openapi.module.ModuleUtil;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.roots.ui.configuration.ChooseModulesDialog;
-import com.intellij.ui.AnActionButton;
 import com.intellij.ui.ToolbarDecorator;
 import com.intellij.ui.table.TableView;
 import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.util.PlatformIcons;
 import com.intellij.util.ui.ColumnInfo;
-import com.intellij.util.ui.JButtonAction;
 import com.intellij.util.ui.ListTableModel;
 import lombok.Getter;
 import org.jetbrains.annotations.NotNull;
@@ -147,7 +145,7 @@ public class CodeGenerateUI {
                              String defaultsTemplatesName,
                              Map<String, List<TemplateSettingDTO>> templateSettingMap) {
     if (selectedTemplateName == null) {
-      selectedTemplateName = generateConfig.getTemplatesName();
+      selectedTemplateName = generateConfig.getTemplatesGroupName();
     }
     TableView<ModuleInfoGo> tableView = new TableView<>(model);
 
@@ -197,7 +195,7 @@ public class CodeGenerateUI {
       private List<ModuleInfoGo> buildModuleUIInfos(String templatesName, List<TemplateSettingDTO> list) {
         List<ModuleInfoGo> moduleUIInfoList = null;
         // 1. 优先选择默认的
-        if (!refresh && templatesName.equals(generateConfig.getTemplatesName())) {
+        if (!refresh && templatesName.equals(generateConfig.getTemplatesGroupName())) {
           moduleUIInfoList = generateConfig.getModuleUIInfoList();
         }
         // 2. 其次根据选择的模板名称来决定使用哪个模板
@@ -401,7 +399,7 @@ public class CodeGenerateUI {
         break;
       }
     }
-    generateConfig.setTemplatesName(templatesName);
+    generateConfig.setTemplatesGroupName(templatesName);
 
   }
 

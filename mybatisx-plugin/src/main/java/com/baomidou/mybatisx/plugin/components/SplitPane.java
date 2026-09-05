@@ -1,6 +1,6 @@
 package com.baomidou.mybatisx.plugin.components;
 
-import com.intellij.ui.JBSplitter;
+import com.intellij.ui.OnePixelSplitter;
 
 import javax.swing.*;
 import java.util.UUID;
@@ -8,7 +8,7 @@ import java.util.UUID;
 /**
  * 分割面板，仅支持两个组件
  */
-public class SplitPane extends JBSplitter {
+public class SplitPane extends OnePixelSplitter {
 
   public SplitPane() {
     this(false, 0.4f);

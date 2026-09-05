@@ -64,4 +64,6 @@ public interface Icons {
   Icon STATUS_ENABLED_DARK = IconLoader.getIcon("/icons/statusEnabled_dark.svg", Icons.class);
   Icon STATUS_DISABLED = IconLoader.getIcon("/icons/statusDisabled.svg", Icons.class);
   Icon STATUS_DISABLED_DARK = IconLoader.getIcon("/icons/statusDisabled_dark.svg", Icons.class);
+  Icon TEMPLATE_EXPAND_ALL = IconLoader.getIcon("/icons/expandAll.svg", Icons.class);
+  Icon TEMPLATE_COLLAPSE_ALL = IconLoader.getIcon("/icons/collapseAll.svg", Icons.class);
 }

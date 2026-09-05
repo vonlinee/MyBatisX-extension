@@ -2,7 +2,7 @@ package com.baomidou.mybatisx.plugin.ui;
 
 import com.baomidou.mybatisx.feat.mybatis.generator.dto.TemplateContext;
 import com.baomidou.mybatisx.feat.mybatis.generator.dto.TemplateSettingDTO;
-import com.baomidou.mybatisx.plugin.setting.TemplatesSettings;
+import com.baomidou.mybatisx.plugin.setting.ProjectTemplatesSettings;
 import com.baomidou.mybatisx.util.IntellijSDK;
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.diagnostic.Logger;
@@ -63,7 +63,7 @@ public class MyBatisXTemplateSettings {
     tree.expandPath(path);
   }
 
-  public void loadBySettings(TemplatesSettings templatesSettings) {
+  public void loadBySettings(ProjectTemplatesSettings templatesSettings) {
     TemplateContext templateContext = templatesSettings.getTemplateContext();
     // 第一个版本只有一个不可更改的配置, 这里直接取默认就可以了
     Map<String, List<TemplateSettingDTO>> templateSettingMap = templatesSettings.getTemplateSettingMap();
@@ -99,7 +99,7 @@ public class MyBatisXTemplateSettings {
 
   }
 
-  public void apply(TemplatesSettings templatesSettings) {
+  public void apply(ProjectTemplatesSettings templatesSettings) {
     // 第一个版本只有一个不可更改的配置, 这里直接取默认就可以了
     DefaultMutableTreeNode lastSelectedPathComponent = (DefaultMutableTreeNode) configTree.getLastSelectedPathComponent();
     if (lastSelectedPathComponent == null) {

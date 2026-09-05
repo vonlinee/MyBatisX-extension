@@ -294,10 +294,6 @@
                         serviceImplementation="com.baomidou.mybatisx.plugin.setting.MyBatisGeneratorSettings"/>
 
     <applicationService
-      id="com.baomidou.mybatisx.plugin.setting.GlobalTemplateSettings"
-      serviceImplementation="com.baomidou.mybatisx.plugin.setting.GlobalTemplateSettings"/>
-
-    <applicationService
       id="com.baomidou.mybatisx.plugin.setting.DataTypeSettings"
       serviceImplementation="com.baomidou.mybatisx.plugin.setting.DataTypeSettings"/>
 
@@ -334,16 +330,19 @@
 
     <applicationService serviceImplementation="com.baomidou.mybatisx.plugin.setting.OtherSetting"/>
 
-    <applicationService id="baomidou.TemplatesSettings"
-                        serviceImplementation="com.baomidou.mybatisx.plugin.setting.TemplatesSettings"/>
+    <applicationService id="baomidou.GlobalTemplatesSettings"
+                        serviceImplementation="com.baomidou.mybatisx.plugin.setting.GlobalTemplateSettings"/>
+
+    <projectService id="baomidou.ProjectTemplatesSettings"
+                    serviceImplementation="com.baomidou.mybatisx.plugin.setting.ProjectTemplatesSettings"/>
   </extensions>
 
-  <applicationListeners>
-    <listener
-      topic="com.intellij.ide.AppLifecycleListener"
-      class="com.baomidou.mybatisx.boot.PluginInitializer"
-      activeInTestMode="false"/>
-  </applicationListeners>
+<!--  <applicationListeners>-->
+<!--    <listener-->
+<!--      topic="com.intellij.ide.AppLifecycleListener"-->
+<!--      class="com.baomidou.mybatisx.boot.MyBatisTemplateSetupHandler"-->
+<!--      activeInTestMode="false"/>-->
+<!--  </applicationListeners>-->
 
   <projectListeners>
     <listener class="com.baomidou.mybatisx.plugin.listener.AgentSupportExecutionListener"

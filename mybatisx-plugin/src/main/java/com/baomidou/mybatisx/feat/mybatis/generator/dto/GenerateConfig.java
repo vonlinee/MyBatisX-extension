@@ -81,7 +81,7 @@ public class GenerateConfig {
   /**
    * 模板组名称
    */
-  private String templatesName;
+  private String templatesGroupName;
   /**
    * 额外的类名后缀
    */
@@ -108,7 +108,7 @@ public class GenerateConfig {
       MessageNotification.showErrorDialog("Generate Info", "moduleName must not be empty");
       return false;
     }
-    if (StringUtils.isEmpty(templatesName)) {
+    if (StringUtils.isEmpty(templatesGroupName)) {
       MessageNotification.showErrorDialog("Generate Info", "templatesName must not be empty");
       return false;
     }

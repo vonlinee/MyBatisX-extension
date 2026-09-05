@@ -1,6 +1,6 @@
 package com.baomidou.mybatisx.plugin.setting.configurable;
 
-import com.baomidou.mybatisx.plugin.setting.TemplatesSettings;
+import com.baomidou.mybatisx.plugin.setting.ProjectTemplatesSettings;
 import com.baomidou.mybatisx.plugin.ui.MyBatisXTemplateSettings;
 import com.intellij.openapi.options.ConfigurableBase;
 import com.intellij.openapi.options.ConfigurableUi;
@@ -35,16 +35,16 @@ public class MyBatisTemplateGeneratorConfigurable extends ConfigurableBase<MyBat
   @Override
   protected MyConfigurableUi createUi() {
     // 如果是社区版本, 就不需要配置代码生成器
-    TemplatesSettings instance = TemplatesSettings.getInstance(project);
+    ProjectTemplatesSettings instance = ProjectTemplatesSettings.getInstance(project);
     mybatisXTemplateSettings.loadBySettings(instance);
     return new MyConfigurableUi(instance);
   }
 
   public class MyConfigurableUi implements ConfigurableUi<MyBatisXTemplateSettings> {
 
-    private final TemplatesSettings templatesSettings;
+    private final ProjectTemplatesSettings templatesSettings;
 
-    public MyConfigurableUi(TemplatesSettings templatesSettings) {
+    public MyConfigurableUi(ProjectTemplatesSettings templatesSettings) {
       this.templatesSettings = templatesSettings;
     }
 

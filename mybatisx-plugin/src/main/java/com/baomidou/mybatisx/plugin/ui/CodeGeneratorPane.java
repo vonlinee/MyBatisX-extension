@@ -177,7 +177,7 @@ public class CodeGeneratorPane extends VBox {
                              String defaultsTemplatesName,
                              Map<String, List<TemplateSettingDTO>> templateSettingMap) {
     if (selectedTemplateName == null) {
-      selectedTemplateName = generateConfig.getTemplatesName();
+      selectedTemplateName = generateConfig.getTemplatesGroupName();
     }
     TableView<ModuleInfoGo> tableView = new TableView<>(model);
 
@@ -227,7 +227,7 @@ public class CodeGeneratorPane extends VBox {
       private List<ModuleInfoGo> buildModuleUIInfos(String templatesName, List<TemplateSettingDTO> list) {
         List<ModuleInfoGo> moduleUIInfoList = null;
         // 1. 优先选择默认的
-        if (!refresh && templatesName.equals(generateConfig.getTemplatesName())) {
+        if (!refresh && templatesName.equals(generateConfig.getTemplatesGroupName())) {
           moduleUIInfoList = generateConfig.getModuleUIInfoList();
         }
         // 2. 其次根据选择的模板名称来决定使用哪个模板
@@ -421,7 +421,7 @@ public class CodeGeneratorPane extends VBox {
         break;
       }
     }
-    generateConfig.setTemplatesName(templatesName);
+    generateConfig.setTemplatesGroupName(templatesName);
 
   }
 

@@ -3,11 +3,14 @@ package com.baomidou.mybatisx.plugin.components;
 import com.intellij.ui.AnActionButtonRunnable;
 import com.intellij.ui.ToolbarDecorator;
 import com.intellij.ui.treeStructure.Tree;
+import lombok.Getter;
 import org.jetbrains.annotations.NotNull;
 
 import javax.swing.*;
 import javax.swing.event.TreeSelectionEvent;
 import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.tree.DefaultTreeModel;
+import javax.swing.tree.TreePath;
 import java.awt.*;
 
 /**
@@ -15,12 +18,27 @@ import java.awt.*;
  *
  * @param <T>
  */
-public class TreeView<T> extends Tree {
+public class TreeView<T> extends ScrollPane {
 
-  private final DefaultMutableTreeNode root;
+  private DefaultMutableTreeNode root;
+
+  @Getter
+  protected final Tree tree;
 
   public TreeView() {
-    root = new DefaultMutableTreeNode();
+    super(new Tree());
+    this.tree = (Tree) getViewport().getView();
+    root = (DefaultMutableTreeNode) tree.getModel().getRoot();
+
+    tree.setRootVisible(false);
+    tree.setShowsRootHandles(false); // 隐藏根节点的展开手柄
+  }
+
+  protected void setModel(TreeModel<T> treeModel) {
+    tree.setModel(treeModel);
+    root = (DefaultMutableTreeNode) treeModel.getRoot();
+    tree.setRootVisible(false);
+    tree.setShowsRootHandles(false);
   }
 
   @SuppressWarnings("unchecked")
@@ -40,41 +58,52 @@ public class TreeView<T> extends Tree {
     this.getTreeModel().addChild(item);
   }
 
-  @Override
   public void setRootVisible(boolean rootVisible) {
     if (rootVisible) {
-      super.setRootVisible(true);
+      tree.setRootVisible(true);
     } else {
+      tree.setRootVisible(false);
       if (getRootNode().getChildCount() > 0) {
-        super.setRootVisible(true);
+        tree.setRootVisible(true);
         // 设置根节点展开, 需要有子节点才有效果
-        expandRow(0);
+        tree.expandRow(0);
         // 隐藏根节点
-        super.setRootVisible(false);
+        tree.setRootVisible(false);
       }
     }
   }
 
   @SuppressWarnings("unchecked")
   public final TreeModel<T> getTreeModel() {
-    return (TreeModel<T>) super.getModel();
+    return (TreeModel<T>) tree.getModel();
   }
 
   /**
    * 要等到根节点下面有节点后才能设置setRootVisible(false)
    */
   public final void expandRoot() {
-    expandRow(0); // 展开根节点，因为根节点已设置为不显示
+    tree.setRootVisible(true);
+    tree.expandPath(new TreePath(getRootNode()));
+    tree.setRootVisible(false);
   }
 
   public final void expandAll() {
     setRootVisible(true);
     expandRoot();
-    setRootVisible(false);
-    int rowCount = this.getRowCount();
-    for (int i = 0; i < rowCount; i++) {
-      this.expandRow(i);
+    tree.setShowsRootHandles(false);
+    for (int i = 0; i < tree.getRowCount(); i++) {
+      tree.expandRow(i);
     }
+    setRootVisible(false);
+  }
+
+  public final void collapseAll() {
+    setRootVisible(true);
+    tree.expandPath(new TreePath(getRootNode()));
+    for (int i = tree.getRowCount() - 1; i > 0; i--) {
+      tree.collapseRow(i);
+    }
+    setRootVisible(false);
   }
 
   public final DefaultMutableTreeNode getRootNode() {
@@ -112,7 +141,7 @@ public class TreeView<T> extends Tree {
   }
 
   public DefaultMutableTreeNode getLastSelectedNode() {
-    return (DefaultMutableTreeNode) getLastSelectedPathComponent();
+    return (DefaultMutableTreeNode) tree.getLastSelectedPathComponent();
   }
 
   // ===================================== Static Utility Methods ====================================
@@ -120,6 +149,19 @@ public class TreeView<T> extends Tree {
   @SuppressWarnings("unchecked")
   public T getSelectedItem() {
     DefaultMutableTreeNode node = getLastSelectedNode();
-    return (T) node.getUserObject();
+    return node == null ? null : (T) node.getUserObject();
+  }
+
+  public void setRoot(DefaultMutableTreeNode rootNode) {
+    DefaultTreeModel model = (DefaultTreeModel) tree.getModel();
+    root.removeAllChildren();
+    root = rootNode;
+    model.setRoot(rootNode);
+    // 刷新整棵树
+    model.reload();
+  }
+
+  public void setRoot(T rootObject) {
+    setRoot(new DefaultMutableTreeNode(rootObject));
   }
 }

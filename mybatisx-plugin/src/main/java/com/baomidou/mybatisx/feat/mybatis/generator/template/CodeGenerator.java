@@ -120,9 +120,9 @@ public class CodeGenerator {
     JavaTypeResolverConfiguration javaTypeResolverConfiguration = new JavaTypeResolverConfiguration();
     javaTypeResolverConfiguration.addProperty("forceBigDecimals", "false");
     context.setJavaTypeResolverConfiguration(javaTypeResolverConfiguration);
-    final List<TemplateSettingDTO> templateSettingDTOS = templateSettingMap.get(generateConfig.getTemplatesName());
+    final List<TemplateSettingDTO> templateSettingDTOS = templateSettingMap.get(generateConfig.getTemplatesGroupName());
     if (templateSettingDTOS == null) {
-      logger.error("未选择模板组名称, templatesName: {}", generateConfig.getTemplatesName());
+      logger.error("未选择模板组名称, templatesName: {}", generateConfig.getTemplatesGroupName());
       return;
     }
     DomainInfo domainInfo = buildDomainInfo(generateConfig, domainName);

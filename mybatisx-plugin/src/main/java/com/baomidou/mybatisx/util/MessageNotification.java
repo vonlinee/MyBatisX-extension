@@ -6,11 +6,14 @@ import com.intellij.notification.NotificationGroupManager;
 import com.intellij.notification.NotificationType;
 import com.intellij.notification.Notifications;
 import com.intellij.openapi.project.Project;
+import com.intellij.openapi.ui.MessageDialogBuilder;
 import com.intellij.openapi.ui.Messages;
+import com.intellij.openapi.util.NlsContexts;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import javax.swing.*;
+import java.awt.*;
 
 /**
  * 消息通知：弹窗通知
@@ -60,5 +63,12 @@ public abstract class MessageNotification {
   public static void warn(String message,
                           @NotNull String title) {
     Messages.showMessageDialog(message, title, Messages.getWarningIcon());
+  }
+
+  @Messages.YesNoResult
+  public static int showYesNoDialog(@NotNull Component parent,
+                                    @NlsContexts.DialogTitle @NotNull String title,
+                                    @NlsContexts.DialogMessage String message) {
+    return MessageDialogBuilder.yesNo(title, message).icon(Messages.getQuestionIcon()).ask(parent) ? 0 : 1;
   }
 }
