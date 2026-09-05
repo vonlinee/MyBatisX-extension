@@ -86,6 +86,13 @@
       <!--Idea顶部工具栏 Generate Java Doc菜单后-->
       <add-to-group group-id="ToolsMenu" anchor="after" relative-to-action="GenerateJavadoc"/>
     </action>
+
+    <action id="com.baomidou.mybatisx.plugin.actions.MyBatisGeneratorToolAction"
+            class="com.baomidou.mybatisx.plugin.actions.MyBatisGeneratorToolAction"
+            text="MyBatis Generator" icon="/icons/mybatis.svg">
+      <!--Idea顶部工具栏 Generate Java Doc菜单后-->
+      <add-to-group group-id="ToolsMenu" anchor="after" relative-to-action="GenerateJavadoc"/>
+    </action>
     <group
       id="FileHotswapAction"
       class="com.baomidou.mybatisx.plugin.actions.FileHotSwapActionGroup"
@@ -261,9 +268,11 @@
                               id="com.baomidou.mybatisx.plugin.provider.MapperXmlSqlRunLineMarkerContributor"
                               implementationClass="com.baomidou.mybatisx.plugin.provider.MapperXmlSqlRunLineMarkerContributor"/>
 
-    <toolWindow factoryClass="com.baomidou.mybatisx.plugin.provider.MyBatisToolWindowFactory"
+<!--    <toolWindow factoryClass="com.baomidou.mybatisx.plugin.provider.MyBatisToolWindowFactory"
                 anchor="bottom"
-                id="MyBatis.ToolWindow"/>
+                icon="/icons/mybatis.svg"
+                secondary="false"
+                id="MyBatisX-extension"/>-->
 
     <!-- mybatis的xml和mapper类 文件图标都改成一只鸟-->
     <iconProvider id="baomidou.XmlAndMapperIconProvider"
@@ -278,7 +287,7 @@
     <applicationService id="baomidou.MybatisSetting"
                         serviceImplementation="com.baomidou.mybatisx.plugin.setting.MyBatisXSettings"/>
 
-    <projectService serviceImplementation="com.baomidou.mybatisx.plugin.provider.MyBatisToolWindowView"
+    <projectService serviceImplementation="com.baomidou.mybatisx.plugin.provider.MyBatisGeneratorToolWindowPanel"
                     id="MyBatisToolWindowView"/>
 
     <applicationService id="com.baomidou.mybatisx.plugin.setting.MyBatisGeneratorSettings"

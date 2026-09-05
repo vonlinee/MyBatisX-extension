@@ -1,38 +1,28 @@
 package com.baomidou.mybatisx.plugin.actions;
 
-import com.baomidou.mybatisx.feat.mybatis.generator.ClassGenerateDialogWrapper;
+import com.baomidou.mybatisx.feat.mybatis.generator.MyBatisGeneratorDialog;
 import com.baomidou.mybatisx.feat.mybatis.generator.PsiTableInfo;
 import com.baomidou.mybatisx.feat.mybatis.generator.TableInfo;
-import com.baomidou.mybatisx.feat.mybatis.generator.dto.GenerateConfig;
-import com.baomidou.mybatisx.feat.mybatis.generator.dto.TableUIInfo;
-import com.baomidou.mybatisx.feat.mybatis.generator.dto.TemplateContext;
-import com.baomidou.mybatisx.feat.mybatis.generator.template.CodeGenerator;
-import com.baomidou.mybatisx.plugin.setting.TemplatesSettings;
 import com.baomidou.mybatisx.util.ArrayUtils;
+import com.baomidou.mybatisx.util.MessageNotification;
 import com.baomidou.mybatisx.util.PluginUtils;
 import com.baomidou.mybatisx.util.PsiUtils;
 import com.intellij.database.psi.DbTable;
 import com.intellij.openapi.actionSystem.ActionUpdateThread;
 import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;
-import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.openapi.project.Project;
-import com.intellij.openapi.ui.Messages;
-import com.intellij.openapi.vfs.VirtualFileManager;
 import com.intellij.psi.PsiElement;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
 
 /**
  * The type Mybatis generator main action.
  */
 public final class MyBatisGeneratorAction extends AnAction {
-
-  private static final Logger logger = Logger.getInstance(MyBatisGeneratorAction.class);
 
   public static boolean checkAssignableFrom(PsiElement element) {
     try {
@@ -40,6 +30,23 @@ public final class MyBatisGeneratorAction extends AnAction {
     } catch (Exception e) {
       return false;
     }
+  }
+
+  private static List<TableInfo> getChooseTables(AnActionEvent e) {
+    PsiElement[] dbToolElements = PsiUtils.getPsiElementArray(e);
+    if (dbToolElements == null || dbToolElements.length == 0) {
+      return Collections.emptyList();
+    }
+    List<TableInfo> tablesToGenerate = new ArrayList<>();
+    for (PsiElement element : dbToolElements) {
+      if (element instanceof DbTable) {
+        tablesToGenerate.add(new PsiTableInfo((DbTable) element));
+      }
+    }
+    if (tablesToGenerate.isEmpty()) {
+      return Collections.emptyList();
+    }
+    return tablesToGenerate;
   }
 
   /**
@@ -51,66 +58,16 @@ public final class MyBatisGeneratorAction extends AnAction {
   @Override
   public void actionPerformed(@NotNull AnActionEvent e) {
     Project project = e.getProject();
-    PsiElement[] dbToolElements = PsiUtils.getPsiElementArray(e);
-    if (dbToolElements == null || dbToolElements.length == 0) {
-      logger.error("未选择表, 无法生成代码");
-      return;
-    }
-    ClassGenerateDialogWrapper classGenerateDialogWrapper = new ClassGenerateDialogWrapper(project);
-    List<TableInfo> tablesToGenerate = new ArrayList<>();
-    for (PsiElement element : dbToolElements) {
-      if (element instanceof DbTable) {
-        tablesToGenerate.add(new PsiTableInfo((DbTable) element));
-      }
-    }
+    List<TableInfo> tablesToGenerate = getChooseTables(e);
     if (tablesToGenerate.isEmpty()) {
+      MessageNotification.showMessageDialog("MyBatis Generator", "未选择表, 无法生成代码", null);
       return;
     }
     // 填充默认的选项
-    classGenerateDialogWrapper.fillData(project, tablesToGenerate);
-    classGenerateDialogWrapper.show();
-    // 模态窗口选择 OK, 生成相关代码
-    if (classGenerateDialogWrapper.getExitCode() == Messages.YES) {
-      // 生成代码
-      GenerateConfig generateConfig = classGenerateDialogWrapper.determineGenerateConfig();
-      if (!generateConfig.checkGenerate()) {
-        return;
-      }
-      generateCode(project, tablesToGenerate, generateConfig);
-    }
-  }
-
-  public void generateCode(Project project, List<TableInfo> psiElements, GenerateConfig generateConfig) {
-    try {
-      // 保存配置, 更新最后一次存储的配置
-      TemplatesSettings templatesSettings = TemplatesSettings.getInstance(project);
-      TemplateContext templateConfigs = templatesSettings.getTemplateContext();
-      templateConfigs.setGenerateConfig(generateConfig);
-      templateConfigs.setTemplateName(generateConfig.getTemplatesName());
-      templateConfigs.setModuleName(generateConfig.getModuleName());
-      templatesSettings.setTemplateContext(templateConfigs);
-
-      Map<String, TableInfo> tableMapping = psiElements.stream()
-        .collect(Collectors.toMap(TableInfo::getTableName, a -> a, (a, b) -> a));
-      for (TableUIInfo uiInfo : generateConfig.getTableUIInfoList()) {
-        String tableName = uiInfo.getTableName();
-        TableInfo dbTable = tableMapping.get(tableName);
-        if (dbTable != null) {
-          // 生成代码
-          CodeGenerator.generate(project,
-            generateConfig,
-            templatesSettings.getTemplateSettingMap(),
-            dbTable,
-            uiInfo.getClassName(),
-            uiInfo.getTableName());
-        }
-      }
-      VirtualFileManager.getInstance().refreshWithoutFileWatcher(true);
-
-      logger.info("全部代码生成成功, 文件内容已更新. config: "+ generateConfig);
-    } catch (Exception e) {
-      logger.error("生成代码出错", e);
-    }
+    MyBatisGeneratorDialog myBatisGeneratorDialog = new MyBatisGeneratorDialog(project);
+    myBatisGeneratorDialog.fillData(project, tablesToGenerate);
+    myBatisGeneratorDialog.show();
+    myBatisGeneratorDialog.generateOnExist(tablesToGenerate);
   }
 
   @Override
