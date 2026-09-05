@@ -5,15 +5,13 @@ import com.baomidou.mybatisx.feat.mybatis.generator.dto.TemplateSettingDTO;
 import com.baomidou.mybatisx.plugin.setting.TemplatesSettings;
 import com.baomidou.mybatisx.util.IntellijSDK;
 import com.intellij.openapi.actionSystem.AnActionEvent;
-import com.intellij.ui.AnActionButton;
+import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.ui.ToolbarDecorator;
 import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.util.PlatformIcons;
 import com.intellij.util.ui.JButtonAction;
 import lombok.Getter;
 import org.jetbrains.annotations.NotNull;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import javax.swing.*;
 import javax.swing.event.TreeSelectionEvent;
@@ -28,7 +26,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 public class MyBatisXTemplateSettings {
-  private static final Logger logger = LoggerFactory.getLogger(MyBatisXTemplateSettings.class);
+  private static final Logger logger = Logger.getInstance(MyBatisXTemplateSettings.class);
   private JTextField packageNameTextField;
   private JTextField fieldNameTextField;
   @Getter
@@ -185,7 +183,7 @@ public class MyBatisXTemplateSettings {
       List<TemplateSettingDTO> templateSettingDTOS = templateSettingMap.get(templatesName);
       if (templateSettingDTOS == null) {
         // 没有找到配置
-        logger.info("没有找到配置,templatesName: {}", templatesName);
+        logger.info("没有找到配置,templatesName: " + templatesName);
         return;
       }
       for (TemplateSettingDTO templateSettingDTO : templateSettingDTOS) {

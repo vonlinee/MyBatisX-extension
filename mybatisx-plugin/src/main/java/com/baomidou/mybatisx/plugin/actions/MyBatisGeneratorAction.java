@@ -14,13 +14,12 @@ import com.intellij.database.psi.DbTable;
 import com.intellij.openapi.actionSystem.ActionUpdateThread;
 import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;
+import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.ui.Messages;
 import com.intellij.openapi.vfs.VirtualFileManager;
 import com.intellij.psi.PsiElement;
 import org.jetbrains.annotations.NotNull;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,7 +31,7 @@ import java.util.stream.Collectors;
  */
 public final class MyBatisGeneratorAction extends AnAction {
 
-  private static final Logger logger = LoggerFactory.getLogger(MyBatisGeneratorAction.class);
+  private static final Logger logger = Logger.getInstance(MyBatisGeneratorAction.class);
 
   public static boolean checkAssignableFrom(PsiElement element) {
     try {
@@ -106,7 +105,8 @@ public final class MyBatisGeneratorAction extends AnAction {
         }
       }
       VirtualFileManager.getInstance().refreshWithoutFileWatcher(true);
-      logger.info("全部代码生成成功, 文件内容已更新. config: {}", generateConfig);
+
+      logger.info("全部代码生成成功, 文件内容已更新. config: "+ generateConfig);
     } catch (Exception e) {
       logger.error("生成代码出错", e);
     }

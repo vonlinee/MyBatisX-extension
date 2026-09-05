@@ -17,6 +17,7 @@ import com.baomidou.mybatisx.util.JavaUtils;
 import com.baomidou.mybatisx.util.SpringStringUtils;
 import com.baomidou.mybatisx.util.StringUtils;
 import com.intellij.database.psi.DbTable;
+import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.openapi.project.Project;
 import com.intellij.psi.PsiClass;
 import org.jetbrains.annotations.NotNull;
@@ -34,8 +35,6 @@ import org.mybatis.generator.internal.NullProgressCallback;
 import org.mybatis.generator.plugins.EqualsHashCodePlugin;
 import org.mybatis.generator.plugins.SerializablePlugin;
 import org.mybatis.generator.plugins.ToStringPlugin;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -60,7 +59,7 @@ import java.util.stream.Collectors;
 public class CodeGenerator {
 
   public static final MergeJavaCallBack SHELL_CALLBACK = new MergeJavaCallBack(true);
-  private static final Logger logger = LoggerFactory.getLogger(CodeGenerator.class);
+  private static final Logger logger = Logger.getInstance(CodeGenerator.class);
 
   public static void generate(Project project,
                               GenerateConfig generateConfig,

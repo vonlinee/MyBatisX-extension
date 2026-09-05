@@ -7,9 +7,8 @@ import com.baomidou.mybatisx.util.IOUtils;
 import com.baomidou.mybatisx.util.PluginUtils;
 import com.intellij.ide.AppLifecycleListener;
 import com.intellij.ide.plugins.cl.PluginClassLoader;
+import com.intellij.openapi.diagnostic.Logger;
 import org.jetbrains.annotations.Nullable;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.InputStream;
@@ -27,7 +26,7 @@ import java.util.jar.JarFile;
 
 public class PluginInitializer implements AppLifecycleListener {
 
-  private static final Logger logger = LoggerFactory.getLogger(PluginInitializer.class);
+  private static final Logger logger = Logger.getInstance(PluginInitializer.class);
 
   /**
    * 模板存放目录

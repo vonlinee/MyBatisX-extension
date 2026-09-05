@@ -3,16 +3,15 @@ package com.baomidou.mybatisx.feat.jpa.operate.generate;
 import com.baomidou.mybatisx.dom.model.Mapper;
 import com.baomidou.mybatisx.feat.jpa.component.TxField;
 import com.baomidou.mybatisx.util.MapperUtils;
+import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.openapi.ui.Messages;
 import com.intellij.psi.PsiClass;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.util.Collection;
 import java.util.List;
 
 public class EmptyGenerator implements Generator {
-  private final Logger logger = LoggerFactory.getLogger(EmptyGenerator.class);
+  private final Logger logger = Logger.getInstance(EmptyGenerator.class);
 
   @Override
   public void generateSelect(String id, String value, Boolean resultType, String resultMap, String resultSet, List<TxField> resultFields, PsiClass entityClass) {

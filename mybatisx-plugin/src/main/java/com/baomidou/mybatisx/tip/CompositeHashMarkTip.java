@@ -9,6 +9,7 @@ import com.baomidou.mybatisx.util.StringUtils;
 import com.intellij.codeInsight.completion.CompletionResultSet;
 import com.intellij.codeInsight.completion.JavaLookupElementBuilder;
 import com.intellij.codeInsight.lookup.LookupElementBuilder;
+import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.openapi.project.Project;
 import com.intellij.psi.JavaPsiFacade;
 import com.intellij.psi.PsiAnnotation;
@@ -27,8 +28,6 @@ import com.intellij.psi.javadoc.PsiDocToken;
 import com.intellij.util.xml.DomUtil;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -51,7 +50,7 @@ public class CompositeHashMarkTip {
    * @param userName 用户名
    */
   public static final String PARAM = "param";
-  private static final Logger logger = LoggerFactory.getLogger(CompositeHashMarkTip.class);
+  private static final Logger logger = Logger.getInstance(CompositeHashMarkTip.class);
   private static final List<HashMarkTip> hashMarkTips = new ArrayList<>() {
     {
       add(new JdbcTypeHashMarkTip());

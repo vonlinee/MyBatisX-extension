@@ -1,12 +1,11 @@
 package com.baomidou.mybatisx.feat.mybatis.generator;
 
 import com.baomidou.mybatisx.feat.mybatis.generator.dto.DomainInfo;
+import com.intellij.openapi.diagnostic.Logger;
 import freemarker.cache.StringTemplateLoader;
 import freemarker.template.Configuration;
 import freemarker.template.Template;
 import freemarker.template.TemplateExceptionHandler;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.io.StringWriter;
 import java.io.Writer;
@@ -19,7 +18,7 @@ import java.util.Map;
  */
 public class DomainPlaceHolder {
 
-  private static final Logger logger = LoggerFactory.getLogger(DomainPlaceHolder.class);
+  private static final Logger logger = Logger.getInstance(DomainPlaceHolder.class);
 
   public static String replace(String templateText, DomainInfo domainInfo) {
     if (templateText == null || templateText.trim().isEmpty()) {

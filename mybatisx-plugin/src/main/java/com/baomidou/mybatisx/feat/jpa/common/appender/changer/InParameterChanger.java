@@ -3,9 +3,8 @@ package com.baomidou.mybatisx.feat.jpa.common.appender.changer;
 import com.baomidou.mybatisx.feat.jpa.common.appender.MxParameterChanger;
 import com.baomidou.mybatisx.feat.jpa.common.iftest.ConditionFieldWrapper;
 import com.baomidou.mybatisx.feat.jpa.component.TxParameter;
+import com.intellij.openapi.diagnostic.Logger;
 import org.jetbrains.annotations.NotNull;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.util.Collections;
 import java.util.LinkedList;
@@ -15,7 +14,7 @@ import java.util.List;
  * The type In parameter changer.
  */
 public class InParameterChanger implements MxParameterChanger {
-  private static final Logger logger = LoggerFactory.getLogger(InParameterChanger.class);
+  private static final Logger logger = Logger.getInstance(InParameterChanger.class);
 
   @Override
   public List<TxParameter> getParameter(TxParameter txParameter) {

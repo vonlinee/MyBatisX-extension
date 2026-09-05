@@ -2,13 +2,12 @@ package com.baomidou.mybatisx.feat.mybatis.generator.template;
 
 import com.baomidou.mybatisx.feat.mybatis.generator.dto.CustomTemplateRoot;
 import com.baomidou.mybatisx.feat.mybatis.generator.dto.ModuleInfoGo;
+import com.intellij.openapi.diagnostic.Logger;
 import org.jetbrains.annotations.Nullable;
 import org.mybatis.generator.api.GeneratedJavaFile;
 import org.mybatis.generator.api.IntrospectedTable;
 import org.mybatis.generator.api.PluginAdapter;
 import org.mybatis.generator.api.dom.java.TopLevelClass;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.io.ByteArrayInputStream;
 import java.io.File;
@@ -25,7 +24,7 @@ import java.util.List;
 public class CustomTemplatePlugin extends PluginAdapter {
 
   public static final String ROOT = "root";
-  private static final Logger logger = LoggerFactory.getLogger(CustomTemplatePlugin.class);
+  private static final Logger logger = Logger.getInstance(CustomTemplatePlugin.class);
 
   @Override
   public boolean validate(List<String> warnings) {
@@ -46,7 +45,9 @@ public class CustomTemplatePlugin extends PluginAdapter {
     final File file = new File(modulePath);
     if (!file.exists()) {
       final boolean created = file.mkdirs();
-      logger.info("模块目录不存在,已创建目录. modulePath: {},created:{}", file.getAbsolutePath(), created);
+      logger.info("模块目录不存在,已创建目录. modulePath: %s,created:%s".formatted(file.getAbsolutePath(), created));
+    } else {
+      logger.info("模块目录已存在. modulePath: %s".formatted(file.getAbsolutePath()));
     }
     TopLevelClass topLevelClass = new TopLevelClass(moduleUIInfo.getFileName());
     FreeMakerFormatter javaFormatter = new FreeMakerFormatter(rootObject, ClassInfo.build(introspectedTable));
@@ -70,7 +71,7 @@ public class CustomTemplatePlugin extends PluginAdapter {
         rootObject = (CustomTemplateRoot) objectInputStream.readObject();
       }
     } catch (IOException | ClassNotFoundException e) {
-      e.printStackTrace();
+      logger.error("read root object error", e);
     }
     return rootObject;
   }

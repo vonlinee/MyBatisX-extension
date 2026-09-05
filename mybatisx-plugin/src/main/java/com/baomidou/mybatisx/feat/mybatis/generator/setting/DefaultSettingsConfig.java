@@ -8,10 +8,9 @@ import com.baomidou.mybatisx.util.StringUtils;
 import com.baomidou.mybatisx.util.XmlUtils;
 import com.intellij.ide.extensionResources.ExtensionsRootType;
 import com.intellij.ide.scratch.ScratchFileService;
+import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.openapi.extensions.PluginId;
 import org.jetbrains.annotations.NotNull;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -28,7 +27,7 @@ import java.util.Set;
 public class DefaultSettingsConfig {
 
   public static final String TEMPLATES = "templates";
-  private static final Logger logger = LoggerFactory.getLogger(DefaultSettingsConfig.class);
+  private static final Logger logger = Logger.getInstance(DefaultSettingsConfig.class);
 
   private static File getPath() throws IOException {
     @NotNull

@@ -1,11 +1,8 @@
 package com.baomidou.mybatisx.feat.jpa.operate.manager;
 
-
 import com.baomidou.mybatisx.feat.jpa.common.SyntaxAppender;
 import com.baomidou.mybatisx.feat.jpa.common.SyntaxAppenderFactory;
 import org.jetbrains.annotations.NotNull;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -19,7 +16,6 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 public class StatementBlockFactory {
 
-  private static final Logger logger = LoggerFactory.getLogger(StatementBlockFactory.class);
   private final List<StatementBlock> blockList = new ArrayList<>();
   private Map<String, StatementBlock> appenderFactoryMap = new ConcurrentHashMap<>();
 

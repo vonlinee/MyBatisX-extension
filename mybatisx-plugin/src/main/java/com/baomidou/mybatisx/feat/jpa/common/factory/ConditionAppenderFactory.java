@@ -19,8 +19,6 @@ import com.baomidou.mybatisx.feat.jpa.component.TxField;
 import com.baomidou.mybatisx.feat.jpa.component.TxParameter;
 import com.baomidou.mybatisx.feat.jpa.operate.model.AppendTypeEnum;
 import com.intellij.psi.PsiClass;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -34,7 +32,6 @@ import java.util.Stack;
  * <a href="https://docs.spring.io/spring-data/jpa/docs/2.3.2.RELEASE/reference/html/#jpa.query-methods.query-creation">...</a>
  */
 public class ConditionAppenderFactory extends BaseAppenderFactory {
-  private static final Logger logger = LoggerFactory.getLogger(ConditionAppenderFactory.class);
   /**
    * The Syntax appender array list.
    */

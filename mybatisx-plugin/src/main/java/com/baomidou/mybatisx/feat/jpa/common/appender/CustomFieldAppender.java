@@ -11,12 +11,11 @@ import com.baomidou.mybatisx.feat.jpa.component.TxParameter;
 import com.baomidou.mybatisx.feat.jpa.operate.model.AppendTypeEnum;
 import com.baomidou.mybatisx.util.PsiUtils;
 import com.baomidou.mybatisx.util.StringUtils;
+import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.psi.PsiClass;
 import com.intellij.psi.PsiField;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.util.Collections;
 import java.util.LinkedList;
@@ -28,7 +27,7 @@ import java.util.Map;
  */
 public class CustomFieldAppender implements SyntaxAppender {
 
-  private static final Logger logger = LoggerFactory.getLogger(CustomFieldAppender.class);
+  private static final Logger logger = Logger.getInstance(CustomFieldAppender.class);
   /**
    * The Tip name.
    */
@@ -139,7 +138,7 @@ public class CustomFieldAppender implements SyntaxAppender {
     text = StringUtils.lowerCaseFirstChar(text);
     PsiField psiField = fieldMap.get(text);
     if (psiField == null) {
-      logger.info("查找映射字段失败, text: {}", text);
+      logger.info("查找映射字段失败, text: " + text);
       return Collections.emptyList();
     }
     return Collections.singletonList(TxParameter.createByPsiField(psiField, areaSequence));

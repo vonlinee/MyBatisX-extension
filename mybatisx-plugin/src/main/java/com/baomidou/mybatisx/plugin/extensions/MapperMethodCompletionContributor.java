@@ -9,6 +9,7 @@ import com.intellij.codeInsight.completion.CompletionContributor;
 import com.intellij.codeInsight.completion.CompletionParameters;
 import com.intellij.codeInsight.completion.CompletionResultSet;
 import com.intellij.codeInsight.completion.CompletionType;
+import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.openapi.editor.Editor;
 import com.intellij.openapi.editor.highlighter.HighlighterIterator;
 import com.intellij.openapi.progress.ProcessCanceledException;
@@ -24,8 +25,6 @@ import com.intellij.psi.javadoc.PsiDocComment;
 import com.intellij.psi.tree.IElementType;
 import com.intellij.psi.util.PsiTreeUtil;
 import org.jetbrains.annotations.NotNull;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.util.Optional;
 
@@ -43,7 +42,7 @@ public class MapperMethodCompletionContributor extends CompletionContributor {
    * The constant MAPPER.
    */
   public static final Key<PsiClass> MAPPER = Key.create("mapper.mapper");
-  private static final Logger logger = LoggerFactory.getLogger(MapperMethodCompletionContributor.class);
+  private static final Logger logger = Logger.getInstance(MapperMethodCompletionContributor.class);
 
   private static boolean inCommentOrLiteral(CompletionParameters parameters) {
     HighlighterIterator iterator = parameters.getEditor().getHighlighter()

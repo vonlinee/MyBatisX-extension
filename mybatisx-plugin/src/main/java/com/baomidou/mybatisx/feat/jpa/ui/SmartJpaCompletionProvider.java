@@ -15,6 +15,7 @@ import com.intellij.codeInsight.completion.InsertHandler;
 import com.intellij.codeInsight.completion.JavaCompletionSorting;
 import com.intellij.codeInsight.lookup.LookupElement;
 import com.intellij.codeInsight.lookup.LookupElementBuilder;
+import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.openapi.editor.Editor;
 import com.intellij.openapi.util.Key;
 import com.intellij.psi.PsiClass;
@@ -22,8 +23,6 @@ import com.intellij.psi.PsiElement;
 import com.intellij.sql.dialects.SqlLanguageDialect;
 import com.intellij.sql.psi.SqlPsiFacade;
 import org.jetbrains.annotations.NotNull;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -36,7 +35,7 @@ import java.util.stream.Collectors;
  */
 public class SmartJpaCompletionProvider {
 
-  private static final Logger logger = LoggerFactory.getLogger(SmartJpaCompletionProvider.class);
+  private static final Logger logger = Logger.getInstance(SmartJpaCompletionProvider.class);
   /**
    * 是否找到区域管理器
    */
@@ -64,7 +63,7 @@ public class SmartJpaCompletionProvider {
     // 按照 mybatisplus3 > mybatisplus2 > resultMap 的顺序查找映射关系
     final Optional<AreaOperateManager> operateManagerOptional = getAreaOperateManager(mapperClass, parameters.getEditor());
     if (!operateManagerOptional.isPresent()) {
-      logger.info("不支持的区域操作管理器, prefix: {} ", prefix);
+      logger.info("不支持的区域操作管理器, prefix: " + prefix);
       return;
     }
     AreaOperateManager areaOperateManager = operateManagerOptional.get();
@@ -159,7 +158,7 @@ public class SmartJpaCompletionProvider {
     if (prefix.length() >= splitString.length()) {
       final String newFragmentPrefix = prefix.substring(splitString.length());
       completionResultSet = completionResultSet.withPrefixMatcher(newFragmentPrefix);
-      logger.info("getCompletionResultSet changed prefix: {}", completionResultSet.getPrefixMatcher()
+      logger.info("getCompletionResultSet changed prefix: " + completionResultSet.getPrefixMatcher()
         .getPrefix());
     }
     return completionResultSet;

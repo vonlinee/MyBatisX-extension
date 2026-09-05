@@ -13,11 +13,10 @@ import com.baomidou.mybatisx.feat.jpa.common.iftest.ConditionFieldWrapper;
 import com.baomidou.mybatisx.feat.jpa.component.TxField;
 import com.baomidou.mybatisx.feat.jpa.component.TxParameter;
 import com.baomidou.mybatisx.feat.jpa.operate.model.AppendTypeEnum;
+import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.psi.PsiClass;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -29,7 +28,7 @@ import java.util.List;
  */
 public class CustomSuffixAppender implements SyntaxAppender {
 
-  private static final Logger logger = LoggerFactory.getLogger(CustomSuffixAppender.class);
+  private static final Logger logger = Logger.getInstance(CustomSuffixAppender.class);
   private final String tipName;
   /**
    * The Suffix operator.
@@ -190,7 +189,7 @@ public class CustomSuffixAppender implements SyntaxAppender {
                                 LinkedList<SyntaxAppenderWrapper> collector,
                                 ConditionFieldWrapper conditionFieldWrapper) {
     if (collector.isEmpty()) {
-      logger.info("这个后缀没有参数, suffix: {}", this.getText());
+      logger.info("这个后缀没有参数, suffix: " + this.getText());
     }
 
     StringBuilder stringBuilder = new StringBuilder();

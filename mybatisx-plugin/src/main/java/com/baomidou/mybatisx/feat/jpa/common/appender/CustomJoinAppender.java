@@ -11,8 +11,6 @@ import com.baomidou.mybatisx.feat.jpa.operate.model.AppendTypeEnum;
 import com.intellij.psi.PsiClass;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.util.Collections;
 import java.util.LinkedList;
@@ -28,7 +26,6 @@ public class CustomJoinAppender implements SyntaxAppender {
    * The constant SPACE.
    */
   public static final String SPACE = " ";
-  private static final Logger logger = LoggerFactory.getLogger(CustomJoinAppender.class);
   private final String tipText;
   private String sqlText;
   private AreaSequence areaSequence;

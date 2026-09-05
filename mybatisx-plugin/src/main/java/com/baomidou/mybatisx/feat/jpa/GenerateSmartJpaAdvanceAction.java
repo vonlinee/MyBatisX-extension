@@ -17,6 +17,7 @@ import com.baomidou.mybatisx.util.MapperUtils;
 import com.intellij.codeInsight.intention.IntentionAction;
 import com.intellij.codeInsight.intention.PsiElementBaseIntentionAction;
 import com.intellij.ide.highlighter.JavaFileType;
+import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.openapi.editor.Editor;
 import com.intellij.openapi.progress.ProcessCanceledException;
 import com.intellij.openapi.project.Project;
@@ -30,8 +31,6 @@ import com.intellij.psi.PsiTypeElement;
 import com.intellij.psi.util.PsiTreeUtil;
 import com.intellij.util.IncorrectOperationException;
 import org.jetbrains.annotations.NotNull;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.util.List;
 import java.util.Optional;
@@ -44,7 +43,7 @@ import java.util.Set;
  */
 public class GenerateSmartJpaAdvanceAction extends PsiElementBaseIntentionAction implements IntentionAction {
 
-  private static final Logger logger = LoggerFactory.getLogger(GenerateSmartJpaAdvanceAction.class);
+  private static final Logger logger = Logger.getInstance(GenerateSmartJpaAdvanceAction.class);
 
   @Override
   public void invoke(@NotNull Project project, Editor editor, @NotNull PsiElement element) throws IncorrectOperationException {
@@ -94,7 +93,7 @@ public class GenerateSmartJpaAdvanceAction extends PsiElementBaseIntentionAction
         platformGenerator.getEntityClass(),
         isSelect);
       if (!conditionFieldWrapperOptional.isPresent()) {
-        logger.info("没找到合适的条件包装器, mapperClass: {}", mapperClass.getName());
+        logger.info("没找到合适的条件包装器, mapperClass: " + mapperClass.getName());
         return;
       }
 

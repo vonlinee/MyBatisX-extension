@@ -1,13 +1,12 @@
 package com.baomidou.mybatisx.alias;
 
 import com.baomidou.mybatisx.util.JavaUtils;
+import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.openapi.project.Project;
 import com.intellij.psi.PsiClass;
 import com.intellij.psi.PsiElement;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.util.*;
 
@@ -17,7 +16,7 @@ import java.util.*;
  * @author yanglin
  */
 public class InnerAliasResolver extends AliasResolver {
-  private static final Logger logger = LoggerFactory.getLogger(InnerAliasResolver.class);
+  private static final Logger logger = Logger.getInstance(InnerAliasResolver.class);
   private volatile Set<AliasDesc> innerAliasDescriptions = null;
 
   /**
